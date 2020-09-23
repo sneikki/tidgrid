@@ -2,17 +2,18 @@
   "name": "tidgrid",
   "version": "0.0.1",
   "description": "Modern CSS grid",
-  "main": "index.js",
+  "main": "dist/tidgrid.min.css",
   "scripts": {
     "start": "webpack-dev-server",
     "transpile": "gulp transpile",
     "minify": "gulp minify",
     "build": "gulp build",
     "transpile:watch": "gulp transpile:watch",
-    "build:watch": "gulp build:watch"
+    "build:watch": "gulp build:watch",
+    "clean": "gulp clean"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Nuutti Varvikko",
+  "license": "MIT",
   "devDependencies": {
     "css-loader": "^4.3.0",
     "del": "^5.1.0",
