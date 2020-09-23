@@ -1,0 +1,152 @@
+.frame {
+    display:        flex;
+    flex-direction: row;
+    flex-wrap:      wrap;
+
+    @include margin(1rem);
+
+    @include each-breakpoint() {
+        @include property(auto) {
+            & > .item {
+                flex: 1 0 0;
+            }
+        }
+
+        @include property(wide) {
+            & > .item {
+                flex: 0 0 100%;
+            }
+        }
+
+        @include property(narrow) {
+            & > .item {
+                flex: 0 1 0;
+            }
+        }
+
+        @include property(reverse) {
+            flex-flow: row-reverse wrap-reverse;
+        }
+
+
+        @include each-column() using ($column) {
+            $item-width: #{100% / $columns * $column};
+            @include property(span-#{$column}) {
+                & > .item {
+                    flex: 0 0 $item-width;
+                }
+            }
+        }
+
+        @include property(margin-none) {
+            @include margin(0);
+        }
+
+        @include property(margin-v-none) {
+            @include margin-v(0);
+        }
+
+        @include property(margin-h-none) {
+            @include margin-h(0);
+        }
+
+        @include property(align-left) {
+            justify-content: flex-start;
+        }
+
+        @include property(align-center) {
+            justify-content: center;
+        }
+
+        @include property(align-right) {
+            justify-content: flex-end;
+        }
+
+        @include property(align-top) {
+            align-items: flex-start;
+        }
+
+        @include property(align-middle) {
+            align-items: center;
+        }
+
+        @include property(align-bottom) {
+            align-items: flex-end;
+        }
+
+        @include property(space-between) {
+            justify-content: space-between;
+        }
+        
+        @include property(space-around) {
+            justify-content: space-around;
+        }
+        
+        @include property(space-evenly) {
+            justify-content: space-evenly;
+        }
+
+        @for $i from 1 through 6 {
+            $margin-size: 0.25rem * $i;
+            
+            @include property(margin-#{$i}) {
+                @include margin($margin-size);
+            }
+
+            @include property(margin-v-#{$i}) {
+                @include margin-v($margin-size);
+            }
+
+            @include property(margin-h-#{$i}) {
+                @include margin-h($margin-size);
+            }
+        }
+
+        .item {
+            @include property(auto) {
+                flex: 1 0 0;
+            }
+
+            @include property(wide) {
+                flex: 0 0 100%;
+            }
+
+            @include property(narrow) {
+                flex: 0 1 0;
+            }
+
+            @include each-column() using ($column) {
+                $item-width: #{100% / $columns * $column};
+                @include property(span-#{$column}) {
+                    flex: 0 0 $item-width;
+                }
+
+                @if $column < 12 {
+                    @include property(offset-#{$column}) {
+                        margin-left: $item-width;
+                    }
+                }
+            }
+
+            @include property(first) {
+                order: -2;
+
+                & + .break {
+                    order: -1;
+                }
+            }
+
+            @include property(last) {
+                order: 2;
+
+                & + .break {
+                    order: 1;
+                }
+            }
+        }
+    }
+
+    .item {
+        flex: 0 0 100%;
+    }
+}

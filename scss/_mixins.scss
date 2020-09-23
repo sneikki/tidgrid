@@ -1,0 +1,61 @@
+@mixin child-item() {
+    & > .item {
+        @content;
+    }
+}
+    
+@mixin margin($size) {
+    margin-top: -$size;
+    margin-left: -$size;
+
+    @include child-item() {
+        padding-top: $size;
+        padding-left: $size;
+    } 
+}
+
+@mixin margin-h($size) {
+    margin-left: -$size;
+
+    @include child-item() {
+        padding-left: $size;
+    }
+}
+
+@mixin margin-v($size) {
+    margin-top: -$size;
+
+    @include child-item() {
+        padding-top: $size;
+    }
+}
+
+$breakpoint-name: null;
+$breakpoint-size: null;
+@mixin each-breakpoint() {
+    $breakpoints: map-merge((base: 0), $breakpoints);
+    @each $name, $size in $breakpoints {
+        $breakpoint-size: $size !global;
+        @if $name == base {
+            $breakpoint-name: "" !global;
+            @content;
+        } @else {
+            $breakpoint-name: "-" + $name !global;
+            @media only screen and (min-width: $size) {
+                @content();
+            }
+        }
+    }
+}
+
+@mixin each-column() {
+    @for $column from 1 through $columns {
+        @content($column);
+    }
+}
+
+@mixin property($property) {
+    &.#{$property}#{$breakpoint-name} {
+        @content;
+    }
+}

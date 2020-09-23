@@ -10,8 +10,8 @@ gulp.task('transpile', function transpile() {
     return gulp
         .src('scss/tidgrid.scss')
         .pipe(sourcemaps.init())
-        .pipe(autoprefixer({ cascade: false }))
         .pipe(sass({ includePaths: ['node_modules'] }).on('error', sass.logError))
+        .pipe(autoprefixer({ cascade: false }))
         .pipe(rename('tidgrid.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist'))
@@ -30,11 +30,11 @@ gulp.task('minify', function() {
 gulp.task('build', gulp.series('transpile', 'minify'))
 
 gulp.task('transpile:watch', function() {
-    gulp.watch('./sass/**/*.sass', gulp.task('transpile'))
+    gulp.watch('./scss/**/*.scss', gulp.task('transpile'))
 })
 
 gulp.task('build:watch', function() {
-    gulp.watch('./sass/**/*.sass', gulp.task('build'))
+    gulp.watch('./scss/**/*.scss', gulp.task('build'))
 })
 
 gulp.task('clean', async function() {
