@@ -86,7 +86,7 @@
             justify-content: space-evenly;
         }
 
-        @for $i from 1 through 6 {
+        @for $i from 1 through $margins {
             $margin-size: 0.25rem * $i;
             
             @include property(margin-#{$i}) {
