@@ -2,7 +2,7 @@ var gulp = require('gulp')
 var sass = require('gulp-dart-sass')
 var rename = require('gulp-rename')
 var cleancss = require('gulp-clean-css')
-var sourecmaps = require('gulp-clean-css')
+var sourcemaps = require('gulp-sourcemaps')
 var autoprefixer = require('gulp-autoprefixer')
 var del = require('del')
 
