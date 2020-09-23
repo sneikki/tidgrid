@@ -10,8 +10,8 @@ gulp.task('transpile', function transpile() {
     return gulp
         .src('scss/tidgrid.scss')
         .pipe(sourcemaps.init())
-        .pipe(sass({ includePaths: ['node_modules'] }).on('error', sass.logError))
         .pipe(autoprefixer({ cascade: false }))
+        .pipe(sass({ includePaths: ['node_modules'] }).on('error', sass.logError))
         .pipe(rename('tidgrid.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist'))
@@ -22,8 +22,8 @@ gulp.task('minify', function() {
         .src('./dist/tidgrid.css')
         .pipe(sourcemaps.init())
         .pipe(cleancss({ level: 2 }))
-        .pipe(rename('tidgrid.min.csss'))
-        .pipe(sourecmaps.write('.'))
+        .pipe(rename('tidgrid.min.css'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist'))
 })
 
