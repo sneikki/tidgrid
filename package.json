@@ -4,7 +4,11 @@
   "description": "Modern CSS grid",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "transpile": "gulp tanspile",
+    "minify": "gulp minify",
+    "build": "gulp build",
+    "transpile:watch": "gulp transpile:watch",
+    "build:watch": "gulp build:watch"
   },
   "author": "",
   "license": "ISC",
