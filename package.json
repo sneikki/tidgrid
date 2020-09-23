@@ -24,6 +24,7 @@
     "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "html-webpack-plugin": "^4.5.0",
+    "normalize.css": "^8.0.1",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
