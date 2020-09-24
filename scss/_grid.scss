@@ -166,10 +166,24 @@
                 display: none;
             }
         }
+
+        .break {
+            @include property(enabled) {
+                display: block;
+            }
+
+            @include property(disabled) {
+                display: none;
+            }
+        }
     }
 
     .item {
         flex: 0 0 100%;
         box-sizing: border-box;
+    }
+
+    .break {
+        width: 100%;    
     }
 }
