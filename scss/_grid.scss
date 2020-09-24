@@ -15,7 +15,8 @@
 
         @include property(wide) {
             & > .item {
-                flex: 0 0 100%;
+                flex: none;
+                width: 100%;
             }
         }
 
@@ -33,7 +34,8 @@
             $item-width: #{100% / $columns * $column};
             @include property(span-#{$column}) {
                 & > .item {
-                    flex: 0 0 $item-width;
+                    flex: none;
+                    width: $item-width;
                 }
             }
         }
@@ -102,13 +104,20 @@
             }
         }
 
+        &.preserve-width {
+            @include child-item() {
+                min-width: 100% / $columns;
+            }
+        }
+
         .item {
             @include property(auto) {
                 flex: 1 0 0;
             }
 
             @include property(wide) {
-                flex: 0 0 100%;
+                flex: none;
+                width: 100%;
             }
 
             @include property(narrow) {
@@ -118,7 +127,8 @@
             @include each-column() using ($column) {
                 $item-width: #{100% / $columns * $column};
                 @include property(span-#{$column}) {
-                    flex: 0 0 $item-width;
+                    flex: none;
+                    width: $item-width;
                 }
 
                 @if $column < 12 {
