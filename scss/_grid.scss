@@ -7,9 +7,10 @@
     @include margin(1rem);
 
     @include each-breakpoint() {
-        @include property(auto) {
+        @include property(fill) {
             & > .item {
-                flex: 1 0 0;
+                flex: auto;
+                width: unset;
             }
         }
 
@@ -23,6 +24,15 @@
         @include property(narrow) {
             & > .item {
                 flex: 0 1 0;
+                width: unset;
+            }
+        }
+
+        @include property(auto) {
+            & > .item {
+                flex: none;
+                max-width: 100%;
+                width: unset;
             }
         }
 
@@ -104,6 +114,10 @@
             }
         }
 
+        @include property(no-wrap) {
+            flex-wrap: nowrap;
+        }
+
         &.preserve-width {
             @include child-item() {
                 min-width: 100% / $columns;
@@ -111,8 +125,9 @@
         }
 
         .item {
-            @include property(auto) {
-                flex: 1 0 0;
+            @include property(fill) {
+                flex: auto;
+                width: unset;
             }
 
             @include property(wide) {
@@ -122,6 +137,12 @@
 
             @include property(narrow) {
                 flex: 0 1 0;
+                width: unset;
+            }
+
+            @include property(auto) {
+                flex: none;
+                width: unset;
             }
 
             @include each-column() using ($column) {
@@ -184,6 +205,6 @@
     }
 
     .break {
-        width: 100%;    
+        width: 100%;
     }
 }
