@@ -7,9 +7,9 @@
     @include margin(1rem);
 
     @include each-breakpoint() {
-        @include property(fill) {
+        @include property(auto) {
             & > .item {
-                flex: auto;
+                flex: 1 0 0;
                 width: unset;
             }
         }
@@ -21,14 +21,14 @@
             }
         }
 
-        @include property(narrow) {
+        @include property(shrink) {
             & > .item {
                 flex: 0 1 0;
                 width: unset;
             }
         }
 
-        @include property(auto) {
+        @include property(narrow) {
             & > .item {
                 flex: none;
                 max-width: 100%;
@@ -124,9 +124,21 @@
             }
         }
 
+        @include property(flex) {
+            display: flex;
+        }
+        
+        @include property(block) {
+            display: block;
+        }
+
+        @include property(inline-block) {
+            display: inline-block;
+        }
+
         .item {
-            @include property(fill) {
-                flex: auto;
+            @include property(auto) {
+                flex: 1 0 0;
                 width: unset;
             }
 
@@ -135,12 +147,12 @@
                 width: 100%;
             }
 
-            @include property(narrow) {
+            @include property(shrink) {
                 flex: 0 1 0;
                 width: unset;
             }
 
-            @include property(auto) {
+            @include property(narrow) {
                 flex: none;
                 width: unset;
             }
@@ -200,7 +212,8 @@
     }
 
     .item {
-        flex: 0 0 100%;
+        flex: none;
+        width: 100%;
         box-sizing: border-box;
     }
 
