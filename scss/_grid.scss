@@ -143,6 +143,14 @@
                     order: 1;
                 }
             }
+
+            @include property(visible) {
+                display: unset;
+            }
+
+            @include property(hidden) {
+                display: none;
+            }
         }
     }
 
