@@ -158,6 +158,10 @@
                 display: unset;
             }
 
+            @include property(invisible) {
+                visibility: hidden;
+            }
+
             @include property(hidden) {
                 display: none;
             }
