@@ -59,3 +59,33 @@ $breakpoint-size: null;
         @content;
     }
 }
+
+@mixin min-viewport($breakpoint) {
+    @media only screen and (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+@mixin sm() {
+    @include min-viewport(map-get($breakpoints, sm)) {
+        @content;
+    }
+}
+
+@mixin md() {
+    @include min-viewport(map-get($breakpoints, md)) {
+        @content;
+    }
+}
+
+@mixin lg() {
+    @include min-viewport(map-get($breakpoints, lg)) {
+        @content;
+    }
+}
+
+@mixin xl() {
+    @include min-viewport(map-get($breakpoints, xl)) {
+        @content;
+    }
+}
