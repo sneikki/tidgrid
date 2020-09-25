@@ -60,6 +60,12 @@ $breakpoint-size: null;
     }
 }
 
+@mixin global-property($property) {
+    .#{$property}#{$breakpoint-name} {
+        @content;
+    }
+}
+
 @mixin min-viewport($breakpoint) {
     @media only screen and (min-width: $breakpoint) {
         @content;

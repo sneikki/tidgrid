@@ -2448,4 +2448,163 @@ template {
     max-width: 1440px;
   }
 }
+
+body {
+  font-family: "Titillium Web";
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5,
+.heading-6 {
+  margin: 0;
+  margin-bottom: 1em;
+  font-weight: 600;
+}
+
+.subheading-1,
+.subheading-2,
+.subheading-3,
+.subheading-4,
+.subheading-5,
+.subheading-6 {
+  margin: 0;
+  margin-bottom: 1em;
+  font-weight: 300;
+}
+
+.heading-1,
+.subheading-1 {
+  font-size: 3.6rem;
+}
+
+.heading-2,
+.subheading-2 {
+  font-size: 3rem;
+}
+
+.heading-3,
+.subheading-3 {
+  font-size: 2.6rem;
+}
+
+.heading-4,
+.subheading-4 {
+  font-size: 2rem;
+}
+
+.heading-5,
+.subheading-5 {
+  font-size: 1.67rem;
+}
+
+.heading-6,
+.subheading-6 {
+  font-size: 1.33rem;
+}
+
+.paragraph {
+  margin: 0;
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+@media only screen and (min-width: 768px) {
+  .text-left-sm {
+    text-align: left;
+  }
+
+  .text-center-sm {
+    text-align: center;
+  }
+
+  .text-right-sm {
+    text-align: right;
+  }
+
+  .text-justify-sm {
+    text-align: justify;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .text-left-md {
+    text-align: left;
+  }
+
+  .text-center-md {
+    text-align: center;
+  }
+
+  .text-right-md {
+    text-align: right;
+  }
+
+  .text-justify-md {
+    text-align: justify;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .text-left-lg {
+    text-align: left;
+  }
+
+  .text-center-lg {
+    text-align: center;
+  }
+
+  .text-right-lg {
+    text-align: right;
+  }
+
+  .text-justify-lg {
+    text-align: justify;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .text-left-xl {
+    text-align: left;
+  }
+
+  .text-center-xl {
+    text-align: center;
+  }
+
+  .text-right-xl {
+    text-align: right;
+  }
+
+  .text-justify-xl {
+    text-align: justify;
+  }
+}
 /*# sourceMappingURL=tidgrid.css.map */

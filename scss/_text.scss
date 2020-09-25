@@ -1,0 +1,91 @@
+body {
+    font-family: 'Titillium Web';
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5,
+.heading-6 {
+    margin: 0;
+    margin-bottom: $heading-margin;
+    font-weight: $heading-weight;
+}
+
+.subheading-1,
+.subheading-2,
+.subheading-3,
+.subheading-4,
+.subheading-5,
+.subheading-6 {
+    margin: 0;
+    margin-bottom: $heading-margin;
+    font-weight: $subheading-weight;
+}
+
+.heading-1,
+.subheading-1 {
+    font-size: $heading-size-1;
+}
+
+.heading-2,
+.subheading-2 {
+    font-size: $heading-size-2;
+}
+
+.heading-3,
+.subheading-3 {
+    font-size: $heading-size-3;
+}
+
+.heading-4,
+.subheading-4 {
+    font-size: $heading-size-4;
+}
+
+.heading-5,
+.subheading-5 {
+    font-size: $heading-size-5;
+}
+
+.heading-6,
+.subheading-6 {
+    font-size: $heading-size-6;
+}
+
+.paragraph {
+    margin: 0;
+    margin-bottom: $paragraph-margin;
+    line-height: $paragraph-line-height;
+}
+
+@include each-breakpoint() {
+    @include global-property(text-left) {
+        text-align: left;
+    }
+
+    @include global-property(text-center) {
+        text-align: center;
+    }
+
+    @include global-property(text-right) {
+        text-align: right;
+    }
+
+    @include global-property(text-justify) {
+        text-align: justify;
+    }
+}
