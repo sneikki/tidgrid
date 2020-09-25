@@ -124,16 +124,12 @@
             }
         }
 
-        @include property(flex) {
-            display: flex;
-        }
-        
-        @include property(block) {
+        @include property(stack) {
             display: block;
         }
 
-        @include property(inline-block) {
-            display: inline-block;
+        @include property(flex) {
+            display: flex;
         }
 
         .item {
