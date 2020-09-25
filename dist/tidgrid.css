@@ -2449,8 +2449,18 @@ template {
   }
 }
 
+.section {
+  margin: 2rem;
+}
+.section:first-of-type {
+  margin-top: 0;
+}
+.section:last-of-type {
+  margin-bottom: 0;
+}
+
 body {
-  font-family: "Titillium Web";
+  font-family: "Titillium Web", Helvetica, sans-serif;
 }
 
 .text-underline {
