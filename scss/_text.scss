@@ -1,75 +1,65 @@
 body {
-    font-family: 'Titillium Web', Helvetica, sans-serif;
-}
-
-.text-underline {
-    text-decoration: underline;
+    font-family: $font-stack;
 }
 
 .text-decoration-none {
     text-decoration: none;
 }
 
+.text-underline {
+    text-decoration: underline;
+}
+
 .text-italic {
     font-style: italic;
 }
 
-.heading-1,
-.heading-2,
-.heading-3,
-.heading-4,
-.heading-5,
-.heading-6 {
-    margin: 0;
-    margin-bottom: $heading-margin;
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-lowercase {
+    text-transform: lowercase;
+}
+
+.text-capitalize {
+    text-transform: uppercase;
+}
+
+.text-sans-serif {
+    font-family: $sans-serif;
+}
+
+.text-serif {
+    font-family: $serif;
+}
+
+.text-monospace {
+    font-family: $monospace;
+}
+
+.heading {
     font-weight: $heading-weight;
 }
 
-.subheading-1,
-.subheading-2,
-.subheading-3,
-.subheading-4,
-.subheading-5,
-.subheading-6 {
-    margin: 0;
-    margin-bottom: $heading-margin;
+.subheading {
     font-weight: $subheading-weight;
 }
 
-.heading-1,
-.subheading-1 {
-    font-size: $heading-size-1;
-}
-
-.heading-2,
-.subheading-2 {
-    font-size: $heading-size-2;
-}
-
-.heading-3,
-.subheading-3 {
-    font-size: $heading-size-3;
-}
-
-.heading-4,
-.subheading-4 {
-    font-size: $heading-size-4;
-}
-
-.heading-5,
-.subheading-5 {
-    font-size: $heading-size-5;
-}
-
-.heading-6,
-.subheading-6 {
-    font-size: $heading-size-6;
+.heading,
+.subheading {
+    margin: 0;
+    margin-bottom: $heading-margin;
 }
 
 .paragraph {
     margin: 0;
     margin-bottom: $paragraph-margin;
     line-height: $paragraph-line-height;
+}
+
+.text-spacing-none {
+    margin-bottom: 0;
 }
 
 @include each-breakpoint() {
@@ -87,5 +77,37 @@ body {
 
     @include global-property(text-justify) {
         text-align: justify;
+    }
+    
+    @include global-property(text-size-1) {
+        font-size: $text-size-1;
+    }
+
+    @include global-property(text-size-2) {
+        font-size: $text-size-2;
+    }
+    
+    @include global-property(text-size-3) {
+        font-size: $text-size-3;
+    }
+    
+    @include global-property(text-size-4) {
+        font-size: $text-size-4;
+    }
+    
+    @include global-property(text-size-5) {
+        font-size: $text-size-5;
+    }
+    
+    @include global-property(text-size-6) {
+        font-size: $text-size-6;
+    }
+    
+    @include global-property(text-size-7) {
+        font-size: $text-size-7;
+    }
+    
+    @include global-property(text-size-8) {
+        font-size: $text-size-8;
     }
 }

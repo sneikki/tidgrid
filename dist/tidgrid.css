@@ -2421,127 +2421,100 @@ template {
   width: 100%;
 }
 
-.layout {
-  width: 100%;
+.container {
+  width: calc(100% - 2em * 2);
   margin: 0 auto;
-  padding: 0 2em;
 }
-.layout.no-edges {
-  padding: 0;
+.container.no-edges {
+  width: 100%;
 }
 @media only screen and (min-width: 48em) {
-  .layout.sm {
+  .container.sm {
     max-width: 48em;
   }
 }
-@media only screen and (min-width: 52em) {
-  .layout.sm {
-    padding: 0;
-  }
-}
 @media only screen and (min-width: 64em) {
-  .layout.md {
+  .container.md {
     max-width: 64em;
   }
 }
-@media only screen and (min-width: 68em) {
-  .layout.md {
-    padding: 0;
-  }
-}
 @media only screen and (min-width: 75em) {
-  .layout.lg {
+  .container.lg {
     max-width: 75em;
   }
 }
-@media only screen and (min-width: 79em) {
-  .layout.lg {
-    padding: 0;
-  }
-}
 @media only screen and (min-width: 90em) {
-  .layout.xl {
+  .container.xl {
     max-width: 90em;
   }
 }
-@media only screen and (min-width: 94em) {
-  .layout.xl {
-    padding: 0;
-  }
+
+.section {
+  padding: 3rem 0;
 }
 
 body {
   font-family: "Titillium Web", Helvetica, sans-serif;
 }
 
-.text-underline {
-  text-decoration: underline;
-}
-
 .text-decoration-none {
   text-decoration: none;
+}
+
+.text-underline {
+  text-decoration: underline;
 }
 
 .text-italic {
   font-style: italic;
 }
 
-.heading-1,
-.heading-2,
-.heading-3,
-.heading-4,
-.heading-5,
-.heading-6 {
-  margin: 0;
-  margin-bottom: 1em;
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: uppercase;
+}
+
+.text-sans-serif {
+  font-family: "Titillium Web", Helvetica, sans-serif;
+}
+
+.text-serif {
+  font-family: serif;
+}
+
+.text-monospace {
+  font-family: Monaco, "Source Code Pro", monospace;
+}
+
+.heading {
   font-weight: 600;
 }
 
-.subheading-1,
-.subheading-2,
-.subheading-3,
-.subheading-4,
-.subheading-5,
-.subheading-6 {
-  margin: 0;
-  margin-bottom: 1em;
+.subheading {
   font-weight: 300;
 }
 
-.heading-1,
-.subheading-1 {
-  font-size: 3.6rem;
-}
-
-.heading-2,
-.subheading-2 {
-  font-size: 3rem;
-}
-
-.heading-3,
-.subheading-3 {
-  font-size: 2.6rem;
-}
-
-.heading-4,
-.subheading-4 {
-  font-size: 2rem;
-}
-
-.heading-5,
-.subheading-5 {
-  font-size: 1.67rem;
-}
-
-.heading-6,
-.subheading-6 {
-  font-size: 1.33rem;
+.heading,
+.subheading {
+  margin: 0;
+  margin-bottom: 1em;
 }
 
 .paragraph {
   margin: 0;
   margin-bottom: 1em;
   line-height: 1.5;
+}
+
+.text-spacing-none {
+  margin-bottom: 0;
 }
 
 .text-left {
@@ -2560,6 +2533,38 @@ body {
   text-align: justify;
 }
 
+.text-size-1 {
+  font-size: 4rem;
+}
+
+.text-size-2 {
+  font-size: 3.5rem;
+}
+
+.text-size-3 {
+  font-size: 3rem;
+}
+
+.text-size-4 {
+  font-size: 2.5rem;
+}
+
+.text-size-5 {
+  font-size: 2rem;
+}
+
+.text-size-6 {
+  font-size: 1.5rem;
+}
+
+.text-size-7 {
+  font-size: 1.25rem;
+}
+
+.text-size-8 {
+  font-size: 1rem;
+}
+
 @media only screen and (min-width: 48em) {
   .text-left-sm {
     text-align: left;
@@ -2575,6 +2580,38 @@ body {
 
   .text-justify-sm {
     text-align: justify;
+  }
+
+  .text-size-1-sm {
+    font-size: 4rem;
+  }
+
+  .text-size-2-sm {
+    font-size: 3.5rem;
+  }
+
+  .text-size-3-sm {
+    font-size: 3rem;
+  }
+
+  .text-size-4-sm {
+    font-size: 2.5rem;
+  }
+
+  .text-size-5-sm {
+    font-size: 2rem;
+  }
+
+  .text-size-6-sm {
+    font-size: 1.5rem;
+  }
+
+  .text-size-7-sm {
+    font-size: 1.25rem;
+  }
+
+  .text-size-8-sm {
+    font-size: 1rem;
   }
 }
 @media only screen and (min-width: 64em) {
@@ -2593,6 +2630,38 @@ body {
   .text-justify-md {
     text-align: justify;
   }
+
+  .text-size-1-md {
+    font-size: 4rem;
+  }
+
+  .text-size-2-md {
+    font-size: 3.5rem;
+  }
+
+  .text-size-3-md {
+    font-size: 3rem;
+  }
+
+  .text-size-4-md {
+    font-size: 2.5rem;
+  }
+
+  .text-size-5-md {
+    font-size: 2rem;
+  }
+
+  .text-size-6-md {
+    font-size: 1.5rem;
+  }
+
+  .text-size-7-md {
+    font-size: 1.25rem;
+  }
+
+  .text-size-8-md {
+    font-size: 1rem;
+  }
 }
 @media only screen and (min-width: 75em) {
   .text-left-lg {
@@ -2610,6 +2679,38 @@ body {
   .text-justify-lg {
     text-align: justify;
   }
+
+  .text-size-1-lg {
+    font-size: 4rem;
+  }
+
+  .text-size-2-lg {
+    font-size: 3.5rem;
+  }
+
+  .text-size-3-lg {
+    font-size: 3rem;
+  }
+
+  .text-size-4-lg {
+    font-size: 2.5rem;
+  }
+
+  .text-size-5-lg {
+    font-size: 2rem;
+  }
+
+  .text-size-6-lg {
+    font-size: 1.5rem;
+  }
+
+  .text-size-7-lg {
+    font-size: 1.25rem;
+  }
+
+  .text-size-8-lg {
+    font-size: 1rem;
+  }
 }
 @media only screen and (min-width: 90em) {
   .text-left-xl {
@@ -2626,6 +2727,38 @@ body {
 
   .text-justify-xl {
     text-align: justify;
+  }
+
+  .text-size-1-xl {
+    font-size: 4rem;
+  }
+
+  .text-size-2-xl {
+    font-size: 3.5rem;
+  }
+
+  .text-size-3-xl {
+    font-size: 3rem;
+  }
+
+  .text-size-4-xl {
+    font-size: 2.5rem;
+  }
+
+  .text-size-5-xl {
+    font-size: 2rem;
+  }
+
+  .text-size-6-xl {
+    font-size: 1.5rem;
+  }
+
+  .text-size-7-xl {
+    font-size: 1.25rem;
+  }
+
+  .text-size-8-xl {
+    font-size: 1rem;
   }
 }
 /*# sourceMappingURL=tidgrid.css.map */

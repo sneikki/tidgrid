@@ -1,5 +1,5 @@
 .container {
-    width: calc(100% - #{$container-margin});
+    width: calc(100% - #{$container-margin} * 2);
     margin: 0 auto;
 
     &.no-edges {
@@ -13,4 +13,8 @@
             }
         }
     }
+}
+
+.section {
+    padding: $section-padding 0;
 }
