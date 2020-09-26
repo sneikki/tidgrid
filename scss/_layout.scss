@@ -1,22 +1,15 @@
-.layout {
-    width: 100%;
+.container {
+    width: calc(100% - #{$container-margin});
     margin: 0 auto;
 
-    padding: 0 $layout-margin;
-
     &.no-edges {
-        padding: 0;
+        width: 100%;
     }
 
     @each $name, $size in $breakpoints {
         @include min-viewport($size) {
             &.#{$name} {
                 max-width: $size;
-            }
-        }
-        @include min-viewport($size + $layout-margin * 2) {
-            &.#{$name} {
-                padding: 0;
             }
         }
     }
