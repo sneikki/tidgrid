@@ -1,0 +1,20 @@
+@each $name, $name-abbrev in $helper-types {
+    @each $dir, $dir-abbrev in $helper-directions {
+        @each $level, $size in $helper-sizes {
+            .#{$name-abbrev}#{$dir-abbrev}-#{$level} {
+                @if $dir == vertical {
+                    #{$name}-top: $size;
+                    #{$name}-bottom: $size;
+                } @else if $dir == horizontal {
+                    #{$name}-left: $size;
+                    #{$name}-right: $size;
+                } @else if $dir == both {
+                    #{$name}: $size;
+                } @else {
+                    #{$name}-#{$dir}: $size;
+                }
+            }
+        }        
+    }
+}
+
