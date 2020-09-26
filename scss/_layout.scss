@@ -1,22 +1,23 @@
 .layout {
     width: 100%;
     margin: 0 auto;
-    
-    @include each-breakpoint() {
-        @include property(fixed) {
-            max-width: $breakpoint-size;
+
+    padding: 0 $layout-margin;
+
+    &.no-edges {
+        padding: 0;
+    }
+
+    @each $name, $size in $breakpoints {
+        @include min-viewport($size) {
+            &.#{$name} {
+                max-width: $size;
+            }
         }
-    }
-}
-
-.section {
-    margin: $section-margin;
-
-    &:first-of-type {
-        margin-top: 0;
-    }
-
-    &:last-of-type {
-        margin-bottom: 0;
+        @include min-viewport($size + $layout-margin * 2) {
+            &.#{$name} {
+                padding: 0;
+            }
+        }
     }
 }

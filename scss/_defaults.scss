@@ -1,8 +1,8 @@
 $breakpoints: (
-    sm: 768px,
-    md: 1024px,
-    lg: 1200px,
-    xl: 1440px
+    sm: 48em,
+    md: 64em,
+    lg: 75em,
+    xl: 90em
 ) !default;
 
 $columns: 12 !default;
@@ -25,4 +25,4 @@ $heading-size-6:    1.33rem !default;
 $heading-weight:    600 !default;
 $subheading-weight: 300 !default;
 
-$section-margin:    2rem !default;
+$layout-margin:     2em !default;

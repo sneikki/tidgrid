@@ -760,7 +760,7 @@ template {
 .items .break.disabled {
   display: none;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 48em) {
   .items.auto-sm > .item {
     flex: 1 0 0;
     width: unset;
@@ -1173,7 +1173,7 @@ template {
     display: none;
   }
 }
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 64em) {
   .items.auto-md > .item {
     flex: 1 0 0;
     width: unset;
@@ -1586,7 +1586,7 @@ template {
     display: none;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 75em) {
   .items.auto-lg > .item {
     flex: 1 0 0;
     width: unset;
@@ -1999,7 +1999,7 @@ template {
     display: none;
   }
 }
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 90em) {
   .items.auto-xl > .item {
     flex: 1 0 0;
     width: unset;
@@ -2424,39 +2424,50 @@ template {
 .layout {
   width: 100%;
   margin: 0 auto;
+  padding: 0 2em;
 }
-.layout.fixed {
-  max-width: 0;
+.layout.no-edges {
+  padding: 0;
 }
-@media only screen and (min-width: 768px) {
-  .layout.fixed-sm {
-    max-width: 768px;
+@media only screen and (min-width: 48em) {
+  .layout.sm {
+    max-width: 48em;
   }
 }
-@media only screen and (min-width: 1024px) {
-  .layout.fixed-md {
-    max-width: 1024px;
+@media only screen and (min-width: 52em) {
+  .layout.sm {
+    padding: 0;
   }
 }
-@media only screen and (min-width: 1200px) {
-  .layout.fixed-lg {
-    max-width: 1200px;
+@media only screen and (min-width: 64em) {
+  .layout.md {
+    max-width: 64em;
   }
 }
-@media only screen and (min-width: 1440px) {
-  .layout.fixed-xl {
-    max-width: 1440px;
+@media only screen and (min-width: 68em) {
+  .layout.md {
+    padding: 0;
   }
 }
-
-.section {
-  margin: 2rem;
+@media only screen and (min-width: 75em) {
+  .layout.lg {
+    max-width: 75em;
+  }
 }
-.section:first-of-type {
-  margin-top: 0;
+@media only screen and (min-width: 79em) {
+  .layout.lg {
+    padding: 0;
+  }
 }
-.section:last-of-type {
-  margin-bottom: 0;
+@media only screen and (min-width: 90em) {
+  .layout.xl {
+    max-width: 90em;
+  }
+}
+@media only screen and (min-width: 94em) {
+  .layout.xl {
+    padding: 0;
+  }
 }
 
 body {
@@ -2549,7 +2560,7 @@ body {
   text-align: justify;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 48em) {
   .text-left-sm {
     text-align: left;
   }
@@ -2566,7 +2577,7 @@ body {
     text-align: justify;
   }
 }
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 64em) {
   .text-left-md {
     text-align: left;
   }
@@ -2583,7 +2594,7 @@ body {
     text-align: justify;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 75em) {
   .text-left-lg {
     text-align: left;
   }
@@ -2600,7 +2611,7 @@ body {
     text-align: justify;
   }
 }
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 90em) {
   .text-left-xl {
     text-align: left;
   }
