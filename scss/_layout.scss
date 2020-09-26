@@ -1,9 +1,21 @@
 .container {
-    width: calc(100% - #{$container-margin} * 2);
+    @include container-margin($container-margin-normal);
     margin: 0 auto;
 
-    &.no-edges {
+    &.margin-none {
         width: 100%;
+    }
+
+    &.margin-small {
+        @include container-margin($container-margin-small);
+    }
+
+    &.margin-medium {
+        @include container-margin($container-margin-medium);
+    }
+
+    &.margin-large {
+        @include container-margin($container-margin-large);
     }
 
     @each $name, $size in $breakpoints {
@@ -16,5 +28,25 @@
 }
 
 .section {
-    padding: $section-padding 0;
+    padding: $section-padding-normal 0;
+
+    &.padding-none {
+        padding: 0;
+    }
+
+    &.huge {
+        padding: $section-padding-huge 0;
+    }
+
+    &.large {
+        padding: $section-padding-large 0;
+    }
+
+    &.medium {
+        padding: $section-padding-medium 0;
+    }
+
+    &.small {
+        padding: $section-padding-small 0;
+    }
 }

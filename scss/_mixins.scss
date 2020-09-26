@@ -72,6 +72,10 @@ $breakpoint-size: null;
     }
 }
 
+@mixin container-margin($margin) {
+    width: calc(100% - #{$margin} * 2);
+}
+
 @mixin sm() {
     @include min-viewport(map-get($breakpoints, sm)) {
         @content;

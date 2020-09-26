@@ -10,8 +10,8 @@ $columns: 12 !default;
 $base-margin: 0.5rem !default;
 $margins: 8 !default;
 
-$paragraph-line-height:    1.5 !default;
-$paragraph-margin:          1.0em !default;
+$paragraph-line-height: 1.5 !default;
+$paragraph-margin:      1.0em !default;
 
 $heading-margin:    1.0em !default;
 
@@ -35,8 +35,19 @@ $font-stack:    $sans-serif !default;
 $heading-weight:    600 !default;
 $subheading-weight: 300 !default;
 
-$container-margin:      2.0em !default;
+$container-margin-small:    1.0em !default;
+$container-margin-normal:   2.0em !default;
+$container-margin-medium:   3.0em !default;
+$container-margin-large:    4.0em !default;
 
-$section-padding:       3.0rem !default;
-$section-padding-tall:  9.0rem !default;
-$section-padding-extra: 15.0rem !default;
+$section-padding-small:     1.5rem !default;
+$section-padding-normal:    3.0rem !default;
+$section-padding-medium:    9.0rem !default;
+$section-padding-large:     15.0rem !default;
+$section-padding-huge:      20.0rem !default;
+
+// Colors
+$white:         #ffffff !default;
+$black:         #000000 !default;
+$darkgrey:      #304455 !default;
+$lightgrey:    #778899 !default;

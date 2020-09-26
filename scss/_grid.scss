@@ -99,7 +99,7 @@
         }
 
         @for $i from 1 through $margins {
-            $margin-size: 0.25rem * $i;
+            $margin-size: $base-margin * $i;
             
             @include property(margin-#{$i}) {
                 @include margin($margin-size);
