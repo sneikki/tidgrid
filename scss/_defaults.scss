@@ -65,15 +65,15 @@ $helper-sizes: (
     5: 2.0rem,
 ) !default;
 $helper-types: (
-    margin: m,
-    padding: p
+    margin:     m,
+    padding:    p
 ) !default;
 $helper-directions: (
-    top: t,
-    right: r,
-    bottom: b,
-    left: l,
+    top:        t,
+    right:      r,
+    bottom:     b,
+    left:       l,
     horizontal: h,
-    vertical: v,
-    both: ""
+    vertical:   v,
+    both:       ""
 ) !default;

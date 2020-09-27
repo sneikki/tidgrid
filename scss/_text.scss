@@ -14,12 +14,20 @@ body {
 .subheading {
     margin: 0;
     margin-bottom: $heading-margin;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .paragraph {
     margin: 0;
     margin-bottom: $paragraph-margin;
     line-height: $paragraph-line-height;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .link {
@@ -90,7 +98,6 @@ body {
 .text-heavy {
     font-weight: 900;
 }
-
 
 .text-white {
     color: $white;
