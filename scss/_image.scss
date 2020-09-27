@@ -1,0 +1,17 @@
+.image {
+    max-width: 100%;
+    height: auto;
+
+    &.center {
+        margin: 0 auto;
+        display: block;
+    }
+
+    &.left {
+        float: left;
+    }
+
+    &.right {
+        float: right;
+    }
+}
