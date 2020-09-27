@@ -91,6 +91,7 @@ body {
     font-weight: 900;
 }
 
+
 .text-white {
     color: $white;
 }
@@ -124,7 +125,7 @@ body {
 }
 
 .text-spacing-relative {
-    margin-bottom: 1rem;
+    margin-bottom: $relative-text-margin;
 }
 
 @include each-breakpoint() {

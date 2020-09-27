@@ -10,10 +10,11 @@ $columns: 12 !default;
 $base-margin: 0.5rem !default;
 $margins: 8 !default;
 
-$paragraph-line-height: 1.5 !default;
-$paragraph-margin:      1.0em !default;
+$text-margin:           1.0em !default;
+$relative-text-margin:  1.0rem !default;
 
-$heading-margin:    1.0em !default;
+$paragraph-line-height: 1.5 !default;
+$paragraph-margin:      $text-margin !default;
 
 $text-size-8:   1.0rem !default;
 $text-size-7:   1.25rem !default;
@@ -34,6 +35,8 @@ $font-stack:    $sans-serif !default;
 
 $heading-weight:    600 !default;
 $subheading-weight: 300 !default;
+
+$heading-margin:    $text-margin !default;
 
 $container-margin-small:    1.0em !default;
 $container-margin-normal:   2.0em !default;
