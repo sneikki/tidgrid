@@ -6,6 +6,24 @@ body {
     font-family: $font-stack;
 }
 
+// Block
+
+.block {
+    margin-bottom: $block-margin;
+
+    &.block:last-child {
+        margin: 0;
+    }
+}
+
+// Title
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 .title {
     margin: 0;
     margin-bottom: $title-margin;
@@ -16,6 +34,33 @@ body {
     }
 }
 
+h1 {
+    font-size: $text-size-1;
+}
+
+h2 {
+    font-size: $text-size-2;
+}
+
+h3 {
+    font-size: $text-size-3;
+}
+
+h4 {
+    font-size: $text-size-4;
+}
+
+h5 {
+    font-size: $text-size-5;
+}
+
+h6 {
+    font-size: $text-size-6;
+}
+
+// Paragraph
+
+p,
 .paragraph {
     margin: 0;
     margin-bottom: $paragraph-margin;
@@ -26,6 +71,9 @@ body {
     }
 }
 
+// Link
+
+a,
 .link {
     color: #41c6a7;
     text-decoration: none;
@@ -34,6 +82,8 @@ body {
         @extend .text-underline;
     }
 }
+
+// Text decoration
 
 .text-decoration-none {
     text-decoration: none;
@@ -58,6 +108,8 @@ body {
 .text-capitalize {
     text-transform: uppercase;
 }
+
+// Text weight
 
 .text-thin {
     font-weight: 100;
@@ -95,6 +147,8 @@ body {
     font-weight: 900;
 }
 
+// Text colors
+
 .text-white {
     color: $white;
 }
@@ -111,6 +165,8 @@ body {
     color: $darkgrey;
 }
 
+// Font families
+
 .text-sans-serif {
     font-family: $sans-serif;
 }
@@ -123,6 +179,8 @@ body {
     font-family: $monospace;
 }
 
+// Text spacing
+
 .text-spacing-none {
     margin-bottom: 0;
 }
@@ -130,6 +188,8 @@ body {
 .text-spacing-root {
     margin-bottom: $relative-text-margin;
 }
+
+// Text spacing
 
 .text-size-1 {
     font-size: $text-size-1;
@@ -156,6 +216,8 @@ body {
 }
 
 @include each-breakpoint() {
+    // Text alignment
+
     @include global-property(text-left) {
         text-align: left;
     }
@@ -172,6 +234,8 @@ body {
         text-align: justify;
     }
 
+    // Title sizes
+
     @include global-property(title-extra) {
         font-size: $title-extra;
     }
@@ -186,13 +250,5 @@ body {
 
     @include global-property(title-medium) {
         font-size: $title-medium;
-    }
-}
-
-.block {
-    margin-bottom: $block-margin;
-
-    &.block:last-child {
-        margin: 0;
     }
 }
