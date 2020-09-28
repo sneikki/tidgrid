@@ -1,0 +1,54 @@
+//
+//  _table.scss
+//
+
+.scrollable-table {
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 0.74rem 1rem;
+}
+
+thead {
+    border-bottom: 3px solid #e5e5e5;
+}
+
+.borders {
+    th, td {
+        border: 1px solid #e5e5e5;
+    }
+}
+
+.header thead {
+    background-color: #f6f6f6;
+}
+
+.split-none thead {
+    border-bottom: 0
+}
+
+.stripes tbody {
+    tr:nth-child(even) {
+        background-color: #f6f6f6;
+    }
+}
+
+.checker tbody tr {
+    &:nth-child(odd) {
+        td:nth-child(odd) {
+            background-color: #f6f6f6;
+        }
+    }
+
+    &:nth-child(even) {
+        td:nth-child(even) {
+            background-color: #f6f6f6;
+        }
+    }
+}
