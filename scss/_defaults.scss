@@ -79,6 +79,17 @@ $list-left-margin:          2rem !default;
 $list-bottom-margin:        1em !default;
 $list-item-margin:          1rem !default;
 
+// Table
+$table-text-align:          left !default;
+$table-data-padding:        0.75rem 1rem !default;
+$table-split-width:         3px !default;
+$table-split-style:         solid !default;
+$table-split-color:         #e5e5e5 !default;
+$table-border-width:        1px !default;
+$table-border-style:        solid !default;
+$table-border-color:        #e5e5e5 !default;
+$table-background-color:    #f6f6f6 !default;
+
 // Helpers
 $helper-sizes: (
     0: 0.0rem,
