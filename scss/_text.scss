@@ -184,3 +184,11 @@ body {
         font-size: $title-medium;
     }
 }
+
+.block {
+    margin-bottom: $block-margin;
+
+    &.block:last-child {
+        margin: 0;
+    }
+}
