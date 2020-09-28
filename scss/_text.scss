@@ -84,6 +84,20 @@ a,
     }
 }
 
+// Code
+
+code {
+    background-color: $code-background-color;
+    white-space: pre;
+    display: block;
+    padding: $code-padding;
+    border-radius: $code-border-radius;
+    border: $code-border-width $code-border-style $code-border-color;
+    line-height: $code-line-height;
+    overflow: auto;
+    font-family: $monospace;
+}
+
 // Text decoration
 
 .text-decoration-none {

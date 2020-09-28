@@ -90,6 +90,15 @@ $table-border-style:        solid !default;
 $table-border-color:        #e5e5e5 !default;
 $table-background-color:    #f6f6f6 !default;
 
+// Code
+$code-background-color:     #f6f6f6 !default;
+$code-padding:              1rem !default;
+$code-border-radius:        0.25rem !default;
+$code-border-width:         1px !default;
+$code-border-style:         solid !default;
+$code-border-color:         #e5e5e5 !default;
+$code-line-height:          1.5 !default;
+
 // Helpers
 $helper-sizes: (
     0: 0.0rem,
