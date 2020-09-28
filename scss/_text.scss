@@ -2,10 +2,10 @@ body {
     font-family: $font-stack;
 }
 
-.heading {
+.title {
     margin: 0;
-    margin-bottom: $heading-margin;
-    font-weight: $heading-weight;
+    margin-bottom: $title-margin;
+    font-weight: $title-weight;
 
     &:last-child {
         margin-bottom: 0;
