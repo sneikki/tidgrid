@@ -1,0 +1,49 @@
+//
+//  _list.scss
+//
+
+ul, ol {
+    &.inside {
+        list-style-position: inside;
+    
+        &.indent {
+            margin-left: $list-margin;
+        }
+    }
+
+    & & {
+        margin-left: $list-margin;
+    }
+}
+
+li {
+    margin-bottom: $list-item-margin;
+
+    &:last-child {
+        margin: 0;
+    }
+}
+
+.decimal {
+    list-style-type: decimal;
+}
+
+.decimal-leading-zero {
+    list-style-type: decimal-leading-zero;
+}
+
+.lower-roman {
+    list-style-type: lower-roman;
+}
+
+.upper-roman {
+    list-style-type: upper-roman;
+}
+
+.lower-alpha {
+    list-style-type: lower-alpha;
+}
+
+.upper-alpha {
+    list-style-type: upper-alpha;
+}

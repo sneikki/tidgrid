@@ -1,3 +1,7 @@
+//
+//  _mixins.scss
+//
+
 @mixin child-item() {
     & > .item {
         @content;

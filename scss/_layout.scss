@@ -1,3 +1,7 @@
+//
+//  _layout.scss
+//
+
 .container {
     @include container-margin($container-margin-normal);
     margin: 0 auto;

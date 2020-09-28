@@ -1,3 +1,7 @@
+//
+//  _helpers.scss
+//
+
 @each $name, $name-abbrev in $helper-types {
     @each $dir, $dir-abbrev in $helper-directions {
         @each $level, $size in $helper-sizes {
