@@ -160,10 +160,9 @@
                     width: $item-width;
                 }
 
-                @if $column < 12 {
-                    @include property(offset-#{$column}) {
-                        margin-left: $item-width;
-                    }
+                @include property(offset-#{$column - 1}) {
+                    $item-width: #{100% / $columns * ($column - 1)};
+                    margin-left: $item-width;
                 }
             }
 
