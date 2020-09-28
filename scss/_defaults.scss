@@ -2,6 +2,8 @@
 //  _defaults.scss
 //
 
+// Grid
+
 $breakpoints: (
     sm: 48em,
     md: 64em,
@@ -9,59 +11,73 @@ $breakpoints: (
     xl: 90em
 ) !default;
 
-$columns: 12 !default;
+$columns:                   12 !default;
+$base-margin:               0.5rem !default;
+$margins:                   8 !default;
 
-$base-margin: 0.5rem !default;
-$margins: 8 !default;
+// Text
 
-$text-size-1: 2.5rem !default;
-$text-size-2: 2.0rem !default;
-$text-size-3: 1.75rem !default;
-$text-size-4: 1.5rem !default;
-$text-size-5: 1.25rem !default;
-$text-size-6: 1.0rem !default;
+// Text sizes
+$text-size-1:               2.5rem !default;
+$text-size-2:               2.0rem !default;
+$text-size-3:               1.75rem !default;
+$text-size-4:               1.5rem !default;
+$text-size-5:               1.25rem !default;
+$text-size-6:               1.0rem !default;
 
-$title-extra: 6.0rem !default;
-$title-huge: 5.0rem !default;
-$title-large: 4.5rem !default;
-$title-medium: 3.0rem !default;
+// Title sizes
+$title-extra:               6.0rem !default;
+$title-huge:                5.0rem !default;
+$title-large:               4.5rem !default;
+$title-medium:              3.0rem !default;
 
-$text-margin:           1.0em !default;
-$relative-text-margin:  1.0rem !default;
+// Paragraph values
+$paragraph-margin:          1.0em !default;
+$paragraph-weight:          400 !default;
+$paragraph-line-height:     1.5 !default;
 
-$paragraph-line-height: 1.5 !default;
-$paragraph-margin:      $text-margin !default;
+// Title values
+$title-weight:              600 !default;
+$title-margin:              1.0em !default;
 
 // Font stacks
-$sans-serif:    'Titillium Web', Helvetica, sans-serif !default;
-$serif:         serif !default;
-$monospace:     Monaco, 'Source Code Pro', monospace !default;
+$sans-serif:                'Titillium Web', Helvetica, sans-serif !default;
+$serif:                     serif !default;
+$monospace:                 Monaco, 'Source Code Pro', monospace !default;
+$font-stack:                $sans-serif !default;
 
-// Default font stack
-$font-stack:    $sans-serif !default;
+// Layout
 
-$title-weight:    600 !default;
-
-$title-margin:    $text-margin !default;
-
+// Container margin
 $container-margin-small:    1.0em !default;
 $container-margin-normal:   2.0em !default;
 $container-margin-medium:   3.0em !default;
 $container-margin-large:    4.0em !default;
 
+// Section padding
 $section-padding-small:     1.5rem !default;
 $section-padding-normal:    3.0rem !default;
 $section-padding-medium:    9.0rem !default;
 $section-padding-large:     15.0rem !default;
 $section-padding-huge:      20.0rem !default;
 
-$block-margin: 2.0rem       !default;
+// Block margin
+$block-margin:              2.0rem !default;
 
 // Colors
-$white:     #ffffff !default;
-$black:     #000000 !default;
-$darkgrey:  #304455 !default;
-$lightgrey: #778899 !default;
+$white:                     #ffffff !default;
+$black:                     #000000 !default;
+$darkgrey:                  #304455 !default;
+$lightgrey:                 #778899 !default;
+
+// Border
+$border-width:              1px !default;
+$border-style:              solid !default;
+
+// List
+$list-left-margin:          2rem !default;
+$list-bottom-margin:        1em !default;
+$list-item-margin:          1rem !default;
 
 // Helpers
 $helper-sizes: (
@@ -87,10 +103,3 @@ $helper-directions: (
     vertical:   v,
     both:       ""
 ) !default;
-
-$border-width:  1px !default;
-$border-style:  solid !default;
-
-$list-left-margin:      2rem !default;
-$list-bottom-margin:    1em !default;
-$list-item-margin:      1rem !default;
