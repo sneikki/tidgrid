@@ -3,16 +3,23 @@
 //
 
 ul, ol {
+    margin: 0;
+    margin-bottom: $list-bottom-margin;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
     &.inside {
         list-style-position: inside;
     
         &.indent {
-            margin-left: $list-margin;
+            margin-left: $list-left-margin;
         }
     }
 
     & & {
-        margin-left: $list-margin;
+        margin-left: $list-left-margin;
     }
 }
 
