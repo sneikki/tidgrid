@@ -3,17 +3,9 @@ body {
 }
 
 .heading {
-    font-weight: $heading-weight;
-}
-
-.subheading {
-    font-weight: $subheading-weight;
-}
-
-.heading,
-.subheading {
     margin: 0;
     margin-bottom: $heading-margin;
+    font-weight: $heading-weight;
 
     &:last-child {
         margin-bottom: 0;
@@ -135,6 +127,30 @@ body {
     margin-bottom: $relative-text-margin;
 }
 
+.text-size-1 {
+    font-size: $text-size-1;
+}
+
+.text-size-2 {
+    font-size: $text-size-2;
+}
+
+.text-size-3 {
+    font-size: $text-size-3;
+}
+
+.text-size-4 {
+    font-size: $text-size-4;
+}
+
+.text-size-5 {
+    font-size: $text-size-5;
+}
+
+.text-size-6 {
+    font-size: $text-size-6;
+}
+
 @include each-breakpoint() {
     @include global-property(text-left) {
         text-align: left;
@@ -151,36 +167,20 @@ body {
     @include global-property(text-justify) {
         text-align: justify;
     }
-    
-    @include global-property(text-size-1) {
-        font-size: $text-size-1;
+
+    @include global-property(title-extra) {
+        font-size: $title-extra;
     }
 
-    @include global-property(text-size-2) {
-        font-size: $text-size-2;
+    @include global-property(title-huge) {
+        font-size: $title-huge;
     }
-    
-    @include global-property(text-size-3) {
-        font-size: $text-size-3;
+
+    @include global-property(title-large) {
+        font-size: $title-large;
     }
-    
-    @include global-property(text-size-4) {
-        font-size: $text-size-4;
-    }
-    
-    @include global-property(text-size-5) {
-        font-size: $text-size-5;
-    }
-    
-    @include global-property(text-size-6) {
-        font-size: $text-size-6;
-    }
-    
-    @include global-property(text-size-7) {
-        font-size: $text-size-7;
-    }
-    
-    @include global-property(text-size-8) {
-        font-size: $text-size-8;
+
+    @include global-property(title-medium) {
+        font-size: $title-medium;
     }
 }
