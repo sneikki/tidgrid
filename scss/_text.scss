@@ -11,7 +11,7 @@ body {
 .block {
     margin-bottom: $block-margin;
 
-    &.block:last-child {
+    &:last-child {
         margin: 0;
     }
 }
@@ -65,6 +65,7 @@ p,
     margin: 0;
     margin-bottom: $paragraph-margin;
     line-height: $paragraph-line-height;
+    font-weight: $paragraph-weight;
 
     &:last-child {
         margin-bottom: 0;
@@ -183,10 +184,6 @@ a,
 
 .text-spacing-none {
     margin-bottom: 0;
-}
-
-.text-spacing-root {
-    margin-bottom: $relative-text-margin;
 }
 
 // Text spacing
