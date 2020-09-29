@@ -1,106 +1,102 @@
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
-input[type='button'],
-input[type='submit'],
-textarea {
-    appearance: none;
-    outline: none;
+.form-entry {
+    margin-bottom: 1rem;
 
-    &[disabled] {
-        cursor: not-allowed;
-        background-color: $disabled-background-color;
+    &:last-child {
+        margin-bottom: 0;
     }
-}
 
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
-textarea {
-    border: $input-border-width $input-border-style $input-border-color;
-    padding: $input-padding;
-    border-radius: $input-border-radius;
-    height: $input-height;
+    &.indent label {
+        margin-left: 0.75rem;
+    }
 
-    &:not([disabled]) {
+    label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    input,
+    textarea,
+    select {
+        outline: none;
+        background-color: white;
+    }
+
+    .text-field,
+    textarea {
+        border: 1px solid #cccccc;
+        border-radius: 0.25rem;
+        padding: 0 0.75rem;
+        transition: box-shadow 0.2s;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        width: 100%;
+
         &:hover {
-            border-color: $input-hover-border-color;
+            border-color: #999999;
         }
 
         &:focus {
-            border-color: $input-focus-border-color;
+            border-color: #41c6a7;
+            box-shadow: 0 0 0 0.2rem #41c6a744;
+        }
+    }
+
+    .text-field {
+        height: 2.5rem;
+    }
+
+    textarea {
+        padding: 0.75rem;
+        max-width: 100%;
+        resize: none;
+        
+        &:not([rows]) {
+            min-height: 7.5rem;
+        }
+    }
+
+    select[multiple] {
+        overflow: auto;
+        height: unset;
+        min-height: 2.5rem;
+    
+        optgroup {
+            margin: 0.5rem 0;
+            option {
+                padding: 0.5rem 0.5rem;
+            }
+        }
+
+        option {
+            padding: 0.5rem 0.75rem;
+            margin: 0 -0.75rem;
+        }
+    }
+
+    textarea,
+    select[multiple] {
+        &.resizable {
+            resize: vertical;
         }
     }
 }
 
-textarea {
-    height: unset;
-    padding: $input-padding;
-    min-height: $textarea-height;
-
-    &.resize-none {
-        resize: none;
+.form-entry.radio,
+.form-entry.check {
+    input + label,
+    label + input {
+        margin-left: 0.5rem;
     }
 
-    &.resize-v-only {
-        resize: vertical;
+    label {
+        margin-bottom: 0;
     }
-
-    &.resize-h-only {
-        resize: horizontal;
-    }
-}
-
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='search'],
-input[type='tel'],
-input[type='url'],
-textarea {
-    &::placeholder {
-        color: $input-placeholder-color;
-    }
-}
-
-input[type='radio'],
-input[type='checkbox'] {
-    display: inline;
-}
-
-label {
-    display: block;
-    font-weight: $input-label-weight;
-    margin-bottom: $input-label-margin;
 
     &.inline {
-        display: inline;
-    }
-}
+        display: inline-block;
+        margin-right: 1rem;
 
-input[type='radio'],
-input[type='checkbox'] {
-    & + label {
-        display: inline;
-        padding-left: $input-label-padding;
-    
-        &::after {
-            content: "";
-            display: block;
-        }
-    }
-
-    &[disabled] {
-        cursor: not-allowed;
-
-        & + label {
-            cursor: not-allowed;
+        &:last-child {
+            margin-right: 0;
         }
     }
 }
