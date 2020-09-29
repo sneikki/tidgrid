@@ -44,6 +44,10 @@
             flex-flow: row-reverse wrap-reverse;
         }
 
+        @include property(reverse-none) {
+            flex-flow: row wrap;
+        }
+
         @include each-column() using ($column) {
             $item-width: #{100% / $columns * $column};
             @include property(span-#{$column}) {
