@@ -1,0 +1,106 @@
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='url'],
+input[type='button'],
+input[type='submit'],
+textarea {
+    appearance: none;
+    outline: none;
+
+    &[disabled] {
+        cursor: not-allowed;
+        background-color: $disabled-background-color;
+    }
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='url'],
+textarea {
+    border: $input-border-width $input-border-style $input-border-color;
+    padding: $input-padding;
+    border-radius: $input-border-radius;
+    height: $input-height;
+
+    &:not([disabled]) {
+        &:hover {
+            border-color: $input-hover-border-color;
+        }
+
+        &:focus {
+            border-color: $input-focus-border-color;
+        }
+    }
+}
+
+textarea {
+    height: unset;
+    padding: $input-padding;
+    min-height: $textarea-height;
+
+    &.resize-none {
+        resize: none;
+    }
+
+    &.resize-v-only {
+        resize: vertical;
+    }
+
+    &.resize-h-only {
+        resize: horizontal;
+    }
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='url'],
+textarea {
+    &::placeholder {
+        color: $input-placeholder-color;
+    }
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+    display: inline;
+}
+
+label {
+    display: block;
+    font-weight: $input-label-weight;
+    margin-bottom: $input-label-margin;
+
+    &.inline {
+        display: inline;
+    }
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+    & + label {
+        display: inline;
+        padding-left: $input-label-padding;
+    
+        &::after {
+            content: "";
+            display: block;
+        }
+    }
+
+    &[disabled] {
+        cursor: not-allowed;
+
+        & + label {
+            cursor: not-allowed;
+        }
+    }
+}

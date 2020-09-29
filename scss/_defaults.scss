@@ -102,6 +102,26 @@ $code-border-color:         #e5e5e5 !default;
 $code-line-height:          2 !default;
 $code-block-padding:        0.75rem !default;
 
+// Input
+$input-border-color:        #e5e5e5 !default;
+$input-border-style:        solid !default;
+$input-border-width:        1px !default;
+$input-focus-border-color:  #41c6a7 !default;
+$input-hover-border-color:  #cccccc !default;
+
+$input-padding:             0.75rem !default;
+$input-border-radius:       0.25rem !default;
+$input-height:              2.5rem !default;
+$input-placeholder-color:  #999999 !default;
+
+$disabled-background-color: #e5e5e5 !default;
+
+$textarea-height:           10rem !default;
+
+$input-label-weight:        600 !default;
+$input-label-margin:        0.5rem !default;
+$input-label-padding:       0.5rem !default;
+
 // Helpers
 $helper-sizes: (
     0: 0.0rem,
