@@ -14,12 +14,12 @@ ul, ol {
         list-style-position: inside;
     
         &.indent {
-            margin-left: $list-left-margin;
+            margin-left: $list-indent-size;
         }
     }
 
     & & {
-        margin-left: $list-left-margin;
+        margin-left: $list-indent-size;
     }
 }
 

@@ -7,16 +7,6 @@ body {
     line-height: $line-height;
 }
 
-// Block
-
-.block {
-    margin-bottom: $block-margin;
-
-    &:last-child {
-        margin: 0;
-    }
-}
-
 // Title
 
 h1,
@@ -96,7 +86,7 @@ code {
     font-family: $monospace;
     color: #f6516b;
     font-size: 0.875rem;
-    line-height: $code-line-height;
+    line-height: $code-inline-line-height;
 }
 
 pre code {
@@ -104,6 +94,7 @@ pre code {
     display: block;
     overflow: auto;
     font-family: $monospace;
+    line-height: $code-block-line-height;
 }
 
 // Text decoration

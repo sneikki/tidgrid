@@ -1,0 +1,11 @@
+//
+//  _block.scss
+//
+
+.block {
+    margin-bottom: $block-margin;
+
+    &:last-child {
+        margin: 0;
+    }
+}

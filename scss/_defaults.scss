@@ -11,36 +11,38 @@ $breakpoints: (
     xl: 90em
 ) !default;
 
-$columns:                   12 !default;
-$base-margin:               0.5rem !default;
-$margins:                   8 !default;
+$columns:                   12      !default;
+$base-margin:               0.5rem  !default;
+$margins:                   8       !default;
 
 // Text
 
-// Text sizes
-$text-size-1:               2.5rem !default;
-$text-size-2:               2.0rem !default;
-$text-size-3:               1.75rem !default;
-$text-size-4:               1.5rem !default;
-$text-size-5:               1.25rem !default;
-$text-size-6:               1.0rem !default;
+$line-height:               1.5  !default;
+$paragraph-line-height:     1.5  !default;
+$code-inline-line-height:   1.5  !default;
+$code-block-line-height:    1.75 !default;
 
-$line-height:               1.5 !default;
+// Text sizes
+$text-size-1:               2.50rem !default;
+$text-size-2:               2.00rem !default;
+$text-size-3:               1.75rem !default;
+$text-size-4:               1.50rem !default;
+$text-size-5:               1.25rem !default;
+$text-size-6:               1.00rem !default;
 
 // Title sizes
-$title-extra:               6.0rem !default;
-$title-huge:                5.0rem !default;
-$title-large:               4.5rem !default;
-$title-medium:              3.0rem !default;
+$title-extra:               6rem !default;
+$title-huge:                5rem !default;
+$title-large:               4rem !default;
+$title-medium:              3rem !default;
 
 // Paragraph values
-$paragraph-margin:          1.0em !default;
+$paragraph-margin:   1em !default;
 $paragraph-weight:          400 !default;
-$paragraph-line-height:     1.5 !default;
 
 // Title values
-$title-weight:              600 !default;
-$title-margin:              1.0em !default;
+$title-weight:              600   !default;
+$title-margin:       1.0em !default;
 
 // Font stacks
 $sans-serif:                'Titillium Web', Helvetica, sans-serif !default;
@@ -57,9 +59,9 @@ $container-margin-medium:   3.0em !default;
 $container-margin-large:    4.0em !default;
 
 // Section padding
-$section-padding-small:     1.5rem !default;
-$section-padding-normal:    3.0rem !default;
-$section-padding-medium:    9.0rem !default;
+$section-padding-small:     1.5rem  !default;
+$section-padding-normal:    3.0rem  !default;
+$section-padding-medium:    9.0rem  !default;
 $section-padding-large:     15.0rem !default;
 $section-padding-huge:      20.0rem !default;
 
@@ -72,18 +74,14 @@ $black:                     #000000 !default;
 $darkgrey:                  #304455 !default;
 $lightgrey:                 #778899 !default;
 
-// Border
-$border-width:              1px !default;
-$border-style:              solid !default;
-
 // List
-$list-left-margin:          2rem !default;
-$list-bottom-margin:        1em !default;
+$list-indent-size:          2rem !default;
+$list-bottom-margin:        1em  !default;
 $list-item-margin:          1rem !default;
 
 // Table
 $table-text-align:          left !default;
-$table-data-padding:        0.75rem 1rem !default;
+$table-col-padding:         0.75rem 1rem !default;
 $table-split-width:         3px !default;
 $table-split-style:         solid !default;
 $table-split-color:         #e5e5e5 !default;
@@ -93,34 +91,33 @@ $table-border-color:        #e5e5e5 !default;
 $table-background-color:    #f6f6f6 !default;
 
 // Code
-$code-background-color:     #f6f6f6 !default;
-$code-padding:              0.2rem 0.5rem !default;
-$code-border-radius:        0.25rem !default;
-$code-border-width:         1px !default;
-$code-border-style:         solid !default;
-$code-border-color:         #e5e5e5 !default;
-$code-line-height:          2 !default;
-$code-block-padding:        0.75rem !default;
+$code-background-color:     #f6f6f6         !default;
+$code-padding:              0.2rem 0.5rem   !default;
+$code-border-radius:        0.25rem         !default;
+$code-border-width:         1px             !default;
+$code-border-style:         solid           !default;
+$code-border-color:         #e5e5e5         !default;
+$code-block-padding:        0.75rem         !default;
 
 // Input
 $input-border-color:        #e5e5e5 !default;
-$input-border-style:        solid !default;
-$input-border-width:        1px !default;
+$input-border-style:        solid       !default;
+$input-border-width:        1px         !default;
 $input-focus-border-color:  #41c6a7 !default;
 $input-hover-border-color:  #cccccc !default;
 
 $input-padding:             0.75rem !default;
 $input-border-radius:       0.25rem !default;
-$input-height:              2.5rem !default;
+$input-height:              2.5rem  !default;
 $input-placeholder-color:  #999999 !default;
 
 $disabled-background-color: #e5e5e5 !default;
 
 $textarea-height:           10rem !default;
 
-$input-label-weight:        600 !default;
-$input-label-margin:        0.5rem !default;
-$input-label-padding:       0.5rem !default;
+$input-label-weight:        600     !default;
+$input-label-margin:        0.5rem  !default;
+$input-label-padding:       0.5rem  !default;
 
 // Helpers
 $helper-sizes: (
