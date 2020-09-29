@@ -4,6 +4,7 @@
 
 body {
     font-family: $font-stack;
+    line-height: $line-height;
 }
 
 // Block
@@ -89,11 +90,18 @@ a,
 code {
     background-color: $code-background-color;
     white-space: pre;
-    display: block;
     padding: $code-padding;
     border-radius: $code-border-radius;
     border: $code-border-width $code-border-style $code-border-color;
+    font-family: $monospace;
+    color: #f6516b;
+    font-size: 0.875rem;
     line-height: $code-line-height;
+}
+
+pre code {
+    padding: $code-block-padding;
+    display: block;
     overflow: auto;
     font-family: $monospace;
 }
