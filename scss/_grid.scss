@@ -8,7 +8,7 @@
     flex-wrap:      wrap;
     box-sizing:     border-box;
     
-    @include gap(1rem);
+    @include gap($default-gap);
 
     @include each-breakpoint() {
         @include property(auto) {
