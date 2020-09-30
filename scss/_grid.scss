@@ -8,7 +8,7 @@
     flex-wrap:      wrap;
     box-sizing:     border-box;
     
-    @include margin(1rem);
+    @include gap(1rem);
 
     @include each-breakpoint() {
         @include property(auto) {
@@ -58,16 +58,16 @@
             }
         }
 
-        @include property(margin-none) {
-            @include margin(0);
+        @include property(gap-none) {
+            @include gap(0);
         }
 
-        @include property(margin-v-none) {
-            @include margin-v(0);
+        @include property(gap-v-none) {
+            @include gap-v(0);
         }
 
-        @include property(margin-h-none) {
-            @include margin-h(0);
+        @include property(gap-h-none) {
+            @include gap-h(0);
         }
 
         @include property(align-left) {
@@ -106,19 +106,19 @@
             justify-content: space-evenly;
         }
 
-        @for $i from 1 through $margins {
-            $margin-size: $base-margin * $i;
+        @for $i from 1 through $gaps {
+            $gap-size: $base-gap * $i;
             
-            @include property(margin-#{$i}) {
-                @include margin($margin-size);
+            @include property(gap-#{$i}) {
+                @include gap($gap-size);
             }
 
-            @include property(margin-v-#{$i}) {
-                @include margin-v($margin-size);
+            @include property(gap-v-#{$i}) {
+                @include gap-v($gap-size);
             }
 
-            @include property(margin-h-#{$i}) {
-                @include margin-h($margin-size);
+            @include property(gap-h-#{$i}) {
+                @include gap-h($gap-size);
             }
         }
 

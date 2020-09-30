@@ -8,7 +8,7 @@
     }
 }
     
-@mixin margin($size) {
+@mixin gap($size) {
     margin-top: -$size;
     margin-left: -$size;
 
@@ -18,7 +18,7 @@
     } 
 }
 
-@mixin margin-h($size) {
+@mixin gap-h($size) {
     margin-left: -$size;
 
     @include child-item() {
@@ -26,7 +26,7 @@
     }
 }
 
-@mixin margin-v($size) {
+@mixin gap-v($size) {
     margin-top: -$size;
 
     @include child-item() {
