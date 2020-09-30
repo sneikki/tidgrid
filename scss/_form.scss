@@ -1,5 +1,5 @@
 .form-entry {
-    margin-bottom: 1rem;
+    margin-bottom: $form-entry-margin;
     position: relative;
 
     &:last-child {
@@ -7,12 +7,12 @@
     }
 
     &.indent label {
-        margin-left: 0.75rem;
+        margin-left: $label-margin;
     }
 
     label {
         display: inline-block;
-        margin-bottom: 0.5rem;
+        margin-bottom: $label-margin;
     }
 
     input,
@@ -42,9 +42,9 @@
 
     .text-field,
     textarea {
-        border: 1px solid #cccccc;
-        border-radius: 0.25rem;
-        padding: 0 0.75rem;
+        border: $input-border-width $input-border-style $input-border-color;
+        border-radius: $input-border-radius;
+        padding: 0 $input-padding;
         transition: box-shadow 0.2s;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         width: 100%;
@@ -60,34 +60,34 @@
     }
 
     .text-field {
-        height: 2.5rem;
+        height: $input-height;
     }
 
     textarea {
-        padding: 0.75rem;
+        padding: $input-padding;
         max-width: 100%;
         resize: none;
         
         &:not([rows]) {
-            min-height: 7.5rem;
+            min-height: $textarea-min-height;
         }
     }
 
     select[multiple] {
         overflow: auto;
         height: unset;
-        min-height: 2.5rem;
+        min-height: $input-height;
     
         optgroup {
-            margin: 0.5rem 0;
+            margin: $optgroup-margin 0;
             option {
-                padding: 0.5rem 0.5rem;
+                padding: $option-padding-v $option-padding-h;
             }
         }
 
         option {
-            padding: 0.5rem 0.75rem;
-            margin: 0 -0.75rem;
+            padding: $option-padding-v $option-padding-h;
+            margin: 0 -#{$option-padding-h};
         }
     }
 
@@ -102,7 +102,7 @@
 .form-entry.radiocheck {
     input + label,
     label + input {
-        margin-left: 0.5rem;
+        margin-left: $radiocheck-margin;
     }
 
     label {
@@ -111,7 +111,7 @@
 
     &.inline {
         display: inline-block;
-        margin-right: 1rem;
+        margin-right: $radiocheck-inline-margin;
 
         &:last-child {
             margin-right: 0;
@@ -120,28 +120,32 @@
 }
 
 .form-entry.radiocheck {
-    &.medium input {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-
-    &.large input {
-        width: 2rem;
-        height: 2rem;
-    }
-    
     input {
         appearance: none;
-
-        width: 1rem;
-        height: 1rem;
+        width: $radiocheck-size;
+        height: $radiocheck-size;
         position: relative;
 
         background-color: #e5e5e5;
 
+        &.medium {
+            width: $radiocheck-medium-size;
+            height: $radiocheck-medium-size;
+        }
+
+        &.large {
+            width: $radiocheck-large-size;
+            height: $radiocheck-large-size;
+        }
+
+        &.huge {
+            width: $radiocheck-huge-size;
+            height: $radiocheck-huge-size;
+        }
+
         // Common
         &:checked {
-            background-color: #41c6a7;
+            background-color: $radiocheck-background-color;
         
             &::after {
                 content: '';
@@ -182,7 +186,7 @@
                 top: 25%;
                 left: 25%;
 
-                background-color: white;
+                background-color: $radiocheck-color;
             }
         }
 
@@ -198,8 +202,8 @@
                 left: 32.5%;
 
                 border-radius: 0;
-                border-right: 3px solid white;
-                border-bottom: 3px solid white;
+                border-right: 3px solid $radiocheck-color;
+                border-bottom: 3px solid $radiocheck-color;
                 transform: rotate(45deg);
 
                 box-sizing: border-box;

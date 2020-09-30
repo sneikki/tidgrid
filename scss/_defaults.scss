@@ -99,6 +99,31 @@ $code-border-style:         solid           !default;
 $code-border-color:         #e5e5e5         !default;
 $code-block-padding:        0.75rem         !default;
 
+// Form
+$form-entry-margin:         1rem !default;
+$label-margin:              0.5rem !default;
+$input-border-color:        #999999 !default;
+$input-border-style:        solid !default;
+$input-border-width:        1px !default;
+$input-border-radius:       0.25rem !default;
+$input-height:              2.5rem !default;
+$input-padding:             0.75rem !default;
+
+$textarea-min-height:       7.5rem !default;
+
+$optgroup-margin:           0.5rem !default;
+$option-padding-v:          0.5rem !default;
+$option-padding-h:          0.75rem !default;
+
+$radiocheck-margin:             0.5rem !default;
+$radiocheck-inline-margin:      1rem !default;
+$radiocheck-size:               1rem !default;
+$radiocheck-medium-size:        1.25rem !default;
+$radiocheck-large-size:         1.5rem !default;
+$radiocheck-huge-size:          2rem !default;
+$radiocheck-background-color:   #41c6a7 !default;
+$radiocheck-color:              white !default;
+
 // Helpers
 $helper-sizes: (
     0: 0.0rem,
