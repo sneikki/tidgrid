@@ -126,7 +126,8 @@
         height: $radiocheck-size;
         position: relative;
 
-        background-color: #e5e5e5;
+        // background-color: #e5e5e5;
+        border: 1px solid $radiocheck-border-color;
 
         &.medium {
             width: $radiocheck-medium-size;
@@ -146,7 +147,8 @@
         // Common
         &:checked {
             background-color: $radiocheck-background-color;
-        
+            border: none;
+
             &::after {
                 content: '';
                 display: block;
@@ -163,6 +165,8 @@
         }
 
         &[disabled] {
+            border-color: $radiocheck-disabled-border-color;
+
             &::before {
                 content: '';
 

@@ -116,14 +116,16 @@ $optgroup-margin:           0.5rem !default;
 $option-padding-v:          0.5rem !default;
 $option-padding-h:          0.75rem !default;
 
-$radiocheck-margin:             0.5rem !default;
-$radiocheck-inline-margin:      1rem !default;
-$radiocheck-size:               1rem !default;
-$radiocheck-medium-size:        1.25rem !default;
-$radiocheck-large-size:         1.5rem !default;
-$radiocheck-huge-size:          2rem !default;
-$radiocheck-background-color:   #41c6a7 !default;
-$radiocheck-color:              white !default;
+$radiocheck-margin:                 0.5rem !default;
+$radiocheck-inline-margin:          1rem !default;
+$radiocheck-size:                   1rem !default;
+$radiocheck-medium-size:            1.25rem !default;
+$radiocheck-large-size:             1.5rem !default;
+$radiocheck-huge-size:              2rem !default;
+$radiocheck-background-color:       #41c6a7 !default;
+$radiocheck-color:                  white !default;
+$radiocheck-border-color:           #cccccc !default;
+$radiocheck-disabled-border-color:  #e5e5e5 !default;
 
 // Helpers
 $helper-sizes: (
