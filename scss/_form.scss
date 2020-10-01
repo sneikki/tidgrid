@@ -1,243 +1,229 @@
-.form-entry {
-    margin-bottom:  $form-entry-margin;
-
-    &:last-child {
-        margin-bottom:  0;
-    }
-
-    &.inline {
-        label {
-            margin:     0 $label-margin 0 0;
-            display:    inline-block;
-        }
-
-        .form-element {
-            display:    inline-block;
-
-            & + label {
-                margin: 0 0 0 $label-margin;
-            }
-        }
-
-        .select-icon select {
-            padding-right:  2.5rem;
-        }
-
-        input {
-            width:  unset;
-        }
-    }
-}
-
-label {
-    display:    block;
-}
-
 input,
 textarea,
 select {
-    width:              100%;
-    position:           relative;
+    appearance: none;
+    outline: none;
+}
 
-    border:             $field-border-width $field-border-style $field-border-color;
-    border-radius:      $field-border-radius;
-    
-    appearance:         none;
-    outline:            none;
-    
-    background-color:   $field-background-color;
-    color:              $field-color;
+label {
+    display: inline-block;
+}
+
+.form-item {
+    margin-bottom: $form-item-margin;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.label {
+    margin: 0;
+}
+
+.label-v {
+    margin-bottom: $label-margin-v;
+}
+
+.label-h {
+    margin-right: $label-margin-h;
+}
+
+.field,
+.textarea,
+.select,
+.radio,
+.checkbox {
+    border-color: $input-border-color;
+    border-style: $input-border-style;
+    border-width: $input-border-width;
+    color: $text-input-color;
+    background-color: $input-background-color;
 
     &:hover {
-        border-color:   $field-hover-border-color;
+        border-color: $input-hover-border-color;
     }
 
     &:focus {
-        border-color:   $field-focus-border-color;
-        box-shadow:     0 0 0 0.2rem #{$field-focus-border-color}44;
+        border-color: $input-focus-border-color;
+        box-shadow: 0 0 0 $input-focus-shadow-size $input-focus-shadow-color;
     }
 
     &:disabled {
-        background-color:   $field-disabled-background-color;
-        color:              $field-disabled-color;
-        border-color:       transparent;
-    
+        background-color: $input-disabled-background-color;
+        border-color: transparent;
+        color: $text-input-disabled-color;
+
         &::placeholder {
-            color:  $field-disabled-placeholder-color;
+            color: $text-input-disabled-placeholder-color;
         }
     }
 
     &::placeholder {
-        color:  $field-placeholder-color;
+        color: $text-input-placeholder-color;
     }
 }
 
-.field {
-    height:     $field-height;
-    padding:    0 $field-padding;
+.textarea {
+    display: block;
+}
 
-    &.rounded {
-        border-radius:  1e10px;
-    }
+.field,
+.textarea,
+.select {
+    width: 100%;
+    border-radius: $text-input-border-radius;
+}
+
+.field-narrow {
+    width: unset;
+}
+
+.field,
+.select {
+    height: $text-input-height;
+    padding: 0 $text-input-padding;
 }
 
 .select-icon {
-    position:   relative;
+    position: relative;
 
     &::after {
-        content:        '';
+        content: '';
 
-        width:          $select-icon-size;
-        height:         $select-icon-size;
+        width: $select-icon-size;
+        height: $select-icon-size;
 
-        display:        block;
-        margin-right:   $select-icon-margin;
+        position: absolute;
 
-        position:       absolute;
-        top:            ($field-height - $select-icon-size * 2) / 2;
-        right:          0;
+        border-width: $select-icon-width;
+        border-style: solid;
+        border-color: $select-icon-color;
+        border-top: none;
+        border-left: none;
 
-        transform:      rotate(135deg);
+        top: ($text-input-height - $select-icon-size * 2) / 2;
+        right: 1rem;
 
-        border-top:     $select-icon-border-width solid $select-icon-color;
-        border-right:   $select-icon-border-width solid $select-icon-color;
+        transform: rotate(45deg);
     }
 }
 
-select[multiple] {
-    min-height: $field-height;
-    padding:    0 $field-padding;
+.select-icon-narrow {
+    display: inline-block;
+}
 
-    overflow:   auto;
-    height:     unset;
+.select-multiple {
+    height: unset;
+    min-height: $text-input-height;
+    padding: 0 $text-input-padding;
 
     optgroup {
         margin-top: $optgroup-margin;
 
-        option:first-child {
-            margin-top: $optgroup-margin;
+        option {
+            &:first-child {
+                margin-top: $optgroup-margin;
+            }
         }
     }
 
     option {
-        padding:    $option-padding-v $option-padding-h;
-        margin:     0 -#{$option-padding-h};
+        padding: $option-padding-h $option-padding-h;
+        margin: 0 -#{$option-padding-h};
     }
 }
 
-textarea:not([rows]) {
-    min-height: $textarea-min-height;
-    padding:    $textarea-padding;
-}
+.textarea {
+    width: 100%;
+    height: unset;
+    padding: $textarea-padding;
+    resize: none;
 
-.resizable {
-    select[multiple],
-    textarea {
-        resize: vertical;
+    &:not([rows]) {
+        min-height: $textarea-min-height;
     }
 }
 
-label {
-    margin: 0 0 $label-margin 0;
+.input-resizable {
+    resize: vertical;
 }
 
-input {
-    width:  100%;
+.select-narrow {
+    width: unset;
+    padding-right: 2.5rem;
 }
 
-.radiocheck {
-    &.medium input {
-        width:  $radiocheck-size-medium;
-        height: $radiocheck-size-medium;
+.radio,
+.checkbox {
+    & + label {
+        margin-left: $radiocheck-margin;
     }
 
-    &.large input {
-        width:  $radiocheck-size-large;
-        height: $radiocheck-size-large;
-    }
+    width: $radiocheck-size;
+    height: $radiocheck-size;
+    
+    position: relative;
 
-    &.huge input {
-        width:  $radiocheck-size-huge;
-        height: $radiocheck-size-huge;
-    }
+    &:checked {
+        background-color: $radiocheck-checked-background-color;
+        border: none;
 
-    input {
-        width:      $radiocheck-size;
-        height:     $radiocheck-size;
-        position:   relative;
+        &::before {
+            content: '';
 
-        display:    inline-block;
-        appearance: none;
-        border:     $radiocheck-border-width solid $radiocheck-border-color;
-
-        &:hover {
-            border-color:   $radiocheck-hover-border-color;
+            display: block;
+            position: absolute;
+            box-sizing: border-box;
         }
+    }
+
+    &:disabled::after {
+        content: '';
         
-        &:focus {
-            border-color:   $radiocheck-focus-border-color;
-            box-shadow:     0 0 0 0.2rem #{$radiocheck-focus-border-color}44;
-        }
+        width: 100%;
+        height: 100%;
+        display: block;
 
-        &:disabled {
-            border-color:   transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
 
-            &::after {
-                content:            '';
+        background-color: #ffffff99;
+        border-radius: inherit;
+    }
+}
 
-                display:            block;
+.radio {
+    border-radius: $radio-border-radius;
 
-                position:           absolute;
-                top:                0;
-                left:               0;
-                width:              100%;
-                height:             100%;
-                background-color:   #ffffff99;
-                border-radius:      inherit;
-            }
-        }
+    &:checked::before {
+        width: 50%;
+        height: 50%;
 
-        &[type=checkbox] {
-            border-radius:  $checkbox-border-radius;
-        }
+        top: 25%;
+        left: 25%;
 
-        &[type=radio] {
-            border-radius:  $radio-border-radius;
-        }
-        
-        &:checked {
-            border:             none;
-            background-color:   $radiocheck-checked-background-color;
+        border-radius: 50%;
 
-            &::before {
-                content:    '';
+        background-color: $radiocheck-color;
+    }
+}
 
-                position:   absolute;
-                box-sizing: border-box;
-            }
+.checkbox {
+    border-radius: $checkbox-border-radius;
 
-            &[type=checkbox]::before {
-                width:          40%;
-                height:         80%;
+    &:checked::before {
+        width: 30%;
+        height: 60%;
 
-                left:           30%;
+        top: 15%;
+        left: 38%;
 
-                transform:      rotate(45deg);
+        border: 3px solid $radiocheck-color;
+        border-left: none;
+        border-top: none;
 
-                border-right:   3px solid white;
-                border-bottom:  3px solid white;
-            }
-
-            &[type=radio]::before {
-                width:              50%;
-                height:             50%;
-
-                left:               25%;
-                top:                25%;
-
-                background-color:   white;
-                border-radius:      50%;
-            }
-        }
+        transform: rotate(45deg);
     }
 }

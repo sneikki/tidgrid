@@ -102,47 +102,51 @@ $code-border-color:         #e5e5e5         !default;
 $code-block-padding:        0.75rem         !default;
 
 // Form
-$form-entry-margin:         1rem !default;
+$form-item-margin:          1rem !default;
 
-$field-border-width:        1px !default;
-$field-border-style:        solid !default;
-$field-border-color:        #e5e5e5 !default;
-$field-border-radius:       0.25rem !default;
-$field-background-color:    white !default;
-$field-color:               black !default;
-$field-disabled-background-color: #e5e5e5 !default;
-$field-disabled-color:      #999999 !default;
-$field-hover-border-color:  #cccccc !default;
-$field-focus-border-color:  #41c6a7 !default;
-$field-placeholder-color:   #999999 !default;
-$field-disabled-placeholder-color: #999999 !default;
-$field-height:              2.5rem !default;
-$field-padding:             0.75rem !default;
+$label-margin-v:            1rem !default;
+$label-margin-h:            1rem !default;
+
+$input-border-color:        #cccccc !default;
+$input-border-style:        solid !default;
+$input-border-width:        1px !default;
+
+$input-background-color:    white !default;
+$input-disabled-background-color: #e5e5e5 !default;
+$text-input-disabled-color: black !default;
+$text-input-placeholder-color:  #999999 !default;
+$text-input-disabled-placeholder-color: #888888 !default;
+$input-hover-border-color:  #bbbbbb !default;
+$input-focus-border-color:  #41c6a7 !default;
+$input-focus-shadow-color:  #41c6a744 !default;
+$input-focus-shadow-size:   0.2rem !default;
+
+$text-input-border-radius:  0.25rem !default;
+$text-input-padding:        0.75rem !default;
+$text-input-height:         2.5rem !default;
+$text-input-color:          black !default;
+
 
 $select-icon-size:          0.5rem !default;
-$select-icon-margin:        1rem !default;
-$select-icon-border-width:  3px !default;
-$select-icon-color:         #304455 !default;
+$select-icon-width:         3px !default;
+$select-icon-color:         #304455;
 
 $optgroup-margin:           0.5rem !default;
-$option-padding-v:          0.5rem !default;
-$option-padding-h:          0.75rem !default;
+$option-padding-h:          0.5rem !default;
+$option-padding-v:          0.75rem !default;
 
-$label-margin:              1rem !default;
+$textarea-padding:          0.75rem !default;
+$textarea-min-height:       7.5rem !default;
 
+$radiocheck-margin:         0.5rem !default;
 $radiocheck-size:           1rem !default;
 $radiocheck-size-medium:    1.25rem !default;
 $radiocheck-size-large:     1.5rem !default;
 $radiocheck-size-huge:      2rem !default;
-
-$radiocheck-border-width:   1px !default;
-$radiocheck-border-color:   #e5e5e5 !default;
-$radiocheck-hover-border-color: #999999 !default;
-$radiocheck-focus-border-color: #41c6a7 !default;
-$radiocheck-checked-background-color: #41c6a7 !default;
-
-$checkbox-border-radius:    0.15rem !default;
+$radiocheck-checked-background-color:   #41c6a7 !default;
+$radiocheck-color:          white !default;
 $radio-border-radius:       50% !default;
+$checkbox-border-radius:    0.15rem !default;
 
 // Helpers
 $helper-sizes: (
