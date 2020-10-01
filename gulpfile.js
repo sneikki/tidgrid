@@ -10,8 +10,8 @@ gulp.task('transpile', function transpile() {
     return gulp
         .src('scss/tidgrid.scss')
         .pipe(sourcemaps.init())
-        .pipe(autoprefixer({ cascade: false }))
         .pipe(sass({ includePaths: ['node_modules'] }).on('error', sass.logError))
+        .pipe(autoprefixer({ cascade: false }))
         .pipe(rename('tidgrid.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist'))
