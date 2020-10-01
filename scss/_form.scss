@@ -1,87 +1,96 @@
 .form-entry {
     margin-bottom: $form-entry-margin;
-    position: relative;
 
     &:last-child {
         margin-bottom: 0;
     }
 
-    &.indent label {
-        margin-left: $label-margin;
-    }
-
     label {
-        display: inline-block;
-        margin-bottom: $label-margin;
+        display: block;
+    
+        &.indent {
+            margin-left: $field-padding;
+        }
     }
 
     input,
     textarea,
     select {
-        outline: none;
-        background-color: white;
-    }
-
-    select {
-        appearance: none;
-    }
-
-    &.select::after {
-        content: '';
-        display: block;
-        width: 0.5rem;
-        height: 0.5rem;
-        border-top: 3px solid #304455;
-        border-right: 3px solid #304455;
-        position: absolute;
-        right: 0;
-        top: 0.75rem;
-        margin-right: 1rem;
-        transform: rotate(135deg);
-    }
-
-    .text-field,
-    textarea {
-        border: $input-border-width $input-border-style $input-border-color;
-        border-radius: $input-border-radius;
-        padding: 0 $input-padding;
-        transition: box-shadow 0.2s;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         width: 100%;
+        border: $field-border-width $field-border-style $field-border-color;
+        border-radius: $field-border-radius;
 
+        appearance: none;
+        outline: none;
+        background-color: $field-background-color;
+        color: $field-color;
+    
         &:hover {
-            border-color: #999999;
+            border-color: $field-hover-border-color;
         }
 
         &:focus {
-            border-color: #41c6a7;
-            box-shadow: 0 0 0 0.2rem #41c6a744;
+            border-color: $field-focus-border-color;
+            box-shadow: 0 0 0 0.2rem #{$field-focus-border-color}44;
+        }
+
+        position: relative;
+        
+        &::placeholder {
+            color: $field-placeholder-color;
+        }
+
+        &:disabled {
+            background-color: $field-disabled-background-color;
+            border-color: transparent;
+            color: $field-disabled-color;
+        
+            &::placeholder {
+                color: $field-disabled-placeholder-color;
+            }
         }
     }
 
-    .text-field {
-        height: $input-height;
+    .text input, .text select {
+        height: $field-height;
+        padding: 0 $field-padding;
     }
 
-    textarea {
-        padding: $input-padding;
-        max-width: 100%;
-        resize: none;
-        
-        &:not([rows]) {
-            min-height: $textarea-min-height;
+    .select-icon {
+        position: relative;
+
+        &::after {
+            content: '';
+            
+            width: $select-icon-size;
+            height: $select-icon-size;
+
+            display: block;
+            margin-right: $select-icon-margin;
+
+            position: absolute;
+            top: ($field-height - $select-icon-size * 2) / 2;
+            right: 0;
+            
+            transform: rotate(135deg);
+
+            border-top: $select-icon-border-width solid $select-icon-color;
+            border-right: $select-icon-border-width solid $select-icon-color;
         }
     }
 
     select[multiple] {
+        min-height: $field-height;
+        padding: 0 $field-padding;
+
         overflow: auto;
         height: unset;
-        min-height: $input-height;
-    
+
         optgroup {
-            margin: $optgroup-margin 0;
-            option {
-                padding: $option-padding-v $option-padding-h;
+            margin-top: $optgroup-margin;
+
+            option:first-child {
+                margin-top: $optgroup-margin;
             }
         }
 
@@ -91,133 +100,138 @@
         }
     }
 
-    textarea,
-    select[multiple] {
-        &.resizable {
+    .resizable {
+        select[multiple],
+        textarea {
             resize: vertical;
         }
     }
-}
-
-.form-entry.radiocheck {
-    input + label,
-    label + input {
-        margin-left: $radiocheck-margin;
-    }
 
     label {
-        margin-bottom: 0;
+        margin: 0 0 $label-margin 0;
+    }
+
+    input {
+        width: 100%;
     }
 
     &.inline {
-        display: inline-block;
-        margin-right: $radiocheck-margin;
+        label {
+            margin: 0 $label-margin 0 0;
+            display: inline-block;
+        }
 
-        &:last-child {
-            margin-right: 0;
+        .form-element + label {
+            margin: 0 0 0 $label-margin;
+        }
+
+        input {
+            width: unset;
+        }
+
+        .form-element {
+            display: inline-block;
+
+            &.select-icon select {
+                padding-right: 2.5rem;
+            }
         }
     }
-}
 
-.form-entry.radiocheck:not(.native) {
-    input {
-        appearance: none;
-        width: $radiocheck-size;
-        height: $radiocheck-size;
-        position: relative;
+    .form-element.radiocheck {
 
-        // background-color: #e5e5e5;
-        border: 1px solid $radiocheck-border-color;
-
-        &.medium {
-            width: $radiocheck-medium-size;
-            height: $radiocheck-medium-size;
+        &.medium input {
+            width: $radiocheck-size-medium;
+            height: $radiocheck-size-medium;
         }
 
-        &.large {
-            width: $radiocheck-large-size;
-            height: $radiocheck-large-size;
+        &.large input {
+            width: $radiocheck-size-large;
+            height: $radiocheck-size-large;
         }
 
-        &.huge {
-            width: $radiocheck-huge-size;
-            height: $radiocheck-huge-size;
+        &.huge input {
+            width: $radiocheck-size-huge;
+            height: $radiocheck-size-huge;
         }
 
-        // Common
-        &:checked {
-            background-color: $radiocheck-background-color;
-            border: none;
+        input {
+            width: $radiocheck-size;
+            height: $radiocheck-size;
+            position: relative;
 
-            &::after {
-                content: '';
-                display: block;
+            display: inline-block;
+            appearance: none;
+            border: $radiocheck-border-width solid $radiocheck-border-color;
 
-                position: absolute;
-
-                border-radius: inherit;
+            &:hover {
+                border-color: $radiocheck-hover-border-color;
             }
-        }
-
-        &:focus {
-                border-color: #41c6a7;
-                box-shadow: 0 0 0 0.2rem #41c6a744;
-        }
-
-        &[disabled] {
-            border-color: $radiocheck-disabled-border-color;
-
-            &::before {
-                content: '';
-
-                width: 100%;
-                height: 100%;
-                display: block;
-
-                position: absolute;
-                top: 0;
-                left: 0;
-                
-                background-color: #ffffff99;
-                z-index: 100;
-                border-radius: inherit;
+            
+            &:focus {
+                border-color: $radiocheck-focus-border-color;
+                box-shadow: 0 0 0 0.2rem #{$radiocheck-focus-border-color}44;
             }
-        }
-    
-        // Radio
-        &[type=radio] {
-            border-radius: 50%;
-        
-            &:checked::after {
-                width: 50%;
-                height: 50%;
-                
-                top: 25%;
-                left: 25%;
 
-                background-color: $radiocheck-color;
+            &:disabled {
+                border-color: transparent;
+
+                &::after {
+                    content: '';
+
+                    display: block;
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: #ffffff99;
+                    border-radius: inherit;
+                }
             }
-        }
 
-        // Checkbox
-        &[type=checkbox] {
-            border-radius: 0.1rem;
+            &[type=checkbox] {
+                border-radius: $checkbox-border-radius;
+            }
 
-            &:checked::after {
-                width: 35%;
-                height: 70%;
+            &[type=radio] {
+                border-radius: $radio-border-radius;
+            }
+            
+            &:checked {
+                border: none;
+                background-color: $radiocheck-checked-background-color;
 
-                top: 10%;
-                left: 32.5%;
+                &::before {
+                    content: '';
 
-                border-radius: 0;
-                border-right: 3px solid $radiocheck-color;
-                border-bottom: 3px solid $radiocheck-color;
-                transform: rotate(45deg);
+                    position: absolute;
+                    box-sizing: border-box;
+                }
 
-                box-sizing: border-box;
+                &[type=checkbox]::before {
+                    width: 40%;
+                    height: 80%;
 
-                background-color: transparent;
+                    left: 30%;
+
+                    transform: rotate(45deg);
+
+                    border-right: 3px solid white;
+                    border-bottom: 3px solid white;
+                }
+
+                &[type=radio]::before {
+                    width: 50%;
+                    height: 50%;
+
+                    left: 25%;
+                    top: 25%;
+
+                    background-color: white;
+                    border-radius: 50%;
+                }
             }
         }
     }
