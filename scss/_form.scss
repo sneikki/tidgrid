@@ -119,7 +119,7 @@
     }
 }
 
-.form-entry.radiocheck {
+.form-entry.radiocheck:not(.native) {
     input {
         appearance: none;
         width: $radiocheck-size;
