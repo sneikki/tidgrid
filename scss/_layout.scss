@@ -5,52 +5,52 @@
 .container {
     @include container-margin($container-margin-normal);
     margin: 0 auto;
+}
 
-    &.margin-none {
-        width: 100%;
-    }
+.container-margin-none {
+    width: 100%;
+}
 
-    &.margin-small {
-        @include container-margin($container-margin-small);
-    }
+.container-margin-small {
+    @include container-margin($container-margin-small);
+}
 
-    &.margin-medium {
-        @include container-margin($container-margin-medium);
-    }
+.container-margin-medium {
+    @include container-margin($container-margin-medium);
+}
 
-    &.margin-large {
-        @include container-margin($container-margin-large);
-    }
+.container-margin-large {
+    @include container-margin($container-margin-large);
+}
 
-    @each $name, $size in $breakpoints {
-        @include min-viewport($size) {
-            &.#{$name} {
-                max-width: $size;
-            }
+@each $name, $size in $breakpoints {
+    @include min-viewport($size) {
+        .container-#{$name} {
+            max-width: $size;
         }
     }
 }
 
 .section {
     padding: $section-padding-normal 0;
+}
 
-    &.padding-none {
-        padding: 0;
-    }
+.section-padding-none {
+    padding: 0;
+}
 
-    &.huge {
-        padding: $section-padding-huge 0;
-    }
+.section-huge {
+    padding: $section-padding-huge 0;
+}
 
-    &.large {
-        padding: $section-padding-large 0;
-    }
+.section-large {
+    padding: $section-padding-large 0;
+}
 
-    &.medium {
-        padding: $section-padding-medium 0;
-    }
+.section-medium {
+    padding: $section-padding-medium 0;
+}
 
-    &.small {
-        padding: $section-padding-small 0;
-    }
+.section-small {
+    padding: $section-padding-small 0;
 }

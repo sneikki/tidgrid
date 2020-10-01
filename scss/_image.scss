@@ -5,17 +5,16 @@
 .image {
     max-width: 100%;
     height: auto;
+}
 
-    &.center {
-        margin: 0 auto;
-        display: block;
-    }
+.image-center {
+    margin: 0 auto;
+}
 
-    &.left {
-        float: left;
-    }
+.image-left {
+    float: left;
+}
 
-    &.right {
-        float: right;
-    }
+.image-right {
+    float: right;
 }

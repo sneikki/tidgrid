@@ -16,12 +16,12 @@ h4,
 h5,
 h6,
 .title {
-    margin: 0;
-    margin-bottom: $title-margin;
-    font-weight: $title-weight;
+    margin:         0;
+    margin-bottom:  $title-margin;
+    font-weight:    $title-weight;
 
     &:last-child {
-        margin-bottom: 0;
+        margin-bottom:  0;
     }
 }
 
@@ -53,10 +53,10 @@ h6 {
 
 p,
 .paragraph {
-    margin: 0;
-    margin-bottom: $paragraph-margin;
-    line-height: $paragraph-line-height;
-    font-weight: $paragraph-weight;
+    margin:         0;
+    margin-bottom:  $paragraph-margin;
+    line-height:    $paragraph-line-height;
+    font-weight:    $paragraph-weight;
 
     &:last-child {
         margin-bottom: 0;
@@ -67,8 +67,8 @@ p,
 
 a,
 .link {
-    color: #41c6a7;
-    text-decoration: none;
+    color:              #41c6a7;
+    text-decoration:    none;
 
     &:hover {
         @extend .text-underline;
@@ -78,15 +78,15 @@ a,
 // Code
 
 code {
-    background-color: $code-background-color;
-    white-space: pre;
-    padding: $code-padding;
-    border-radius: $code-border-radius;
-    border: $code-border-width $code-border-style $code-border-color;
-    font-family: $monospace;
-    color: #f6516b;
-    font-size: 0.875rem;
-    line-height: $code-inline-line-height;
+    background-color:   $code-background-color;
+    white-space:        pre;
+    padding:            $code-padding;
+    border-radius:      $code-border-radius;
+    border:             $code-border-width $code-border-style $code-border-color;
+    font-family:        $monospace;
+    color:              #f6516b;
+    font-size:          0.875rem;
+    line-height:        $code-inline-line-height;
 }
 
 pre code {

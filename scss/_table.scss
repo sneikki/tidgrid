@@ -3,66 +3,66 @@
 //
 
 .scrollable-table {
-    overflow: auto;
+    overflow:   auto;
 }
 
 table {
-    border-collapse: collapse;
-    text-align: $table-text-align;
+    border-collapse:    collapse;
+    text-align:         $table-text-align;
 }
 
 th, td {
-    padding: $table-col-padding;
+    padding:    $table-col-padding;
 }
 
 thead {
-    border-bottom: $table-split-width $table-split-style $table-split-color;
+    border-bottom:  $table-split-width $table-split-style $table-split-color;
 }
 
-.borders {
+.tabhle-borders {
     th, td {
         border: $table-border-width $table-border-style $table-border-color;
     }
 }
 
-.borders-v {
+.table-borders-v {
     th, td {
-        border-top: $table-border-width $table-border-style $table-border-color;
-        border-bottom: $table-border-width $table-border-style $table-border-color;
+        border-top:     $table-border-width $table-border-style $table-border-color;
+        border-bottom:  $table-border-width $table-border-style $table-border-color;
     }
 }
 
-.borders-v {
+.table-borders-v {
     th, td {
-        border-left: $table-border-width $table-border-style $table-border-color;
-        border-right: $table-border-width $table-border-style $table-border-color;
+        border-left:    $table-border-width $table-border-style $table-border-color;
+        border-right:   $table-border-width $table-border-style $table-border-color;
     }
 }
 
-.header thead {
-    background-color: $table-background-color;
+.table-header thead {
+    background-color:   $table-background-color;
 }
 
-.split-none thead {
-    border-bottom: 0
+.table-split-none thead {
+    border-bottom:  0
 }
 
-.stripes tbody {
+.table-stripes tbody {
     tr:nth-child(even) {
-        background-color: $table-background-color;
+        background-color:   $table-background-color;
     }
 }
 
-.checker tbody tr {
+.table-checker tbody tr {
     &:nth-child(odd) {
         td:nth-child(odd) {
-            background-color: $table-background-color;
+            background-color:   $table-background-color;
         }
     }
 
     &:nth-child(even) {
         td:nth-child(even) {
-            background-color: $table-background-color;
+            background-color:   $table-background-color;
         }
     }
 }
