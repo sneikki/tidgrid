@@ -153,6 +153,11 @@
             }
         }
 
+        &:focus {
+                border-color: #41c6a7;
+                box-shadow: 0 0 0 0.2rem #41c6a744;
+        }
+
         &[disabled] {
             &::before {
                 content: '';
