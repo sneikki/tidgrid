@@ -1,115 +1,115 @@
 .form-entry {
-    margin-bottom: $form-entry-margin;
+    margin-bottom:  $form-entry-margin;
 
     &:last-child {
-        margin-bottom: 0;
+        margin-bottom:  0;
     }
 
     &.inline {
         label {
-            margin: 0 $label-margin 0 0;
-            display: inline-block;
+            margin:     0 $label-margin 0 0;
+            display:    inline-block;
         }
-    
-        .form-element + label {
-            margin: 0 0 0 $label-margin;
-        }
-    
-        input {
-            width: unset;
-        }
-    
+
         .form-element {
-            display: inline-block;
-    
-            &.select-icon select {
-                padding-right: 2.5rem;
+            display:    inline-block;
+
+            & + label {
+                margin: 0 0 0 $label-margin;
             }
         }
+
+        .select-icon select {
+            padding-right:  2.5rem;
+        }
+
+        input {
+            width:  unset;
+        }
     }
-    
 }
 
 label {
-    display: block;
-
-    &.indent {
-        margin-left: $field-padding;
-    }
+    display:    block;
 }
 
 input,
 textarea,
 select {
-    width: 100%;
-    border: $field-border-width $field-border-style $field-border-color;
-    border-radius: $field-border-radius;
+    width:              100%;
+    position:           relative;
 
-    appearance: none;
-    outline: none;
-    background-color: $field-background-color;
-    color: $field-color;
+    border:             $field-border-width $field-border-style $field-border-color;
+    border-radius:      $field-border-radius;
+    
+    appearance:         none;
+    outline:            none;
+    
+    background-color:   $field-background-color;
+    color:              $field-color;
 
     &:hover {
-        border-color: $field-hover-border-color;
+        border-color:   $field-hover-border-color;
     }
 
     &:focus {
-        border-color: $field-focus-border-color;
-        box-shadow: 0 0 0 0.2rem #{$field-focus-border-color}44;
-    }
-
-    position: relative;
-    
-    &::placeholder {
-        color: $field-placeholder-color;
+        border-color:   $field-focus-border-color;
+        box-shadow:     0 0 0 0.2rem #{$field-focus-border-color}44;
     }
 
     &:disabled {
-        background-color: $field-disabled-background-color;
-        border-color: transparent;
-        color: $field-disabled-color;
+        background-color:   $field-disabled-background-color;
+        color:              $field-disabled-color;
+        border-color:       transparent;
     
         &::placeholder {
-            color: $field-disabled-placeholder-color;
+            color:  $field-disabled-placeholder-color;
         }
+    }
+
+    &::placeholder {
+        color:  $field-placeholder-color;
     }
 }
 
-.field input, .field select {
-    height: $field-height;
-    padding: 0 $field-padding;
+.field {
+    height:     $field-height;
+    padding:    0 $field-padding;
+
+    &.rounded {
+        border-radius:  1e10px;
+    }
 }
 
 .select-icon {
-    position: relative;
+    position:   relative;
 
     &::after {
-        content: '';
-        
-        width: $select-icon-size;
-        height: $select-icon-size;
+        content:        '';
 
-        display: block;
-        margin-right: $select-icon-margin;
+        width:          $select-icon-size;
+        height:         $select-icon-size;
 
-        position: absolute;
-        top: ($field-height - $select-icon-size * 2) / 2;
-        right: 0;
-        
-        transform: rotate(135deg);
+        display:        block;
+        margin-right:   $select-icon-margin;
 
-        border-top: $select-icon-border-width solid $select-icon-color;
-        border-right: $select-icon-border-width solid $select-icon-color;
+        position:       absolute;
+        top:            ($field-height - $select-icon-size * 2) / 2;
+        right:          0;
+
+        transform:      rotate(135deg);
+
+        border-top:     $select-icon-border-width solid $select-icon-color;
+        border-right:   $select-icon-border-width solid $select-icon-color;
     }
 }
 
 select[multiple] {
     min-height: $field-height;
-    padding: 0 $field-padding;
+    padding:    0 $field-padding;
 
-    overflow: auto;
-    height: unset;
+    overflow:   auto;
+    height:     unset;
 
     optgroup {
         margin-top: $optgroup-margin;
@@ -120,9 +120,14 @@ select[multiple] {
     }
 
     option {
-        padding: $option-padding-v $option-padding-h;
-        margin: 0 -#{$option-padding-h};
+        padding:    $option-padding-v $option-padding-h;
+        margin:     0 -#{$option-padding-h};
     }
+}
+
+textarea:not([rows]) {
+    min-height: $textarea-min-height;
+    padding:    $textarea-padding;
 }
 
 .resizable {
@@ -137,103 +142,101 @@ label {
 }
 
 input {
-    width: 100%;
+    width:  100%;
 }
 
-
-.form-element.radiocheck {
-
+.radiocheck {
     &.medium input {
-        width: $radiocheck-size-medium;
+        width:  $radiocheck-size-medium;
         height: $radiocheck-size-medium;
     }
 
     &.large input {
-        width: $radiocheck-size-large;
+        width:  $radiocheck-size-large;
         height: $radiocheck-size-large;
     }
 
     &.huge input {
-        width: $radiocheck-size-huge;
+        width:  $radiocheck-size-huge;
         height: $radiocheck-size-huge;
     }
 
     input {
-        width: $radiocheck-size;
-        height: $radiocheck-size;
-        position: relative;
+        width:      $radiocheck-size;
+        height:     $radiocheck-size;
+        position:   relative;
 
-        display: inline-block;
+        display:    inline-block;
         appearance: none;
-        border: $radiocheck-border-width solid $radiocheck-border-color;
+        border:     $radiocheck-border-width solid $radiocheck-border-color;
 
         &:hover {
-            border-color: $radiocheck-hover-border-color;
+            border-color:   $radiocheck-hover-border-color;
         }
         
         &:focus {
-            border-color: $radiocheck-focus-border-color;
-            box-shadow: 0 0 0 0.2rem #{$radiocheck-focus-border-color}44;
+            border-color:   $radiocheck-focus-border-color;
+            box-shadow:     0 0 0 0.2rem #{$radiocheck-focus-border-color}44;
         }
 
         &:disabled {
-            border-color: transparent;
+            border-color:   transparent;
 
             &::after {
-                content: '';
+                content:            '';
 
-                display: block;
+                display:            block;
 
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: #ffffff99;
-                border-radius: inherit;
+                position:           absolute;
+                top:                0;
+                left:               0;
+                width:              100%;
+                height:             100%;
+                background-color:   #ffffff99;
+                border-radius:      inherit;
             }
         }
 
         &[type=checkbox] {
-            border-radius: $checkbox-border-radius;
+            border-radius:  $checkbox-border-radius;
         }
 
         &[type=radio] {
-            border-radius: $radio-border-radius;
+            border-radius:  $radio-border-radius;
         }
         
         &:checked {
-            border: none;
-            background-color: $radiocheck-checked-background-color;
+            border:             none;
+            background-color:   $radiocheck-checked-background-color;
 
             &::before {
-                content: '';
+                content:    '';
 
-                position: absolute;
+                position:   absolute;
                 box-sizing: border-box;
             }
 
             &[type=checkbox]::before {
-                width: 40%;
-                height: 80%;
+                width:          40%;
+                height:         80%;
 
-                left: 30%;
+                left:           30%;
 
-                transform: rotate(45deg);
+                transform:      rotate(45deg);
 
-                border-right: 3px solid white;
-                border-bottom: 3px solid white;
+                border-right:   3px solid white;
+                border-bottom:  3px solid white;
             }
 
             &[type=radio]::before {
-                width: 50%;
-                height: 50%;
+                width:              50%;
+                height:             50%;
 
-                left: 25%;
-                top: 25%;
+                left:               25%;
+                top:                25%;
 
-                background-color: white;
-                border-radius: 50%;
+                background-color:   white;
+                border-radius:      50%;
             }
         }
     }
