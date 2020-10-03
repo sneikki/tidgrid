@@ -158,6 +158,7 @@ label {
 .checkbox {
     & + label {
         margin-left: $radiocheck-margin;
+        display: inline;
     }
 
     width: $radiocheck-size;
