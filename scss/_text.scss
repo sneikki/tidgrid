@@ -193,10 +193,12 @@ pre code {
     font-family: $monospace;
 }
 
-// Text spacing
-
 .text-spacing-none {
     margin-bottom: 0;
+}
+
+.text-negative {
+    margin-bottom: -0.4em;
 }
 
 // Text spacing
