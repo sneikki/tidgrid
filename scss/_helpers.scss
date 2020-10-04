@@ -55,31 +55,59 @@
 }
 
 .b {
-    border: 1px solid;
+    border: $border-width-1 $border-style;
 }
 
 .bh {
-    border-right: 1px solid;
-    border-left: 1px solid;
+    border-right: $border-width-1  $border-style;
+    border-left: $border-width-1  $border-style;
 }
 
 .bv {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+    border-top: $border-width-1  $border-style;
+    border-bottom: $border-width-1  $border-style;
 }
 
 .bt {
-    border-top: 1px solid;
+    border-top: $border-width-1  $border-style;
 }
 
 .br {
-    border-right: 1px solid;
+    border-right: $border-width-1  $border-style;
 }
 
 .bb {
-    border-bottom: 1px solid;
+    border-bottom: $border-width-1  $border-style;
 }
 
 .bl {
-    border-left: 1px solid;
+    border-left: $border-width-1  $border-style;
+}
+
+.b-1 {
+    border-width: $border-width-1;
+}
+
+.b-2 {
+    border-width: $border-width-2;
+}
+
+.b-3 {
+    border-width: $border-width-3;
+}
+
+.b-3 {
+    border-width: $border-width-4;
+}
+
+.b-5 {
+    border-width: $border-width-5;
+}
+
+.r-rounded {
+    border-radius: $rounded-value;
+}
+
+.r-full {
+    border-radius: $rounded-full-value;
 }

@@ -230,3 +230,13 @@ $helper-directions: (
     bottom:     b,
     left:       l
 ) !default;
+
+$border-width-1:         1px !default;
+$border-width-2:        2px !default;
+$border-width-3:        3px !default;
+$border-width-4:        4px !default;
+$border-width-5:        5px !default;
+$border-style:          solid !default;
+
+$rounded-value:         1e10px !default;
+$rounded-full-value:    50% !default;
