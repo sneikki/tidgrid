@@ -130,8 +130,10 @@ $lightgray:                 $grayscale-10 !default;
 $lightgray-2:               $grayscale-11 !default;
 $lightgray-3:               $grayscale-12 !default;
 
-$white:                     $grayscale-14 !default;
-$white-2:                   $grayscale-13 !default;
+$white:                     $grayscale-14;
+$white-2:                   $grayscale-13;
+$white-3:                   hsl(0, 0, 96%) !default;
+$white-4:                   hsl(0, 0, 98%) !default;
 
 // List
 $list-indent-size:          2rem !default;
@@ -164,19 +166,19 @@ $form-item-margin:          1rem !default;
 $label-margin-v:            0.5rem !default;
 $label-margin-h:            0.5rem !default;
 
-$input-border-color:        #cccccc !default;
+$input-border-color:        $lightgray-2 !default;
 $input-border-style:        solid !default;
 $input-border-width:        1px !default;
 
-$input-background-color:    white !default;
-$input-disabled-background-color: #e5e5e5 !default;
-$text-input-disabled-color: black !default;
-$text-input-placeholder-color:  #999999 !default;
-$text-input-disabled-placeholder-color: #888888 !default;
-$input-hover-border-color:  #bbbbbb !default;
-$input-focus-border-color:  #41c6a7 !default;
-$input-focus-shadow-color:  #41c6a744 !default;
-$input-focus-shadow-size:   0.2rem !default;
+$input-background-color:                $white !default;
+$input-disabled-background-color:       $white-2 !default;
+$text-input-disabled-color:             $black !default;
+$text-input-placeholder-color:          $lightgray !default;
+$text-input-disabled-placeholder-color: $lightgray !default;
+$input-hover-border-color:              $gray-3 !default;
+$input-focus-border-color:              #41c6a7 !default;
+$input-focus-shadow-color:              #41c6a744 !default;
+$input-focus-shadow-size:               0.2rem !default;
 
 $text-input-border-radius:  0.25rem !default;
 $text-input-padding:        0.75rem !default;
