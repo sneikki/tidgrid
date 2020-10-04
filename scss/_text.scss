@@ -161,24 +161,6 @@ pre code {
     font-weight: 900;
 }
 
-// Text colors
-
-.text-white {
-    color: $white;
-}
-
-.text-black {
-    color: $black;
-}
-
-.text-lightgrey {
-    color: $lightgrey;
-}
-
-.text-darkgrey {
-    color: $darkgrey;
-}
-
 // Font families
 
 .text-sans-serif {
@@ -198,7 +180,7 @@ pre code {
 }
 
 .text-negative {
-    margin-bottom: -0.33em;
+    margin-bottom: $text-negative-margin;
 }
 
 // Text spacing

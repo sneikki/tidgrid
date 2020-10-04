@@ -39,18 +39,44 @@ $title-large:               4rem !default;
 $title-medium:              3rem !default;
 
 // Paragraph values
-$paragraph-margin:   1em !default;
-$paragraph-weight:          400 !default;
+$paragraph-margin:      1em !default;
+$paragraph-weight:      400 !default;
+$text-negative-margin:  -0.33em !default;
 
 // Title values
-$title-weight:              600   !default;
-$title-margin:       1.0em !default;
+$title-weight:      600   !default;
+$title-margin:      1.0em !default;
 
 // Font stacks
-$sans-serif:                'Titillium Web', Helvetica, sans-serif !default;
-$serif:                     serif !default;
-$monospace:                 Monaco, 'Source Code Pro', monospace !default;
-$font-stack:                $sans-serif !default;
+$sans-serif:        system,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    "Roboto",
+                    "Oxygen-Sans",
+                    "Ubuntu", 
+                    "Cantarell", 
+                    "Helvetica Neue",
+                    sans-serif !default;
+
+$serif:             "Cambria",
+                    "Hoefler Text",
+                    "Utopia",
+                    "Liberation Serif",
+                    "Nimbus Roman No9 L Regular",
+                    Times,
+                    "Times New Roman",
+                    serif !default;
+
+$monospace:         SFMonoRegular,
+                    "Menlo",
+                    "Monaco",
+                    "Source Code Pro",
+                    "Liberation Mono",
+                    "Courier new",
+                    monospace !default;
+
+$font-stack:        $sans-serif !default;
 
 // Layout
 
@@ -71,10 +97,41 @@ $section-padding-huge:      20.0rem !default;
 $block-margin:              2.0rem !default;
 
 // Colors
-$white:                     #ffffff !default;
-$black:                     #000000 !default;
-$darkgrey:                  #304455 !default;
-$lightgrey:                 #778899 !default;
+
+// Grayscale
+$grayscale-1:                    hsl(0, 0, 7%) !default;
+$grayscale-2:                    hsl(0, 0, 14%) !default;
+$grayscale-3:                    hsl(0, 0, 21%) !default;
+$grayscale-4:                    hsl(0, 0, 28%) !default;
+$grayscale-5:                    hsl(0, 0, 35%) !default;
+$grayscale-6:                    hsl(0, 0, 42%) !default;
+$grayscale-7:                    hsl(0, 0, 49%) !default;
+$grayscale-8:                    hsl(0, 0, 56%) !default;
+$grayscale-9:                    hsl(0, 0, 63%) !default;
+$grayscale-10:                   hsl(0, 0, 70%) !default;
+$grayscale-11:                   hsl(0, 0, 77%) !default;
+$grayscale-12:                   hsl(0, 0, 84%) !default;
+$grayscale-13:                   hsl(0, 0, 93%) !default;
+$grayscale-14:                   hsl(0, 0, 100%) !default;
+
+$black:                     $grayscale-1 !default;
+$black-2:                   $grayscale-2 !default;
+$black-3:                   $grayscale-3 !default;
+
+$darkgray:                  $grayscale-4 !default;
+$darkgray-2:                $grayscale-5 !default;
+$darkgray-3:                $grayscale-6 !default;
+
+$gray:                      $grayscale-7 !default;
+$gray-2:                    $grayscale-8 !default;
+$gray-3:                    $grayscale-9 !default;
+
+$lightgray:                 $grayscale-10 !default;
+$lightgray-2:               $grayscale-11 !default;
+$lightgray-3:               $grayscale-12 !default;
+
+$white:                     $grayscale-14 !default;
+$white-2:                   $grayscale-13 !default;
 
 // List
 $list-indent-size:          2rem !default;
@@ -163,11 +220,11 @@ $helper-types: (
     border-radius: r
 ) !default;
 $helper-directions: (
+    both:       "",
+    vertical:   v,
+    horizontal: h,
     top:        t,
     right:      r,
     bottom:     b,
-    left:       l,
-    horizontal: h,
-    vertical:   v,
-    both:       ""
+    left:       l
 ) !default;
