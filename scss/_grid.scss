@@ -122,7 +122,7 @@
       }
     }
 
-    @include property(no-wrap) {
+    @include property(wrap-none) {
       flex-wrap: nowrap;
     }
 
