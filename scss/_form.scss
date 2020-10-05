@@ -106,7 +106,7 @@
     border-top: none;
     border-left: none;
 
-    top: ($text-input-height - $select-icon-size * 2) / 2;
+    top: calc((#{$text-input-height} - #{$select-icon-size} * 2) / 2);
     right: 1rem;
 
     transform: rotate(45deg);
