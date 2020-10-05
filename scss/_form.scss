@@ -2,14 +2,14 @@
 //  _form.scss
 //
 
-input,
-textarea,
-select {
+.field,
+.textarea,
+.select {
   appearance: none;
   outline: none;
 }
 
-label {
+.label {
   display: inline-block;
 }
 
