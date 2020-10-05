@@ -9,3 +9,15 @@
     margin: 0;
   }
 }
+
+.block-margin-none {
+  margin-bottom: 0;
+}
+
+.block-margin-small {
+  margin-bottom: $block-margin-small;
+}
+
+.block-margin-large {
+  margin-bottom: $block-margin-large;
+}
