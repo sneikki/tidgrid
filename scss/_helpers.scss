@@ -23,16 +23,36 @@
 }
 
 @include each-breakpoint() {
-  @include global-property(visible) {
+  @include global-property(v-visible) {
     display: unset;
   }
 
-  @include global-property(invisible) {
+  @include global-property(v-invisible) {
     visibility: hidden;
   }
 
-  @include global-property(hidden) {
+  @include global-property(v-hidden) {
     display: none;
+  }
+
+  @include global-property(d-flex) {
+    display: flex;
+  }
+
+  @include global-property(d-inline-flex) {
+    display: flex;
+  }
+
+  @include global-property(d-block) {
+    display: flex;
+  }
+
+  @include global-property(d-inline-block) {
+    display: flex;
+  }
+
+  @include global-property(d-inline) {
+    display: flex;
   }
 }
 

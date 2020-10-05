@@ -132,14 +132,6 @@
       }
     }
 
-    @include property(stack) {
-      display: block;
-    }
-
-    @include property(flex) {
-      display: flex;
-    }
-
     .item {
       @include property(auto) {
         flex: 1 0 0;
