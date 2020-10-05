@@ -13,7 +13,7 @@
   @include each-breakpoint() {
     @include property(auto) {
       & > .item {
-        flex: 1 0 0;
+        flex: auto;
         width: unset;
       }
     }
@@ -134,7 +134,7 @@
 
     .item {
       @include property(auto) {
-        flex: 1 0 0;
+        flex: auto;
         width: unset;
       }
 
