@@ -189,18 +189,6 @@
           order: 1;
         }
       }
-
-      @include property(visible) {
-        display: unset;
-      }
-
-      @include property(invisible) {
-        visibility: hidden;
-      }
-
-      @include property(hidden) {
-        display: none;
-      }
     }
 
     .break {

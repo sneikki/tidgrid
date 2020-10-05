@@ -22,6 +22,20 @@
   }
 }
 
+@include each-breakpoint() {
+  @include global-property(visible) {
+    display: unset;
+  }
+
+  @include global-property(invisible) {
+    visibility: hidden;
+  }
+
+  @include global-property(hidden) {
+    display: none;
+  }
+}
+
 .r-full {
   border-radius: 50%;
 }
