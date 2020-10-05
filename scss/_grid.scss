@@ -3,224 +3,224 @@
 //
 
 .items {
-    display:        flex;
-    flex-direction: row;
-    flex-wrap:      wrap;
-    box-sizing:     border-box;
-    
-    @include gap($default-gap);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 
-    @include each-breakpoint() {
-        @include property(auto) {
-            & > .item {
-                flex: 1 0 0;
-                width: unset;
-            }
+  @include gap($default-gap);
+
+  @include each-breakpoint() {
+    @include property(auto) {
+      & > .item {
+        flex: 1 0 0;
+        width: unset;
+      }
+    }
+
+    @include property(wide) {
+      & > .item {
+        flex: none;
+        width: 100%;
+      }
+    }
+
+    @include property(shrink) {
+      & > .item {
+        flex: 0 1 0;
+        width: unset;
+      }
+    }
+
+    @include property(narrow) {
+      & > .item {
+        flex: none;
+        max-width: 100%;
+        width: unset;
+      }
+    }
+
+    @include property(reverse) {
+      flex-flow: row-reverse wrap-reverse;
+    }
+
+    @include property(reverse-none) {
+      flex-flow: row wrap;
+    }
+
+    @include each-column() using ($column) {
+      $item-width: #{100% / $columns * $column};
+      @include property(span-#{$column}) {
+        & > .item {
+          flex: none;
+          width: $item-width;
         }
+      }
+    }
 
-        @include property(wide) {
-            & > .item {
-                flex: none;
-                width: 100%;
-            }
-        }
+    @include property(gap-none) {
+      @include gap(0);
+    }
 
-        @include property(shrink) {
-            & > .item {
-                flex: 0 1 0;
-                width: unset;
-            }
-        }
+    @include property(gap-v-none) {
+      @include gap-v(0);
+    }
 
-        @include property(narrow) {
-            & > .item {
-                flex: none;
-                max-width: 100%;
-                width: unset;
-            }
-        }
+    @include property(gap-h-none) {
+      @include gap-h(0);
+    }
 
-        @include property(reverse) {
-            flex-flow: row-reverse wrap-reverse;
-        }
+    @include property(align-left) {
+      justify-content: flex-start;
+    }
 
-        @include property(reverse-none) {
-            flex-flow: row wrap;
-        }
+    @include property(align-center) {
+      justify-content: center;
+    }
 
-        @include each-column() using ($column) {
-            $item-width: #{100% / $columns * $column};
-            @include property(span-#{$column}) {
-                & > .item {
-                    flex: none;
-                    width: $item-width;
-                }
-            }
-        }
+    @include property(align-right) {
+      justify-content: flex-end;
+    }
 
-        @include property(gap-none) {
-            @include gap(0);
-        }
+    @include property(align-top) {
+      align-items: flex-start;
+    }
 
-        @include property(gap-v-none) {
-            @include gap-v(0);
-        }
+    @include property(align-middle) {
+      align-items: center;
+    }
 
-        @include property(gap-h-none) {
-            @include gap-h(0);
-        }
+    @include property(align-bottom) {
+      align-items: flex-end;
+    }
 
-        @include property(align-left) {
-            justify-content: flex-start;
-        }
+    @include property(space-between) {
+      justify-content: space-between;
+    }
 
-        @include property(align-center) {
-            justify-content: center;
-        }
+    @include property(space-around) {
+      justify-content: space-around;
+    }
 
-        @include property(align-right) {
-            justify-content: flex-end;
-        }
+    @include property(space-evenly) {
+      justify-content: space-evenly;
+    }
 
-        @include property(align-top) {
-            align-items: flex-start;
-        }
+    @for $i from 1 through $gaps {
+      $gap-size: $base-gap * $i;
 
-        @include property(align-middle) {
-            align-items: center;
-        }
+      @include property(gap-#{$i}) {
+        @include gap($gap-size);
+      }
 
-        @include property(align-bottom) {
-            align-items: flex-end;
-        }
+      @include property(gap-v-#{$i}) {
+        @include gap-v($gap-size);
+      }
 
-        @include property(space-between) {
-            justify-content: space-between;
-        }
-        
-        @include property(space-around) {
-            justify-content: space-around;
-        }
-        
-        @include property(space-evenly) {
-            justify-content: space-evenly;
-        }
+      @include property(gap-h-#{$i}) {
+        @include gap-h($gap-size);
+      }
+    }
 
-        @for $i from 1 through $gaps {
-            $gap-size: $base-gap * $i;
-            
-            @include property(gap-#{$i}) {
-                @include gap($gap-size);
-            }
+    @include property(no-wrap) {
+      flex-wrap: nowrap;
+    }
 
-            @include property(gap-v-#{$i}) {
-                @include gap-v($gap-size);
-            }
+    &.preserve-width {
+      @include child-item() {
+        min-width: 100% / $columns;
+      }
+    }
 
-            @include property(gap-h-#{$i}) {
-                @include gap-h($gap-size);
-            }
-        }
+    @include property(stack) {
+      display: block;
+    }
 
-        @include property(no-wrap) {
-            flex-wrap: nowrap;
-        }
-
-        &.preserve-width {
-            @include child-item() {
-                min-width: 100% / $columns;
-            }
-        }
-
-        @include property(stack) {
-            display: block;
-        }
-
-        @include property(flex) {
-            display: flex;
-        }
-
-        .item {
-            @include property(auto) {
-                flex: 1 0 0;
-                width: unset;
-            }
-
-            @include property(wide) {
-                flex: none;
-                width: 100%;
-            }
-
-            @include property(shrink) {
-                flex: 0 1 0;
-                width: unset;
-            }
-
-            @include property(narrow) {
-                flex: none;
-                width: unset;
-            }
-
-            @include each-column() using ($column) {
-                $item-width: #{100% / $columns * $column};
-                @include property(span-#{$column}) {
-                    flex: none;
-                    width: $item-width;
-                }
-
-                @include property(offset-#{$column - 1}) {
-                    $item-width: #{100% / $columns * ($column - 1)};
-                    margin-left: $item-width;
-                }
-            }
-
-            @include property(first) {
-                order: -2;
-
-                & + .break {
-                    order: -1;
-                }
-            }
-
-            @include property(last) {
-                order: 2;
-
-                & + .break {
-                    order: 1;
-                }
-            }
-
-            @include property(visible) {
-                display: unset;
-            }
-
-            @include property(invisible) {
-                visibility: hidden;
-            }
-
-            @include property(hidden) {
-                display: none;
-            }
-        }
-
-        .break {
-            @include property(enabled) {
-                display: block;
-            }
-
-            @include property(disabled) {
-                display: none;
-            }
-        }
+    @include property(flex) {
+      display: flex;
     }
 
     .item {
+      @include property(auto) {
+        flex: 1 0 0;
+        width: unset;
+      }
+
+      @include property(wide) {
         flex: none;
         width: 100%;
-        box-sizing: border-box;
+      }
+
+      @include property(shrink) {
+        flex: 0 1 0;
+        width: unset;
+      }
+
+      @include property(narrow) {
+        flex: none;
+        width: unset;
+      }
+
+      @include each-column() using ($column) {
+        $item-width: #{100% / $columns * $column};
+        @include property(span-#{$column}) {
+          flex: none;
+          width: $item-width;
+        }
+
+        @include property(offset-#{$column - 1}) {
+          $item-width: #{100% / $columns * ($column - 1)};
+          margin-left: $item-width;
+        }
+      }
+
+      @include property(first) {
+        order: -2;
+
+        & + .break {
+          order: -1;
+        }
+      }
+
+      @include property(last) {
+        order: 2;
+
+        & + .break {
+          order: 1;
+        }
+      }
+
+      @include property(visible) {
+        display: unset;
+      }
+
+      @include property(invisible) {
+        visibility: hidden;
+      }
+
+      @include property(hidden) {
+        display: none;
+      }
     }
 
     .break {
-        width: 100%;
+      @include property(enabled) {
+        display: block;
+      }
+
+      @include property(disabled) {
+        display: none;
+      }
     }
+  }
+
+  .item {
+    flex: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .break {
+    width: 100%;
+  }
 }

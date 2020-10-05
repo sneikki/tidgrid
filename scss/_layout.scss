@@ -3,54 +3,54 @@
 //
 
 .container {
-    @include container-margin($container-margin-normal);
-    margin: 0 auto;
+  @include container-margin($container-margin-normal);
+  margin: 0 auto;
 }
 
 .container-margin-none {
-    width: 100%;
+  width: 100%;
 }
 
 .container-margin-small {
-    @include container-margin($container-margin-small);
+  @include container-margin($container-margin-small);
 }
 
 .container-margin-medium {
-    @include container-margin($container-margin-medium);
+  @include container-margin($container-margin-medium);
 }
 
 .container-margin-large {
-    @include container-margin($container-margin-large);
+  @include container-margin($container-margin-large);
 }
 
 @each $name, $size in $breakpoints {
-    @include min-viewport($size) {
-        .container-#{$name} {
-            max-width: $size;
-        }
+  @include min-viewport($size) {
+    .container-#{$name} {
+      max-width: $size;
     }
+  }
 }
 
 .section {
-    padding: $section-padding-normal 0;
+  padding: $section-padding-normal 0;
 }
 
 .section-padding-none {
-    padding: 0;
+  padding: 0;
 }
 
 .section-huge {
-    padding: $section-padding-huge 0;
+  padding: $section-padding-huge 0;
 }
 
 .section-large {
-    padding: $section-padding-large 0;
+  padding: $section-padding-large 0;
 }
 
 .section-medium {
-    padding: $section-padding-medium 0;
+  padding: $section-padding-medium 0;
 }
 
 .section-small {
-    padding: $section-padding-small 0;
+  padding: $section-padding-small 0;
 }

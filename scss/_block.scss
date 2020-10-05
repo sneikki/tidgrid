@@ -3,9 +3,9 @@
 //
 
 .block {
-    margin-bottom: $block-margin;
+  margin-bottom: $block-margin;
 
-    &:last-child {
-        margin: 0;
-    }
+  &:last-child {
+    margin: 0;
+  }
 }

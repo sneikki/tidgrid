@@ -3,103 +3,108 @@
 //
 
 @mixin child-item() {
-    & > .item {
-        @content;
-    }
+  & > .item {
+    @content;
+  }
 }
-    
-@mixin gap($size) {
-    margin-top: -$size;
-    margin-left: -$size;
 
-    @include child-item() {
-        padding-top: $size;
-        padding-left: $size;
-    } 
+@mixin gap($size) {
+  margin-top: -$size;
+  margin-left: -$size;
+
+  @include child-item() {
+    padding-top: $size;
+    padding-left: $size;
+  }
 }
 
 @mixin gap-h($size) {
-    margin-left: -$size;
+  margin-left: -$size;
 
-    @include child-item() {
-        padding-left: $size;
-    }
+  @include child-item() {
+    padding-left: $size;
+  }
 }
 
 @mixin gap-v($size) {
-    margin-top: -$size;
+  margin-top: -$size;
 
-    @include child-item() {
-        padding-top: $size;
-    }
+  @include child-item() {
+    padding-top: $size;
+  }
 }
 
 $breakpoint-name: null;
 $breakpoint-size: null;
 @mixin each-breakpoint() {
-    $breakpoints: map-merge((base: 0), $breakpoints);
-    @each $name, $size in $breakpoints {
-        $breakpoint-size: $size !global;
-        @if $name == base {
-            $breakpoint-name: "" !global;
-            @content;
-        } @else {
-            $breakpoint-name: "-" + $name !global;
-            @media only screen and (min-width: $size) {
-                @content();
-            }
-        }
+  $breakpoints: map-merge(
+    (
+      base: 0,
+    ),
+    $breakpoints
+  );
+  @each $name, $size in $breakpoints {
+    $breakpoint-size: $size !global;
+    @if $name == base {
+      $breakpoint-name: "" !global;
+      @content;
+    } @else {
+      $breakpoint-name: "-" + $name !global;
+      @media only screen and (min-width: $size) {
+        @content();
+      }
     }
+  }
 }
 
 @mixin each-column() {
-    @for $column from 1 through $columns {
-        @content($column);
-    }
+  @for $column from 1 through $columns {
+    @content ($column);
+  }
 }
 
 @mixin property($property) {
-    &.#{$property}#{$breakpoint-name} {
-        @content;
-    }
+  &.#{$property}#{$breakpoint-name} {
+    @content;
+  }
 }
 
 @mixin global-property($property) {
-    .#{$property}#{$breakpoint-name} {
-        @content;
-    }
+  .#{$property}#{$breakpoint-name} {
+    @content;
+  }
 }
 
 @mixin min-viewport($breakpoint) {
-    @media only screen and (min-width: $breakpoint) {
-        @content;
-    }
+  @media only screen and (min-width: $breakpoint) {
+    @content;
+  }
 }
 
 @mixin container-margin($margin) {
-    width: calc(100% - #{$margin} * 2);
+  width: calc(100% - #{$margin} * 2);
 }
 
 @mixin sm() {
-    @include min-viewport(map-get($breakpoints, sm)) {
-        @content;
-    }
+  @include min-viewport(map-get($breakpoints, sm)) {
+    @content;
+  }
 }
 
 @mixin md() {
-    @include min-viewport(map-get($breakpoints, md)) {
-        @content;
-    }
+  @include min-viewport(map-get($breakpoints, md)) {
+    @content;
+  }
 }
 
 @mixin lg() {
-    @include min-viewport(map-get($breakpoints, lg)) {
-        @content;
-    }
+  @include min-viewport(map-get($breakpoints, lg)) {
+    @content;
+  }
 }
 
 @mixin xl() {
-    @include min-viewport(map-get($breakpoints, xl)) {
-        @content;
-    }
+  @include min-viewport(map-get($breakpoints, xl)) {
+    @content;
+  }
 }

@@ -5,238 +5,218 @@
 // Grid
 
 $breakpoints: (
-    sm: 48em,
-    md: 64em,
-    lg: 75em,
-    xl: 90em
+  sm: 48em,
+  md: 64em,
+  lg: 75em,
+  xl: 90em,
 ) !default;
 
-$columns:                   12      !default;
-$base-gap:                  0.5rem  !default;
-$default-gap:               1rem    !default;
-$gaps:                      8       !default;
+$columns: 12 !default;
+$base-gap: 0.5rem !default;
+$default-gap: 1rem !default;
+$gaps: 8 !default;
 
 // Text
 
-$line-height:               1.5  !default;
-$paragraph-line-height:     1.5  !default;
-$code-inline-line-height:   1.5  !default;
-$code-block-line-height:    1.75 !default;
+$line-height: 1.5 !default;
+$paragraph-line-height: 1.5 !default;
+$code-inline-line-height: 1.5 !default;
+$code-block-line-height: 1.75 !default;
 
 // Text sizes
-$text-size-1:               2.50rem !default;
-$text-size-2:               2.00rem !default;
-$text-size-3:               1.75rem !default;
-$text-size-4:               1.50rem !default;
-$text-size-5:               1.25rem !default;
-$text-size-6:               1.00rem !default;
-$text-size-7:               0.75rem !default;
+$text-size-1: 2.5rem !default;
+$text-size-2: 2rem !default;
+$text-size-3: 1.75rem !default;
+$text-size-4: 1.5rem !default;
+$text-size-5: 1.25rem !default;
+$text-size-6: 1rem !default;
+$text-size-7: 0.75rem !default;
 
 // Title sizes
-$title-extra:               6rem !default;
-$title-huge:                5rem !default;
-$title-large:               4rem !default;
-$title-medium:              3rem !default;
+$title-extra: 6rem !default;
+$title-huge: 5rem !default;
+$title-large: 4rem !default;
+$title-medium: 3rem !default;
 
 // Paragraph values
-$paragraph-margin:      1em !default;
-$paragraph-weight:      400 !default;
-$text-negative-margin:  -0.33em !default;
+$paragraph-margin: 1em !default;
+$paragraph-weight: 400 !default;
+$text-negative-margin: -0.33em !default;
 
 // Title values
-$title-weight:      600   !default;
-$title-margin:      1.0em !default;
+$title-weight: 600 !default;
+$title-margin: 1em !default;
 
 // Font stacks
-$sans-serif:        system,
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    "Segoe UI",
-                    "Roboto",
-                    "Oxygen-Sans",
-                    "Ubuntu", 
-                    "Cantarell", 
-                    "Helvetica Neue",
-                    sans-serif !default;
+$sans-serif: system, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+  "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif !default;
 
-$serif:             "Cambria",
-                    "Hoefler Text",
-                    "Utopia",
-                    "Liberation Serif",
-                    "Nimbus Roman No9 L Regular",
-                    Times,
-                    "Times New Roman",
-                    serif !default;
+$serif: "Cambria", "Hoefler Text", "Utopia", "Liberation Serif",
+  "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif !default;
 
-$monospace:         SFMonoRegular,
-                    "Menlo",
-                    "Monaco",
-                    "Source Code Pro",
-                    "Liberation Mono",
-                    "Courier new",
-                    monospace !default;
+$monospace: SFMonoRegular, "Menlo", "Monaco", "Source Code Pro",
+  "Liberation Mono", "Courier new", monospace !default;
 
-$font-stack:        $sans-serif !default;
+$font-stack: $sans-serif !default;
 
 // Layout
 
 // Container margin
-$container-margin-small:    1.0em !default;
-$container-margin-normal:   2.0em !default;
-$container-margin-medium:   3.0em !default;
-$container-margin-large:    4.0em !default;
+$container-margin-small: 1em !default;
+$container-margin-normal: 2em !default;
+$container-margin-medium: 3em !default;
+$container-margin-large: 4em !default;
 
 // Section padding
-$section-padding-small:     1.5rem  !default;
-$section-padding-normal:    3.0rem  !default;
-$section-padding-medium:    9.0rem  !default;
-$section-padding-large:     15.0rem !default;
-$section-padding-huge:      20.0rem !default;
+$section-padding-small: 1.5rem !default;
+$section-padding-normal: 3rem !default;
+$section-padding-medium: 9rem !default;
+$section-padding-large: 15rem !default;
+$section-padding-huge: 20rem !default;
 
 // Block margin
-$block-margin:              2.0rem !default;
+$block-margin: 2rem !default;
 
 // Colors
 
 // Grayscale
-$grayscale-1:                    hsl(0, 0, 7%) !default;
-$grayscale-2:                    hsl(0, 0, 14%) !default;
-$grayscale-3:                    hsl(0, 0, 21%) !default;
-$grayscale-4:                    hsl(0, 0, 28%) !default;
-$grayscale-5:                    hsl(0, 0, 35%) !default;
-$grayscale-6:                    hsl(0, 0, 42%) !default;
-$grayscale-7:                    hsl(0, 0, 49%) !default;
-$grayscale-8:                    hsl(0, 0, 56%) !default;
-$grayscale-9:                    hsl(0, 0, 63%) !default;
-$grayscale-10:                   hsl(0, 0, 70%) !default;
-$grayscale-11:                   hsl(0, 0, 77%) !default;
-$grayscale-12:                   hsl(0, 0, 84%) !default;
-$grayscale-13:                   hsl(0, 0, 93%) !default;
-$grayscale-14:                   hsl(0, 0, 100%) !default;
+$grayscale-1: hsl(0, 0, 7%) !default;
+$grayscale-2: hsl(0, 0, 14%) !default;
+$grayscale-3: hsl(0, 0, 21%) !default;
+$grayscale-4: hsl(0, 0, 28%) !default;
+$grayscale-5: hsl(0, 0, 35%) !default;
+$grayscale-6: hsl(0, 0, 42%) !default;
+$grayscale-7: hsl(0, 0, 49%) !default;
+$grayscale-8: hsl(0, 0, 56%) !default;
+$grayscale-9: hsl(0, 0, 63%) !default;
+$grayscale-10: hsl(0, 0, 70%) !default;
+$grayscale-11: hsl(0, 0, 77%) !default;
+$grayscale-12: hsl(0, 0, 84%) !default;
+$grayscale-13: hsl(0, 0, 93%) !default;
+$grayscale-14: hsl(0, 0, 100%) !default;
 
-$black:                     $grayscale-1 !default;
-$black-2:                   $grayscale-2 !default;
-$black-3:                   $grayscale-3 !default;
+$black: $grayscale-1 !default;
+$black-2: $grayscale-2 !default;
+$black-3: $grayscale-3 !default;
 
-$darkgray:                  $grayscale-4 !default;
-$darkgray-2:                $grayscale-5 !default;
-$darkgray-3:                $grayscale-6 !default;
+$darkgray: $grayscale-4 !default;
+$darkgray-2: $grayscale-5 !default;
+$darkgray-3: $grayscale-6 !default;
 
-$gray:                      $grayscale-7 !default;
-$gray-2:                    $grayscale-8 !default;
-$gray-3:                    $grayscale-9 !default;
+$gray: $grayscale-7 !default;
+$gray-2: $grayscale-8 !default;
+$gray-3: $grayscale-9 !default;
 
-$lightgray:                 $grayscale-10 !default;
-$lightgray-2:               $grayscale-11 !default;
-$lightgray-3:               $grayscale-12 !default;
+$lightgray: $grayscale-10 !default;
+$lightgray-2: $grayscale-11 !default;
+$lightgray-3: $grayscale-12 !default;
 
-$white:                     $grayscale-14;
-$white-2:                   $grayscale-13;
-$white-3:                   hsl(0, 0, 96%) !default;
-$white-4:                   hsl(0, 0, 98%) !default;
+$white: $grayscale-14;
+$white-2: $grayscale-13;
+$white-3: hsl(0, 0, 96%) !default;
+$white-4: hsl(0, 0, 98%) !default;
 
 // List
-$list-indent-size:          2rem !default;
-$list-bottom-margin:        1em  !default;
-$list-item-margin:          1rem !default;
+$list-indent-size: 2rem !default;
+$list-bottom-margin: 1em !default;
+$list-item-margin: 1rem !default;
 
 // Table
-$table-text-align:          left !default;
-$table-col-padding:         0.75rem 1rem !default;
-$table-split-width:         3px !default;
-$table-split-style:         solid !default;
-$table-split-color:         #e5e5e5 !default;
-$table-border-width:        1px !default;
-$table-border-style:        solid !default;
-$table-border-color:        #e5e5e5 !default;
-$table-background-color:    #f6f6f6 !default;
+$table-text-align: left !default;
+$table-col-padding: 0.75rem 1rem !default;
+$table-split-width: 3px !default;
+$table-split-style: solid !default;
+$table-split-color: #e5e5e5 !default;
+$table-border-width: 1px !default;
+$table-border-style: solid !default;
+$table-border-color: #e5e5e5 !default;
+$table-background-color: #f6f6f6 !default;
 
 // Code
-$code-background-color:     #f6f6f6         !default;
-$code-padding:              0.2rem 0.5rem   !default;
-$code-border-radius:        0.25rem         !default;
-$code-border-width:         1px             !default;
-$code-border-style:         solid           !default;
-$code-border-color:         #e5e5e5         !default;
-$code-block-padding:        0.75rem         !default;
+$code-background-color: #f6f6f6 !default;
+$code-padding: 0.2rem 0.5rem !default;
+$code-border-radius: 0.25rem !default;
+$code-border-width: 1px !default;
+$code-border-style: solid !default;
+$code-border-color: #e5e5e5 !default;
+$code-block-padding: 0.75rem !default;
 
 // Form
-$form-item-margin:          1rem !default;
+$form-item-margin: 1rem !default;
 
-$label-margin-v:            0.5rem !default;
-$label-margin-h:            0.5rem !default;
+$label-margin-v: 0.5rem !default;
+$label-margin-h: 0.5rem !default;
 
-$input-border-color:        $lightgray-2 !default;
-$input-border-style:        solid !default;
-$input-border-width:        1px !default;
+$input-border-color: $lightgray-2 !default;
+$input-border-style: solid !default;
+$input-border-width: 1px !default;
 
-$input-background-color:                $white !default;
-$input-disabled-background-color:       $white-2 !default;
-$text-input-disabled-color:             $black !default;
-$text-input-placeholder-color:          $lightgray !default;
+$input-background-color: $white !default;
+$input-disabled-background-color: $white-2 !default;
+$text-input-disabled-color: $black !default;
+$text-input-placeholder-color: $lightgray !default;
 $text-input-disabled-placeholder-color: $lightgray !default;
-$input-hover-border-color:              $gray-3 !default;
-$input-focus-border-color:              #41c6a7 !default;
-$input-focus-shadow-color:              #41c6a744 !default;
-$input-focus-shadow-size:               0.2rem !default;
+$input-hover-border-color: $gray-3 !default;
+$input-focus-border-color: #41c6a7 !default;
+$input-focus-shadow-color: #41c6a744 !default;
+$input-focus-shadow-size: 0.2rem !default;
 
-$text-input-border-radius:  0.25rem !default;
-$text-input-padding:        0.75rem !default;
-$text-input-height:         2.5rem !default;
-$text-input-color:          black !default;
+$text-input-border-radius: 0.25rem !default;
+$text-input-padding: 0.75rem !default;
+$text-input-height: 2.5rem !default;
+$text-input-color: black !default;
 
-$select-icon-size:          0.5rem !default;
-$select-icon-width:         3px !default;
-$select-icon-color:         #304455;
+$select-icon-size: 0.5rem !default;
+$select-icon-width: 3px !default;
+$select-icon-color: #304455;
 
-$optgroup-margin:           0.5rem !default;
-$option-padding-h:          0.5rem !default;
-$option-padding-v:          0.75rem !default;
+$optgroup-margin: 0.5rem !default;
+$option-padding-h: 0.5rem !default;
+$option-padding-v: 0.75rem !default;
 
-$textarea-padding:          0.75rem !default;
-$textarea-min-height:       7.5rem !default;
+$textarea-padding: 0.75rem !default;
+$textarea-min-height: 7.5rem !default;
 
-$radiocheck-margin:         0.5rem !default;
-$radiocheck-size:           1rem !default;
-$radiocheck-size-medium:    1.25rem !default;
-$radiocheck-size-large:     1.5rem !default;
-$radiocheck-size-huge:      2rem !default;
-$radiocheck-checked-background-color:   #41c6a7 !default;
-$radiocheck-color:          white !default;
-$radio-border-radius:       50% !default;
-$checkbox-border-radius:    0.15rem !default;
+$radiocheck-margin: 0.5rem !default;
+$radiocheck-size: 1rem !default;
+$radiocheck-size-medium: 1.25rem !default;
+$radiocheck-size-large: 1.5rem !default;
+$radiocheck-size-huge: 2rem !default;
+$radiocheck-checked-background-color: #41c6a7 !default;
+$radiocheck-color: white !default;
+$radio-border-radius: 50% !default;
+$checkbox-border-radius: 0.15rem !default;
 
 // Helpers
 $helper-sizes: (
-    0: 0.0rem,
-    1: 0.25rem,
-    2: 0.5rem,
-    3: 0.75rem,
-    4: 1.0rem,
-    5: 1.5rem,
-    6: 2.0rem,
+  0: 0rem,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem,
 ) !default;
 $helper-types: (
-    margin:     m,
-    padding:    p,
-    border-radius: r
+  margin: m,
+  padding: p,
+  border-radius: r,
 ) !default;
 $helper-directions: (
-    both:       "",
-    vertical:   v,
-    horizontal: h,
-    top:        t,
-    right:      r,
-    bottom:     b,
-    left:       l
+  both: "",
+  vertical: v,
+  horizontal: h,
+  top: t,
+  right: r,
+  bottom: b,
+  left: l,
 ) !default;
 
-$border-width-1:         1px !default;
-$border-width-2:        2px !default;
-$border-width-3:        3px !default;
-$border-width-4:        4px !default;
-$border-width-5:        5px !default;
-$border-style:          solid !default;
+$border-width-1: 1px !default;
+$border-width-2: 2px !default;
+$border-width-3: 3px !default;
+$border-width-4: 4px !default;
+$border-width-5: 5px !default;
+$border-style: solid !default;
 
-$rounded-value:         1e10px !default;
-$rounded-full-value:    50% !default;
+$rounded-full-value: 1e10px !default;

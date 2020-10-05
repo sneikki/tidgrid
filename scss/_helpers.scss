@@ -3,111 +3,107 @@
 //
 
 @each $name, $name-abbrev in $helper-types {
-    @each $dir, $dir-abbrev in $helper-directions {
-        @each $level, $size in $helper-sizes {
-            .#{$name-abbrev}#{$dir-abbrev}-#{$level} {
-                @if $dir == vertical {
-                    #{$name}-top: $size;
-                    #{$name}-bottom: $size;
-                } @else if $dir == horizontal {
-                    #{$name}-left: $size;
-                    #{$name}-right: $size;
-                } @else if $dir == both {
-                    #{$name}: $size;
-                } @else {
-                    #{$name}-#{$dir}: $size;
-                }
-            }
-        }        
+  @each $dir, $dir-abbrev in $helper-directions {
+    @each $level, $size in $helper-sizes {
+      .#{$name-abbrev}#{$dir-abbrev}-#{$level} {
+        @if $dir == vertical {
+          #{$name}-top: $size;
+          #{$name}-bottom: $size;
+        } @else if $dir == horizontal {
+          #{$name}-left: $size;
+          #{$name}-right: $size;
+        } @else if $dir == both {
+          #{$name}: $size;
+        } @else {
+          #{$name}-#{$dir}: $size;
+        }
+      }
     }
+  }
 }
 
 .r-full {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .w-full {
-    width: 100%;
+  width: 100%;
 }
 
 .w-max-full {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .w-half {
-    width: 50%;
+  width: 50%;
 }
 
 .p-left {
-    float: left;
+  float: left;
 }
 
 .p-center {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .p-right {
-    float: right;
+  float: right;
 }
 
 .p-clear {
-    clear: both;
+  clear: both;
 }
 
 .b {
-    border: $border-width-1 $border-style;
+  border: $border-width-1 $border-style;
 }
 
 .bh {
-    border-right: $border-width-1  $border-style;
-    border-left: $border-width-1  $border-style;
+  border-right: $border-width-1 $border-style;
+  border-left: $border-width-1 $border-style;
 }
 
 .bv {
-    border-top: $border-width-1  $border-style;
-    border-bottom: $border-width-1  $border-style;
+  border-top: $border-width-1 $border-style;
+  border-bottom: $border-width-1 $border-style;
 }
 
 .bt {
-    border-top: $border-width-1  $border-style;
+  border-top: $border-width-1 $border-style;
 }
 
 .br {
-    border-right: $border-width-1  $border-style;
+  border-right: $border-width-1 $border-style;
 }
 
 .bb {
-    border-bottom: $border-width-1  $border-style;
+  border-bottom: $border-width-1 $border-style;
 }
 
 .bl {
-    border-left: $border-width-1  $border-style;
+  border-left: $border-width-1 $border-style;
 }
 
 .b-1 {
-    border-width: $border-width-1;
+  border-width: $border-width-1;
 }
 
 .b-2 {
-    border-width: $border-width-2;
+  border-width: $border-width-2;
 }
 
 .b-3 {
-    border-width: $border-width-3;
+  border-width: $border-width-3;
 }
 
 .b-3 {
-    border-width: $border-width-4;
+  border-width: $border-width-4;
 }
 
 .b-5 {
-    border-width: $border-width-5;
-}
-
-.r-rounded {
-    border-radius: $rounded-value;
+  border-width: $border-width-5;
 }
 
 .r-full {
-    border-radius: $rounded-full-value;
+  border-radius: $rounded-full-value;
 }
