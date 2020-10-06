@@ -249,4 +249,8 @@ pre code {
   @include global-property(title-medium) {
     font-size: $title-medium;
   }
+
+  @include global-property(title-small) {
+    font-size: $title-small;
+  }
 }
