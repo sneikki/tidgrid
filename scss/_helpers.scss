@@ -40,19 +40,19 @@
   }
 
   @include global-property(d-inline-flex) {
-    display: flex;
+    display: inline-flex;
   }
 
   @include global-property(d-block) {
-    display: flex;
+    display: block;
   }
 
   @include global-property(d-inline-block) {
-    display: flex;
+    display: inline-block;
   }
 
   @include global-property(d-inline) {
-    display: flex;
+    display: inline;
   }
 }
 
