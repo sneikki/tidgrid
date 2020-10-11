@@ -1,0 +1,7 @@
+//
+//  _utils.scss
+//
+
+@function color($lightness) {
+  @return hsl($hue, $saturation, $lightness);
+}
