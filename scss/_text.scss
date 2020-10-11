@@ -67,7 +67,7 @@ p,
 
 a,
 .link {
-  color: #41c6a7;
+  color: #34a7cc;
   text-decoration: none;
 
   &:hover {
@@ -211,6 +211,10 @@ pre code {
 
 .text-size-7 {
   font-size: $text-size-7;
+}
+
+.text-size-8 {
+  font-size: $text-size-8;
 }
 
 @include each-breakpoint() {
