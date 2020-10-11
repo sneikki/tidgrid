@@ -1,7 +1,7 @@
-![](./assets/banner.png)
-
-----
+<p align="center">
+    <img src="assets/tidgrid-logo.svg">
+</p>
 
 # Tidgrid
 
-Modern CSS grid
+Modern CSS framework to ease front-end development.
