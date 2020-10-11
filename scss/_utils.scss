@@ -2,6 +2,6 @@
 //  _utils.scss
 //
 
-@function color($lightness) {
-  @return hsl($hue, $saturation, $lightness);
+@function color($level, $color: $base-color) {
+  @return hsl(nth($color, 1), nth($color, 2), $level);
 }
