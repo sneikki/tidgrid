@@ -160,7 +160,7 @@
           width: $item-width;
         }
 
-        @include property(offset-#{$column - 1}) {
+        @include property(offset-#{$column}) {
           $item-width: #{100% / $columns * ($column - 1)};
           margin-left: $item-width;
         }
