@@ -2,8 +2,8 @@
 //  _mixins.scss
 //
 
-@mixin child-item() {
-  & > .item {
+@mixin child-col() {
+  & > .col {
     @content;
   }
 }
@@ -12,7 +12,7 @@
   margin-top: -$size;
   margin-left: -$size;
 
-  @include child-item() {
+  @include child-col() {
     padding-top: $size;
     padding-left: $size;
   }
@@ -21,7 +21,7 @@
 @mixin gap-h($size) {
   margin-left: -$size;
 
-  @include child-item() {
+  @include child-col() {
     padding-left: $size;
   }
 }
@@ -29,7 +29,7 @@
 @mixin gap-v($size) {
   margin-top: -$size;
 
-  @include child-item() {
+  @include child-col() {
     padding-top: $size;
   }
 }
@@ -58,7 +58,7 @@ $breakpoint-size: null;
 }
 
 @mixin each-column() {
-  @for $column from 1 through $columns {
+  @for $column from 0 through $columns {
     @content ($column);
   }
 }

@@ -2,7 +2,7 @@
 //  _grid.scss
 //
 
-.items {
+.row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12,28 +12,28 @@
 
   @include each-breakpoint() {
     @include property(auto) {
-      & > .item {
+      & > .col {
         flex: 1 0 0;
         width: unset;
       }
     }
 
     @include property(wide) {
-      & > .item {
+      & > .col {
         flex: none;
         width: 100%;
       }
     }
 
     @include property(shrink) {
-      & > .item {
+      & > .col {
         flex: 0 1 0;
         width: unset;
       }
     }
 
     @include property(narrow) {
-      & > .item {
+      & > .col {
         flex: none;
         max-width: 100%;
         width: unset;
@@ -49,11 +49,11 @@
     }
 
     @include each-column() using ($column) {
-      $item-width: #{100% / $columns * $column};
+      $col-width: #{100% / $columns * $column};
       @include property(span-#{$column}) {
-        & > .item {
+        & > .col {
           flex: none;
-          width: $item-width;
+          width: $col-width;
         }
       }
     }
@@ -127,12 +127,12 @@
     }
 
     &.preserve-width {
-      @include child-item() {
+      @include child-col() {
         min-width: 100% / $columns;
       }
     }
 
-    .item {
+    .col {
       @include property(auto) {
         flex: 1 0 0;
         width: unset;
@@ -154,15 +154,15 @@
       }
 
       @include each-column() using ($column) {
-        $item-width: #{100% / $columns * $column};
+        $col-width: #{100% / $columns * $column};
         @include property(span-#{$column}) {
           flex: none;
-          width: $item-width;
+          width: $col-width;
         }
 
-        @include property(offset-#{$column}) {
-          $item-width: #{100% / $columns * ($column - 1)};
-          margin-left: $item-width;
+        @include property(offset-#{$column - 1}) {
+          $col-width: #{100% / $columns * ($column - 1)};
+          margin-left: $col-width;
         }
       }
 
@@ -194,7 +194,7 @@
     }
   }
 
-  .item {
+  .col {
     flex: none;
     width: 100%;
     box-sizing: border-box;
