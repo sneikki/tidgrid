@@ -17,7 +17,6 @@ $default-gap: 1rem !default;
 $gaps: 8 !default;
 
 // Text
-
 $line-height: 1.5 !default;
 $paragraph-line-height: 1.5 !default;
 $code-inline-line-height: 1.5 !default;
@@ -82,43 +81,43 @@ $block-margin-small: 1rem !default;
 $block-margin-large: 3rem !default;
 
 // Colors
+$base-color: 0, 0 !default;
 
-// Grayscale
-$grayscale-1: hsl(0, 0, 7%) !default;
-$grayscale-2: hsl(0, 0, 14%) !default;
-$grayscale-3: hsl(0, 0, 21%) !default;
-$grayscale-4: hsl(0, 0, 28%) !default;
-$grayscale-5: hsl(0, 0, 35%) !default;
-$grayscale-6: hsl(0, 0, 42%) !default;
-$grayscale-7: hsl(0, 0, 49%) !default;
-$grayscale-8: hsl(0, 0, 56%) !default;
-$grayscale-9: hsl(0, 0, 63%) !default;
-$grayscale-10: hsl(0, 0, 70%) !default;
-$grayscale-11: hsl(0, 0, 77%) !default;
-$grayscale-12: hsl(0, 0, 84%) !default;
-$grayscale-13: hsl(0, 0, 93%) !default;
-$grayscale-14: hsl(0, 0, 100%) !default;
+$black: 5% !default;
+$black-3: 8% !default;
+$black-2: 10% !default;
 
-$black: $grayscale-1 !default;
-$black-2: $grayscale-2 !default;
-$black-3: $grayscale-3 !default;
+$darkest: 14% !default;
+$darker: 21% !default;
+$dark: 28% !default;
+$dark-2: 35% !default;
 
-$darkgray: $grayscale-4 !default;
-$darkgray-2: $grayscale-5 !default;
-$darkgray-3: $grayscale-6 !default;
+$light-2: 70% !default;
+$light: 77% !default;
+$lighter: 84% !default;
+$lightest: 91% !default;
 
-$gray: $grayscale-7 !default;
-$gray-2: $grayscale-8 !default;
-$gray-3: $grayscale-9 !default;
+$white-2: 96% !default;
+$white-3: 98% !default;
+$white: 100% !default;
 
-$lightgray: $grayscale-10 !default;
-$lightgray-2: $grayscale-11 !default;
-$lightgray-3: $grayscale-12 !default;
+$color-black: color($black) !default;
+$color-black-2: color($black-2) !default;
+$color-black-3: color($black-3) !default;
 
-$white: $grayscale-14;
-$white-2: $grayscale-13;
-$white-3: hsl(0, 0, 96%) !default;
-$white-4: hsl(0, 0, 98%) !default;
+$color-darkest: color($darkest) !default;
+$color-darker: color($darker) !default;
+$color-dark: color($dark) !default;
+$color-dark-2: color($dark-2) !default;
+
+$color-light-2: color($light-2) !default;
+$color-light: color($light) !default;
+$color-lighter: color($lighter) !default;
+$color-lightest: color($lightest) !default;
+
+$color-white-3: color($white-3) !default;
+$color-white-2: color($white-2) !default;
+$color-white: color($white) !default;
 
 // List
 $list-indent-size: 2rem !default;
@@ -130,19 +129,19 @@ $table-text-align: left !default;
 $table-col-padding: 0.75rem 1rem !default;
 $table-split-width: 3px !default;
 $table-split-style: solid !default;
-$table-split-color: #e5e5e5 !default;
+$table-split-color: $color-lighter !default;
 $table-border-width: 1px !default;
 $table-border-style: solid !default;
-$table-border-color: #e5e5e5 !default;
-$table-background-color: #f6f6f6 !default;
+$table-border-color: $color-lighter !default;
+$table-background-color: $color-white-2 !default;
 
 // Code
-$code-background-color: #f6f6f6 !default;
+$code-background-color: $color-white-3 !default;
 $code-padding: 0.2rem 0.5rem !default;
 $code-border-radius: 0.25rem !default;
 $code-border-width: 1px !default;
 $code-border-style: solid !default;
-$code-border-color: #e5e5e5 !default;
+$code-border-color: $color-lightest !default;
 $code-block-padding: 0.75rem !default;
 
 // Form
@@ -151,16 +150,20 @@ $form-item-margin: 1rem !default;
 $label-margin-v: 0.5rem !default;
 $label-margin-h: 0.5rem !default;
 
-$input-border-color: $lightgray-2 !default;
+$input-border-color: $color-lighter !default;
 $input-border-style: solid !default;
 $input-border-width: 1px !default;
 
-$input-background-color: $white !default;
-$input-disabled-background-color: $white-2 !default;
-$text-input-disabled-color: $black !default;
-$text-input-placeholder-color: $lightgray !default;
-$text-input-disabled-placeholder-color: $lightgray !default;
-$input-hover-border-color: $gray-3 !default;
+$input-background-color: $color-white !default;
+$input-disabled-background-color: $color-lightest !default;
+
+$text-input-color: $color-darkest !default;
+$text-input-disabled-color: $color-dark-2 !default;
+
+$text-input-placeholder-color: $light !default;
+$text-input-disabled-placeholder-color: $color-light-2 !default;
+
+$input-hover-border-color: $color-light !default;
 $input-focus-border-color: #41c6a7 !default;
 $input-focus-shadow-color: #41c6a744 !default;
 $input-focus-shadow-size: 0.2rem !default;
@@ -168,11 +171,10 @@ $input-focus-shadow-size: 0.2rem !default;
 $text-input-border-radius: 0.25rem !default;
 $text-input-padding: 0.75em !default;
 $text-input-height: 2.5em !default;
-$text-input-color: black !default;
 
 $select-icon-size: 0.5rem !default;
 $select-icon-width: 3px !default;
-$select-icon-color: #304455;
+$select-icon-color: $color-dark;
 
 $optgroup-margin: 0.5rem !default;
 $option-padding-h: 0.5rem !default;
@@ -187,7 +189,7 @@ $radiocheck-size-medium: 1.25rem !default;
 $radiocheck-size-large: 1.5rem !default;
 $radiocheck-size-huge: 2rem !default;
 $radiocheck-checked-background-color: #41c6a7 !default;
-$radiocheck-color: white !default;
+$radiocheck-color: $color-white !default;
 $radio-border-radius: 50% !default;
 $checkbox-border-radius: 0.15rem !default;
 
@@ -201,7 +203,7 @@ $margin-helper-values: (
   3: 0.75rem,
   4: 1rem,
   5: 1.5rem,
-  6: 2rem
+  6: 2rem,
 ) !default;
 
 $padding-helper-name: p !default;
@@ -212,7 +214,7 @@ $padding-helper-values: (
   3: 0.75rem,
   4: 1rem,
   5: 1.5rem,
-  6: 2rem
+  6: 2rem,
 ) !default;
 
 $border-radius-helper-name: r !default;
@@ -225,7 +227,7 @@ $border-radius-helper-values: (
   5: 1.5rem,
   6: 2rem,
   circlular: 50%,
-  full: 1e10px
+  full: 1e10px,
 ) !default;
 
 $width-helper-name: w !default;
@@ -245,7 +247,7 @@ $display-helper-values: (
   inline-block: inline-block,
   block: block,
   flex: flex,
-  inline-flex: inline-flex
+  inline-flex: inline-flex,
 ) !default;
 $default-display: block !default;
 
@@ -254,7 +256,7 @@ $visibility-helper-name: v !default;
 $overflow-helper-name: o !default;
 $overflow-helper-values: (
   auto: auto,
-  hidden: hidden
+  hidden: hidden,
 ) !default;
 
 $helper-direction-h: h !default;
