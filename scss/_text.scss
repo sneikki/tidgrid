@@ -26,6 +26,10 @@ h6,
   }
 }
 
+.title-bordered {
+  border-bottom: 1px solid $color-lightest;
+}
+
 h1 {
   font-size: $text-size-1;
 }
@@ -80,22 +84,21 @@ a,
 
 code {
   background-color: $code-background-color;
-  white-space: pre;
-  padding: $code-padding;
-  border-radius: $code-border-radius;
   border: $code-border-width $code-border-style $code-border-color;
+  border-radius: $code-border-radius;
+  color: $code-color;
   font-family: $monospace;
-  color: #f6516b;
   font-size: 0.875rem;
   line-height: $code-inline-line-height;
+  padding: $code-padding;
+  white-space: pre;
 }
 
 pre code {
-  padding: $code-block-padding;
   display: block;
-  overflow: auto;
-  font-family: $monospace;
   line-height: $code-block-line-height;
+  overflow: auto;
+  padding: $code-block-padding;
 }
 
 // Text decoration
