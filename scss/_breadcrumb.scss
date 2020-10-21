@@ -1,0 +1,25 @@
+$breadcrumb-separator-icon:     "\f054";
+$breadcrumb-separator-color:    color($light);
+$breadcrumb-separator-margin:   0.75rem;
+$breadcrumb-separator-size:     0.5rem;
+$breadcrumb-separator-font:     'FontAwesome';
+
+.breadcrumb {
+    display:            flex;
+    flex-wrap:          wrap;
+    font-family: 'Titillium Web';
+
+    .breadcrumb-item:not(:first-child)::before {
+        content:        $breadcrumb-separator-icon;
+        color:          $breadcrumb-separator-color;
+        font-family:    $breadcrumb-separator-font;
+        font-size:      $breadcrumb-separator-size;
+        margin-right:   $breadcrumb-separator-margin;
+        vertical-align: middle;
+    }
+
+    .breadcrumb-item::after {
+        content:        "";
+        margin-left:    $breadcrumb-separator-margin;
+    }
+}
