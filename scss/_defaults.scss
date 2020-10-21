@@ -192,7 +192,31 @@ $radio-border-radius: 50% !default;
 $checkbox-border-radius: 0.15rem !default;
 
 // Helpers
-$helper-sizes: (
+
+$margin-helper-name: m !default;
+$margin-helper-values: (
+  0: 0rem,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem
+) !default;
+
+$padding-helper-name: p !default;
+$padding-helper-values: (
+  0: 0rem,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem
+) !default;
+
+$border-radius-helper-name: r !default;
+$border-radius-helper-values: (
   0: 0rem,
   1: 0.25rem,
   2: 0.5rem,
@@ -200,21 +224,45 @@ $helper-sizes: (
   4: 1rem,
   5: 1.5rem,
   6: 2rem,
+  circlular: 50%,
+  full: 1e10px
 ) !default;
-$helper-types: (
-  margin: m,
-  padding: p,
-  border-radius: r,
+
+$width-helper-name: w !default;
+$width-helper-values: (
+  0: 0,
+  one-quarter: 25%,
+  one-third: 100% / 3,
+  half: 50%,
+  two-thirds: 100% / 3 * 2,
+  three-quarters: 75%,
+  full: 100%,
 ) !default;
-$helper-directions: (
-  both: "",
-  vertical: v,
-  horizontal: h,
-  top: t,
-  right: r,
-  bottom: b,
-  left: l,
+
+$display-helper-name: d !default;
+$display-helper-values: (
+  inline: inline,
+  inline-block: inline-block,
+  block: block,
+  flex: flex,
+  inline-flex: inline-flex
 ) !default;
+$default-display: block !default;
+
+$visibility-helper-name: v !default;
+
+$overflow-helper-name: o !default;
+$overflow-helper-values: (
+  auto: auto,
+  hidden: hidden
+) !default;
+
+$helper-direction-h: h !default;
+$helper-direction-v: v !default;
+$helper-direction-top: t !default;
+$helper-direction-right: r !default;
+$helper-direction-bottom: b !default;
+$helper-direction-left: l !default;
 
 $border-width-1: 1px !default;
 $border-width-2: 2px !default;
@@ -222,5 +270,3 @@ $border-width-3: 3px !default;
 $border-width-4: 4px !default;
 $border-width-5: 5px !default;
 $border-style: solid !default;
-
-$rounded-full-value: 1e10px !default;
