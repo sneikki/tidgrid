@@ -24,39 +24,6 @@
   }
 }
 
-// Margin helpers
-@each $name, $value in $margin-helper-values {
-  .#{$margin-helper-name}-#{$name} {
-    margin: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-v}-#{$name} {
-    margin-top: $value;
-    margin-bottom: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-h}-#{$name} {
-    margin-right: $value;
-    margin-left: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-top}-#{$name} {
-    margin-top: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-right}-#{$name} {
-    margin-right: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-bottom}-#{$name} {
-    margin-bottom: $value;
-  }
-
-  .#{$margin-helper-name}#{$helper-direction-left}-#{$name} {
-    margin-left: $value;
-  }
-}
-
 // Padding helpers
 @each $name, $value in $padding-helper-values {
   .#{$padding-helper-name}-#{$name} {
@@ -104,9 +71,67 @@
   }
 }
 
+// Position helpers
+.p-left {
+  float: left;
+}
+
+.p-right {
+  float: right;
+}
+
+.p-clear {
+  clear: both;
+}
+
+.pl-clear {
+  clear: left;
+}
+
+.pr-clear {
+  clear: right;
+}
+
+.p-center {
+  margin: 0 auto;
+}
+
 // Overflow helpers
 @each $name, $value in $overflow-helper-values {
   .#{$overflow-helper-name}-#{$name} {
     overflow: $value;
+  }
+}
+
+// Margin helpers
+@each $name, $value in $margin-helper-values {
+  .#{$margin-helper-name}-#{$name} {
+    margin: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-v}-#{$name} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-h}-#{$name} {
+    margin-right: $value;
+    margin-left: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-top}-#{$name} {
+    margin-top: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-right}-#{$name} {
+    margin-right: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-bottom}-#{$name} {
+    margin-bottom: $value;
+  }
+
+  .#{$margin-helper-name}#{$helper-direction-left}-#{$name} {
+    margin-left: $value;
   }
 }
