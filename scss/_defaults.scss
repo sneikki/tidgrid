@@ -137,12 +137,13 @@ $table-background-color: $color-white-2 !default;
 
 // Code
 $code-background-color: $color-white-3 !default;
-$code-padding: 0.2rem 0.5rem !default;
+$code-color: $color-dark !default;
+$code-padding: 0.2rem 0.33rem !default;
 $code-border-radius: 0.25rem !default;
 $code-border-width: 1px !default;
 $code-border-style: solid !default;
 $code-border-color: $color-lightest !default;
-$code-block-padding: 0.75rem !default;
+$code-block-padding: 0.5rem 0.75rem !default;
 
 // Form
 $form-item-margin: 1rem !default;
