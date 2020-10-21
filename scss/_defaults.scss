@@ -16,7 +16,48 @@ $base-gap: 0.5rem !default;
 $default-gap: 1rem !default;
 $gaps: 8 !default;
 
+// Colors
+$base-color: 0, 0 !default;
+
+$black: 5% !default;
+$black-3: 8% !default;
+$black-2: 10% !default;
+
+$darkest: 14% !default;
+$darker: 21% !default;
+$dark: 28% !default;
+$dark-2: 35% !default;
+
+$light-2: 70% !default;
+$light: 77% !default;
+$lighter: 84% !default;
+$lightest: 91% !default;
+
+$white-2: 96% !default;
+$white-3: 98% !default;
+$white: 100% !default;
+
+$color-black: color($black) !default;
+$color-black-2: color($black-2) !default;
+$color-black-3: color($black-3) !default;
+
+$color-darkest: color($darkest) !default;
+$color-darker: color($darker) !default;
+$color-dark: color($dark) !default;
+$color-dark-2: color($dark-2) !default;
+
+$color-light-2: color($light-2) !default;
+$color-light: color($light) !default;
+$color-lighter: color($lighter) !default;
+$color-lightest: color($lightest) !default;
+
+$color-white-3: color($white-3) !default;
+$color-white-2: color($white-2) !default;
+$color-white: color($white) !default;
+
 // Text
+$text-color: $color-darkest !default;
+
 $line-height: 1.5 !default;
 $paragraph-line-height: 1.5 !default;
 $code-inline-line-height: 1.5 !default;
@@ -80,45 +121,6 @@ $block-margin: 2rem !default;
 $block-margin-small: 1rem !default;
 $block-margin-large: 3rem !default;
 
-// Colors
-$base-color: 0, 0 !default;
-
-$black: 5% !default;
-$black-3: 8% !default;
-$black-2: 10% !default;
-
-$darkest: 14% !default;
-$darker: 21% !default;
-$dark: 28% !default;
-$dark-2: 35% !default;
-
-$light-2: 70% !default;
-$light: 77% !default;
-$lighter: 84% !default;
-$lightest: 91% !default;
-
-$white-2: 96% !default;
-$white-3: 98% !default;
-$white: 100% !default;
-
-$color-black: color($black) !default;
-$color-black-2: color($black-2) !default;
-$color-black-3: color($black-3) !default;
-
-$color-darkest: color($darkest) !default;
-$color-darker: color($darker) !default;
-$color-dark: color($dark) !default;
-$color-dark-2: color($dark-2) !default;
-
-$color-light-2: color($light-2) !default;
-$color-light: color($light) !default;
-$color-lighter: color($lighter) !default;
-$color-lightest: color($lightest) !default;
-
-$color-white-3: color($white-3) !default;
-$color-white-2: color($white-2) !default;
-$color-white: color($white) !default;
-
 // List
 $list-indent-size: 2rem !default;
 $list-bottom-margin: 1em !default;
@@ -137,7 +139,7 @@ $table-background-color: $color-white-2 !default;
 
 // Code
 $code-background-color: $color-white-3 !default;
-$code-color: $color-dark !default;
+$code-color: $text-color !default;
 $code-padding: 0.2rem 0.33rem !default;
 $code-border-radius: 0.25rem !default;
 $code-border-width: 1px !default;
@@ -158,7 +160,7 @@ $input-border-width: 1px !default;
 $input-background-color: $color-white !default;
 $input-disabled-background-color: $color-lightest !default;
 
-$text-input-color: $color-darkest !default;
+$text-input-color: $text-color !default;
 $text-input-disabled-color: $color-dark-2 !default;
 
 $text-input-placeholder-color: $light !default;
@@ -193,6 +195,10 @@ $radiocheck-checked-background-color: #41c6a7 !default;
 $radiocheck-color: $color-white !default;
 $radio-border-radius: 50% !default;
 $checkbox-border-radius: 0.15rem !default;
+
+$figcaption-background-color: $color-white-2 !default;
+$figcaption-color: $text-color !default;
+$figcaption-padding: 0.75rem 1rem !default;
 
 // Helpers
 
@@ -240,6 +246,13 @@ $width-helper-values: (
   two-thirds: 100% / 3 * 2,
   three-quarters: 75%,
   full: 100%,
+) !default;
+
+$position-helper-name: p !default;
+$position-helper-values: (
+  left: left,
+  center: center,
+  right: right
 ) !default;
 
 $display-helper-name: d !default;
