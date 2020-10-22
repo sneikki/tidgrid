@@ -132,6 +132,18 @@
       }
     }
 
+    .break {
+      @include property(enabled) {
+        display: block;
+      }
+
+      @include property(disabled) {
+        display: none;
+      }
+    }
+  }
+
+  @include each-breakpoint {
     .col {
       @include property(auto) {
         flex: 1 0 0;
@@ -183,16 +195,8 @@
       }
     }
 
-    .break {
-      @include property(enabled) {
-        display: block;
-      }
-
-      @include property(disabled) {
-        display: none;
-      }
-    }
   }
+
 
   .col {
     flex: none;
