@@ -12,28 +12,28 @@
 
   @include each-breakpoint() {
     @include property(auto) {
-      & > .col {
+      @include child-col() {
         flex: 1 0 0;
         width: unset;
       }
     }
 
     @include property(wide) {
-      & > .col {
+      @include child-col() {
         flex: none;
         width: 100%;
       }
     }
 
     @include property(shrink) {
-      & > .col {
+      @include child-col() {
         flex: 0 1 0;
         width: unset;
       }
     }
 
     @include property(narrow) {
-      & > .col {
+      @include child-col() {
         flex: none;
         max-width: 100%;
         width: unset;
@@ -51,7 +51,7 @@
     @include each-column() using ($column) {
       $col-width: #{100% / $columns * $column};
       @include property(span-#{$column}) {
-        & > .col {
+        @include child-col() {
           flex: none;
           width: $col-width;
         }
@@ -194,9 +194,7 @@
         }
       }
     }
-
   }
-
 
   .col {
     flex: none;
