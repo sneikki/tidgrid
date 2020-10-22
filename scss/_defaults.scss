@@ -248,6 +248,12 @@ $width-helper-values: (
   full: 100%,
 ) !default;
 
+$height-helper-name: h !default;
+$height-helper-values: (
+  0: 0,
+  full: 100%
+) !default;
+
 $position-helper-name: p !default;
 $position-helper-values: (
   left: left,

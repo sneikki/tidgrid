@@ -71,6 +71,12 @@
   }
 }
 
+@each $name, $value in $height-helper-values {
+  .#{$height-helper-name}-#{$name} {
+    height: $value;
+  }
+}
+
 // Position helpers
 .p-left {
   float: left;
