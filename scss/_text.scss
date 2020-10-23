@@ -94,7 +94,7 @@ code {
   white-space: pre;
 }
 
-pre code {
+code.block {
   display: block;
   line-height: $code-block-line-height;
   overflow: auto;
