@@ -83,6 +83,11 @@
   color: get-color(turquoise);
 }
 
+.color-secondary,
+.color-gray {
+  color: get-invert(gray);
+}
+
 .background-black {
   background-color: $color-black;
 }
@@ -164,6 +169,11 @@
   background-color: get-color(turquoise);
 }
 
+.background-secondary,
+.background-gray {
+  background-color: get-color(gray);
+}
+
 .theme-info {
   background-color: get-color(blue);
   color: get-invert(blue);
@@ -173,15 +183,23 @@
   background-color: get-color(yellow);
   color: get-invert(yellow);
 }
+
 .theme-danger {
   background-color: get-color(red);
   color: get-invert(red);
 }
+
 .theme-success {
   background-color: get-color(green);
   color: get-invert(green);
 }
+
 .theme-primary {
   background-color: get-color(turquoise);
   color: get-invert(turquoise);
+}
+
+.theme-secondary {
+  background-color: get-color(gray);
+  color: get-invert(gray);
 }
