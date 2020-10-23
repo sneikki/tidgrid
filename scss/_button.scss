@@ -2,42 +2,6 @@
 //  _buttons.scss
 //
 
-$colors: (
-  red: build-color-pair(hsl(351, 100%, 64%), $color-white),
-  blue: build-color-pair(hsl(215, 97%, 52%), $color-white),
-  yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
-  green: build-color-pair(hsl(137, 60%, 53%), $color-white),
-  gray: build-color-pair($color-lighter, $color-dark),
-  turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
-) !default;
-
-$primary-button-background: get-color(turquoise) !default;
-$primary-button-color: get-invert(turquoise) !default;
-
-$secondary-button-background: get-color(gray) !default;
-$secondary-button-color: get-invert(gray);
-
-$success-button-background: get-color(green) !default;
-$success-button-color: get-invert(green) !default;
-
-$warning-button-background: get-color(yellow) !default;
-$warning-button-color: get-invert(yellow) !default;
-
-$danger-button-background: get-color(red) !default;
-$danger-button-color: get-invert(red) !default;
-
-$info-button-background: get-color(blue) !default;
-$info-buttoin-color: get-invert(blue) !default;
-
-$button-padding: 0.5em 1em !default;
-$button-border-radius: 0.25em !default;
-$button-border-width: 1px !default;
-$button-border-style: solid !default;
-$button-transition-duration: 0.2s !default;
-$button-cursor: pointer !default;
-$button-disabled-cursor: not-allowed !default;
-$button-disabled-background-color: transparentize($color-white, 0.6) !default;
-
 .button {
   appearance: none;
   user-select: none;
