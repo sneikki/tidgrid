@@ -23,210 +23,85 @@ $colors: (
   turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
 ) !default;
 
+$button-padding: 0.5em 1em !default;
+$button-border-radius: 0.25em !default;
+$button-border-width: 1px !default;
+$button-border-style: solid !default;
+$button-transition-duration: 0.2s !default;
+$button-cursor: pointer !default;
+$button-disabled-cursor: not-allowed !default;
+$button-disabled-background-color: transparentize($color-white, 0.6) !default;
+
 .button {
   appearance: none;
   user-select: none;
   border-color: transparent;
-  border-width: 1px;
-  border-style: solid;
+  border-width: $button-border-width;
+  border-style: $button-border-style;
   outline: none;
-  padding: 0.5em 1em;
-  border-radius: 0.25em;
-  transition: border 0.2s, box-shadow 0.2s, background-color 0.2s;
+  padding: $button-padding;
+  border-radius: $button-border-radius;
+  transition: border, box-shadow, background-color;
+  transition-duration: $button-transition-duration;
 
   &[disabled] {
     position: relative;
-    cursor: not-allowed;
+    cursor: $button-disabled-cursor;
     &::after {
       content: "";
-
       position: absolute;
-      top: -1px;
-      right: -1px;
-      bottom: -1px;
-      left: -1px;
-      background-color: #ffffff88;
+      top: -$button-border-width;
+      right: -$button-border-width;
+      bottom: -$button-border-width;
+      left: -$button-border-width;
+      background-color: $button-disabled-background-color;
     }
   }
 
   &:not([disabled]) {
-      cursor: pointer;
+    cursor: $button-cursor;
   }
+}
 
-  &.button-primary {
-    background-color: get-color(turquoise);
-    color: get-invert(turquoise);
+.button-primary {
+  @include create-button(get-color(turquoise), get-invert(turquoise));
+}
 
-    &:not([disabled]):hover {
-      background-color: darken(get-color(turquoise), 5%);
-    }
+.button-secondary {
+  @include create-button(
+    get-color(gray),
+    get-invert(gray),
+    $outlined-background-color: white,
+    $outlined-foreground-color: get-invert(gray)
+  );
+}
 
-    &:active {
-      background-color: darken(get-color(turquoise), 7.5%) !important;
-    }
+.button-success {
+  @include create-button(
+    get-color(green),
+    get-invert(green)
+  );
+}
 
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(turquoise), 0.6);
-    }
+.button-warning {
+  @include create-button(
+    get-color(yellow),
+    get-invert(yellow),
+    $outlined-background-color: white,
+    $outlined-foreground-color: get-invert(yellow)
+  );
+}
 
-    &.button-outlined {
-      border-color: get-color(turquoise);
-      background-color: get-invert(turquoise);
-      color: get-color(turquoise);
+.button-danger {
+  @include create-button(
+    get-color(red),
+    get-invert(red)
+  );
+}
 
-      &:not([disabled]):hover {
-        background-color: get-color(turquoise);
-        color: get-invert(turquoise);
-      }
-
-      &:active {
-        color: get-invert(turquoise);
-      }
-    }
-  }
-
-  &.button-secondary {
-    background-color: get-color(gray);
-    color: get-invert(gray);
-
-    &:not([disabled]):hover {
-      background-color: darken(get-color(gray), 10%);
-    }
-
-    &:active {
-      background-color: darken(get-color(gray), 20%) !important;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(gray), 0.6);
-    }
-
-    &.button-outlined {
-      border-color: get-color(gray);
-      background-color: white;
-      color: get-invert(gray);
-
-      &:not([disabled]):hover {
-        background-color: get-color(gray);
-        color: get-invert(gray);
-      }
-
-      &:active {
-        color: get-invert(gray);
-      }
-    }
-  }
-
-  &.button-warning {
-    background-color: get-color(yellow);
-    color: get-invert(yellow);
-
-    &:not([disabled]):hover {
-      background-color: darken(get-color(yellow), 15%);
-    }
-
-    &:active {
-      background-color: darken(get-color(yellow), 25%) !important;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(yellow), 0.6);
-    }
-  }
-
-  &.button-danger {
-    background-color: get-color(red);
-    color: get-invert(red);
-
-    &:not([disabled]):hover {
-      background-color: darken(get-color(red), 15%);
-    }
-
-    &:active {
-      background-color: darken(get-color(red), 20%) !important;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(red), 0.6);
-    }
-
-    &.button-outlined {
-      border-color: get-color(red);
-      background-color: white;
-      color: get-color(red);
-
-      &:not([disabled]):hover {
-        background-color: get-color(red);
-        color: get-invert(red);
-      }
-
-      &:active {
-        color: get-invert(red);
-      }
-    }
-  }
-
-  &.button-success {
-    background-color: get-color(green);
-    color: get-invert(green);
-
-    &:not([disabled]):hover {
-      background-color: darken(get-color(green), 10%);
-    }
-
-    &:active {
-      background-color: darken(get-color(green), 20%) !important;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(green), 0.6);
-    }
-
-    &.button-outlined {
-      border-color: get-color(green);
-      background-color: white;
-      color: get-color(green);
-
-      &:not([disabled]):hover {
-        background-color: get-color(green);
-        color: get-invert(green);
-      }
-
-      &:active {
-        color: get-invert(green);
-      }
-    }
-  }
-
-  &.button-info {
-    background-color: get-color(blue);
-    color: get-invert(blue);
-
-    &:not([disabled]):hover {
-      background-color: darken(get-color(blue), 10%);
-    }
-
-    &:active {
-      background-color: darken(get-color(blue), 10%) !important;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2em transparentize(get-color(blue), 0.6);
-    }
-
-    &.button-outlined {
-      border-color: get-color(blue);
-      background-color: white;
-      color: get-color(blue);
-
-      &:not([disabled]):hover {
-        background-color: get-color(blue);
-        color: get-invert(blue);
-      }
-
-      &:active {
-        color: get-invert(blue);
-      }
-    }
-  }
+.button-info {
+  @include create-button (
+    get-color(blue),
+    get-invert(blue)
+  );
 }
