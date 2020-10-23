@@ -13,6 +13,7 @@
   border-radius: $button-border-radius;
   transition: border, box-shadow, background-color;
   transition-duration: $button-transition-duration;
+  cursor: $button-cursor;
 
   &[disabled] {
     position: relative;
@@ -26,10 +27,6 @@
       left: -$button-border-width;
       background-color: $button-disabled-background-color;
     }
-  }
-
-  &:not([disabled]) {
-    cursor: $button-cursor;
   }
 }
 
