@@ -29,10 +29,20 @@
       background-color: $button-disabled-background-color;
     }
   }
+}
 
-  &.button-shadow-none {
-    box-shadow: none !important;
-  }
+.button-shadow-none {
+  box-shadow: none !important;
+}
+
+.button-icon {
+  display: flex;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(0, 0%, 0%, 10%);
 }
 
 a.button {
