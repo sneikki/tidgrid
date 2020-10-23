@@ -18,7 +18,7 @@
 
   // Display helpers
   @each $name, $value in $display-helper-values {
-    .#{$display-helper-name}-#{$name} {
+    @include global-property(#{$display-helper-name}-#{$name}) {
       display: $value;
     }
   }
