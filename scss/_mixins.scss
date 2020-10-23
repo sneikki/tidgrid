@@ -108,3 +108,50 @@ $breakpoint-size: null;
     @content;
   }
 }
+
+@mixin create-button(
+  $background-color,
+  $foreground-color,
+  $hover-color: $background-color,
+  $active-color: $background-color,
+  $focus-color: $background-color,
+  $hover-darken-amount: 10%,
+  $active-darken-amount: 10%,
+  $focus-transparency: 0.6,
+  $create-outlined: true,
+  $border-color: $background-color,
+  $outlined-background-color: $foreground-color,
+  $outlined-foreground-color: $background-color
+) {
+  background-color: $background-color;
+  color: $foreground-color;
+
+  &:not([disabled]):hover {
+    background-color: darken($hover-color, $hover-darken-amount);
+  }
+
+  &:active {
+    background-color: darken($active-color, $active-darken-amount);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2em transparentize($focus-color, $focus-transparency);
+  }
+
+  @if $create-outlined == true {
+    &.button-outlined {
+      border-color: $border-color;
+      background-color: $outlined-background-color;
+      color: $outlined-foreground-color;
+
+      &:not([disabled]):hover {
+        background-color: $background-color;
+        color: $foreground-color;
+      }
+
+      &:active {
+        color: $foreground-color;
+      }
+    }
+  }
+}
