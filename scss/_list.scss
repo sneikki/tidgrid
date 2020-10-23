@@ -2,8 +2,7 @@
 //  _list.scss
 //
 
-ul,
-ol {
+.list {
   margin: 0;
   margin-bottom: $list-bottom-margin;
 
@@ -24,7 +23,7 @@ ol {
   margin-left: $list-indent-size;
 }
 
-li {
+li.list {
   margin-bottom: $list-item-margin;
 
   &:last-child {
