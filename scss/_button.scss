@@ -15,10 +15,10 @@
 }
 
 $colors: (
-  red: build-color-pair(hsl(348, 100%, 61%), $color-white),
-  blue: build-color-pair(hsl(217, 71%, 53%), $color-white),
-  yellow: build-color-pair(hsl(48, 100%, 67%), $color-dark),
-  green: build-color-pair(hsl(141, 53%, 53%), $color-white),
+  red: build-color-pair(hsl(351, 100%, 64%), $color-white),
+  blue: build-color-pair(hsl(215, 97%, 52%), $color-white),
+  yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
+  green: build-color-pair(hsl(137, 60%, 53%), $color-white),
   gray: build-color-pair($color-lighter, $color-dark),
   turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
 ) !default;
