@@ -70,7 +70,7 @@ p,
 
 // Link
 
-a,
+a:not(.button),
 .link {
   color: $link-color;
   text-decoration: none;
