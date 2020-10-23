@@ -7,8 +7,6 @@
     flex-wrap:          wrap;
     font-family: 'Titillium Web';
     line-height: $breadcrumb-line-height;
-    margin-top: -$breadcrumb-line-height / 2;
-    margin-bottom: -$breadcrumb-line-height / 2;
 
     .breadcrumb-item:not(:first-child)::before {
         content:        $breadcrumb-separator-icon;
