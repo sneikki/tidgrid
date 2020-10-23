@@ -31,6 +31,10 @@
   }
 }
 
+a.button {
+  text-decoration: none;
+}
+
 .button-primary {
   @include create-button($primary-button-background, $primary-button-color);
 }
