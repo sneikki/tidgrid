@@ -6,6 +6,7 @@
     display:            flex;
     flex-wrap:          wrap;
     font-family: 'Titillium Web';
+    line-height: $breadcrumb-line-height;
 
     .breadcrumb-item:not(:first-child)::before {
         content:        $breadcrumb-separator-icon;
