@@ -211,7 +211,7 @@ $colors: (
   yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
   green: build-color-pair(hsl(137, 60%, 53%), $color-white),
   gray: build-color-pair($color-lighter, $color-dark),
-  turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
+  turquoise: build-color-pair(hsl(166, 54%, 52%), $color-white),
 ) !default;
 
 $primary-button-background: get-color(turquoise) !default;
