@@ -23,6 +23,24 @@ $colors: (
   turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
 ) !default;
 
+$primary-button-background: get-color(turquoise) !default;
+$primary-button-color: get-invert(turquoise) !default;
+
+$secondary-button-background: get-color(gray) !default;
+$secondary-button-color: get-invert(gray);
+
+$success-button-background: get-color(green) !default;
+$success-button-color: get-invert(green) !default;
+
+$warning-button-background: get-color(yellow) !default;
+$warning-button-color: get-invert(yellow) !default;
+
+$danger-button-background: get-color(red) !default;
+$danger-button-color: get-invert(red) !default;
+
+$info-button-background: get-color(blue) !default;
+$info-buttoin-color: get-invert(blue) !default;
+
 $button-padding: 0.5em 1em !default;
 $button-border-radius: 0.25em !default;
 $button-border-width: 1px !default;
@@ -64,44 +82,44 @@ $button-disabled-background-color: transparentize($color-white, 0.6) !default;
 }
 
 .button-primary {
-  @include create-button(get-color(turquoise), get-invert(turquoise));
+  @include create-button($primary-button-background, $primary-button-color);
 }
 
 .button-secondary {
   @include create-button(
-    get-color(gray),
-    get-invert(gray),
+    $secondary-button-background,
+    $secondary-button-color,
     $outlined-background-color: white,
-    $outlined-foreground-color: get-invert(gray)
+    $outlined-foreground-color: $secondary-button-color
   );
 }
 
 .button-success {
   @include create-button(
-    get-color(green),
-    get-invert(green)
+    $success-button-background,
+    $success-button-color
   );
 }
 
 .button-warning {
   @include create-button(
-    get-color(yellow),
-    get-invert(yellow),
+    $warning-button-background,
+    $warning-button-color,
     $outlined-background-color: white,
-    $outlined-foreground-color: get-invert(yellow)
+    $outlined-foreground-color: $warning-button-color
   );
 }
 
 .button-danger {
   @include create-button(
-    get-color(red),
-    get-invert(red)
+    $danger-button-background,
+    $danger-button-color
   );
 }
 
 .button-info {
   @include create-button (
-    get-color(blue),
-    get-invert(blue)
+    $info-button-background,
+    $info-buttoin-color
   );
 }
