@@ -1,0 +1,232 @@
+//
+//  _buttons.scss
+//
+
+@function build-color-pair($color, $invert) {
+  @return (value: $color, invert: $invert);
+}
+
+@function get-color($color) {
+  @return map-get(map-get($colors, $color), value);
+}
+
+@function get-invert($color) {
+  @return map-get(map-get($colors, $color), invert);
+}
+
+$colors: (
+  red: build-color-pair(hsl(348, 100%, 61%), $color-white),
+  blue: build-color-pair(hsl(217, 71%, 53%), $color-white),
+  yellow: build-color-pair(hsl(48, 100%, 67%), $color-dark),
+  green: build-color-pair(hsl(141, 53%, 53%), $color-white),
+  gray: build-color-pair($color-lighter, $color-dark),
+  turquoise: build-color-pair(hsl(171, 100%, 41%), $color-white),
+) !default;
+
+.button {
+  appearance: none;
+  user-select: none;
+  border-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  transition: border 0.2s, box-shadow 0.2s, background-color 0.2s;
+
+  &[disabled] {
+    position: relative;
+    cursor: not-allowed;
+    &::after {
+      content: "";
+
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      background-color: #ffffff88;
+    }
+  }
+
+  &:not([disabled]) {
+      cursor: pointer;
+  }
+
+  &.button-primary {
+    background-color: get-color(turquoise);
+    color: get-invert(turquoise);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(turquoise), 5%);
+    }
+
+    &:active {
+      background-color: darken(get-color(turquoise), 7.5%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(turquoise), 0.6);
+    }
+
+    &.button-outlined {
+      border-color: get-color(turquoise);
+      background-color: get-invert(turquoise);
+      color: get-color(turquoise);
+
+      &:not([disabled]):hover {
+        background-color: get-color(turquoise);
+        color: get-invert(turquoise);
+      }
+
+      &:active {
+        color: get-invert(turquoise);
+      }
+    }
+  }
+
+  &.button-secondary {
+    background-color: get-color(gray);
+    color: get-invert(gray);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(gray), 10%);
+    }
+
+    &:active {
+      background-color: darken(get-color(gray), 20%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(gray), 0.6);
+    }
+
+    &.button-outlined {
+      border-color: get-color(gray);
+      background-color: white;
+      color: get-invert(gray);
+
+      &:not([disabled]):hover {
+        background-color: get-color(gray);
+        color: get-invert(gray);
+      }
+
+      &:active {
+        color: get-invert(gray);
+      }
+    }
+  }
+
+  &.button-warning {
+    background-color: get-color(yellow);
+    color: get-invert(yellow);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(yellow), 15%);
+    }
+
+    &:active {
+      background-color: darken(get-color(yellow), 25%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(yellow), 0.6);
+    }
+  }
+
+  &.button-danger {
+    background-color: get-color(red);
+    color: get-invert(red);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(red), 15%);
+    }
+
+    &:active {
+      background-color: darken(get-color(red), 20%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(red), 0.6);
+    }
+
+    &.button-outlined {
+      border-color: get-color(red);
+      background-color: white;
+      color: get-color(red);
+
+      &:not([disabled]):hover {
+        background-color: get-color(red);
+        color: get-invert(red);
+      }
+
+      &:active {
+        color: get-invert(red);
+      }
+    }
+  }
+
+  &.button-success {
+    background-color: get-color(green);
+    color: get-invert(green);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(green), 10%);
+    }
+
+    &:active {
+      background-color: darken(get-color(green), 20%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(green), 0.6);
+    }
+
+    &.button-outlined {
+      border-color: get-color(green);
+      background-color: white;
+      color: get-color(green);
+
+      &:not([disabled]):hover {
+        background-color: get-color(green);
+        color: get-invert(green);
+      }
+
+      &:active {
+        color: get-invert(green);
+      }
+    }
+  }
+
+  &.button-info {
+    background-color: get-color(blue);
+    color: get-invert(blue);
+
+    &:not([disabled]):hover {
+      background-color: darken(get-color(blue), 10%);
+    }
+
+    &:active {
+      background-color: darken(get-color(blue), 10%) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2em transparentize(get-color(blue), 0.6);
+    }
+
+    &.button-outlined {
+      border-color: get-color(blue);
+      background-color: white;
+      color: get-color(blue);
+
+      &:not([disabled]):hover {
+        background-color: get-color(blue);
+        color: get-invert(blue);
+      }
+
+      &:active {
+        color: get-invert(blue);
+      }
+    }
+  }
+}
