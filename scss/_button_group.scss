@@ -1,0 +1,18 @@
+//
+//  _button_group.scss
+//
+
+.button-group {
+  border-radius: $button-border-radius;
+  overflow: hidden;
+  display: inline-flex;
+
+  &.row {
+    @include gap(0);
+    display: flex;
+  }
+
+  .button {
+    border-radius: 0;
+  }
+}
