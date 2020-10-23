@@ -237,6 +237,9 @@ $button-transition-duration: 0.2s !default;
 $button-cursor: pointer !default;
 $button-disabled-cursor: not-allowed !default;
 $button-disabled-background-color: transparentize($color-white, 0.6) !default;
+$button-hover-darken-amount: 3.5% !default;
+$button-active-darken-amount: 7% !default;
+$button-focus-transparency: 0.6 !default;
 
 // Helpers
 
