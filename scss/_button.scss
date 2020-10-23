@@ -29,6 +29,10 @@
       background-color: $button-disabled-background-color;
     }
   }
+
+  &.button-shadow-none {
+    box-shadow: none !important;
+  }
 }
 
 a.button {
