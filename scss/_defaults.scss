@@ -55,6 +55,15 @@ $color-white-3: color($white-3) !default;
 $color-white-2: color($white-2) !default;
 $color-white: color($white) !default;
 
+$colors: (
+  red: build-color-pair(hsl(351, 100%, 64%), $color-white),
+  blue: build-color-pair(hsl(215, 97%, 52%), $color-white),
+  yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
+  green: build-color-pair(hsl(137, 60%, 53%), $color-white),
+  gray: build-color-pair($color-lighter, $color-dark),
+  turquoise: build-color-pair(hsl(166, 54%, 52%), $color-white),
+) !default;
+
 // Text
 $text-color: $color-darkest !default;
 
@@ -84,6 +93,9 @@ $title-small: 2.5rem !default;
 $paragraph-margin: 1em !default;
 $paragraph-weight: 400 !default;
 $text-negative-margin: -0.33em !default;
+
+// Link values
+$link-color: get-color(blue);
 
 // Title values
 $title-weight: 600 !default;
@@ -204,15 +216,6 @@ $figcaption-color: $text-color !default;
 $figcaption-padding: 0.75rem 1rem !default;
 
 // Buttons
-
-$colors: (
-  red: build-color-pair(hsl(351, 100%, 64%), $color-white),
-  blue: build-color-pair(hsl(215, 97%, 52%), $color-white),
-  yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
-  green: build-color-pair(hsl(137, 60%, 53%), $color-white),
-  gray: build-color-pair($color-lighter, $color-dark),
-  turquoise: build-color-pair(hsl(166, 54%, 52%), $color-white),
-) !default;
 
 $primary-button-background: get-color(turquoise) !default;
 $primary-button-color: get-invert(turquoise) !default;
