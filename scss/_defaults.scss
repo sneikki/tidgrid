@@ -248,6 +248,14 @@ $button-active-darken-amount: 7% !default;
 $button-focus-transparency: 0.6 !default;
 $button-transition-duration: $transition-duration !default;
 
+// Breadcrumb
+$breadcrumb-separator-icon:     "/";
+$breadcrumb-separator-color:    color($dark-2);
+$breadcrumb-separator-margin:   0.75em;
+$breadcrumb-separator-size:     1em;
+$breadcrumb-separator-font:     'FontAwesome';
+
+
 // Helpers
 
 $margin-helper-name: m !default;
