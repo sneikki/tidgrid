@@ -18,6 +18,7 @@
   &[disabled] {
     position: relative;
     cursor: $button-disabled-cursor;
+    
     &::after {
       content: "";
       position: absolute;

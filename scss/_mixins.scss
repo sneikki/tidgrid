@@ -115,7 +115,7 @@ $breakpoint-size: null;
   $hover-color: $background-color,
   $active-color: $background-color,
   $focus-color: $background-color,
-  $hover-darken-amount: 10%,
+  $hover-darken-amount: 5%,
   $active-darken-amount: 10%,
   $focus-transparency: 0.6,
   $create-outlined: true,
@@ -131,7 +131,7 @@ $breakpoint-size: null;
   }
 
   &:active {
-    background-color: darken($active-color, $active-darken-amount);
+    background-color: darken($active-color, $active-darken-amount) !important;
   }
 
   &:focus {
