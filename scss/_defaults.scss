@@ -60,7 +60,7 @@ $colors: (
   blue: build-color-pair(hsl(215, 97%, 52%), $color-white),
   yellow: build-color-pair(hsl(54, 98%, 53%), $color-dark),
   green: build-color-pair(hsl(137, 60%, 53%), $color-white),
-  gray: build-color-pair($color-lighter, $color-dark),
+  gray: build-color-pair($color-lightest, $color-dark),
   turquoise: build-color-pair(hsl(166, 54%, 52%), $color-white),
 ) !default;
 
