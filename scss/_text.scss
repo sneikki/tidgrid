@@ -220,6 +220,10 @@ code.block {
   font-size: $text-size-8;
 }
 
+.text-size-9 {
+  font-size: $text-size-9;
+}
+
 @include each-breakpoint() {
   // Text alignment
 
