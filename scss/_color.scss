@@ -58,6 +58,31 @@
   color: $color-white;
 }
 
+.color-turquoise,
+.color-primary {
+  color: get-color(red);
+}
+
+.color-blue,
+.color-info {
+  color: get-color(blue);
+}
+
+.color-yellow,
+.color-warning {
+  color: get-color(yellow);
+}
+
+.color-green,
+.color-success {
+  color: get-color(green);
+}
+
+.color-turquoise,
+.color-primary {
+  color: get-color(turquoise);
+}
+
 .background-black {
   background-color: $color-black;
 }
@@ -112,4 +137,51 @@
 
 .background-white-3 {
   background-color: $color-white-3;
+}
+
+.background-danger,
+.background-red {
+  background-color: get-color(red);
+}
+
+.background-info,
+.background-blue {
+  background-color: get-color(blue);
+}
+
+.background-warning,
+.background-yellow {
+  background-color: get-color(yellow);
+}
+
+.background-success,
+.background-green {
+  background-color: get-color(green);
+}
+
+.background-primary,
+.background-turquoise {
+  background-color: get-color(turquoise);
+}
+
+.theme-info {
+  background-color: get-color(blue);
+  color: get-invert(blue);
+}
+
+.theme-warning {
+  background-color: get-color(yellow);
+  color: get-invert(yellow);
+}
+.theme-danger {
+  background-color: get-color(red);
+  color: get-invert(red);
+}
+.theme-success {
+  background-color: get-color(green);
+  color: get-invert(green);
+}
+.theme-primary {
+  background-color: get-color(turquoise);
+  color: get-invert(turquoise);
 }
