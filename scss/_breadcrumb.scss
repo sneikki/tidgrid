@@ -22,3 +22,8 @@
         margin-left:    $breadcrumb-separator-margin;
     }
 }
+
+ol.breadcrumb,
+ul.breadcrumb {
+    list-style-type: none;
+}
