@@ -2,18 +2,6 @@
 //  _buttons.scss
 //
 
-@function build-color-pair($color, $invert) {
-  @return (value: $color, invert: $invert);
-}
-
-@function get-color($color) {
-  @return map-get(map-get($colors, $color), value);
-}
-
-@function get-invert($color) {
-  @return map-get(map-get($colors, $color), invert);
-}
-
 $colors: (
   red: build-color-pair(hsl(351, 100%, 64%), $color-white),
   blue: build-color-pair(hsl(215, 97%, 52%), $color-white),

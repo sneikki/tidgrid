@@ -5,3 +5,15 @@
 @function color($level, $color: $base-color) {
   @return hsl(nth($color, 1), nth($color, 2), $level);
 }
+
+@function build-color-pair($color, $invert) {
+  @return (value: $color, invert: $invert);
+}
+
+@function get-color($color) {
+  @return map-get(map-get($colors, $color), value);
+}
+
+@function get-invert($color) {
+  @return map-get(map-get($colors, $color), invert);
+}
