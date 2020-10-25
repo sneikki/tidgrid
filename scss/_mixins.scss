@@ -12,7 +12,7 @@
   margin-top: -$size;
   margin-left: -$size;
 
-  @include child-col() {
+  > * {
     padding-top: $size;
     padding-left: $size;
   }
@@ -21,7 +21,7 @@
 @mixin gap-h($size) {
   margin-left: -$size;
 
-  @include child-col() {
+  > * {
     padding-left: $size;
   }
 }
@@ -29,7 +29,7 @@
 @mixin gap-v($size) {
   margin-top: -$size;
 
-  @include child-col() {
+  > * {
     padding-top: $size;
   }
 }
