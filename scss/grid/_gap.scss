@@ -18,4 +18,16 @@
       @include gap-h($gap-size);
     }
   }
+
+  @include global-property(gap-none) {
+    @include gap(0);
+  }
+
+  @include global-property(gap-v-none) {
+    @include gap-v(0);
+  }
+
+  @include global-property(gap-h-none) {
+    @include gap-h(0);
+  }
 }
