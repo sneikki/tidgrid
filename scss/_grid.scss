@@ -2,51 +2,6 @@
 //  _grid.scss
 //
 
-@mixin col-auto() {
-  flex: 1 0 0;
-}
-
-@mixin col-wide() {
-  flex: none;
-  width: 100%,
-}
-
-@mixin col-shrink() {
-  flex: 0 1 0;
-  width: unset;
-}
-
-@mixin col-narrow() {
-  flex: none;
-  max-width: 100%;
-  width: unset;
-}
-
-@mixin col-span($width) {
-  flex: none;
-  width: $width;
-}
-
-@mixin col-offset($width) {
-  margin-left: $width;
-}
-
-@mixin col-move($position) {
-  @if $position == first {
-    order: -2;
-    
-    & + .break {
-      order: -1;
-    }
-  } @else {
-    order: 2;
-  
-    & + .break {
-      order: 1;
-    }
-  }
-}
-
 .row {
   box-sizing: border-box;
   display: flex;
