@@ -93,7 +93,7 @@ code {
   white-space: pre;
 }
 
-code.block {
+code.multiline {
   display: block;
   line-height: $code-block-line-height;
   overflow: auto;
