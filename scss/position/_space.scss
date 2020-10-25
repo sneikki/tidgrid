@@ -3,15 +3,15 @@
 //
 
 @include each-breakpoint() {
-    @include global-property(space-between) {
+    @include global-property(row-space-between) {
         justify-content: space-between;
     }
 
-    @include global-property(space-around) {
+    @include global-property(row-space-around) {
         justify-content: space-around;
     }
 
-    @include global-property(space-evenly) {
+    @include global-property(row-space-evenly) {
         justify-content: space-evenly;
     }
 }
