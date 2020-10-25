@@ -6,7 +6,6 @@
 @import "utils";
 @import "defaults";
 @import "mixins";
-@import "grid/main";
 @import "layout";
 @import "text";
 @import "image";
@@ -19,4 +18,5 @@
 @import 'figure';
 @import 'button';
 @import 'button_group';
+@import "grid/main";
 @import "helpers";
