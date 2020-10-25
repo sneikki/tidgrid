@@ -1,0 +1,17 @@
+//
+//  _space.scss
+//
+
+@include each-breakpoint() {
+    @include global-property(space-between) {
+        justify-content: space-between;
+    }
+
+    @include global-property(space-around) {
+        justify-content: space-around;
+    }
+
+    @include global-property(space-evenly) {
+        justify-content: space-evenly;
+    }
+}

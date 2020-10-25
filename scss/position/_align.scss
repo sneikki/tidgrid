@@ -1,0 +1,29 @@
+//
+//  _align.scss
+//
+
+@include each-breakpoint() {
+    @include global-property(align-left) {
+        justify-content: flex-start;
+    }
+
+    @include global-property(align-center) {
+        justify-content: flex-center;
+    }
+
+    @include global-property(align-right) {
+        justify-content: flex-end;
+    }
+
+    @include global-property(align-top) {
+        align-items: flex-start;
+    }
+
+    @include global-property(align-middle) {
+        align-items: flex-start;
+    }
+
+    @include global-property(align-bottom) {
+        align-items: flex-start;
+    }
+}

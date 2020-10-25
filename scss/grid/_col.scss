@@ -1,0 +1,47 @@
+//
+//  _col.scss
+//
+
+.col {
+  flex: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@include each-breakpoint() {
+  @include global-property(col-auto) {
+    @include col-auto();
+  }
+
+  @include global-property(col-wide) {
+    @include col-wide();
+  }
+
+  @include global-property(col-shrink) {
+    @include col-shrink();
+  }
+
+  @include global-property(col-narrow) {
+    @include col-narrow();
+  }
+
+  @include each-column() using ($column) {
+    @include global-property(col-span-#{$column}) {
+      $column-width: #{100% / $columns * $column};
+      @include col-span($column-width);
+    }
+
+    @include global-property(col-offset-#{$column - 1}) {
+      $offset-width: #{100% / $columns * ($column - 1)};
+      @include col-offset($offset-width);
+    }
+  }
+
+  @include global-property(col-first) {
+    @include col-move(first);
+  }
+
+  @include global-property(col-last) {
+    @include col-move(last);
+  }
+}
