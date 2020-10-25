@@ -1,0 +1,21 @@
+//
+//  _gap.scss
+//
+
+@include each-breakpoint() {
+  @for $gap from 1 through $gaps {
+    $gap-size: $base-gap * $gap;
+
+    @include global-property(gap-#{$gap}) {
+      @include gap($gap-size);
+    }
+
+    @include global-property(gap-v-#{$gap}) {
+      @include gap-v($gap-size);
+    }
+
+    @include global-property(gap-h-#{$gap}) {
+      @include gap-h($gap-size);
+    }
+  }
+}
