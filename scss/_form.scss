@@ -49,7 +49,7 @@
   border-width: $input-border-width;
   color: $text-input-color;
   background-color: $input-background-color;
-  transition: border-color, box-shadow;
+  transition: box-shadow;
   transition-duration: $form-transition-duration;
 
   &:hover {
