@@ -60,4 +60,12 @@
   @include global-property(row-wrap-none) {
     flex-wrap: nowrap;
   }
+
+  @include global-property(row-flip) {
+    flex-direction: column;
+  }
+
+  @include global-property(row-flip-none) {
+    flex-direction: row;
+  }
 }
