@@ -1,0 +1,62 @@
+//
+//  _tag.scss
+//
+
+$tag-padding: 0.1em 0.5em;
+$tag-wide-padding: 0.25rem 1rem;
+$tag-border-radius: 0.25em;
+$tags-gap: 0.75em;
+
+.tag {
+    padding: $tag-padding;
+    border-radius: $tag-border-radius;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+
+    .button-icon {
+        font-size: 0.75em;
+    
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+
+        &:first-child {
+            margin-right: 0.5em;
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+            margin-left: 0.5em;
+        }
+    }
+}
+
+.tag-wide {
+    padding: $tag-wide-padding;
+}
+
+.tag-container {
+    display: inline-flex;
+    border-radius: $tag-border-radius;
+    overflow: hidden;
+
+    .tag {
+        border-radius: 0;
+    }
+}
+
+.tags {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    margin-left: -$tags-gap !important;
+    margin-top: -$tags-gap !important;
+
+    > .tag, > .tag-container {
+        margin-left: $tags-gap;
+        margin-top: $tags-gap;
+        text-align: center;
+    }
+}
