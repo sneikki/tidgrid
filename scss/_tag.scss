@@ -32,31 +32,20 @@ $tags-gap: 0.75em;
     }
 }
 
-.tag-wide {
-    padding: $tag-wide-padding;
-}
-
 .tag-container {
-    display: inline-flex;
-    border-radius: $tag-border-radius;
-    overflow: hidden;
+    display: flex;
 
     .tag {
         border-radius: 0;
     }
-}
 
-.tags {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+    .tag:first-child {
+        border-bottom-left-radius: $tag-border-radius;
+        border-top-left-radius: $tag-border-radius;
+    }
 
-    margin-left: -$tags-gap !important;
-    margin-top: -$tags-gap !important;
-
-    > .tag, > .tag-container {
-        margin-left: $tags-gap;
-        margin-top: $tags-gap;
-        text-align: center;
+    .tag:last-child {
+        border-top-right-radius: $tag-border-radius;
+        border-bottom-right-radius: $tag-border-radius;
     }
 }
