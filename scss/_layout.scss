@@ -25,7 +25,7 @@
 
 @each $name, $size in $breakpoints {
   @include min-viewport($size) {
-    .container\:#{$name} {
+    .container#{$breakpoint-separator}#{$name} {
       max-width: $size;
     }
   }

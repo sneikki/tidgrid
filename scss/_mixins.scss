@@ -49,7 +49,7 @@ $breakpoint-size: null;
       $breakpoint-name: "" !global;
       @content;
     } @else {
-      $breakpoint-name: "\\:" + $name !global;
+      $breakpoint-name: $breakpoint-separator + $name !global;
       @media only screen and (min-width: $size) {
         @content();
       }
