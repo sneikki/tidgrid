@@ -4,5 +4,9 @@
   "main": "src/tidgrid.scss",
   "repository": "git@github.com:varvikko/Tidgrid.git",
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard-scss": "^6.1.0"
+  }
 }
