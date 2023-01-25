@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/tidgrid-logo.svg">
+    <img src="assets/logo.svg">
 </p>
 
 # Tidgrid
