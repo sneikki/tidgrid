@@ -9,6 +9,7 @@
     "lint:scss": "stylelint \"src/**/*.scss\""
   },
   "devDependencies": {
+    "sass": "^1.57.1",
     "stylelint": "^14.16.1",
     "stylelint-config-standard-scss": "^6.1.0"
   }
