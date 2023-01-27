@@ -14,7 +14,11 @@ Run `yarn build` to build Tidgrid from source. The build will be minimized,
 and source map is generated automatically. To compile with more options,
 please refer to the next section.
 
+The compiled CSS files will be placed under the `build` directory.
 To remove all generated build files and directories, run `yarn clean`.
+
+Please note that the files under build are only updated within
+releases. To get the unstable version, you need to build it from the source.
 
 ## Compiling
 
