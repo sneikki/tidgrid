@@ -6,7 +6,7 @@
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn compile-minimized",
+    "build": "yarn compile:minimized",
     "compile": "sass src/tidgrid.scss build/tidgrid.css",
     "compile:minimized": "yarn compile --style=compressed",
     "watch": "yarn compile --watch",
