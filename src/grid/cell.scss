@@ -2,11 +2,12 @@
  * grid/row.scss
  */
 
+@import "stack";
+
 .cell {
     /* When no breakpoint modifier is active, the default is to use stacked layout.
      * Cells are placed vertically, meaning 100% width with no flex. */
-    flex: none;
-    width: 100%;
+    @include stack();
 
     box-sizing: border-box;
 }
