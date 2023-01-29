@@ -12,6 +12,7 @@
     "watch": "yarn compile --watch",
     "repl:scss": "sass --interactive",
     "lint:scss": "stylelint \"src/**/*.scss\"",
+    "fix:scss": "stylelint \"src/**/*.scss\"",
     "clean": "rm -r build/"
   },
   "devDependencies": {

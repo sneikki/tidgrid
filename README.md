@@ -32,4 +32,5 @@ Run `yarn repl:scss` to run an interactive SassScript REPL session.
 ## Checking code style
 
 There is a linter configured for this project. To use it,
-run `yarn lint:scss`.
+run `yarn lint:scss`. To fix style issues that may be automatically
+fixed, run `yarn fix:scss`.
