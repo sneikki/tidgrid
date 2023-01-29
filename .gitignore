@@ -1,4 +1,5 @@
-# Files related to the package manager
+# Package manager
+node_modules/
 .yarn/
 .pnp.cjs
 .pnp.loader.mjs
