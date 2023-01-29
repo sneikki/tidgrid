@@ -2,9 +2,15 @@
  * grid/row.scss
  */
 
-@import "stack";
+@import "mode";
 
-.row {
+@mixin child-cell() {
+  & > .tg-cell {
+    @content;
+  }
+}
+
+.tg-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12,6 +18,26 @@
   box-sizing: border-box;
 }
 
-.row.stack > .cell {
-  @include stack();
+.tg-row.tg-auto {
+  @include child-cell() {
+    @include auto();
+  }
+}
+
+.tg-row.tg-stacked {
+  @include child-cell() {
+    @include stacked();
+  }
+}
+
+.tg-row.tg-thin {
+  @include child-cell() {
+    @include thin();
+  }
+}
+
+.tg-row.tg-fill {
+  @include child-cell() {
+    @include fill();
+  }
 }
