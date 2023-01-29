@@ -13,32 +13,30 @@
 
 .tg-row {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
+  flex-flow: row wrap;
   box-sizing: border-box;
 }
 
-@include variants-for("tg-auto") {
-  @include child-cell() {
-    @include auto();
+@include variants-for(tg-auto) {
+  @include child-cell {
+    @include auto;
   }
 }
 
-@include variants-for("tg-stacked") {
-  @include child-cell() {
-    @include stacked();
+@include variants-for(tg-stacked) {
+  @include child-cell {
+    @include stacked;
   }
 }
 
-@include variants-for("tg-thin") {
-  @include child-cell() {
-    @include thin();
+@include variants-for(tg-thin) {
+  @include child-cell {
+    @include thin;
   }
 }
 
-@include variants-for("tg-fill") {
-  @include child-cell() {
-    @include fill();
+@include variants-for(tg-fill) {
+  @include child-cell {
+    @include fill;
   }
 }
