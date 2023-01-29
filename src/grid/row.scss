@@ -3,6 +3,7 @@
  */
 
 @import "mode";
+@import "../variant";
 
 @mixin child-cell() {
   & > .tg-cell {
@@ -18,25 +19,25 @@
   box-sizing: border-box;
 }
 
-.tg-row.tg-auto {
+@include variants-for("tg-auto") {
   @include child-cell() {
     @include auto();
   }
 }
 
-.tg-row.tg-stacked {
+@include variants-for("tg-stacked") {
   @include child-cell() {
     @include stacked();
   }
 }
 
-.tg-row.tg-thin {
+@include variants-for("tg-thin") {
   @include child-cell() {
     @include thin();
   }
 }
 
-.tg-row.tg-fill {
+@include variants-for("tg-fill") {
   @include child-cell() {
     @include fill();
   }
