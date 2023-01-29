@@ -1620,7 +1620,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.19":
+"postcss@npm:^8.4.19, postcss@npm:^8.4.21":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:
@@ -2194,6 +2194,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tidgrid@workspace:."
   dependencies:
+    postcss: ^8.4.21
     sass: ^1.57.1
     stylelint: ^14.16.1
     stylelint-config-standard-scss: ^6.1.0

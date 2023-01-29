@@ -15,6 +15,7 @@
     "clean": "rm -r build/"
   },
   "devDependencies": {
+    "postcss": "^8.4.21",
     "sass": "^1.57.1",
     "stylelint": "^14.16.1",
     "stylelint-config-standard-scss": "^6.1.0"
