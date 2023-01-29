@@ -1,2 +1,4 @@
-node_modules
-dev/
+# Files related to the package manager
+.yarn/
+.pnp.cjs
+.pnp.loader.mjs

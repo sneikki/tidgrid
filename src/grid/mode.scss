@@ -1,0 +1,23 @@
+/*
+ * grid/mode.scss
+ */
+
+@mixin auto() {
+  flex: 1 0 0;
+  width: unset;
+}
+
+@mixin stacked() {
+  flex: none;
+  width: 100%;
+}
+
+@mixin thin() {
+  flex: 0 1 0;
+  width: unset;
+}
+
+@mixin fill() {
+  flex: 1 0 0;
+  width: unset;
+}

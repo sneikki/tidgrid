@@ -1,37 +1,24 @@
 {
   "name": "tidgrid",
-  "version": "0.0.1",
-  "description": "Modern CSS grid",
-  "main": "dist/tidgrid.min.css",
-  "scripts": {
-    "start": "webpack-dev-server",
-    "transpile": "gulp transpile",
-    "minify": "gulp minify",
-    "build": "gulp build",
-    "transpile:watch": "gulp transpile:watch",
-    "build:watch": "gulp build:watch",
-    "clean": "gulp clean"
-  },
-  "author": "Nuutti Varvikko",
+  "version": "1.0.0",
+  "main": "src/tidgrid.scss",
+  "repository": "git@github.com:varvikko/Tidgrid.git",
+  "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "css-loader": "^4.3.0",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-dart-sass": "^1.0.2",
-    "gulp-rename": "^2.0.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "html-webpack-plugin": "^4.5.0",
-    "node-sass": "^4.14.1",
-    "normalize.css": "^8.0.1",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+  "scripts": {
+    "build": "yarn compile:minimized",
+    "compile": "sass src/tidgrid.scss build/tidgrid.css",
+    "compile:minimized": "yarn compile --style=compressed",
+    "watch": "yarn compile --watch",
+    "repl:scss": "sass --interactive",
+    "lint:scss": "stylelint \"src/**/*.scss\"",
+    "fix:scss": "stylelint \"src/**/*.scss\"",
+    "clean": "rm -r build/"
   },
-  "dependencies": {
-    "sass-loader": "^10.0.2"
+  "devDependencies": {
+    "postcss": "^8.4.21",
+    "sass": "^1.57.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard-scss": "^6.1.0"
   }
 }
