@@ -1,0 +1,23 @@
+$breakpoints: (
+  xs: 36em, /* = 576 px */
+  sm: 48em, /* = 768 px */
+  md: 64em, /* = 1024 px */
+  lg: 75em, /* = 1200 px */
+  xl: 90em, /* = 1440 px */
+) !default;
+
+@mixin variants-for($name) {
+  /* Generate the variant that is active when
+   * no variant with breakpoint is is effect. */
+  .#{$name} {
+    @content();
+  }
+
+  @each $key, $value in $breakpoints {
+    @media only screen and (min-width: $value) {
+      .#{$key}\:#{$name} {
+        @content();
+      }
+    }
+  }
+}
