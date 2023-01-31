@@ -6,14 +6,7 @@
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn compile:minimized",
-    "compile": "sass src/tidgrid.scss build/tidgrid.css",
-    "compile:minimized": "yarn compile --style=compressed",
-    "watch": "yarn compile --watch",
-    "repl:scss": "sass --interactive",
-    "lint:scss": "stylelint \"src/**/*.scss\"",
-    "fix:scss": "stylelint \"src/**/*.scss\"",
-    "clean": "rm -r build/"
+    "build": "make compile"
   },
   "devDependencies": {
     "postcss": "^8.4.21",
