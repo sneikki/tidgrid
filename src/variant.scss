@@ -6,7 +6,7 @@ $breakpoints: (
   xl: 90em, /* = 1440 px */
 ) !default;
 
-@mixin generate-variants {
+@mixin generate {
   /* Generate the variant that is active when
    * no variant with breakpoint is is effect. */
   $breakpoint: null !global;

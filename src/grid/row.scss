@@ -2,8 +2,8 @@
  * grid/row.scss
  */
 
-@import "mode";
-@import "../variant";
+@use "mode";
+@use "../variant";
 
 @mixin child-cell() {
   & > .tg-cell {
@@ -11,34 +11,34 @@
   }
 }
 
-@include generate-variants {
-  @include varying(tg-row) {
-    display: flex;
-    flex-flow: row wrap;
-    box-sizing: border-box;
-  }
+.tg-row {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+}
 
-  @include varying(tg-auto) {
+@include variant.generate {
+  @include variant.varying(tg-auto) {
     @include child-cell {
-      @include auto;
+      @include mode.auto;
     }
   }
 
-  @include varying(tg-stacked) {
+  @include variant.varying(tg-stacked) {
     @include child-cell {
-      @include stacked;
+      @include mode.stacked;
     }
   }
 
-  @include varying(tg-thin) {
+  @include variant.varying(tg-thin) {
     @include child-cell {
-      @include thin;
+      @include mode.thin;
     }
   }
 
-  @include varying(tg-fill) {
+  @include variant.varying(tg-fill) {
     @include child-cell {
-      @include fill;
+      @include mode.fill;
     }
   }
 }
