@@ -1,7 +1,7 @@
 compile: src/tidgrid.scss
 	npx sass src/tidgrid.scss build/tidgrid.css
 
-compile-minimized:
+compile-minimized: src/tidgrid.scss
 	make compile -- --style=compressed
 
 .PHONY: lint-scss
