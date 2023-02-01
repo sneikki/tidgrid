@@ -2,5 +2,4 @@
  * tidgrid.scss
  */
 
-@import "grid/row";
-@import "grid/cell";
+@use "grid";

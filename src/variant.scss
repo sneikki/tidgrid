@@ -6,18 +6,28 @@ $breakpoints: (
   xl: 90em, /* = 1440 px */
 ) !default;
 
-@mixin variants-for($name) {
+@mixin generate {
   /* Generate the variant that is active when
    * no variant with breakpoint is is effect. */
-  .#{$name} {
-    @content();
-  }
+  $breakpoint: null !global;
+  @content;
 
   @each $key, $value in $breakpoints {
     @media only screen and (min-width: $value) {
-      .#{$key}\:#{$name} {
-        @content();
-      }
+      $breakpoint: $key !global;
+      @content;
     }
+  }
+}
+
+@mixin varying($name) {
+  $class-name: $name;
+
+  @if $breakpoint {
+    $class-name: #{$breakpoint}\:#{$name};
+  }
+
+  .#{$class-name} {
+    @content;
   }
 }
