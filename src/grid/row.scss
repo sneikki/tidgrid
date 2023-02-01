@@ -11,32 +11,34 @@
   }
 }
 
-.tg-row {
-  display: flex;
-  flex-flow: row wrap;
-  box-sizing: border-box;
-}
-
-@include variants-for(tg-auto) {
-  @include child-cell {
-    @include auto;
+@include generate-variants {
+  @include varying(tg-row) {
+    display: flex;
+    flex-flow: row wrap;
+    box-sizing: border-box;
   }
-}
 
-@include variants-for(tg-stacked) {
-  @include child-cell {
-    @include stacked;
+  @include varying(tg-auto) {
+    @include child-cell {
+      @include auto;
+    }
   }
-}
 
-@include variants-for(tg-thin) {
-  @include child-cell {
-    @include thin;
+  @include varying(tg-stacked) {
+    @include child-cell {
+      @include stacked;
+    }
   }
-}
 
-@include variants-for(tg-fill) {
-  @include child-cell {
-    @include fill;
+  @include varying(tg-thin) {
+    @include child-cell {
+      @include thin;
+    }
+  }
+
+  @include varying(tg-fill) {
+    @include child-cell {
+      @include fill;
+    }
   }
 }
