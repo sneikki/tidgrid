@@ -4,7 +4,7 @@
 
 # Tidgrid
 
-Modern CSS framework to ease front-end development.
+Tiny and expressive CSS framework built around Flexbox to simplify your layouts.
 
 # Quick usage
 
