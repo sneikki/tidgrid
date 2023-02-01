@@ -10,12 +10,12 @@ Tiny and expressive CSS framework built around Flexbox to simplify your layouts.
 
 ## Building
 
-Run `npm run build` to build Tidgrid from source. The build will be minimized,
+Install dependencies by running `npm install`. Then run `npm run build` or `make build` to build Tidgrid from source. The build will be minimized,
 and source map is generated automatically. To compile with more options,
 please refer to the next section.
 
 The compiled CSS files will be placed under the `build` directory.
-To remove all generated build files and directories, run `npm run clean`.
+To remove all generated build files and directories, run `make clean`.
 
 Please note that the files under build are only updated within
 releases. To get the unstable version, you need to build it from the source.
@@ -24,13 +24,10 @@ releases. To get the unstable version, you need to build it from the source.
 
 Run `npm run compile` to generate the CSS files. Note that the resulting files
 are provided as-is, having comments in place and no minimizing. To strip
-comments and minimize the result, run `npm run compile:minimized`.
-
-To compile automatically after changes to source files, run `npm run watch`.
-Run `npm run repl:scss` to run an interactive SassScript REPL session. 
+comments and minimize the result, run `make compile-minimized`.
 
 ## Checking code style
 
 There is a linter configured for this project. To use it,
-run `npm run lint:scss`. To fix style issues that may be automatically
-fixed, run `npm run fix:scss`.
+run `make lint-scss`. To fix style issues that may be automatically
+fixed, run `make fix-scss`.
