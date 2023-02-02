@@ -17,3 +17,7 @@ fix-scss:
 .PHONY: clean
 clean:
 	rm -rf build/
+
+.PHONY: test
+test:
+	npx jest
