@@ -1,0 +1,36 @@
+/*
+ * test/string.spec.scss
+ */
+
+@use "true" as *;
+@use "util/string";
+
+@include describe("string.join") {
+  @include it("should join a list containing a single strings correctly") {
+    @include assert-equal(
+      string.join(("tidgrid")),
+      "tidgrid"
+    );
+  }
+
+  @include it("should join a list containing multiple strings correctly") {
+    @include assert-equal(
+      string.join(("tid", "grid")),
+      "tidgrid"
+    );
+  }
+}
+
+@include describe("string.replace-first") {
+  @include it("should replace the pattern that occurs once") {
+    @include assert-equal(
+      string.replace-first("hello world", "world", "tidgrid"),
+      "hello tidgrid"
+    );
+
+    @include assert-equal(
+      string.replace-first("1/2", "/", "\\/"),
+      "1\\/2"
+    );
+  }
+}
