@@ -52,6 +52,17 @@ $fractions: (
     }
   }
 
+  @each $name, $value in $fractions {
+    $cell-width: math.percentage($value);
+    $escaped-name: string.replace-first($name, "/", "\\/");
+
+    @include variant.varying(tg-frac-#{$escaped-name}) {
+      @include child-cell {
+        width: $cell-width;
+      }
+    }
+  }
+
   @each $row-size in $row-sizes {
     .tg-size-#{$row-size} {
       @for $column from 1 through $row-size {
@@ -62,17 +73,6 @@ $fractions: (
             width: $cell-width;
           }
         }
-      }
-    }
-  }
-
-  @each $name, $value in $fractions {
-    $cell-width: math.percentage($value);
-    $escaped-name: string.replace($name, "/", "\\/");
-
-    @include variant.varying(tg-frac-#{$escaped-name}) {
-      @include child-cell {
-        width: $cell-width;
       }
     }
   }
