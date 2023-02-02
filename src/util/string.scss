@@ -1,0 +1,23 @@
+/*
+ * util/string.scss
+ */
+
+@use "sass:string";
+
+@function replace($string, $pattern, $replacement) {
+  $length: string.length($pattern);
+  $index: 0;
+
+  @while true {
+    $index: string.index(string.slice($string, $index), $pattern);
+
+    @if not $index {
+      @return $string;
+    }
+
+    $string: string.slice($string, 0, $index - 1) +
+      $replacement +
+      string.slice($string, $index + $length);
+    $index: $index + $length + 1;
+  }
+}

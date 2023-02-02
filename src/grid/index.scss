@@ -1,2 +1,6 @@
-@use "row";
-@use "cell";
+/*
+ * grid/index.scss
+ */
+
+@forward "row";
+@forward "cell";

@@ -2,8 +2,18 @@
  * grid/row.scss
  */
 
+@use "sass:math";
+@use "util/string";
 @use "mode";
-@use "../variant";
+@use "variant";
+
+$row-sizes: (12, 16) !default;
+$fractions: (
+  "1/2": math.div(1, 2),
+  "1/3": math.div(1, 3),
+  "1/4": math.div(1, 4),
+  "2/3": math.div(2, 3),
+) !default;
 
 @mixin child-cell() {
   & > .tg-cell {
@@ -39,6 +49,31 @@
   @include variant.varying(tg-fill) {
     @include child-cell {
       @include mode.fill;
+    }
+  }
+
+  @each $row-size in $row-sizes {
+    .tg-size-#{$row-size} {
+      @for $column from 1 through $row-size {
+        $cell-width: #{math.div(100%, $row-size) * $column};
+
+        @include variant.varying(tg-span-#{$column}) {
+          @include child-cell {
+            width: $cell-width;
+          }
+        }
+      }
+    }
+  }
+
+  @each $name, $value in $fractions {
+    $cell-width: math.percentage($value);
+    $escaped-name: string.replace($name, "/", "\\/");
+
+    @include variant.varying(tg-frac-#{$escaped-name}) {
+      @include child-cell {
+        width: $cell-width;
+      }
     }
   }
 }
