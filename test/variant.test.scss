@@ -1,0 +1,81 @@
+/*
+ * test/string.spec.scss
+ */
+
+@use "true" as *;
+@use "variant";
+@use "grid/row";
+@use "grid/mode";
+
+$breakpoints: (
+  xs: 36em,
+  sm: 48em,
+  md: 64em
+);
+
+@include describe("variant.generate") {
+  @include it("generates variants for all breakpoints ") {
+    @include assert {
+      @include output($selector: false) {
+        @include variant.generate($breakpoints) {
+          @include variant.varying(tg-stacked) {
+            @include row.child-cell {
+              flex: 1 0 0;
+              width: unset;
+            }
+          }
+        }
+      }
+
+      @include expect($selector: false) {
+        .tg-stacked > .tg-cell {
+          flex: 1 0 0;
+          width: unset;
+        }
+
+        @media only screen and (min-width: 36em) {
+          .xs\:tg-stacked > .tg-cell {
+            flex: 1 0 0;
+            width: unset;
+          }
+        }
+
+        @media only screen and (min-width: 48em) {
+          .sm\:tg-stacked > .tg-cell {
+            flex: 1 0 0;
+            width: unset;
+          }
+        }
+
+        @media only screen and (min-width: 64em) {
+          .md\:tg-stacked > .tg-cell {
+            flex: 1 0 0;
+            width: unset;
+          }
+        }
+      }
+    }
+  }
+
+  @include it("does not generate variants when no breakpoint are provided") {
+    @include assert {
+      @include output($selector: false) {
+        @include variant.generate(()) {
+          @include variant.varying(tg-stacked) {
+            @include row.child-cell {
+              flex: 1 0 0;
+              width: unset;
+            }
+          }
+        }
+      }
+
+      @include expect($selector: false) {
+        .tg-stacked > .tg-cell {
+          flex: 1 0 0;
+          width: unset;
+        }
+      }
+    }
+  }
+}
