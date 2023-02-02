@@ -1,3 +1,10 @@
+/*
+ * variant.scss
+ */
+
+@use "sass:selector";
+@use "util/string";
+
 $breakpoints: (
   xs: 36em, /* = 576 px */
   sm: 48em, /* = 768 px */
@@ -21,13 +28,19 @@ $breakpoints: (
 }
 
 @mixin varying($name) {
-  $class-name: $name;
+  $classname: $name;
 
   @if $breakpoint {
-    $class-name: #{$breakpoint}\:#{$name};
+    $classname: #{$breakpoint}\:#{$name};
   }
 
-  .#{$class-name} {
+  $selector: ".#{$classname}";
+
+  @if & {
+    $selector: "&.#{$classname}";
+  }
+
+  #{$selector} {
     @content;
   }
 }
