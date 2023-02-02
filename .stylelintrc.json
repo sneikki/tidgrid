@@ -1,3 +1,12 @@
 {
-  "extends": "stylelint-config-standard-scss"
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "max-line-length": [
+      80,
+      {
+      "ignore": ["comments"]
+      }
+    ],
+    "scss/operator-no-newline-after": null
+  }
 }
