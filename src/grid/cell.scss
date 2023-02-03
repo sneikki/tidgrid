@@ -7,14 +7,28 @@
 @use "variant";
 
 @include static.declare(cell) {
-  /* When no breakpoint modifier is active, the default is to use stacked layout.
-   * Cells are placed vertically, meaning 100% width with no flex. */
   @include mode.stacked;
 
   box-sizing: border-box;
 }
 
 @include variant.generate {
+  @include variant.declare(auto) {
+    @include mode.auto;
+  }
+
+  @include variant.declare(stacked) {
+    @include mode.stacked;
+  }
+
+  @include variant.declare(thin) {
+    @include mode.thin;
+  }
+
+  @include variant.declare(fill) {
+    @include mode.fill;
+  }
+
   @include variant.declare(first) {
     order: -2;
   }
