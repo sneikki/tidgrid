@@ -4,11 +4,51 @@
 
 @use "mode";
 @use "static";
+@use "variant";
+@use "row";
 
-.static.declare(cell) {
-  /* When no breakpoint modifier is active, the default is to use stacked layout.
-   * Cells are placed vertically, meaning 100% width with no flex. */
+@include static.declare(cell) {
   @include mode.stacked;
 
   box-sizing: border-box;
+}
+
+@include variant.generate {
+  @include variant.declare(auto) {
+    @include mode.auto;
+  }
+
+  @include variant.declare(stacked) {
+    @include mode.stacked;
+  }
+
+  @include variant.declare(thin) {
+    @include mode.thin;
+  }
+
+  @include variant.declare(fill) {
+    @include mode.fill;
+  }
+
+  @include variant.declare(first) {
+    order: -2;
+  }
+
+  @include variant.declare(last) {
+    order: 2;
+  }
+
+  @include mode.frac(row.$fractions) using ($name, $cell-width) {
+    @include variant.declare($name) {
+      width: $cell-width;
+    }
+  }
+
+  @each $row-size in row.$row-sizes {
+    @include mode.span($row-size) using ($name, $cell-width) {
+      @include variant.declare($name) {
+        width: $cell-width;
+      }
+    }
+  }
 }
