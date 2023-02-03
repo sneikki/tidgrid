@@ -6,6 +6,10 @@ compile: src/tidgrid.scss
 compile-minimized: src/tidgrid.scss
 	make -s compile style=compressed
 
+.PHONY: test
+test:
+	npx jest
+
 .PHONY: lint-scss
 lint-scss:
 	npx stylelint "{src,test}/**/*.scss"
@@ -17,7 +21,3 @@ fix-scss:
 .PHONY: clean
 clean:
 	rm -rf build/
-
-.PHONY: test
-test:
-	npx jest
