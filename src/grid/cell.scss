@@ -4,6 +4,7 @@
 
 @use "mode";
 @use "static";
+@use "variant";
 
 @include static.declare(cell) {
   /* When no breakpoint modifier is active, the default is to use stacked layout.
@@ -11,4 +12,14 @@
   @include mode.stacked;
 
   box-sizing: border-box;
+}
+
+@include variant.generate {
+  @include variant.declare(first) {
+    order: -2;
+  }
+
+  @include variant.declare(last) {
+    order: 2;
+  }
 }
