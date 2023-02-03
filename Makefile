@@ -8,11 +8,11 @@ compile-minimized: src/tidgrid.scss
 
 .PHONY: lint-scss
 lint-scss:
-	npx stylelint "src/**/*.scss"
+	npx stylelint "{src,test}/**/*.scss"
 
 .PHONY: fix-scss
 fix-scss:
-	npx stylelint "src/**/*.scss" --fix
+	npx stylelint "{src,test}/**/*.scss" --fix
 
 .PHONY: clean
 clean:

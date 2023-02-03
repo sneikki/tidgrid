@@ -18,7 +18,7 @@ $breakpoints: (
     @include assert {
       @include output($selector: false) {
         @include variant.generate($breakpoints) {
-          @include variant.varying(tg-stacked) {
+          @include variant.declare(stacked) {
             @include row.child-cell {
               flex: 1 0 0;
               width: unset;
@@ -61,7 +61,7 @@ $breakpoints: (
     @include assert {
       @include output($selector: false) {
         @include variant.generate(()) {
-          @include variant.varying(tg-stacked) {
+          @include variant.declare(stacked) {
             @include row.child-cell {
               flex: 1 0 0;
               width: unset;

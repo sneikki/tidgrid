@@ -27,7 +27,6 @@
       string.replace-first("hello world", "world", "tidgrid"),
       "hello tidgrid"
     );
-
     @include assert-equal(
       string.replace-first("1/2", "/", "\\/"),
       "1\\/2"

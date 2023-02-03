@@ -1,0 +1,11 @@
+/*
+ * static.scss
+ */
+
+@use "namespace";
+
+@mixin declare($name) {
+  .#{namespace.use-prefix($name)} {
+    @content;
+  }
+}

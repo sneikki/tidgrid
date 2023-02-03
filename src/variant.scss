@@ -4,6 +4,7 @@
 
 @use "sass:selector";
 @use "util/string";
+@use "namespace";
 
 $default-breakpoints: (
   xs: 36em, /* = 576 px */
@@ -25,7 +26,8 @@ $default-breakpoints: (
   }
 }
 
-@mixin varying($name) {
+@mixin declare($name) {
+  $name: namespace.use-prefix($name);
   $classname: $name;
 
   @if $breakpoint {

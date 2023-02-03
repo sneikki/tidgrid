@@ -7,6 +7,7 @@
       "ignore": ["comments"]
       }
     ],
-    "scss/operator-no-newline-after": null
+    "scss/operator-no-newline-after": null,
+    "selector-class-pattern": null
   }
 }

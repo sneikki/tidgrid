@@ -6,6 +6,7 @@
 @use "util/string";
 @use "mode";
 @use "variant";
+@use "static";
 
 $row-sizes: (12, 16) !default;
 $fractions: (
@@ -21,32 +22,32 @@ $fractions: (
   }
 }
 
-.tg-row {
+@include static.declare(row) {
   display: flex;
   flex-flow: row wrap;
   box-sizing: border-box;
 }
 
 @include variant.generate {
-  @include variant.varying(tg-auto) {
+  @include variant.declare(auto) {
     @include child-cell {
       @include mode.auto;
     }
   }
 
-  @include variant.varying(tg-stacked) {
+  @include variant.declare(stacked) {
     @include child-cell {
       @include mode.stacked;
     }
   }
 
-  @include variant.varying(tg-thin) {
+  @include variant.declare(thin) {
     @include child-cell {
       @include mode.thin;
     }
   }
 
-  @include variant.varying(tg-fill) {
+  @include variant.declare(fill) {
     @include child-cell {
       @include mode.fill;
     }
@@ -56,7 +57,7 @@ $fractions: (
     $cell-width: math.percentage($value);
     $escaped-name: string.replace-first($name, "/", "\\/");
 
-    @include variant.varying(tg-frac-#{$escaped-name}) {
+    @include variant.declare(frac-#{$escaped-name}) {
       @include child-cell {
         width: $cell-width;
       }
@@ -68,7 +69,7 @@ $fractions: (
       @for $column from 1 through $row-size {
         $cell-width: #{math.div(100%, $row-size) * $column};
 
-        @include variant.varying(tg-span-#{$column}) {
+        @include variant.declare(span-#{$column}) {
           @include child-cell {
             width: $cell-width;
           }
