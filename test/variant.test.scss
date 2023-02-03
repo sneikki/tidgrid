@@ -33,6 +33,7 @@ $breakpoints: (
           width: unset;
         }
 
+        /* stylelint-disable selector-class-pattern */
         @media only screen and (min-width: 36em) {
           .xs\:tg-stacked > .tg-cell {
             flex: 1 0 0;
@@ -53,6 +54,7 @@ $breakpoints: (
             width: unset;
           }
         }
+        /* stylelint-enable selector-class-pattern */
       }
     }
   }
