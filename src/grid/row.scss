@@ -5,6 +5,7 @@
 @use "sass:math";
 @use "util/string";
 @use "mode";
+@use "namespace";
 @use "variant";
 @use "static";
 
@@ -17,7 +18,7 @@ $fractions: (
 ) !default;
 
 @mixin child-cell() {
-  & > .tg-cell {
+  & > .#{namespace.use-prefix(cell)} {
     @content;
   }
 }
@@ -65,7 +66,7 @@ $fractions: (
   }
 
   @each $row-size in $row-sizes {
-    .tg-size-#{$row-size} {
+    @include static.declare(size-#{$row-size}) {
       @for $column from 1 through $row-size {
         $cell-width: #{math.div(100%, $row-size) * $column};
 
