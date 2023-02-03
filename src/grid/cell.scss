@@ -5,6 +5,7 @@
 @use "mode";
 @use "static";
 @use "variant";
+@use "row";
 
 @include static.declare(cell) {
   @include mode.stacked;
@@ -35,5 +36,19 @@
 
   @include variant.declare(last) {
     order: 2;
+  }
+
+  @include mode.frac(row.$fractions) using ($name, $cell-width) {
+    @include variant.declare($name) {
+      width: $cell-width;
+    }
+  }
+
+  @each $row-size in row.$row-sizes {
+    @include mode.span($row-size) using ($name, $cell-width) {
+      @include variant.declare($name) {
+        width: $cell-width;
+      }
+    }
   }
 }
