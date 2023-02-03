@@ -2,6 +2,9 @@
  * grid/mode.scss
  */
 
+@use "sass:math";
+@use "util/string";
+
 @mixin auto() {
   flex: 1 0 0;
   width: unset;
@@ -20,4 +23,20 @@
 @mixin fill() {
   flex: 1 0 0;
   width: unset;
+}
+
+@mixin frac($fractions) {
+  @each $name, $value in $fractions {
+    $cell-width: math.percentage($value);
+    $escaped-name: string.replace-first($name, "/", "\\/");
+
+    @content(frac-#{$escaped-name}, $cell-width);
+  }
+}
+
+@mixin span($row-size) {
+  @for $column from 1 through $row-size {
+    $cell-width: #{math.div(100%, $row-size) * $column};
+    @content(span-#{$column}, $cell-width);
+  }
 }

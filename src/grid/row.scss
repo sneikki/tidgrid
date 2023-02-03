@@ -54,11 +54,8 @@ $fractions: (
     }
   }
 
-  @each $name, $value in $fractions {
-    $cell-width: math.percentage($value);
-    $escaped-name: string.replace-first($name, "/", "\\/");
-
-    @include variant.declare(frac-#{$escaped-name}) {
+  @include mode.frac($fractions) using ($name, $cell-width) {
+    @include variant.declare($name) {
       @include child-cell {
         width: $cell-width;
       }
@@ -67,10 +64,8 @@ $fractions: (
 
   @each $row-size in $row-sizes {
     @include static.declare(size-#{$row-size}) {
-      @for $column from 1 through $row-size {
-        $cell-width: #{math.div(100%, $row-size) * $column};
-
-        @include variant.declare(span-#{$column}) {
+      @include mode.span($row-size) using ($name, $cell-width) {
+        @include variant.declare($name) {
           @include child-cell {
             width: $cell-width;
           }
