@@ -7,4 +7,3 @@ $use-namespace: true !default;
 @function use-prefix($name) {
   @return if($use-namespace, "tg-#{$name}", $name);
 }
-
