@@ -15,6 +15,7 @@ jobs:
           fetch-depth: '0'
 
       - uses: anothrNick/github-tag-action@1.55.0
+        if: ${{ !contains(join(github.event.commits.*.message), '#no-deploy') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
