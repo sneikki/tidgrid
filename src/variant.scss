@@ -26,8 +26,8 @@ $default-breakpoints: (
   }
 }
 
-@mixin declare($name) {
-  $name: namespace.use-prefix($name);
+@mixin declare($property, $value) {
+  $name: namespace.get-name($property, $value);
   $classname: $name;
 
   @if $breakpoint {

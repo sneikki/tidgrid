@@ -7,50 +7,50 @@
 @use "variant";
 @use "row";
 
-@include static.declare(cell) {
+@include static.element(cell) {
   @include mode.stacked;
 
   box-sizing: border-box;
 }
 
 @include variant.generate {
-  @include variant.declare(auto) {
+  @include variant.declare(mode, auto) {
     @include mode.auto;
   }
 
-  @include variant.declare(stacked) {
+  @include variant.declare(mode, stacked) {
     @include mode.stacked;
   }
 
-  @include variant.declare(thin) {
+  @include variant.declare(mode, thin) {
     @include mode.thin;
   }
 
-  @include variant.declare(fill) {
+  @include variant.declare(mode, fill) {
     @include mode.fill;
   }
 
-  @include variant.declare(order-first) {
+  @include variant.declare(order, first) {
     order: -2;
   }
 
-  @include variant.declare(order-last) {
+  @include variant.declare(order, last) {
     order: 2;
   }
 
-  @include variant.declare(order-none) {
+  @include variant.declare(order, none) {
     order: unset;
   }
 
-  @include mode.frac(row.$fractions) using ($name, $cell-width) {
-    @include variant.declare($name) {
+  @include mode.frac(row.$fractions) using ($value, $cell-width) {
+    @include variant.declare(frac, $value) {
       width: $cell-width;
     }
   }
 
   @each $row-size in row.$row-sizes {
-    @include mode.span($row-size) using ($name, $cell-width) {
-      @include variant.declare($name) {
+    @include mode.span($row-size) using ($value, $cell-width) {
+      @include variant.declare(span, $value) {
         width: $cell-width;
       }
     }

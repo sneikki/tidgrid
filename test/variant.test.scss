@@ -3,6 +3,7 @@
  */
 
 @use "true" as *;
+@use "namespace" with ($syntax: dashes);
 @use "variant";
 @use "grid/row";
 @use "grid/mode";
@@ -18,7 +19,7 @@ $breakpoints: (
     @include assert {
       @include output($selector: false) {
         @include variant.generate($breakpoints) {
-          @include variant.declare(stacked) {
+          @include variant.declare(mode, stacked) {
             @include row.child-cell {
               flex: 1 0 0;
               width: unset;
@@ -28,27 +29,27 @@ $breakpoints: (
       }
 
       @include expect($selector: false) {
-        .tg-stacked > .tg-cell {
+        .tg-mode-stacked > .tg-cell {
           flex: 1 0 0;
           width: unset;
         }
 
         @media only screen and (min-width: 36em) {
-          .xs\:tg-stacked > .tg-cell {
+          .xs\:tg-mode-stacked > .tg-cell {
             flex: 1 0 0;
             width: unset;
           }
         }
 
         @media only screen and (min-width: 48em) {
-          .sm\:tg-stacked > .tg-cell {
+          .sm\:tg-mode-stacked > .tg-cell {
             flex: 1 0 0;
             width: unset;
           }
         }
 
         @media only screen and (min-width: 64em) {
-          .md\:tg-stacked > .tg-cell {
+          .md\:tg-mode-stacked > .tg-cell {
             flex: 1 0 0;
             width: unset;
           }
@@ -61,7 +62,7 @@ $breakpoints: (
     @include assert {
       @include output($selector: false) {
         @include variant.generate(()) {
-          @include variant.declare(stacked) {
+          @include variant.declare(mode, stacked) {
             @include row.child-cell {
               flex: 1 0 0;
               width: unset;
@@ -71,7 +72,7 @@ $breakpoints: (
       }
 
       @include expect($selector: false) {
-        .tg-stacked > .tg-cell {
+        .tg-mode-stacked > .tg-cell {
           flex: 1 0 0;
           width: unset;
         }
