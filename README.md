@@ -6,6 +6,10 @@
 
 Tiny and expressive CSS framework built around Flexbox to simplify your layouts.
 
+[![Testing](https://github.com/sneikki/tidgrid/actions/workflows/test.yml/badge.svg)](https://github.com/sneikki/tidgrid/actions/workflows/test.yml)
+[![Deployment](https://github.com/sneikki/tidgrid/actions/workflows/deploy.yml/badge.svg)](https://github.com/sneikki/tidgrid/actions/workflows/deploy.yml)
+
+
 # Quick usage
 
 ## Building
