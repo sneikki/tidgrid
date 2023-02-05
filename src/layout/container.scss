@@ -1,0 +1,10 @@
+/*
+ * src/layout/container.scss
+ */
+
+@use "static";
+
+@include static.declare(container) {
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -1,0 +1,22 @@
+/*
+ * src/layout/section.scss
+ */
+
+$section-padding: (
+  top: 3rem,
+  bottom: 3rem
+) !default;
+$footer-padding: (
+  top: 3rem,
+  bottom: 5rem
+) !default;
+
+@include static.declare(section) {
+  padding-top: $section-padding;
+  padding-bottom: $section-padding;
+}
+
+@include static.declare(footer) {
+  padding-top: $section-padding;
+  padding-bottom: $section-padding;
+}
