@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - master
+  release:
+    types: [created]
 
 jobs:
   version:
+    if: github.event_name == "push"
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -18,3 +21,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           WITH_V: true
+
+  release:
+    if: github.event_name == "release"
+    needs: version
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - run: npm ci
+      - run: npm build
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Release ${{ needs.version.outputs.new_tag }}
