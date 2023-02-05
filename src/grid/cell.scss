@@ -30,12 +30,16 @@
     @include mode.fill;
   }
 
-  @include variant.declare(first) {
+  @include variant.declare(order-first) {
     order: -2;
   }
 
-  @include variant.declare(last) {
+  @include variant.declare(order-last) {
     order: 2;
+  }
+
+  @include variant.declare(order-none) {
+    order: unset;
   }
 
   @include mode.frac(row.$fractions) using ($name, $cell-width) {

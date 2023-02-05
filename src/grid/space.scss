@@ -1,0 +1,59 @@
+/*
+ * src/position/align.scss
+ */
+
+@use "variant";
+
+@include variant.generate {
+  @include variant.declare(space-between) {
+    justify-content: space-between;
+    align-content: space-between;
+  }
+
+  @include variant.declare(space-around) {
+    justify-content: space-around;
+    align-content: space-around;
+  }
+
+  @include variant.declare(space-evenly) {
+    justify-content: space-evenly;
+    align-content: space-evenly;
+  }
+
+  @include variant.declare(space-none) {
+    justify-content: none;
+    align-content: none;
+  }
+
+  @include variant.declare(space-x-between) {
+    justify-content: space-between;
+  }
+
+  @include variant.declare(space-x-around) {
+    justify-content: space-around;
+  }
+
+  @include variant.declare(space-x-evenly) {
+    justify-content: space-evenly;
+  }
+
+  @include variant.declare(space-x-none) {
+    justify-content: unset;
+  }
+
+  @include variant.declare(space-y-between) {
+    align-content: space-between;
+  }
+
+  @include variant.declare(space-y-around) {
+    align-content: space-around;
+  }
+
+  @include variant.declare(space-y-evenly) {
+    align-content: space-evenly;
+  }
+
+  @include variant.declare(space-y-none) {
+    align-content: unset;
+  }
+}
