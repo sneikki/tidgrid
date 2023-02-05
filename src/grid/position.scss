@@ -1,0 +1,59 @@
+/*
+ * src/position/align.scss
+ */
+
+@use "variant";
+
+@include variant.generate {
+  @include variant.declare(pos-x-start) {
+    justify-content: flex-start;
+  }
+
+  @include variant.declare(pos-x-center) {
+    justify-content: center;
+  }
+
+  @include variant.declare(pos-x-end) {
+    justify-content: flex-end;
+  }
+
+  @include variant.declare(pos-x-none) {
+    justify-content: unset;
+  }
+
+  @include variant.declare(pos-y-start) {
+    align-items: flex-start;
+  }
+
+  @include variant.declare(pos-y-center) {
+    align-items: center;
+  }
+
+  @include variant.declare(pos-y-end) {
+    align-items: center;
+  }
+
+  @include variant.declare(pos-y-none) {
+    align-items: unset;
+  }
+
+  @include variant.declare(pos-start) {
+    justify-content: start;
+    align-items: start;
+  }
+
+  @include variant.declare(pos-center) {
+    justify-content: center;
+    align-items: center;
+  }
+
+  @include variant.declare(pos-end) {
+    justify-content: end;
+    align-items: end;
+  }
+
+  @include variant.declare(pos-none) {
+    justify-content: unset;
+    align-items: unset;
+  }
+}

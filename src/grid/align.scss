@@ -17,6 +17,10 @@
     justify-content: flex-end;
   }
 
+  @include variant.declare(x--none) {
+    justify-content: unset;
+  }
+
   @include variant.declare(y-start) {
     align-items: flex-start;
   }
@@ -27,6 +31,10 @@
 
   @include variant.declare(y-end) {
     align-items: center;
+  }
+
+  @include variant.declare(y-align-none) {
+    align-items: unset;
   }
 
   @include variant.declare(start) {
@@ -42,5 +50,10 @@
   @include variant.declare(end) {
     justify-content: end;
     align-items: end;
+  }
+
+  @include variant.declare(align-none) {
+    justify-content: unset;
+    align-items: unset;
   }
 }
