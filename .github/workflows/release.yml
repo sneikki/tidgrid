@@ -1,0 +1,28 @@
+name: Releasing
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    needs: version
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - run: npm ci
+      - run: npm build
+
+        id: latest-tag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Release ${{ needs.version.outputs.new_tag }}
