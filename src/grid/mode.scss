@@ -30,13 +30,13 @@
     $cell-width: math.percentage($value);
     $escaped-name: string.replace-first($name, "/", "\\/");
 
-    @content(frac-#{$escaped-name}, $cell-width);
+    @content($escaped-name, $cell-width);
   }
 }
 
 @mixin span($row-size) {
   @for $column from 1 through $row-size {
     $cell-width: #{math.div(100%, $row-size) * $column};
-    @content(span-#{$column}, $cell-width);
+    @content($column, $cell-width);
   }
 }

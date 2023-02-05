@@ -23,39 +23,39 @@ $fractions: (
   }
 }
 
-@include static.declare(row) {
+@include static.element(row) {
   display: flex;
   flex-flow: row wrap;
   box-sizing: border-box;
 }
 
 @include variant.generate {
-  @include variant.declare(auto) {
+  @include variant.declare(mode, auto) {
     @include child-cell {
       @include mode.auto;
     }
   }
 
-  @include variant.declare(stacked) {
+  @include variant.declare(mode, stacked) {
     @include child-cell {
       @include mode.stacked;
     }
   }
 
-  @include variant.declare(thin) {
+  @include variant.declare(mode, thin) {
     @include child-cell {
       @include mode.thin;
     }
   }
 
-  @include variant.declare(fill) {
+  @include variant.declare(mode, fill) {
     @include child-cell {
       @include mode.fill;
     }
   }
 
-  @include mode.frac($fractions) using ($name, $cell-width) {
-    @include variant.declare($name) {
+  @include mode.frac($fractions) using ($value, $cell-width) {
+    @include variant.declare(frac, $value) {
       @include child-cell {
         width: $cell-width;
       }
@@ -63,9 +63,9 @@ $fractions: (
   }
 
   @each $row-size in $row-sizes {
-    @include static.declare(size-#{$row-size}) {
-      @include mode.span($row-size) using ($name, $cell-width) {
-        @include variant.declare($name) {
+    @include static.declare(size, $row-size) {
+      @include mode.span($row-size) using ($value, $cell-width) {
+        @include variant.declare(span, $value) {
           @include child-cell {
             width: $cell-width;
           }

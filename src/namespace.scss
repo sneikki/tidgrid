@@ -2,7 +2,30 @@
  * namespace.scss
  */
 
+@use "sass:meta";
+
+$syntax: parentheses !default;
 $use-namespace: true !default;
+
+@function use-parentheses($property, $value) {
+  @return "#{$property}\\(#{$value}\\)";
+}
+
+@function use-dashes($property, $value) {
+  @return "#{$property}-#{$value}";
+}
+
+@function get-name($property, $value) {
+  @return use-prefix(
+    meta.call(
+      meta.get-function(
+        if($syntax == parentheses, use-parentheses, use-dashes)
+      ),
+      $property,
+      $value
+    )
+  );
+}
 
 @function use-prefix($name) {
   @return if($use-namespace, "tg-#{$name}", $name);

@@ -32,15 +32,15 @@ $gaps: (
 
 @include variant.generate {
   @each $name, $size in $gaps {
-    @include variant.declare(gap-#{$name}) {
+    @include variant.declare(gap, $name) {
       @include gaps($size);
     }
 
-    @include variant.declare(x-gap-#{$name}) {
+    @include variant.declare(x-gap, $name) {
       @include gap($size, x);
     }
 
-    @include variant.declare(y-gap-#{$name}) {
+    @include variant.declare(y-gap, $name) {
       @include gap($size, y);
     }
   }

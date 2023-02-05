@@ -4,7 +4,13 @@
 
 @use "namespace";
 
-@mixin declare($name) {
+@mixin declare($property, $value) {
+  .#{namespace.get-name($property, $value)} {
+    @content;
+  }
+}
+
+@mixin element($name) {
   .#{namespace.use-prefix($name)} {
     @content;
   }
