@@ -17,7 +17,7 @@ jobs:
           node-version: 19
 
       - run: npm ci
-      - run: npm build
+      - run: make build
 
       - id: current-version
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
