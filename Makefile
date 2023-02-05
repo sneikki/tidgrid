@@ -1,5 +1,8 @@
 style = expanded
 
+build: src/tidgrid.scss
+	make compile
+
 compile: src/tidgrid.scss
 	npx sass src/tidgrid.scss build/tidgrid.css --style=$(style) --load-path=src
 

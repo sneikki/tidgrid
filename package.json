@@ -6,7 +6,7 @@
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "make compile",
+    "build": "make build",
     "test": "jest"
   },
   "devDependencies": {
