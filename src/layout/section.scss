@@ -8,15 +8,15 @@
 $section-padding: (top: 3rem, bottom: 3rem) !default;
 $footer-padding: (top: 3rem, bottom: 5rem) !default;
 
-%section {
+@mixin section($padding) {
   padding-top: map.get($section-padding, top);
   padding-bottom: map.get($section-padding, bottom);
 }
 
 @include static.element(section) {
-  @extend %section;
+  @include section($section-padding);
 }
 
 @include static.element(footer) {
-  @extend %section;
+  @include section($footer-padding);
 }
