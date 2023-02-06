@@ -2,21 +2,21 @@
  * src/layout/section.scss
  */
 
-$section-padding: (
-  top: 3rem,
-  bottom: 3rem
-) !default;
-$footer-padding: (
-  top: 3rem,
-  bottom: 5rem
-) !default;
+@use "sass:map";
+@use "static";
 
-@include static.declare(section) {
-  padding-top: $section-padding;
-  padding-bottom: $section-padding;
+$section-padding: (top: 3rem, bottom: 3rem) !default;
+$footer-padding: (top: 3rem, bottom: 5rem) !default;
+
+%section {
+  padding-top: map.get($section-padding, top);
+  padding-bottom: map.get($section-padding, bottom);
 }
 
-@include static.declare(footer) {
-  padding-top: $section-padding;
-  padding-bottom: $section-padding;
+@include static.element(section) {
+  @extend %section;
+}
+
+@include static.element(footer) {
+  @extend %section;
 }
