@@ -3,8 +3,19 @@
  */
 
 @use "static";
+@use "variant";
 
-@include static.declare(container) {
+@include static.element(container) {
   margin-right: auto;
   margin-left: auto;
+
+  @include variant.use-breakpoints using ($max-width) {
+    max-width: $max-width;
+  }
+}
+
+@include variant.for-breakpoints using ($key, $value) {
+  @include static.declare(container, $key) {
+    max-width: $value;
+  }
 }
