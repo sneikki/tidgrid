@@ -5,7 +5,14 @@
 @use "namespace";
 
 @mixin declare($property, $value) {
-  .#{namespace.get-name($property, $value)} {
+  $name: namespace.get-name($property, $value);
+  $selector: ".#{$name}";
+
+  @if & {
+    $selector: "&.#{$name}";
+  }
+
+  #{$selector} {
     @content;
   }
 }

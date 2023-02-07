@@ -3,6 +3,7 @@
  */
 
 @use "sass:selector";
+@use "sass:map";
 @use "util/string";
 @use "namespace";
 
@@ -13,6 +14,28 @@ $default-breakpoints: (
   lg: 75em, /* = 1200 px */
   xl: 90em, /* = 1440 px */
 ) !default;
+
+@mixin for-breakpoints($breakpoints: $default-breakpoints) {
+  @each $key, $value in $breakpoints {
+    @content($key, $value);
+  }
+}
+
+@mixin use-breakpoint($name, $breakpoints: $default-breakpoints) {
+  $value: map.get($breakpoints, $name);
+
+  @media only screen and (min-width: $value) {
+    @content;
+  }
+}
+
+@mixin use-breakpoints($breakpoints: $default-breakpoints) {
+  @include for-breakpoints($breakpoints) using ($name, $value) {
+    @media only screen and (min-width: $value) {
+      @content($value);
+    }
+  }
+}
 
 @mixin generate($breakpoints: $default-breakpoints) {
   $breakpoint: null !global;

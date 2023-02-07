@@ -1,0 +1,37 @@
+/*
+ * src/layout/section.scss
+ */
+
+@use "sass:map";
+@use "variant";
+@use "static";
+
+$section-padding: (top: 3rem, bottom: 3rem) !default;
+$footer-padding: (top: 3rem, bottom: 5rem) !default;
+
+@mixin section($padding) {
+  @include padding($padding);
+}
+
+@mixin padding($padding) {
+  padding-top: map.get($padding, top);
+  padding-bottom: map.get($padding, bottom);
+}
+
+@include static.element(section) {
+  @include section($section-padding);
+}
+
+@include static.element(footer) {
+  @include section($footer-padding);
+}
+
+@include variant.generate {
+  @include variant.declare(section-padding, default) {
+    @include padding($section-padding);
+  }
+
+  @include variant.declare(section-padding, none) {
+    @include padding((top: 0, bottom: 0));
+  }
+}
