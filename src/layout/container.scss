@@ -2,20 +2,33 @@
  * src/layout/container.scss
  */
 
+@use "sass:map";
 @use "static";
 @use "variant";
 
-@include static.element(container) {
-  margin-right: auto;
-  margin-left: auto;
+$margin: (left: 2rem, right: 2rem) !default;
 
+@function get-margin($size, $max-width) {
+  @return calc(#{$size} + (100% - #{$max-width}) / 2);
+}
+
+@mixin use-margin($margin, $max-width) {
+  $right: map.get($margin, right);
+  $left: map.get($margin, left);
+
+  margin-right: max($left, get-margin($right, $max-width));
+  margin-left: max($right, get-margin($left, $max-width));
+  max-width: min(100%, #{calc($max-width - $left - $right)});
+}
+
+@include static.element(container) {
   @include variant.use-breakpoints using ($max-width) {
-    max-width: $max-width;
+    @include use-margin($margin, $max-width);
   }
 }
 
-@include variant.for-breakpoints using ($key, $value) {
+@include variant.for-breakpoints using ($key, $max-width) {
   @include static.declare(container, $key) {
-    max-width: $value;
+    @include use-margin($margin, $max-width);
   }
 }
