@@ -3,4 +3,14 @@
  */
 
 @forward "container";
-@forward "section";
+@use "namespace";
+@use "section";
+@use "static";
+
+@include static.declare(layout, immediate) {
+  @include static.declare(section-padding, none) {
+    .#{namespace.use-prefix(section)} {
+      @include section.padding((top: 0, bottom: 0));
+    }
+  }
+}
