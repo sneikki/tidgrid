@@ -10,8 +10,12 @@ $section-padding: (top: 3rem, bottom: 3rem) !default;
 $footer-padding: (top: 3rem, bottom: 5rem) !default;
 
 @mixin section($padding) {
-  padding-top: map.get($section-padding, top);
-  padding-bottom: map.get($section-padding, bottom);
+  @include padding($padding);
+}
+
+@mixin padding($padding) {
+  padding-top: map.get($padding, top);
+  padding-bottom: map.get($padding, bottom);
 }
 
 @include static.element(section) {
@@ -23,8 +27,11 @@ $footer-padding: (top: 3rem, bottom: 5rem) !default;
 }
 
 @include variant.generate {
+  @include variant.declare(section-padding, default) {
+    @include padding($section-padding);
+  }
+
   @include variant.declare(section-padding, none) {
-    padding-top: 0;
-    padding-bottom: 0;
+    @include padding((top: 0, bottom: 0));
   }
 }
