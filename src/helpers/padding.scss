@@ -1,0 +1,80 @@
+/*
+ rs* src/helpers/padding.scss
+ */
+
+@use "variant";
+
+$paddings: (
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  10: 1rem,
+  20: 1.25rem,
+  30: 1.5rem,
+  40: 1.75rem,
+  100: 2rem,
+  1000: 3rem) !default;
+
+@mixin padding-x($size) {
+  padding-right: $size;
+  padding-left: $size;
+}
+
+@mixin padding-y($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+@mixin padding($size, $direction: null) {
+  @if $direction == left {
+    padding-left: $size;
+  }
+
+  @else if $direction == right {
+    padding-right: $size;
+  }
+
+  @else if $direction == top {
+    padding-top: $size;
+  }
+
+  @else if $direction == bottom {
+    padding-bottom: $size;
+  }
+
+  @else {
+    padding: $size;
+  }
+}
+
+@include variant.generate {
+  @each $name, $size in $paddings {
+    @include variant.declare(p, $name) {
+      @include padding($size);
+    }
+
+    @include variant.declare(px, $name) {
+      @include padding-x($size);
+    }
+
+    @include variant.declare(py, $name) {
+      @include padding-y($size);
+    }
+
+    @include variant.declare(pr, $name) {
+      @include padding($size, right);
+    }
+
+    @include variant.declare(pb, $name) {
+      @include padding($size, bottom);
+    }
+
+    @include variant.declare(pl, $name) {
+      @include padding($size, left);
+    }
+
+    @include variant.declare(pt, $name) {
+      @include padding($size, top);
+    }
+  }
+}
