@@ -28,21 +28,13 @@ $paddings: (
 @mixin padding($size, $direction: null) {
   @if $direction == left {
     padding-left: $size;
-  }
-
-  @else if $direction == right {
+  } @else if $direction == right {
     padding-right: $size;
-  }
-
-  @else if $direction == top {
+  } @else if $direction == top {
     padding-top: $size;
-  }
-
-  @else if $direction == bottom {
+  } @else if $direction == bottom {
     padding-bottom: $size;
-  }
-
-  @else {
+  } @else {
     padding: $size;
   }
 }
