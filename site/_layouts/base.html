@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  <head>
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/assets/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
+  </head>
+  <body>
+    <div class="root">
+      <nav class="root__section root__section--header">
+        {% include header.html %}
+      </nav>
+
+      <!-- <main class="root__section root__section--main"> -->
+      <!--   {{ content }} -->
+      <!-- </main> -->
+
+      <footer class="root__section root_section--footer">
+        {% include footer.html %}
+      </footer>
+    </div>
+  </body>
+</html>
