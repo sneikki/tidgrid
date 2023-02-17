@@ -11,18 +11,10 @@
     <link rel="icon" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
   </head>
   <body>
-    <div class="root">
-      <nav class="root__section root__section--header">
-        {% include header.html %}
-      </nav>
+    {% include header.html %}
 
-      <!-- <main class="root__section root__section--main"> -->
-      <!--   {{ content }} -->
-      <!-- </main> -->
+    {{ content }}
 
-      <footer class="root__section root_section--footer">
-        {% include footer.html %}
-      </footer>
-    </div>
+    {% include footer.html %}
   </body>
 </html>
