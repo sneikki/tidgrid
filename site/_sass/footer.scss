@@ -44,6 +44,7 @@ $section-item-anchor-color-hover: #50A5AF;
 
   &:hover {
     color: $section-item-anchor-color-hover;
+    text-decoration: underline;
   }
 }
 
