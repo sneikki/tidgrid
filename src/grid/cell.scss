@@ -2,6 +2,7 @@
  * grid/cell.scss
  */
 
+@use "namespace";
 @use "mode";
 @use "static";
 @use "variant";
@@ -13,7 +14,7 @@
   box-sizing: border-box;
 }
 
-@include variant.generate {
+@include variant.generate($with: namespace.use-prefix(cell)) {
   @include variant.declare(mode, auto) {
     @include mode.auto;
   }
