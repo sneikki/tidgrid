@@ -6,6 +6,7 @@
 @use "row";
 
 $gaps: (
+  none: 0rem,
   xs: 0.25rem,
   sm: 0.5rem,
   md: 0.75rem,
@@ -13,17 +14,22 @@ $gaps: (
   xl: 2rem,
 ) !default;
 
+@mixin gaps($size) {
+  margin-left: -$size;
+  margin-top: -$size;
+
+  @include row.child-cell {
+    padding-left: $size;
+    padding-right: $size;
+  }
+}
+
 @mixin gap($size, $direction) {
   margin-#{if($direction == x, left, top)}: -$size;
 
   @include row.child-cell {
     padding-#{if($direction == x, left, top)}: $size;
   }
-}
-
-@mixin gaps($size) {
-  @include gap($size, x);
-  @include gap($size, y);
 }
 
 @include variant.generate {
