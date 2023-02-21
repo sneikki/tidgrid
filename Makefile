@@ -1,12 +1,12 @@
 style = expanded
 
-build: src/tidgrid.scss
+build: src/index.scss
 	make compile
 
-compile: src/tidgrid.scss
-	npx sass src/tidgrid.scss build/tidgrid.css --style=$(style) --load-path=src
+compile: src/index.scss
+	npx sass src/index.scss build/tidgrid.css --style=$(style) --load-path=src
 
-compile-minimized: src/tidgrid.scss
+compile-minimized: src/index.scss
 	make -s compile style=compressed
 
 .PHONY: test
