@@ -20,7 +20,7 @@ $gaps: (
 
   @include row.child-cell {
     padding-left: $size;
-    padding-right: $size;
+    padding-top: $size;
   }
 }
 
