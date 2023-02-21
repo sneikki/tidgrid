@@ -46,6 +46,7 @@
   @include mode.frac(row.$fractions) using ($value, $cell-width) {
     @include variant.declare(frac, $value) {
       width: $cell-width;
+      flex: none;
     }
   }
 
@@ -53,6 +54,7 @@
     @include mode.span($row-size) using ($value, $cell-width) {
       @include variant.declare(span, $value) {
         width: $cell-width;
+        flex: none;
       }
     }
   }
