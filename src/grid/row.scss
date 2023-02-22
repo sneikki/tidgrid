@@ -31,31 +31,45 @@ $fractions: (
 
 @include variant.generate {
   @include variant.declare(mode, auto) {
+    display: flex;
+
     @include child-cell {
       @include mode.auto;
     }
   }
 
   @include variant.declare(mode, stacked) {
+    display: flex;
+
     @include child-cell {
       @include mode.stacked;
     }
   }
 
   @include variant.declare(mode, thin) {
+    display: flex;
+
     @include child-cell {
       @include mode.thin;
     }
   }
 
   @include variant.declare(mode, fill) {
+    display: flex;
+
     @include child-cell {
       @include mode.fill;
     }
   }
 
+  @include variant.declare(mode, disabled) {
+    display: none;
+  }
+
   @include mode.frac($fractions) using ($value, $cell-width) {
     @include variant.declare(frac, $value) {
+      display: flex;
+
       @include child-cell {
         width: $cell-width;
         flex: none;
@@ -67,6 +81,8 @@ $fractions: (
     @include static.declare(size, $row-size) {
       @include mode.span($row-size) using ($value, $cell-width) {
         @include variant.declare(span, $value) {
+          display: flex;
+
           @include child-cell {
             width: $cell-width;
             flex: none;
