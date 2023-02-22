@@ -9,6 +9,10 @@ Tiny and expressive CSS library built around Flexbox to simplify your layouts.
 [![Testing](https://github.com/sneikki/tidgrid/actions/workflows/test.yml/badge.svg)](https://github.com/sneikki/tidgrid/actions/workflows/test.yml)
 [![Deployment](https://github.com/sneikki/tidgrid/actions/workflows/deploy.yml/badge.svg)](https://github.com/sneikki/tidgrid/actions/workflows/deploy.yml)
 
+> :warning: **This project is still on a very early stage on development.**
+> There certainly are bugs, and some of the features may not function correctly under all circumstances.
+> Should you use this library in your on project, do it at your own discretion.
+> If you find a bug or have a suggestion, don't hesitate to collaborate!
 
 # Quick usage
 
