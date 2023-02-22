@@ -37,8 +37,9 @@ $default-breakpoints: (
   }
 }
 
-@mixin generate($breakpoints: $default-breakpoints) {
+@mixin generate($breakpoints: $default-breakpoints, $with: null) {
   $breakpoint: null !global;
+  $declare-with: $with !global;
   @content;
 
   @each $key, $value in $breakpoints {
@@ -61,6 +62,10 @@ $default-breakpoints: (
 
   @if & {
     $selector: "&.#{$classname}";
+  }
+
+  @if $declare-with {
+    $selector: ".#{$declare-with}#{$selector}";
   }
 
   #{$selector} {

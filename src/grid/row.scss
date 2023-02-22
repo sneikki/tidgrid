@@ -58,6 +58,7 @@ $fractions: (
     @include variant.declare(frac, $value) {
       @include child-cell {
         width: $cell-width;
+        flex: none;
       }
     }
   }
@@ -68,6 +69,7 @@ $fractions: (
         @include variant.declare(span, $value) {
           @include child-cell {
             width: $cell-width;
+            flex: none;
           }
         }
       }
