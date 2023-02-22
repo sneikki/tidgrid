@@ -22,6 +22,8 @@ $margin: (left: 2rem, right: 2rem) !default;
 }
 
 @include static.element(container) {
+  @include use-margin($margin, 100%);
+
   @include variant.use-breakpoints using ($max-width) {
     @include use-margin($margin, $max-width);
   }
