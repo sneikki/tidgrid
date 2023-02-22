@@ -16,6 +16,10 @@ Tiny and expressive CSS library built around Flexbox to simplify your layouts.
 
 # Quick usage
 
+## Inline stylesheet
+
+The easiest way to get going is to add link to [a hosted version](https://cdn.jsdelivr.net/gh/sneikki/tidgrid@v0.1.0-alpha/build/tidgrid.css) of Tidgrid. This is intended merely for development purposes, as it includes all of the generated CSS on your site. You'll usually use just a small subset of Tidgrid. Thus, it is wise to purge unused styles to reduce the amount of CSS deployed to production.
+
 ## Building
 
 Install dependencies by running `npm install`. Then run `npm run build` or `make build` to build Tidgrid from source. The build will be minimized,
