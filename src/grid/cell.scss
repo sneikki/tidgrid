@@ -16,19 +16,31 @@
 
 @include variant.generate($with: namespace.use-prefix(cell)) {
   @include variant.declare(mode, auto) {
+    display: block;
+
     @include mode.auto;
   }
 
   @include variant.declare(mode, stacked) {
+    display: block;
+
     @include mode.stacked;
   }
 
   @include variant.declare(mode, thin) {
+    display: block;
+
     @include mode.thin;
   }
 
   @include variant.declare(mode, fill) {
+    display: block;
+
     @include mode.fill;
+  }
+
+  @include variant.declare(mode, disabled) {
+    display: none;
   }
 
   @include variant.declare(order, first) {
