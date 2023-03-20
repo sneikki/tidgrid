@@ -6,8 +6,13 @@
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "make build",
-    "test": "jest"
+    "build": "npm run compile",
+    "compile": "sass src/index.scss build/tidgrid.css --load-path=src",
+    "compile:minimized": "npm run compile -- --style=compressed",
+    "test": "jest",
+    "lint:scss": "stylelint \"{src,test}/**/*.scss\"",
+    "fix:scss": "npm run lint:scss -- --fix",
+    "clean": "rm -rf build/"
   },
   "devDependencies": {
     "glob": "^8.1.0",
