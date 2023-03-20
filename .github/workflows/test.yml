@@ -16,7 +16,7 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: make lint-scss
+      - run: npm run lint:scss
   test:
     runs-on: ubuntu-20.04
     steps:
@@ -27,4 +27,4 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: make test
+      - run: npm run test
