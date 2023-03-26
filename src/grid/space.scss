@@ -2,7 +2,7 @@
  * src/position/align.scss
  */
 
-@use "variant";
+@use "../variant";
 
 @include variant.generate {
   @include variant.declare(space, between) {
