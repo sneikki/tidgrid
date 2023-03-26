@@ -2,7 +2,7 @@
   "name": "tidgrid",
   "version": "0.1.0",
   "main": "src/index.scss",
-  "repository": "git@github.com:varvikko/tidgrid.git",
+  "repository": "git@github.com:sneikki/tidgrid.git",
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
   "license": "MIT",
   "scripts": {
