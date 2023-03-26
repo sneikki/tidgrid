@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run compile",
-    "compile": "sass src/index.scss build/tidgrid.css --load-path=src",
+    "compile": "sass src/index.scss build/tidgrid.css",
     "compile:minimized": "npm run compile -- --style=compressed",
     "test": "jest",
     "lint:scss": "stylelint \"{src,test}/**/*.scss\"",
