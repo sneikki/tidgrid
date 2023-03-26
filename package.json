@@ -1,6 +1,6 @@
 {
   "name": "tidgrid",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "src/index.scss",
   "repository": "git@github.com:varvikko/tidgrid.git",
   "author": "Nuutti Varvikko <nvarvikko@gmail.com>",
