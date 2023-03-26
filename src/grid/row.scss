@@ -3,11 +3,11 @@
  */
 
 @use "sass:math";
-@use "util/string";
-@use "mode";
-@use "namespace";
-@use "variant";
-@use "static";
+@use "../util/string";
+@use "./mode";
+@use "../namespace";
+@use "../variant";
+@use "../static";
 
 $row-sizes: (12, 16) !default;
 $fractions: (

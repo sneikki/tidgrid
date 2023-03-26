@@ -3,8 +3,8 @@
  */
 
 @use "sass:map";
-@use "variant";
-@use "static";
+@use "../variant";
+@use "../static";
 
 $section-padding: (top: 3rem, bottom: 3rem) !default;
 $footer-padding: (top: 3rem, bottom: 5rem) !default;

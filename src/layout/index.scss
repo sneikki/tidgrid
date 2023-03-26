@@ -2,7 +2,7 @@
  * layout/index.scss
  */
 
-@forward "container";
-@use "namespace";
-@use "section";
-@use "static";
+@forward "./container";
+@use "../namespace";
+@use "./section";
+@use "../static";

@@ -2,8 +2,8 @@
  * src/grid/gap.scss
  */
 
-@use "variant";
-@use "row";
+@use "../variant";
+@use "./row";
 
 $gaps: (
   none: 0,

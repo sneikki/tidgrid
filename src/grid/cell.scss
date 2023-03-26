@@ -2,11 +2,11 @@
  * grid/cell.scss
  */
 
-@use "namespace";
-@use "mode";
-@use "static";
-@use "variant";
-@use "row";
+@use "../namespace";
+@use "./mode";
+@use "../static";
+@use "../variant";
+@use "./row";
 
 @include static.element(cell) {
   @include mode.stacked;

@@ -3,8 +3,8 @@
  */
 
 @use "sass:map";
-@use "static";
-@use "variant";
+@use "../static";
+@use "../variant";
 
 $margin: (left: 2rem, right: 2rem) !default;
 
