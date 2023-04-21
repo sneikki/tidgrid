@@ -27,6 +27,10 @@ Run 'npm install' to install dependencies. Then, to build Tidgrid from the sourc
 The CSS files that have been built will be put in the `build` directory.
 Run `make clean` to delete all created build files and folders.
 
+Another option is to build with Docker. A Dockefile is provided, and it can be built with
+`docker build .`. To obtain the source code, create a new container and copy the source code
+to your system: `docker create <image-id> && docker cp $(docker ps -lq):/usr/src/tidgrid/build .`.
+
 Please keep in mind that the files in the build directory are only changed between releases.
 To obtain the unstable version, you must compile it from source.
 
