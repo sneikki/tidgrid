@@ -18,9 +18,11 @@
     "glob": "^8.1.0",
     "jest": "^29.4.1",
     "postcss": "^8.4.21",
-    "sass": "^1.57.1",
     "sass-true": "^7.0.0",
     "stylelint": "^14.16.1",
     "stylelint-config-standard-scss": "^6.1.0"
+  },
+  "dependencies": {
+    "sass": "^1.57.1"
   }
 }
