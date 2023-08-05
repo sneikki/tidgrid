@@ -8,3 +8,11 @@
   width: 2rem;
   height: 2rem;
 }
+
+
+body {
+  background-size: 5rem 5rem;
+  background-image:
+    linear-gradient(to right, #f2f2f2 1px, transparent 1px),
+    linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
+}
