@@ -40,7 +40,6 @@ $fractions: (
 
   @include variant.declare(mode, stacked) {
     display: flex;
-    flex-direction: column;
 
     @include child-cell {
       @include mode.stacked;

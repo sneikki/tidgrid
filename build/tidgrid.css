@@ -146,7 +146,6 @@ menu {
 
 .tg-mode\(stacked\) {
   display: flex;
-  flex-direction: column;
 }
 .tg-mode\(stacked\) > .tg-cell {
   flex: none;
@@ -415,7 +414,6 @@ menu {
   }
   .xs\:tg-mode\(stacked\) {
     display: flex;
-    flex-direction: column;
   }
   .xs\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -675,7 +673,6 @@ menu {
   }
   .sm\:tg-mode\(stacked\) {
     display: flex;
-    flex-direction: column;
   }
   .sm\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -935,7 +932,6 @@ menu {
   }
   .md\:tg-mode\(stacked\) {
     display: flex;
-    flex-direction: column;
   }
   .md\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -1195,7 +1191,6 @@ menu {
   }
   .lg\:tg-mode\(stacked\) {
     display: flex;
-    flex-direction: column;
   }
   .lg\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -1455,7 +1450,6 @@ menu {
   }
   .xl\:tg-mode\(stacked\) {
     display: flex;
-    flex-direction: column;
   }
   .xl\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
