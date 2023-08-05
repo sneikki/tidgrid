@@ -1,7 +1,7 @@
 $sidebar-bg: #f8f8f8;
 $sidebar-fg: #32495d;
 $sidebar-font-family: Montserrat;
-$sidebar-font-size: 1rem;
+$sidebar-font-size: 1.1rem;
 
 .header__logo {
   width: 3rem;
@@ -54,13 +54,13 @@ $sidebar-font-size: 1rem;
 .navigation__link {
   font-size: $sidebar-font-size;
   font-family: $sidebar-font-family;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   color: $sidebar-fg;
   transition: 200ms color;
 
   &:hover {
-    color: lighten($sidebar-fg, 20%);
+    color: lighten($sidebar-fg, 15%);
   }
 }
 
