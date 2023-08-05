@@ -48,6 +48,7 @@ $fractions: (
 
   @include variant.declare(mode, thin) {
     display: flex;
+    flex-wrap: nowrap;
 
     @include child-cell {
       @include mode.thin;
