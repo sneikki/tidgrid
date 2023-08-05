@@ -1,0 +1,18 @@
+.header__logo {
+  width: 3rem;
+  height: 3rem;
+
+  background-image: url("/assets/img/logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.header__navigation {
+  ul {
+    list-style-type: none;
+  }
+}
+
+.navigation__link {
+  text-decoration: none;
+}
