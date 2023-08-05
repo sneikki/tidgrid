@@ -1,18 +1,20 @@
-<header class="tg-row tg-space(between)">
-  <div class="header__logo"></div>
-  <nav class="header__navigation">
-    <ul class="header__links tg-row tg-mode(stacked) tg-y-gap(xl)">
-      {% include navigation-link.html
-        name="Get started"
-        href="/get-started" %}
+<header class="tg-section">
+  <div class="tg-container tg-row tg-space(between)">
+    <div class="header__logo"></div>
+    <nav class="header__navigation">
+      <ul class="header__links tg-row tg-mode(stacked) tg-y-gap(xl)">
+        {% include navigation-link.html
+          name="Get started"
+          href="/get-started" %}
 
-      {% include navigation-link.html
-        name="Examples"
-        href="/examples" %}
+        {% include navigation-link.html
+          name="Examples"
+          href="/examples" %}
 
-      {% include navigation-link.html
-        name="Documentation"
-        href="/documentation" %}
-    </ul>
-  </nav>
+        {% include navigation-link.html
+          name="Documentation"
+          href="/documentation" %}
+      </ul>
+    </nav>
+  </div>
 </header>
