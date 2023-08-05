@@ -2,5 +2,9 @@
 ---
 
 @import "tidgrid";
-@import "base.scss";
 @import "header.scss";
+
+.icon--sm {
+  width: 2rem;
+  height: 2rem;
+}

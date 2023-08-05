@@ -1,8 +1,12 @@
 <header class="tg-section">
-  <div class="tg-container tg-row tg-space(between)">
+  <div class="tg-container tg-row tg-space(between) tg-pos-y(center)">
     <div class="header__logo"></div>
-    <nav class="header__navigation">
-      <ul class="header__links tg-row tg-mode(stacked) tg-y-gap(xl)">
+
+    <nav class="header__navigation header__navigation--collapsed">
+      <ul class="header__links
+        tg-row tg-mode(stacked) sm:tg-mode(thin)
+        tg-y-gap(xl) sm:tg-x-gap(xl)"
+      >
         {% include navigation-link.html
           name="Get started"
           href="/get-started" %}

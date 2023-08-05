@@ -25,6 +25,24 @@ $sidebar-font-size: 1rem;
   right: 0;
   background-color: $sidebar-bg;
   border-left: 1px solid darken($sidebar-bg, 5%);
+
+  @media only screen and (min-width: 48rem) {
+    width: unset;
+    max-width: unset;
+    height: unset;
+
+    padding: 0;
+
+    position: static;
+
+    background-color: unset;
+    border-left: none;
+  }
+}
+
+
+.header__navigation--collapsed {
+  right: -100%;
 }
 
 
@@ -39,9 +57,14 @@ $sidebar-font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
   color: $sidebar-fg;
-  transition: 300ms color;
+  transition: 200ms color;
 
   &:hover {
-    color: lighten($sidebar-fg, 25%);
+    color: lighten($sidebar-fg, 20%);
   }
+}
+
+
+.header__icon {
+  fill: $sidebar-fg;
 }
