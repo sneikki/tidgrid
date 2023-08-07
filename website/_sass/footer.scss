@@ -1,0 +1,61 @@
+.footer {
+  background-color: #f7f7f7;
+}
+
+
+.footer__header {
+  @media only screen and (min-width: 64em) {
+    text-align: right;
+    line-height: 1.5;
+  }
+}
+
+
+.footer__text-logo {
+  font-size: 2rem;
+  font-family: "Source Code Pro";
+  text-transform: lowercase;
+  color: #32495d;
+}
+
+
+.footer__documentation-links {
+  margin-top: 0rem;
+}
+
+
+.footer__version-text {
+  font-family: "Source Code Pro";
+  font-size: 1rem;
+  color: #92adc4;
+}
+
+
+.footer__link {
+  font-family: "Lato";
+  text-decoration: none;
+  color: #32495d;
+  transition: 200ms color;
+
+  &:hover {
+    color: lighten(#32495d, 15%);
+  }
+}
+
+
+.footer__link--primary {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+.footer__copyright {
+  font-family: "Lato";
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #92adc4;
+
+  @media only screen and (min-width: 48em) {
+    text-align: right;
+  }
+}
