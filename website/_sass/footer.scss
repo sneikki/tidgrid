@@ -8,6 +8,23 @@
     text-align: right;
     line-height: 1.5;
   }
+
+  @media only screen and (min-width: 75em) {
+    position: absolute; 
+    right: 0
+  }
+}
+
+
+.footer__content {
+  position: relative;
+}
+
+
+.footer__navigation-wrapper {
+  @media only screen and (min-width: 75em) {
+    padding-top: 0 !important;
+  }
 }
 
 
