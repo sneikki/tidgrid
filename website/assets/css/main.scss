@@ -4,6 +4,7 @@
 @import "tidgrid";
 @import "header.scss";
 @import "footer.scss";
+@import "index.scss";
 
 .icon--sm {
   width: 2rem;
@@ -12,10 +13,21 @@
 
 
 body {
+  min-height: 100vh;
+
   overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
 
   background-size: 5rem 5rem;
   background-image:
     linear-gradient(to right, #f2f2f2 1px, transparent 1px),
     linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
 }
+
+
+.page-content {
+  flex: 1;
+}
+

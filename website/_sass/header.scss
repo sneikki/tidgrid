@@ -42,7 +42,11 @@ $sidebar-font-size: 1.1rem;
 
 
 .header__navigation--collapsed {
-  right: -100%;
+  display: none;
+
+  @media only screen and (min-width: 48rem) {
+    display: block;
+  }
 }
 
 

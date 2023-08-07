@@ -1,0 +1,52 @@
+.jumbo__text-logo {
+  width: min-content;
+
+  margin: 0 auto;
+
+  font-family: "Source Code Pro";
+  font-size: 4rem;
+  text-align: right;
+  line-height: 1.2;
+  color: #32495d;
+
+  @media only screen and (min-width: 48em) {
+    font-size: 5rem;
+  }
+
+  @media only screen and (min-width: 75em) {
+    margin: unset;
+
+    display: flex;
+  }
+}
+
+
+.jumbo__text-logo--accent {
+  color: #da526b;
+}
+
+
+.jumbo__button {
+  display: block;
+
+  padding: 1rem;
+
+  border-radius: 0.25rem;
+  
+  font-weight: 600;
+  font-family: "Montserrat";
+  text-align: center;
+  text-decoration: none;
+}
+
+
+.jumbo__button--primary {
+  background-color: #32495d;
+  color: #fff;
+}
+
+
+.jumbo__button--secondary {
+  background-color: #f8f3ed;
+  color: #32495d;
+}
