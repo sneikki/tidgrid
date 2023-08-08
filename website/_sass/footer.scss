@@ -1,3 +1,6 @@
+@import "common.scss";
+
+
 .footer {
   background-color: #f7f7f7;
 }
@@ -10,7 +13,7 @@
   }
 
   @media only screen and (min-width: 75em) {
-    position: absolute; 
+    position: absolute;
     right: 0
   }
 }
@@ -30,7 +33,7 @@
 
 .footer__text-logo {
   font-size: 2rem;
-  font-family: "Source Code Pro";
+  font-family: $monospace;
   text-transform: lowercase;
   color: #32495d;
 }
@@ -42,14 +45,14 @@
 
 
 .footer__version-text {
-  font-family: "Source Code Pro";
+  font-family: $monospace;
   font-size: 1rem;
   color: #92adc4;
 }
 
 
 .footer__link {
-  font-family: "Lato";
+  font-family: $sans-serif;
   text-decoration: none;
   color: #32495d;
   transition: 200ms color;
@@ -61,13 +64,13 @@
 
 
 .footer__link--primary {
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
 
 .footer__copyright {
-  font-family: "Lato";
+  font-family: $sans-serif;
   font-size: 0.9rem;
   line-height: 1.75;
   color: #92adc4;

@@ -7,14 +7,18 @@
 @import "index.scss";
 @import "doc-page.scss";
 
+/*
 @import "https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Source+Code+Pro&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Source+Code+Pro&display=swap";
+*/
 
 .icon--sm {
   width: 2rem;
   height: 2rem;
 }
+
+$ff: sans-serif;
 
 
 body {
