@@ -1,5 +1,6 @@
 ---
 layout: default
+title: Home
 ---
 
 <section class="tg-section jumbo">
