@@ -25,10 +25,11 @@ jobs:
 
       - name: Build website
         run: cd website && bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
 
       - name: Archive artifact
         run: tar --directory website/_site -cvf "$RUNNER_TEMP/artifact.tar" .
-
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
