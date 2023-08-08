@@ -5,5 +5,5 @@ node_modules/
 .pnp.loader.mjs
 
 # Website
-site/_site/
-site/.jekyll-cache/
+website/_site/
+website/.jekyll-cache/
