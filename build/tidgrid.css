@@ -146,6 +146,7 @@ menu {
 
 .tg-mode\(stacked\) {
   display: flex;
+  flex-wrap: wrap;
 }
 .tg-mode\(stacked\) > .tg-cell {
   flex: none;
@@ -414,6 +415,7 @@ menu {
   }
   .xs\:tg-mode\(stacked\) {
     display: flex;
+    flex-wrap: wrap;
   }
   .xs\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -673,6 +675,7 @@ menu {
   }
   .sm\:tg-mode\(stacked\) {
     display: flex;
+    flex-wrap: wrap;
   }
   .sm\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -932,6 +935,7 @@ menu {
   }
   .md\:tg-mode\(stacked\) {
     display: flex;
+    flex-wrap: wrap;
   }
   .md\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -1191,6 +1195,7 @@ menu {
   }
   .lg\:tg-mode\(stacked\) {
     display: flex;
+    flex-wrap: wrap;
   }
   .lg\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -1450,6 +1455,7 @@ menu {
   }
   .xl\:tg-mode\(stacked\) {
     display: flex;
+    flex-wrap: wrap;
   }
   .xl\:tg-mode\(stacked\) > .tg-cell {
     flex: none;
@@ -3523,7 +3529,7 @@ menu {
 }
 
 .tg-pos-y\(end\) {
-  align-items: center;
+  align-items: flex-end;
 }
 
 .tg-pos-y\(none\) {
@@ -3566,7 +3572,7 @@ menu {
     align-items: center;
   }
   .xs\:tg-pos-y\(end\) {
-    align-items: center;
+    align-items: flex-end;
   }
   .xs\:tg-pos-y\(none\) {
     align-items: unset;
@@ -3608,7 +3614,7 @@ menu {
     align-items: center;
   }
   .sm\:tg-pos-y\(end\) {
-    align-items: center;
+    align-items: flex-end;
   }
   .sm\:tg-pos-y\(none\) {
     align-items: unset;
@@ -3650,7 +3656,7 @@ menu {
     align-items: center;
   }
   .md\:tg-pos-y\(end\) {
-    align-items: center;
+    align-items: flex-end;
   }
   .md\:tg-pos-y\(none\) {
     align-items: unset;
@@ -3692,7 +3698,7 @@ menu {
     align-items: center;
   }
   .lg\:tg-pos-y\(end\) {
-    align-items: center;
+    align-items: flex-end;
   }
   .lg\:tg-pos-y\(none\) {
     align-items: unset;
@@ -3734,7 +3740,7 @@ menu {
     align-items: center;
   }
   .xl\:tg-pos-y\(end\) {
-    align-items: center;
+    align-items: flex-end;
   }
   .xl\:tg-pos-y\(none\) {
     align-items: unset;
