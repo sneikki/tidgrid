@@ -101,6 +101,11 @@
 }
 
 
+.doc-card__container {
+  text-decoration: none;
+}
+
+
 .doc-card {
   padding: 1.5rem;
 
@@ -110,10 +115,15 @@
 
   background-color: #fff;
   box-shadow: 0 0 1rem 0 #00000011;
+  transition: box-shadow 300ms;
 
   .doc-card__title {
     font-size: 1.2rem;
     font-weight: 700;
     color: #32495d;
+  }
+
+  &:hover {
+    box-shadow: 0 0 1rem 0 #00000021;
   }
 }
