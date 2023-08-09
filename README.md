@@ -1,6 +1,11 @@
 <p align="center">
-    <img src="assets/logo.svg">
+    <a href="https://tidgrid.dev">
+        <img src="assets/logo.svg">
+    </a>
 </p>
+<h3 align="center">
+    <a href="https://tidgrid.dev">tidgrid.dev</a>
+</h3>
 
 # Tidgrid
 
