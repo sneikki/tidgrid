@@ -44,3 +44,12 @@ body {
 .page-content__home {
   justify-content: center;
 }
+
+
+.content-page__title {
+  font-family: $title-font;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #32495d;
+  margin-bottom: 1rem;
+}
