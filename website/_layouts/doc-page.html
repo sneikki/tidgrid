@@ -7,9 +7,11 @@ layout: default
     <div class="breadcrumb">
       {% assign parts = page.dir | split: "/" %}
       {% assign length = parts.size | minus: 1 %}
+
       {% for i in (1..length) %}
+
         <div class="breadcrumb__item">
-          {{ parts[i] | capitalize }}
+          <a href="/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
         </div>
       {% endfor %}
 

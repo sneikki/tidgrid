@@ -45,6 +45,17 @@
 
 
 .breadcrumb__item {
+  a {
+    font-size: 1.15rem;
+    text-decoration: none;
+    color: #32495d;
+    transition: 200ms color;
+
+    &:hover {
+      color: lighten(#32495d, 15%);
+    }
+  }
+
   &:not(:last-child)::after {
     content: "›";
 
