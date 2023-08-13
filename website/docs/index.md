@@ -1,6 +1,6 @@
 ---
 layout: doc-page
-title: Index
+title: Documentation
 ---
 
 <div class="tg-row tg-gap(xl)">
