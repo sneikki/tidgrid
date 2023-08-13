@@ -21,7 +21,7 @@
   </head>
   <body>
     {% include header.html %}
-    <main class="page-content">
+    <main class="page-content page-content__{{ page.title | downcase }}">
       {{ content }}
     </main>
     {% include footer.html %}
