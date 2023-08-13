@@ -2,7 +2,7 @@
 
 $sidebar-bg: #f8f8f8;
 $sidebar-fg: #32495d;
-$sidebar-font-family: $sans-serif;
+$sidebar-font-family: $title-font;
 $sidebar-font-size: 1.1rem;
 
 .header__logo {
@@ -82,10 +82,12 @@ $sidebar-font-size: 1.1rem;
 .navigation__link {
   font-size: $sidebar-font-size;
   font-family: $sidebar-font-family;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   color: $sidebar-fg;
   transition: 200ms color;
+  text-transform: uppercase;
+  font-size: 0.95rem;
 
   &:hover {
     color: lighten($sidebar-fg, 15%);

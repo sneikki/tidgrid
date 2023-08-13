@@ -21,6 +21,16 @@
     margin: unset;
 
     display: flex;
+
+    font-size: 4rem;
+  }
+
+  @media only screen and (min-width: 90em) {
+    margin: unset;
+
+    display: flex;
+
+    font-size: 5rem;
   }
 }
 
@@ -38,7 +48,7 @@
   border-radius: 0.25rem;
   
   font-weight: 700;
-  font-family: $sans-serif;
+  font-family: $title-font;
   text-align: center;
   text-decoration: none;
 }
@@ -57,8 +67,9 @@
 
 
 .jumbo__description {
-  font-family: $sans-serif;
+  font-family: $title-font;
   font-size: 1.5rem;
+  font-weight: 400;
   text-align: center;
   color: #32495d;
 

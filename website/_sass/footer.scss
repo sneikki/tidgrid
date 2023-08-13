@@ -66,7 +66,9 @@
 
 
 .footer__link--primary {
-  font-weight: 700;
+  font-family: $title-font;
+  font-size: 0.9rem;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -79,6 +81,10 @@
 
   @media only screen and (min-width: 48em) {
     text-align: right;
+  }
+
+  .footer__link {
+    font-family: $sans-serif;
   }
 }
 
