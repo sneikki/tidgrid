@@ -5,6 +5,7 @@ title: Index
 
 <div class="tg-row tg-gap(xl)">
     {% include doc-card.html title="Installation"
+        href="/docs/installation"
         description="How to install and start using Tidgrid" %}
 
     {% include doc-card.html title="Grid"
