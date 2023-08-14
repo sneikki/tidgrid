@@ -27,7 +27,7 @@ The easiest way to get going is to add a link to your document to a [hosted vers
 Run 'npm install' to install dependencies. Then, to build Tidgrid from the source, run 'npm run build' or'make build'. The build will be minimized, and the source map will be automatically generated. Please see the following section for more options.
 
 The CSS files that have been built will be put in the `build` directory.
-Run `make clean` to delete all created build files and folders.
+Run `npm run clean` to delete all created build files and folders.
 
 Please keep in mind that the files in the build directory are only changed between releases.
 To obtain the unstable version, you must compile it from source.
@@ -36,10 +36,10 @@ To obtain the unstable version, you must compile it from source.
 
 To create the CSS files, use `npm run compile`.
 Please keep in mind that the generated files are offered as-is, with no minimizing and no comments.
-Run `make compile-minimized` to remove comments and reduce the size of the output.
+Run `npm run compile:minimized` to remove comments and reduce the size of the output.
 
 ## Checking code style
 
 This project has a linter configured.
-Run `make lint-scss` to utilize it.
-Run `make fix-scss` to resolve auto-fixable style problems.
+Run `npm run lint:scss` to utilize it.
+Run `npm run fix:scss` to resolve auto-fixable style problems.
