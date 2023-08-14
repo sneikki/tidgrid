@@ -1,5 +1,12 @@
 @import "common.scss";
 
+.jumbo {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+
 .jumbo__text-logo {
   width: min-content;
 

@@ -19,6 +19,12 @@
 }
 
 
+.section-padding-lg {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+
 body {
   min-height: 100vh;
 
@@ -51,5 +57,53 @@ body {
   font-size: 3rem;
   font-weight: 700;
   color: #32495d;
-  margin-bottom: 1rem;
+}
+
+
+.content-page__title--lighter {
+  font-weight: 400;
+}
+
+
+.content-page__title--centered {
+  text-align: center;
+}
+
+
+.features__subtitle {
+  margin-bottom: 4rem;
+}
+
+
+.features__code {
+  overflow: auto;
+
+  padding: 1.5rem;
+
+  background-color: #32495d;
+  color: #fff;
+  border-radius: 0.5rem;
+
+  code {
+    font-family: $monospace;
+  }
+}
+
+
+.features__box {
+  padding: 2rem;
+
+  font-family: $title-font;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+
+  background-color: #da526b;
+  border-radius: 0.5rem;
+}
+
+
+.features__box--dark {
+  background-color: #32495d;
 }
