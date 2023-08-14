@@ -149,7 +149,10 @@
 
 
 .doc__keyword {
-  padding: 0.125rem 0.333rem;
+  display: inline-block;
+
+  padding: 0 0.333rem;
+
 
   font-family: $monospace;
   color: #fa8383;
