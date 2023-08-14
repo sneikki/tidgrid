@@ -29,7 +29,7 @@ $fractions: (
   box-sizing: border-box;
 }
 
-@include variant.generate {
+@include variant.generate($with: namespace.use-prefix(row)) {
   @include variant.declare(mode, auto) {
     display: flex;
 
