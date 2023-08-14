@@ -1,6 +1,6 @@
 ---
 layout: doc-page
-title: Positioning
+title: Grid
 ---
 
 {% include note.html type="note" content="This page is incomplete." %}
