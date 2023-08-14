@@ -60,9 +60,9 @@ $default-breakpoints: (
 
   $selector: ".#{$classname}";
 
-//   @if & {
-//     $selector: "&.#{$classname}";
-//   }
+  //   @if & {
+  //     $selector: "&.#{$classname}";
+  //   }
 
   @if $declare-with {
     $selector: ".#{$declare-with}#{$selector}";
