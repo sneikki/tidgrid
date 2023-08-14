@@ -77,6 +77,10 @@ $sidebar-font-size: 1.1rem;
   background-color: transparent;
   cursor: pointer;
 
+  @media only screen and (min-width: 48em) {
+    display: none;
+  }
+
   svg {
     fill: #32495d;
   }
