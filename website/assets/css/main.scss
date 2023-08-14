@@ -6,6 +6,7 @@
 @import "footer.scss";
 @import "index.scss";
 @import "doc-page.scss";
+@import "note.scss";
 
 .icon--xs {
   width: 2rem;
@@ -53,6 +54,7 @@ body {
 
 
 .content-page__title {
+  margin-bottom: 1rem;
   font-family: $title-font;
   font-size: 2rem;
   font-weight: 700;

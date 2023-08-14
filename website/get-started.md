@@ -8,5 +8,7 @@ title: Get started
     <p class="content-page__title">
       Get started
     </p>
+
+    {% include note.html type="note" content="This page is incomplete." %}
   </div>
 </section>
