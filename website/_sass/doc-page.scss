@@ -146,3 +146,14 @@
     box-shadow: 0 0 1rem 0 #00000021;
   }
 }
+
+
+.doc__keyword {
+  padding: 0.125rem 0.333rem;
+
+  font-family: $monospace;
+  color: #fa8383;
+
+  background-color: #f8f3ed;
+  border-radius: 0.25rem;
+}
