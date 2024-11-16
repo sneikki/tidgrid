@@ -1,0 +1,34 @@
+.note {
+  color: #32495d;
+
+  background-color: #f7f7f7;
+
+  border-radius: 0.333rem;
+}
+
+
+.note__header {
+  padding: 1rem;
+
+  font-family: $title-font;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+.note__content {
+  padding: 1rem;
+
+  font-family: $sans-serif;
+  line-height: 1.75;
+}
+
+
+.note--info {
+  border: 1px solid #f0f0f0;
+
+  .note__header {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}

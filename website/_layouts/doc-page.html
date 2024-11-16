@@ -7,9 +7,11 @@ layout: default
     <div class="breadcrumb">
       {% assign parts = page.dir | split: "/" %}
       {% assign length = parts.size | minus: 1 %}
+
       {% for i in (1..length) %}
+
         <div class="breadcrumb__item">
-          {{ parts[i] | capitalize }}
+          <a href="{{ site.baseurl }}/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
         </div>
       {% endfor %}
 
@@ -24,6 +26,6 @@ layout: default
 
     <main class="doc-page__content">
       {{ content }}
-    </main>
+    <main>
   </div>
 </section>

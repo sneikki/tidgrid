@@ -6,6 +6,8 @@
 @import "footer.scss";
 @import "index.scss";
 @import "doc-page.scss";
+@import "note.scss";
+@import "highlight-theme.scss";
 
 .icon--xs {
   width: 2rem;
@@ -19,6 +21,12 @@
 }
 
 
+.section-padding-lg {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+
 body {
   min-height: 100vh;
 
@@ -29,11 +37,147 @@ body {
 
   background-size: 5rem 5rem;
   background-image:
-    linear-gradient(to right, #f2f2f2 1px, transparent 1px),
-    linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
+    linear-gradient(to right, #f7f7f7 1px, transparent 1px),
+    linear-gradient(to bottom, #f7f7f7 1px, transparent 1px);
 }
 
 
 .page-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.page-content__home {
+  justify-content: center;
+}
+
+
+.content-page__title {
+  margin-bottom: 1rem;
+  font-family: $title-font;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #32495d;
+  
+  @media only screen and (min-width: 48rem) {
+    font-size: 2.5rem;
+  }
+
+  @media only screen and (min-width: 64rem) {
+    font-size: 3rem;
+  }
+}
+
+
+.content-page__title--lighter {
+  font-weight: 400;
+}
+
+
+.content-page__title--centered {
+  text-align: center;
+}
+
+
+.features__subtitle {
+  margin-bottom: 4rem;
+}
+
+
+.features__code {
+  overflow: auto;
+
+  padding: 1.5rem;
+
+  background-color: #32495d;
+  color: #fff;
+  border-radius: 0.5rem;
+
+  code {
+    font-family: $monospace;
+  }
+}
+
+
+.features__box {
+  padding: 2rem;
+
+  font-family: $title-font;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+
+  background-color: #da526b;
+  border-radius: 0.5rem;
+}
+
+
+.features__box--dark {
+  background-color: #32495d;
+}
+
+
+.page-ingress {
+  font-size: 1.2rem;
+}
+
+.page-ingress--lg {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
+.page__text--lg {
+  font-size: 1.2rem;
+}
+
+
+.page__text--xl {
+  font-size: 1.5rem;
+}
+
+
+.page__text--centerized {
+  text-align: center;
+}
+
+
+.page__text--sb {
+  font-weight: 600;
+}
+
+
+.hljs.language-sh::before {
+  content: "$";
+
+  margin-right: 0.75rem;
+
+  font-weight: 600;
+  color: #32495d;
+}
+
+
+.page__subtitle {
+  margin-bottom: 2rem;
+}
+
+
+.page__subtitle--important {
+  font-weight: 600 !important;
+}
+
+
+.page, .doc-page {
+  p a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #32495d;
+
+    &:hover {
+      color: lighten(#32495d, 15%);
+    }
+  }
 }

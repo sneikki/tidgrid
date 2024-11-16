@@ -36,6 +36,8 @@
   font-family: $monospace;
   text-transform: lowercase;
   color: #32495d;
+
+  user-select: none;
 }
 
 
@@ -64,7 +66,9 @@
 
 
 .footer__link--primary {
-  font-weight: 700;
+  font-family: $title-font;
+  font-size: 0.9rem;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -78,4 +82,13 @@
   @media only screen and (min-width: 48em) {
     text-align: right;
   }
+
+  .footer__link {
+    font-family: $sans-serif;
+  }
+}
+
+
+.footer__icon-link {
+  fill: #32495d;
 }

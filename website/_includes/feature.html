@@ -1,0 +1,18 @@
+<section class="tg-section section-padding-lg">
+  <div class="tg-container">
+    <p class="features__subtitle content-page__title content-page__title--lighter content-page__title--centered">
+        {{ include.title }}
+    </p>
+
+    <div class="tg-row tg-space-x(evenly) tg-pos-y(center) tg-gap(xl)">
+        <div class="tg-cell lg:tg-span(7) {% if include.reverse %}lg:tg-order(last){% endif %}">
+          {{ include.source }}
+        </div>
+
+        <div class="tg-cell lg:tg-span(7)">
+            {{ include.result }}
+        </div>
+    </div>
+
+  </div>
+</section>

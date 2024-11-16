@@ -1,3 +1,4 @@
+.page,
 .doc-page {
   font-family: $sans-serif;
 }
@@ -17,6 +18,7 @@
   }
 
   h2 {
+    font-family: Montserrat;
     font-size: 2rem;
     font-weight: 400;
     color: #32495d;
@@ -44,6 +46,17 @@
 
 
 .breadcrumb__item {
+  a {
+    font-size: 1.15rem;
+    text-decoration: none;
+    color: #32495d;
+    transition: 200ms color;
+
+    &:hover {
+      color: lighten(#32495d, 15%);
+    }
+  }
+
   &:not(:last-child)::after {
     content: "›";
 
@@ -58,10 +71,15 @@
 
 
 .doc-page__title {
-  font-size: 3rem;
-  font-weight: 900;
+  font-family: $title-font;
+  font-size: 2rem;
+  font-weight: 700;
   color: #32495d;
   margin-bottom: 1rem;
+
+  @media only screen and (min-width: 64em) {
+    font-size: 3rem;
+  }
 }
 
 
@@ -107,6 +125,7 @@
 
 
 .doc-card {
+  border: 1px solid #f0f0f0;
   padding: 1.5rem;
 
   font-family: $sans-serif;
@@ -118,12 +137,27 @@
   transition: box-shadow 300ms;
 
   .doc-card__title {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-family: $title-font;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: #32495d;
   }
 
   &:hover {
     box-shadow: 0 0 1rem 0 #00000021;
   }
+}
+
+
+.doc__keyword {
+  display: inline-block;
+
+  padding: 0 0.333rem;
+
+
+  font-family: $monospace;
+  color: #fa8383;
+
+  background-color: #f8f3ed;
+  border-radius: 0.25rem;
 }

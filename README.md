@@ -1,10 +1,10 @@
 <p align="center">
-    <a href="https://tidgrid.dev">
+    <a href="https://sneikki.github.io/tidgrid">
         <img src="assets/logo.svg">
     </a>
 </p>
 <h3 align="center">
-    <a href="https://tidgrid.dev">tidgrid.dev</a>
+    <a href="https://sneikki.github.io/tidgrid">tidgrid.dev</a>
 </h3>
 
 # Tidgrid
