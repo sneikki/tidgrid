@@ -17,13 +17,13 @@ title: Home
             <div class="tg-cell lg:tg-span(8)">
                 <div class="tg-row jumbo__buttons tg-y-gap(lg) tg-x-gap(lg) tg-x-gap(xl)">
                     <div class="tg-cell tg-span(16) sm:tg-mode(auto)">
-                        <a href="/get-started" class="jumbo__button jumbo__button--primary">
+                        <a href="{{ site.baseurl }}/get-started" class="jumbo__button jumbo__button--primary">
                             Get started
                         </a>
                     </div>
 
                     <div class="tg-cell xs:tg-span(16) sm:tg-mode(auto)">
-                        <a href="/docs" class="jumbo__button jumbo__button--secondary">
+                        <a href="{{ site.baseurl }}/docs" class="jumbo__button jumbo__button--secondary">
                             Documentation
                         </a>
                     </div>

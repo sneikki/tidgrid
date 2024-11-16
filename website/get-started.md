@@ -32,7 +32,7 @@ npm install tidgrid
 
     <p class="page__text page__text--lg">
         Check out the
-        <a href="/docs/installation">installation guide</a>
+        <a href="{{ site.baseurl }}/docs/installation">installation guide</a>
         for a more comprehensive guide.
     </p>
 </section>
@@ -53,13 +53,13 @@ npm install tidgrid
         <div class="tg-cell tg-size(16)">
             <div class="tg-row jumbo__buttons sm:tg-mode(auto) md:tg-span(7) lg:tg-span(6) xl:tg-span(5) tg-pos-x(center) tg-y-gap(lg) tg-gap(lg)">
                 <div class="tg-cell">
-                    <a href="/examples" class="jumbo__button jumbo__button--red">
+                    <a href="{{ site.baseurl }}/examples" class="jumbo__button jumbo__button--red">
                         Check out the examples
                     </a>
                 </div>
 
                 <div class="tg-cell">
-                    <a href="/docs" class="jumbo__button jumbo__button--primary">
+                    <a href="{{ site.baseurl }}/docs" class="jumbo__button jumbo__button--primary">
                         Jump into the documentation
                     </a>
                 </div>

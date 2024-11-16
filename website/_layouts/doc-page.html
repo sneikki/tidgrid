@@ -11,7 +11,7 @@ layout: default
       {% for i in (1..length) %}
 
         <div class="breadcrumb__item">
-          <a href="/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
+          <a href="{{ site.baseurl }}/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
         </div>
       {% endfor %}
 
