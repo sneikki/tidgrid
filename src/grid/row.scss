@@ -88,8 +88,7 @@ $fractions: (
       display: flex;
 
       @include child-cell {
-        width: $cell-width;
-        flex: none;
+        flex-basis: $cell-width;
       }
     }
   }
@@ -101,8 +100,7 @@ $fractions: (
           display: flex;
 
           @include child-cell {
-            width: $cell-width;
-            flex: none;
+            flex-basis: $cell-width;
           }
         }
       }

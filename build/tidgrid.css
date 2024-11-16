@@ -155,7 +155,6 @@ menu {
 
 .tg-row.tg-mode\(thin\) {
   display: flex;
-  flex-wrap: nowrap;
 }
 .tg-row.tg-mode\(thin\) > .tg-cell {
   flex: 0 1 0;
@@ -173,6 +172,20 @@ menu {
 
 .tg-row.tg-mode\(disabled\) {
   display: none;
+}
+
+.tg-row.tg-flow\(wrap\) {
+  flex-wrap: wrap;
+}
+.tg-row.tg-flow\(wrap\) > .tg-cell {
+  white-space: normal;
+}
+
+.tg-row.tg-flow\(keep\) {
+  flex-wrap: nowrap;
+}
+.tg-row.tg-flow\(keep\) > .tg-cell {
+  white-space: nowrap;
 }
 
 .tg-row.tg-frac\(1\/2\) {
@@ -423,7 +436,6 @@ menu {
   }
   .tg-row.xs\:tg-mode\(thin\) {
     display: flex;
-    flex-wrap: nowrap;
   }
   .tg-row.xs\:tg-mode\(thin\) > .tg-cell {
     flex: 0 1 0;
@@ -439,6 +451,18 @@ menu {
   }
   .tg-row.xs\:tg-mode\(disabled\) {
     display: none;
+  }
+  .tg-row.xs\:tg-flow\(wrap\) {
+    flex-wrap: wrap;
+  }
+  .tg-row.xs\:tg-flow\(wrap\) > .tg-cell {
+    white-space: normal;
+  }
+  .tg-row.xs\:tg-flow\(keep\) {
+    flex-wrap: nowrap;
+  }
+  .tg-row.xs\:tg-flow\(keep\) > .tg-cell {
+    white-space: nowrap;
   }
   .tg-row.xs\:tg-frac\(1\/2\) {
     display: flex;
@@ -683,7 +707,6 @@ menu {
   }
   .tg-row.sm\:tg-mode\(thin\) {
     display: flex;
-    flex-wrap: nowrap;
   }
   .tg-row.sm\:tg-mode\(thin\) > .tg-cell {
     flex: 0 1 0;
@@ -699,6 +722,18 @@ menu {
   }
   .tg-row.sm\:tg-mode\(disabled\) {
     display: none;
+  }
+  .tg-row.sm\:tg-flow\(wrap\) {
+    flex-wrap: wrap;
+  }
+  .tg-row.sm\:tg-flow\(wrap\) > .tg-cell {
+    white-space: normal;
+  }
+  .tg-row.sm\:tg-flow\(keep\) {
+    flex-wrap: nowrap;
+  }
+  .tg-row.sm\:tg-flow\(keep\) > .tg-cell {
+    white-space: nowrap;
   }
   .tg-row.sm\:tg-frac\(1\/2\) {
     display: flex;
@@ -943,7 +978,6 @@ menu {
   }
   .tg-row.md\:tg-mode\(thin\) {
     display: flex;
-    flex-wrap: nowrap;
   }
   .tg-row.md\:tg-mode\(thin\) > .tg-cell {
     flex: 0 1 0;
@@ -959,6 +993,18 @@ menu {
   }
   .tg-row.md\:tg-mode\(disabled\) {
     display: none;
+  }
+  .tg-row.md\:tg-flow\(wrap\) {
+    flex-wrap: wrap;
+  }
+  .tg-row.md\:tg-flow\(wrap\) > .tg-cell {
+    white-space: normal;
+  }
+  .tg-row.md\:tg-flow\(keep\) {
+    flex-wrap: nowrap;
+  }
+  .tg-row.md\:tg-flow\(keep\) > .tg-cell {
+    white-space: nowrap;
   }
   .tg-row.md\:tg-frac\(1\/2\) {
     display: flex;
@@ -1203,7 +1249,6 @@ menu {
   }
   .tg-row.lg\:tg-mode\(thin\) {
     display: flex;
-    flex-wrap: nowrap;
   }
   .tg-row.lg\:tg-mode\(thin\) > .tg-cell {
     flex: 0 1 0;
@@ -1219,6 +1264,18 @@ menu {
   }
   .tg-row.lg\:tg-mode\(disabled\) {
     display: none;
+  }
+  .tg-row.lg\:tg-flow\(wrap\) {
+    flex-wrap: wrap;
+  }
+  .tg-row.lg\:tg-flow\(wrap\) > .tg-cell {
+    white-space: normal;
+  }
+  .tg-row.lg\:tg-flow\(keep\) {
+    flex-wrap: nowrap;
+  }
+  .tg-row.lg\:tg-flow\(keep\) > .tg-cell {
+    white-space: nowrap;
   }
   .tg-row.lg\:tg-frac\(1\/2\) {
     display: flex;
@@ -1463,7 +1520,6 @@ menu {
   }
   .tg-row.xl\:tg-mode\(thin\) {
     display: flex;
-    flex-wrap: nowrap;
   }
   .tg-row.xl\:tg-mode\(thin\) > .tg-cell {
     flex: 0 1 0;
@@ -1479,6 +1535,18 @@ menu {
   }
   .tg-row.xl\:tg-mode\(disabled\) {
     display: none;
+  }
+  .tg-row.xl\:tg-flow\(wrap\) {
+    flex-wrap: wrap;
+  }
+  .tg-row.xl\:tg-flow\(wrap\) > .tg-cell {
+    white-space: normal;
+  }
+  .tg-row.xl\:tg-flow\(keep\) {
+    flex-wrap: nowrap;
+  }
+  .tg-row.xl\:tg-flow\(keep\) > .tg-cell {
+    white-space: nowrap;
   }
   .tg-row.xl\:tg-frac\(1\/2\) {
     display: flex;
