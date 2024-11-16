@@ -4,7 +4,7 @@
     </a>
 </p>
 <h3 align="center">
-    <a href="https://sneikki.github.io/tidgrid">sneikki.github.io/tidgrid</a>
+    <a href="https://sneikki.github.io/tidgrid">tidgrid.dev</a>
 </h3>
 
 # Tidgrid
