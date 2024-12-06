@@ -1,30 +1,48 @@
 <p align="center">
-    <a href="https://sneikki.github.io/tidgrid">
+    <a href="https://tidgrid.dev">
         <img src="assets/logo.svg">
     </a>
 </p>
+
 <h3 align="center">
-    <a href="https://sneikki.github.io/tidgrid">tidgrid.dev</a>
+    <a href="https://tidgrid.dev">
+        tidgrid.dev
+    </a>
 </h3>
+
+<p align="center">
+    <strong>
+        Tiny and expressive
+    </strong>
+    CSS library built around Flexbox to
+    <strong>
+        simplify your layouts.
+    </strong>
+</p>
+
+<br />
 
 # Tidgrid
 
-Tiny and expressive CSS library built around Flexbox to simplify your layouts.
-
-> :warning: **This project is still in a very early stage of development.**
-> There certainly are bugs, and some of the features may not function correctly under all circumstances.
-> Should you use this library in your project, do it at your discretion.
-> If you find a bug or have a suggestion, don't hesitate to collaborate!
-
 # Quick usage
+
+> :warning: **This project is still in an early stage of development.**
+> There certainly are bugs, and some of the features may not function as expected.
+> If you find a bug or have a suggestion, don't hesitate to collaborate!
 
 ## Inline stylesheet
 
-The easiest way to get going is to add a link to your document to a [hosted version](https://cdn.jsdelivr.net/gh/sneikki/tidgrid@v0.1.0-alpha/build/tidgrid.css) of Tidgrid. This approach is intended merely for development purposes, as it includes all of the generated CSS on your site. You'll usually use just a tiny subset of Tidgrid. Thus, it is wise to purge unused styles to reduce the amount of CSS deployed to production.
+The easiest way to get going is to add a link to your document to a [**hosted version**](https://cdn.jsdelivr.net/gh/sneikki/tidgrid@v0.1.0-alpha.2/build/tidgrid.min.css) of Tidgrid.
+This approach is intended merely for development purposes, as it includes all of the generated CSS on your site.
+You'll usually use just a tiny subset of Tidgrid.
+Thus, it is wise to purge unused styles to reduce the amount of CSS deployed to production.
 
 ## Building
 
-Run 'npm install' to install dependencies. Then, to build Tidgrid from the source, run 'npm run build' or'make build'. The build will be minimized, and the source map will be automatically generated. Please see the following section for more options.
+Run 'npm install' to install dependencies.
+Then, to build Tidgrid from the source, run 'npm run build' or'make build'.
+The build will be minimized, and the source map will be automatically generated.
+Please see the following section for more options.
 
 The CSS files that have been built will be put in the `build` directory.
 Run `npm run clean` to delete all created build files and folders.
