@@ -268,6 +268,101 @@ body {
   min-height: var(--tg-size-measure);
 }
 
+.tg-cols\(1\) {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.tg-cols\(2\) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tg-cols\(3\) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tg-cols\(4\) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tg-cols\(5\) {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.tg-cols\(6\) {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.tg-cols\(12\) {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.tg-span\(1\) {
+  grid-column: span 1;
+}
+
+.tg-span\(2\) {
+  grid-column: span 2;
+}
+
+.tg-span\(3\) {
+  grid-column: span 3;
+}
+
+.tg-span\(4\) {
+  grid-column: span 4;
+}
+
+.tg-span\(5\) {
+  grid-column: span 5;
+}
+
+.tg-span\(6\) {
+  grid-column: span 6;
+}
+
+.tg-span\(7\) {
+  grid-column: span 7;
+}
+
+.tg-span\(8\) {
+  grid-column: span 8;
+}
+
+.tg-span\(9\) {
+  grid-column: span 9;
+}
+
+.tg-span\(10\) {
+  grid-column: span 10;
+}
+
+.tg-span\(11\) {
+  grid-column: span 11;
+}
+
+.tg-span\(12\) {
+  grid-column: span 12;
+}
+
+.tg-order\(first\) {
+  order: -1;
+}
+
+.tg-order\(last\) {
+  order: 1;
+}
+
+.tg-show {
+  display: revert;
+}
+
 .tg-hide {
   display: none;
 }
@@ -437,6 +532,79 @@ body {
   }
   .sm\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .sm\:tg-cols\(1\) {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(2\) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(3\) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(4\) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(5\) {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(6\) {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .sm\:tg-cols\(12\) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .sm\:tg-span\(1\) {
+    grid-column: span 1;
+  }
+  .sm\:tg-span\(2\) {
+    grid-column: span 2;
+  }
+  .sm\:tg-span\(3\) {
+    grid-column: span 3;
+  }
+  .sm\:tg-span\(4\) {
+    grid-column: span 4;
+  }
+  .sm\:tg-span\(5\) {
+    grid-column: span 5;
+  }
+  .sm\:tg-span\(6\) {
+    grid-column: span 6;
+  }
+  .sm\:tg-span\(7\) {
+    grid-column: span 7;
+  }
+  .sm\:tg-span\(8\) {
+    grid-column: span 8;
+  }
+  .sm\:tg-span\(9\) {
+    grid-column: span 9;
+  }
+  .sm\:tg-span\(10\) {
+    grid-column: span 10;
+  }
+  .sm\:tg-span\(11\) {
+    grid-column: span 11;
+  }
+  .sm\:tg-span\(12\) {
+    grid-column: span 12;
+  }
+  .sm\:tg-order\(first\) {
+    order: -1;
+  }
+  .sm\:tg-order\(last\) {
+    order: 1;
+  }
+  .sm\:tg-show {
+    display: revert;
   }
   .sm\:tg-hide {
     display: none;
@@ -608,6 +776,79 @@ body {
   }
   .md\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .md\:tg-cols\(1\) {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(2\) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(3\) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(4\) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(5\) {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(6\) {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .md\:tg-cols\(12\) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .md\:tg-span\(1\) {
+    grid-column: span 1;
+  }
+  .md\:tg-span\(2\) {
+    grid-column: span 2;
+  }
+  .md\:tg-span\(3\) {
+    grid-column: span 3;
+  }
+  .md\:tg-span\(4\) {
+    grid-column: span 4;
+  }
+  .md\:tg-span\(5\) {
+    grid-column: span 5;
+  }
+  .md\:tg-span\(6\) {
+    grid-column: span 6;
+  }
+  .md\:tg-span\(7\) {
+    grid-column: span 7;
+  }
+  .md\:tg-span\(8\) {
+    grid-column: span 8;
+  }
+  .md\:tg-span\(9\) {
+    grid-column: span 9;
+  }
+  .md\:tg-span\(10\) {
+    grid-column: span 10;
+  }
+  .md\:tg-span\(11\) {
+    grid-column: span 11;
+  }
+  .md\:tg-span\(12\) {
+    grid-column: span 12;
+  }
+  .md\:tg-order\(first\) {
+    order: -1;
+  }
+  .md\:tg-order\(last\) {
+    order: 1;
+  }
+  .md\:tg-show {
+    display: revert;
   }
   .md\:tg-hide {
     display: none;

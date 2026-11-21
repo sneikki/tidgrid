@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -46,6 +47,7 @@ func listText(v *Vocabulary) string {
 	}
 
 	b.WriteString("\n# atoms\n")
+	b.WriteString("S = a name in space, Z = a name in size\n")
 	var statics []string
 	flush := func() {
 		if len(statics) > 0 {
@@ -65,14 +67,14 @@ func listText(v *Vocabulary) string {
 			statics = append(statics, base)
 		case strings.HasPrefix(first.Decls[0][1], "var("):
 			flush()
-			fmt.Fprintf(&b, "%s (%s)\n", base, listScale(v, first.Decls[0][1]))
+			fmt.Fprintf(&b, "%s(%s)\n", base, scaleLetter(listScale(v, first.Decls[0][1])))
 		default:
 			flush()
 			vals := make([]string, 0, j-i)
 			for _, a := range v.Atoms[i:j] {
 				vals = append(vals, a.Value)
 			}
-			fmt.Fprintf(&b, "%s(%s)\n", base, strings.Join(vals, "|"))
+			fmt.Fprintf(&b, "%s(%s)\n", base, strings.Join(rangeNums(vals), "|"))
 		}
 		i = j
 	}
@@ -112,6 +114,37 @@ func listScale(v *Vocabulary, decl string) string {
 		}
 	}
 	return ""
+}
+
+// scaleLetter is the short name the atoms section gives the two scales.
+func scaleLetter(group string) string {
+	if group == "size" {
+		return "Z"
+	}
+	return "S"
+}
+
+// rangeNums folds runs of three or more consecutive integers: 1 2 3 4 5 6 12 -> 1-6 12.
+func rangeNums(vals []string) []string {
+	var out []string
+	for i := 0; i < len(vals); {
+		n, err := strconv.Atoi(vals[i])
+		j := i
+		for err == nil && j+1 < len(vals) {
+			if m, e := strconv.Atoi(vals[j+1]); e != nil || m != n+(j+1-i) {
+				break
+			}
+			j++
+		}
+		if j-i >= 2 {
+			out = append(out, vals[i]+"-"+vals[j])
+			i = j + 1
+		} else {
+			out = append(out, vals[i])
+			i++
+		}
+	}
+	return out
 }
 
 // listRoleKinds returns the kinds in file order and the roles of each, in file order.

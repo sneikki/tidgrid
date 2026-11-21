@@ -1,7 +1,7 @@
 [project]
 prefix = "tg"                       # default
 out    = "src/styles/tidgrid.css"   # required
-scan   = ["src"]                    # default ["."]
+scan   = ["."]                    # default ["."]
 
 [breakpoints]                       # ascending, in file order
 sm = "40em"
