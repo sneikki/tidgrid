@@ -15,21 +15,27 @@ import (
 // DefaultConfig is the vocabulary file name used when -c is not given.
 const DefaultConfig = "tidgrid.toml"
 
-// LoadFlag parses -c and loads the vocabulary; on failure it prints the errors and returns exit code 2.
+// LoadFile loads the vocabulary at path. On failure it prints each error to
+// stderr and returns a nil vocabulary with exit code 2; else the vocabulary and 0.
+func LoadFile(path string) (*Vocabulary, int) {
+	v, errs := Load(path)
+	if len(errs) > 0 {
+		for _, e := range errs {
+			fmt.Fprintf(os.Stderr, "%s: %v\n", path, e)
+		}
+		return nil, 2
+	}
+	return v, 0
+}
+
+// LoadFlag parses -c and loads that vocabulary with LoadFile; a bad flag returns exit code 2.
 func LoadFlag(name string, args []string) (*Vocabulary, int) {
 	fs := flag.NewFlagSet(name, flag.ContinueOnError)
 	cfg := fs.String("c", DefaultConfig, "vocabulary file")
 	if err := fs.Parse(args); err != nil {
 		return nil, 2
 	}
-	v, errs := Load(*cfg)
-	if len(errs) > 0 {
-		for _, e := range errs {
-			fmt.Fprintf(os.Stderr, "%s: %v\n", *cfg, e)
-		}
-		return nil, 2
-	}
-	return v, 0
+	return LoadFile(*cfg)
 }
 
 // Load parses and validates the vocabulary file at path; errors name the table path and key.

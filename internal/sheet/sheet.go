@@ -79,12 +79,9 @@ func Run(args []string) int {
 	if err := fs.Parse(args); err != nil {
 		return 2
 	}
-	v, errs := vocab.Load(*cfg)
-	if len(errs) > 0 {
-		for _, e := range errs {
-			fmt.Fprintf(os.Stderr, "%s: %v\n", *cfg, e)
-		}
-		return 2
+	v, code := vocab.LoadFile(*cfg)
+	if v == nil {
+		return code
 	}
 	if err := os.WriteFile(*out, []byte(page(v)), 0o644); err != nil {
 		fmt.Fprintln(os.Stderr, "tidgrid sheet:", err)
