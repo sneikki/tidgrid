@@ -1,0 +1,66 @@
+[project]
+prefix = "tg"                       # default
+out    = "src/styles/tidgrid.css"   # required
+scan   = ["src"]                    # default ["."]
+
+[breakpoints]                       # ascending, in file order
+sm = "40em"
+md = "64em"
+
+[tokens.color]                      # tokens are the ONLY place for raw values
+ground = "#0f1214"
+ink    = "#e6e9eb"
+accent = "#5ed5dc"
+link   = "{color.accent}"           # a token may reference another
+
+[tokens.space]                      # gap and pad atoms run on this group
+sm = "0.5rem"
+md = "1rem"
+
+[tokens.size]                       # width and height atoms run on this group
+full    = "100%"
+measure = "80rem"
+
+[tokens.border]                     # any other group name is free
+hair = "1px"
+
+[tokens.motion]
+slow = "1.1s"
+
+[element.body]                      # base rule for a bare element
+background = "{color.ground}"
+color      = "{color.ink}"
+
+[role.surface.card]                 # class: tg-surface(card)
+use        = "A panel that lifts off the ground. One per group of related content."
+background = "{color.ground}"
+border     = "{border.hair} solid {color.accent}"
+
+[role.surface.card."&:hover"]       # nested rule, native CSS nesting
+border-color = "{color.ink}"
+
+[role.surface.card."@md"]           # from breakpoint md up
+border-width = "{border.hair}"
+
+[role.state.ready]                  # a class a script sets; other roles react to it
+use = "Set on body when the intro animation has finished."
+
+[role.text.title]
+use     = "The one title of a page."
+opacity = "0"
+
+[role.text.title.".tg-state(ready) &"]
+opacity   = "1"
+animation = "{keyframes.rise} {motion.slow} ease"
+
+[keyframes.rise."0%"]
+transform = "translateY({space.sm})"
+
+[keyframes.rise."100%"]
+transform = "none"
+
+[allow.class]                       # visible exceptions, each with its reason
+"has-js" = "set by an inline script before first paint"
+
+[allow.css]
+"src/styles/fonts.css" = "self-hosted @font-face only"
