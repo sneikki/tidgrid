@@ -1,7 +1,7 @@
 [project]
 prefix = "tg"
 out    = "assets/css/tidgrid.css"
-scan   = ["."]
+scan   = [".", "../docs"]   # website/docs is a symlink; check does not follow those
 
 [breakpoints]
 xs = "36em"
