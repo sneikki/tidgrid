@@ -87,7 +87,7 @@ tg-surface(card)  A panel that lifts off the ground. One per group of related co
 ## text
 tg-text(title)  The one title of a page.
 {% endcapture %}
-{% include code.html code=listing %}
+{% include code.html code=listing plain=true %}
 <!-- tidgrid-ignore-end -->
         <p class="tg-text(label)">tidgrid check, after a slip</p>
 <!-- tidgrid-ignore-start -->
@@ -97,7 +97,7 @@ slip.html:2: appearance in style attribute: color; use a role (`tidgrid list`)
 slip.html:3: unknown class border-l-4: not in the vocabulary; run `tidgrid list`
 slip.html:7: own CSS: <style> block; make it a role in the vocabulary
 {% endcapture %}
-{% include code.html code=slip %}
+{% include code.html code=slip plain=true %}
 <!-- tidgrid-ignore-end -->
         <p class="tg-text(body)">An unknown atom value, an inline colour, a class from nowhere and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1.</p>
       </div>

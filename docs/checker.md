@@ -21,7 +21,7 @@ A message names the fix where there is one:
 {% capture c %}
 src/pages/index.astro:14: unknown class tg-gap(2); tg-gap takes: sm md
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c plain=true %}
 
 After the violations come three lists: per file, the roles it uses; the roles nothing uses; and the `allow` entries with their reasons.
 

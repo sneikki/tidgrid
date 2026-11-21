@@ -600,3 +600,8 @@ gap                   = "{space.lg}"
 
 [role.layout.card-grid."@sm"]
 grid-template-columns = "1fr 1fr"
+
+# ---------------------------------------------------------------- exceptions
+
+[allow.class]
+nohighlight = "read by highlight.js: keeps a panel of plain text, a shell command or tool output uncoloured"
