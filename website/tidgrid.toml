@@ -74,6 +74,7 @@ subtitle  = "1.5rem"
 h2        = "2rem"
 h1        = "2.5rem"
 display   = "3rem"
+hero-narrow = "2.75rem"
 hero      = "4rem"
 hero-wide = "5rem"
 
@@ -186,10 +187,13 @@ user-select    = "none"
 [role.text.wordmark-hero]
 use         = "The huge product name of the front page hero. Pair with text(wordmark-accent) for the accent part."
 font-family = "{font.mono}"
-font-size   = "{type.hero}"
+font-size   = "{type.hero-narrow}"
 line-height = "1.2"
 color       = "{color.ink}"
 user-select = "none"
+
+[role.text.wordmark-hero."@xs"]
+font-size = "{type.hero}"
 
 [role.text.wordmark-hero."@sm"]
 font-size = "{type.hero-wide}"

@@ -54,6 +54,7 @@
   --tg-type-h2: 2rem;
   --tg-type-h1: 2.5rem;
   --tg-type-display: 3rem;
+  --tg-type-hero-narrow: 2.75rem;
   --tg-type-hero: 4rem;
   --tg-type-hero-wide: 5rem;
   --tg-border-hair: 1px;
@@ -158,10 +159,13 @@ svg {
 
 .tg-text\(wordmark-hero\) {
   font-family: var(--tg-font-mono);
-  font-size: var(--tg-type-hero);
+  font-size: var(--tg-type-hero-narrow);
   line-height: 1.2;
   color: var(--tg-color-ink);
   user-select: none;
+  @media (min-width: 36em) {
+    font-size: var(--tg-type-hero);
+  }
   @media (min-width: 48em) {
     font-size: var(--tg-type-hero-wide);
   }
