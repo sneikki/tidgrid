@@ -35,25 +35,25 @@ func (u *roleUse) record(file, class string) {
 
 // sortedViolations orders by path, line, message so output is stable.
 func (c *run) sortedViolations() []violation {
-	vios := c.vios
-	sort.Slice(vios, func(i, j int) bool {
-		a, b := vios[i], vios[j]
-		if a.path != b.path {
-			return a.path < b.path
+	violations := c.violations
+	sort.Slice(violations, func(i, j int) bool {
+		first, second := violations[i], violations[j]
+		if first.path != second.path {
+			return first.path < second.path
 		}
-		if a.line != b.line {
-			return a.line < b.line
+		if first.line != second.line {
+			return first.line < second.line
 		}
-		return a.msg < b.msg
+		return first.msg < second.msg
 	})
-	return vios
+	return violations
 }
 
-func writeViolations(w io.Writer, vios []violation) {
-	for _, x := range vios {
-		fmt.Fprintf(w, "%s:%d: %s\n", x.path, x.line, x.msg)
+func writeViolations(w io.Writer, violations []violation) {
+	for _, entry := range violations {
+		fmt.Fprintf(w, "%s:%d: %s\n", entry.path, entry.line, entry.msg)
 	}
-	if len(vios) > 0 {
+	if len(violations) > 0 {
 		fmt.Fprintln(w)
 	}
 }

@@ -25,12 +25,12 @@ func reportProject(v *vocab.Vocabulary, w io.Writer) int {
 	c := newRun(v)
 	use := c.scanFiles(c.filesUnderScan())
 	c.judgeOutputFresh()
-	vios := c.sortedViolations()
-	writeViolations(w, vios)
+	violations := c.sortedViolations()
+	writeViolations(w, violations)
 	writeRolesUsed(w, use)
 	writeRolesUnused(w, v, use)
 	writeAllowed(w, v)
-	if len(vios) > 0 {
+	if len(violations) > 0 {
 		return 1
 	}
 	return 0
@@ -41,7 +41,7 @@ func reportProject(v *vocab.Vocabulary, w io.Writer) int {
 type run struct {
 	v            *vocab.Vocabulary
 	dir          string // absolute directory of the vocabulary file; paths in the report are relative to it
-	vios         []violation
+	violations   []violation
 	seenViolated map[violation]bool
 	allowedClass map[string]bool
 	allowedCSS   map[string]bool // absolute paths
@@ -82,10 +82,10 @@ func (c *run) rel(p string) string {
 
 // add records a violation once; the same one found twice is reported once.
 func (c *run) add(path string, line int, msg string) {
-	x := violation{path, line, msg}
-	if !c.seenViolated[x] {
-		c.seenViolated[x] = true
-		c.vios = append(c.vios, x)
+	found := violation{path, line, msg}
+	if !c.seenViolated[found] {
+		c.seenViolated[found] = true
+		c.violations = append(c.violations, found)
 	}
 }
 
