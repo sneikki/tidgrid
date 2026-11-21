@@ -24,7 +24,7 @@ func Run(args []string) int {
 // reportProject checks the project, writes the report to w and returns the
 // exit code: 1 when any violation was found, else 0.
 func reportProject(v *vocab.Vocabulary, w io.Writer) int {
-	c := newRun(v)
+	c := newProjectScan(v)
 	use := c.scanFiles(c.filesUnderScan())
 	c.judgeOutputFresh()
 	violations := c.sortedViolations()
@@ -38,9 +38,9 @@ func reportProject(v *vocab.Vocabulary, w io.Writer) int {
 	return 0
 }
 
-// run is one check of one project: the violations found so far and the
+// projectScan is one check of one project: the violations found so far and the
 // lookups the file readers share.
-type run struct {
+type projectScan struct {
 	v            *vocab.Vocabulary
 	dir          string // absolute directory of the vocabulary file; paths in the report are relative to it
 	violations   []violation
@@ -50,8 +50,8 @@ type run struct {
 	roleClass    map[string]bool
 }
 
-func newRun(v *vocab.Vocabulary) *run {
-	c := &run{v: v, seenViolated: map[violation]bool{}, allowedClass: map[string]bool{}, roleClass: map[string]bool{}}
+func newProjectScan(v *vocab.Vocabulary) *projectScan {
+	c := &projectScan{v: v, seenViolated: map[violation]bool{}, allowedClass: map[string]bool{}, roleClass: map[string]bool{}}
 	c.dir = c.abs(filepath.Dir(v.Path))
 	for _, a := range v.AllowClass {
 		c.allowedClass[a.Name] = true
@@ -66,7 +66,7 @@ func newRun(v *vocab.Vocabulary) *run {
 	return c
 }
 
-func (c *run) abs(p string) string {
+func (c *projectScan) abs(p string) string {
 	a, err := filepath.Abs(p)
 	if err != nil {
 		return p
@@ -75,7 +75,7 @@ func (c *run) abs(p string) string {
 }
 
 // rel is the path as the report prints it.
-func (c *run) rel(p string) string {
+func (c *projectScan) rel(p string) string {
 	if r, err := filepath.Rel(c.dir, p); err == nil {
 		p = r
 	}
@@ -83,7 +83,7 @@ func (c *run) rel(p string) string {
 }
 
 // add records a violation once; the same one found twice is reported once.
-func (c *run) add(path string, line int, msg string) {
+func (c *projectScan) add(path string, line int, msg string) {
 	found := violation{path, line, msg}
 	if !c.seenViolated[found] {
 		c.seenViolated[found] = true
@@ -92,7 +92,7 @@ func (c *run) add(path string, line int, msg string) {
 }
 
 // scanFiles judges each file by its kind and returns which roles were used.
-func (c *run) scanFiles(paths []string) *roleUse {
+func (c *projectScan) scanFiles(paths []string) *roleUse {
 	use := newRoleUse()
 	for _, p := range paths {
 		ext := strings.ToLower(filepath.Ext(p))
@@ -107,7 +107,7 @@ func (c *run) scanFiles(paths []string) *roleUse {
 }
 
 // scanSource reads one source file for class names and style attributes.
-func (c *run) scanSource(p, ext string, use *roleUse) {
+func (c *projectScan) scanSource(p, ext string, use *roleUse) {
 	r := c.rel(p)
 	raw, err := os.ReadFile(p)
 	if err != nil {

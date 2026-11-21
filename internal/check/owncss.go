@@ -8,14 +8,14 @@ import "os"
 
 // judgeStylesheet reports a CSS file that is neither the built output nor
 // listed under allow.css.
-func (c *run) judgeStylesheet(abs, rel string) {
+func (c *projectScan) judgeStylesheet(abs, rel string) {
 	if !c.allowedCSS[abs] {
 		c.add(rel, 1, "own CSS: stylesheet not under allow.css; make it roles in the vocabulary")
 	}
 }
 
 // judgeOutputFresh reports a built stylesheet that is missing or stale.
-func (c *run) judgeOutputFresh() {
+func (c *projectScan) judgeOutputFresh() {
 	out := c.v.Project.Out
 	b, err := os.ReadFile(out)
 	switch {
