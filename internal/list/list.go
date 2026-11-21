@@ -1,4 +1,4 @@
-package main
+package list
 
 import (
 	"fmt"
@@ -13,7 +13,8 @@ const listRules = "Style only with the classes `tidgrid list` prints. No <style>
 	"Run `tidgrid check` before every commit; it must exit 0.\n" +
 	"A new role is a change to tidgrid.toml in its own commit, never mixed into page work.\n"
 
-func runList(args []string) int {
+// Run is the list command: the agent-facing summary of the vocabulary.
+func Run(args []string) int {
 	v, code := vocab.LoadFlag("list", args)
 	if v == nil {
 		return code

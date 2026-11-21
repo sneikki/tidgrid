@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/sneikki/tidgrid/internal/check"
+	"github.com/sneikki/tidgrid/internal/list"
 )
 
 func main() { os.Exit(run(os.Args[1:])) }
@@ -23,7 +24,7 @@ func run(args []string) int {
 	case "check":
 		return check.Run(args[1:])
 	case "list":
-		return runList(args[1:])
+		return list.Run(args[1:])
 	case "sheet":
 		return runSheet(args[1:])
 	}

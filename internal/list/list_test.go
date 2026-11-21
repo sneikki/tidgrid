@@ -1,4 +1,4 @@
-package main
+package list
 
 import (
 	"strings"
@@ -9,7 +9,7 @@ import (
 
 func loadExampleVocab(t *testing.T) *vocab.Vocabulary {
 	t.Helper()
-	v, errs := vocab.Load("internal/vocab/testdata/example.toml")
+	v, errs := vocab.Load("../vocab/testdata/example.toml")
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}

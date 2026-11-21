@@ -9,6 +9,15 @@ import (
 	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
+func loadExampleVocab(t *testing.T) *vocab.Vocabulary {
+	t.Helper()
+	v, errs := vocab.Load("internal/vocab/testdata/example.toml")
+	if len(errs) > 0 {
+		t.Fatal(errs)
+	}
+	return v
+}
+
 func TestSheetExample(t *testing.T) {
 	v := loadExampleVocab(t)
 	out := sheetHTML(v)
