@@ -58,7 +58,7 @@ In the tables below, `S` is every name in `tokens.space` and `Z` is every name i
 
 ## Breakpoints
 
-Every atom also exists per breakpoint, mobile first. A prefix such as `md:` applies the atom from that breakpoint up: `md:tg-gap(md)` sets the gap from `md` up.
+Every atom except `tg-hide-below` also exists per breakpoint, mobile first. A prefix such as `md:` applies the atom from that breakpoint up: `md:tg-gap(md)` sets the gap from `md` up.
 
 A small example, a column on a phone and a row from `md` up:
 

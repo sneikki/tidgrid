@@ -79,8 +79,8 @@ transform = "none"
 
 ## The tables
 
-- `[project]` says where the stylesheet goes (`out`, required), which folders `check` scans (`scan`, default `["."]`) and the class prefix (`prefix`, default `tg`). `project.helpers` lists extra function names whose string arguments are class names. `check` reports a scan path that does not exist.
-- `[breakpoints]` names the screen widths, smallest first. Every layout atom gets a prefixed variant per breakpoint. See [layout atoms](/docs/layout-atoms).
+- `[project]` says where the stylesheet goes (`out`, required), which folders `check` scans (`scan`, default `["."]`) and the class prefix (`prefix`, default `tg`). `project.helpers` sets the function names whose string arguments are class names. It replaces the default list (`cn`, `clsx`, `cva`, `classNames`, `twMerge`), so list those too if you still use them. `check` reports a scan path that does not exist.
+- `[breakpoints]` names the screen widths, smallest first. Every layout atom except `tg-hide-below` gets a prefixed variant per breakpoint. See [layout atoms](/docs/layout-atoms).
 - `[tokens.<group>]` holds the raw values. See [tokens](/docs/tokens).
 - `[element.<selector>]` is a base rule for a bare element such as `body`, `a` or `"*"`. It is written like a role, and `use` is optional.
 - `[role.<kind>.<name>]` is a class with a look. See [roles](/docs/roles).
@@ -89,7 +89,7 @@ transform = "none"
 
 ## Order
 
-Roles, declarations and nested rules are written in file order. The stylesheet as a whole is written in this order, so a later part wins over an earlier one: tokens, elements, keyframes, roles, atoms, then the atoms of each breakpoint in file order.
+Roles, declarations and nested rules are written in file order. The stylesheet as a whole is written in this order, so a later part wins over an earlier one: tokens, elements, keyframes, roles, atoms, then the atoms of each breakpoint in file order, then the `tg-hide-below` atoms, which therefore win over a `md:tg-row` on the same element. `tg-hide` is the last atom of its block.
 
 ## Next
 
