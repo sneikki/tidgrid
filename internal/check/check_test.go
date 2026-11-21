@@ -1,4 +1,4 @@
-package main
+package check
 
 import (
 	"bytes"
@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 func copyTree(t *testing.T, from, to string) {
@@ -38,7 +40,7 @@ func runCase(t *testing.T, name string) (code int, violations []string, out stri
 	vb, _ := os.ReadFile("testdata/check/tidgrid.toml")
 	cfg := filepath.Join(dir, "tidgrid.toml")
 	os.WriteFile(cfg, vb, 0o644)
-	v, errs := load(cfg)
+	v, errs := vocab.Load(cfg)
 	if errs != nil {
 		t.Fatal(errs)
 	}
@@ -46,10 +48,10 @@ func runCase(t *testing.T, name string) (code int, violations []string, out stri
 	_, noOut := os.Stat(filepath.Join(dir, "no-out"))
 	if ownOut != nil && noOut != nil {
 		os.MkdirAll(filepath.Join(dir, "out"), 0o755)
-		os.WriteFile(v.Project.Out, []byte(v.render()), 0o644)
+		os.WriteFile(v.Project.Out, []byte(v.Render()), 0o644)
 	}
 	var buf bytes.Buffer
-	code = doCheck(v, &buf)
+	code = reportProject(v, &buf)
 	out = buf.String()
 	head, _, _ := strings.Cut(out, "\n\n")
 	if code == 1 {
@@ -121,13 +123,13 @@ func TestSymlinkedDirReported(t *testing.T) {
 	run := func(scan string) string {
 		cfg := filepath.Join(dir, "site", "tidgrid.toml")
 		os.WriteFile(cfg, []byte("[project]\nout = \"o.css\"\nscan = "+scan+"\n"), 0o644)
-		v, errs := load(cfg)
+		v, errs := vocab.Load(cfg)
 		if errs != nil {
 			t.Fatal(errs)
 		}
-		os.WriteFile(v.Project.Out, []byte(v.render()), 0o644)
+		os.WriteFile(v.Project.Out, []byte(v.Render()), 0o644)
 		var buf bytes.Buffer
-		doCheck(v, &buf)
+		reportProject(v, &buf)
 		return buf.String()
 	}
 	if out := run(`["."]`); !strings.Contains(out, "docs:1: symlinked directory is not scanned") {
@@ -147,7 +149,7 @@ func TestScriptUseCountsRole(t *testing.T) {
 }
 
 func TestRunCheckExit2(t *testing.T) {
-	if c := runCheck([]string{"-c", "testdata/check/nope.toml"}); c != 2 {
+	if c := Run([]string{"-c", "testdata/check/nope.toml"}); c != 2 {
 		t.Errorf("missing vocabulary: exit %d, want 2", c)
 	}
 }

@@ -1,19 +1,22 @@
-package main
+package sheet
 
 import (
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
+	"github.com/sneikki/tidgrid/internal/vocab/vocabtest"
 )
 
 func TestSheetExample(t *testing.T) {
-	v := loadExampleVocab(t)
-	out := sheetHTML(v)
-	if again := sheetHTML(v); again != out {
-		t.Fatal("sheetHTML is not deterministic")
+	v := vocabtest.Example(t)
+	out := page(v)
+	if again := page(v); again != out {
+		t.Fatal("page is not deterministic")
 	}
-	if !strings.Contains(out, v.render()) {
+	if !strings.Contains(out, v.Render()) {
 		t.Error("rendered stylesheet not inlined")
 	}
 	states := 0
@@ -42,7 +45,7 @@ func TestSheetExample(t *testing.T) {
 
 func TestSheetEscapesUseAndInlinesFonts(t *testing.T) {
 	dir := t.TempDir()
-	vocab := `[project]
+	src := `[project]
 out = "out.css"
 
 [tokens.color]
@@ -55,17 +58,17 @@ color = "{color.ink}"
 [allow.css]
 "fonts.css" = "self-hosted"
 `
-	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(src), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(dir, "fonts.css"), []byte("/*FONT-MARK*/</STYLE><script>x</script>"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
+	v, errs := vocab.Load(filepath.Join(dir, "tidgrid.toml"))
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}
-	out := sheetHTML(v)
+	out := page(v)
 	if strings.Contains(out, "<b>this</b>") {
 		t.Error("use text not escaped")
 	}
@@ -90,18 +93,18 @@ func TestSheetRefusesSymlinkOut(t *testing.T) {
 		t.Fatal(err)
 	}
 	dir := t.TempDir()
-	vocab := "[project]\nout = \"out.css\"\n\n[allow.css]\n\"link.css\" = \"x\"\n"
-	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
+	src := "[project]\nout = \"out.css\"\n\n[allow.css]\n\"link.css\" = \"x\"\n"
+	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(src), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.Symlink(outside, filepath.Join(dir, "link.css")); err != nil {
 		t.Skip(err)
 	}
-	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
+	v, errs := vocab.Load(filepath.Join(dir, "tidgrid.toml"))
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}
-	if strings.Contains(sheetHTML(v), "SECRET-MARK") {
+	if strings.Contains(page(v), "SECRET-MARK") {
 		t.Error("file outside the project inlined through a symlink")
 	}
 }

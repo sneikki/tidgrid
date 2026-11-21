@@ -1,4 +1,4 @@
-package main
+package vocab
 
 import (
 	"flag"
@@ -18,23 +18,23 @@ func loadStr(t *testing.T, s string) (*Vocabulary, []error) {
 	if err := os.WriteFile(p, []byte(s), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return load(p)
+	return Load(p)
 }
 
 func TestGolden(t *testing.T) {
-	v, errs := load("testdata/example.toml")
+	v, errs := Load("vocabtest/example.toml")
 	if errs != nil {
 		t.Fatal(errs)
 	}
-	got := v.render()
+	got := v.Render()
 	if *update {
-		os.WriteFile("testdata/example.css", []byte(got), 0o644)
+		os.WriteFile("vocabtest/example.css", []byte(got), 0o644)
 	}
-	want, _ := os.ReadFile("testdata/example.css")
+	want, _ := os.ReadFile("vocabtest/example.css")
 	if got != string(want) {
-		t.Fatal("output differs from testdata/example.css (go test -update)")
+		t.Fatal("output differs from vocabtest/example.css (go test -update)")
 	}
-	if v.render() != got {
+	if v.Render() != got {
 		t.Fatal("render not deterministic")
 	}
 	for _, s := range []string{`.tg-state\(ready\) & {`, "@keyframes tg-rise", "  &:hover {", "@media (min-width: 64em) {\n    border-width"} {
@@ -155,7 +155,7 @@ func TestAtRuleKeyLiteral(t *testing.T) {
 	if errs != nil {
 		t.Fatal(errs)
 	}
-	css := v.render()
+	css := v.Render()
 	if !strings.Contains(css, "@media (max-height: 1rem) {") {
 		t.Errorf("at-rule key not literal:\n%s", css)
 	}
@@ -166,7 +166,7 @@ func TestEscapeAndOrder(t *testing.T) {
 	if errs != nil {
 		t.Fatal(errs)
 	}
-	if !strings.Contains(v.render(), `.md\:tg-gap\(sm\) & {`) {
+	if !strings.Contains(v.Render(), `.md\:tg-gap\(sm\) & {`) {
 		t.Fatal("selector class not escaped")
 	}
 	if !v.Valid("md:tg-gap(sm)") || v.Valid("tg-gap(md)") {
@@ -243,29 +243,8 @@ func TestAtomTable(t *testing.T) {
 	if v.Atoms[n-2].Class != "tg-hide" || v.Atoms[n-1].Class != "tg-hide-below(md)" {
 		t.Error("tg-hide must be the last plain atom")
 	}
-	if !strings.Contains(v.render(), "  .md\\:tg-hide {\n    display: none;\n  }\n}") {
+	if !strings.Contains(v.Render(), "  .md\\:tg-hide {\n    display: none;\n  }\n}") {
 		t.Error("breakpoint block must end with hide")
-	}
-}
-
-func TestBuildCmd(t *testing.T) {
-	dir := t.TempDir()
-	cfg := filepath.Join(dir, "t.toml")
-	os.WriteFile(cfg, []byte(base), 0o644)
-	if run([]string{"build", "-c", cfg}) != 0 {
-		t.Fatal("build failed")
-	}
-	a, _ := os.ReadFile(filepath.Join(dir, "o.css"))
-	run([]string{"build", "-c", cfg})
-	b, _ := os.ReadFile(filepath.Join(dir, "o.css"))
-	if len(a) == 0 || string(a) != string(b) {
-		t.Fatal("not deterministic")
-	}
-	if run([]string{"build", "-c", filepath.Join(dir, "missing.toml")}) != 2 {
-		t.Fatal("missing file must exit 2")
-	}
-	if run([]string{"check"}) != 2 {
-		t.Fatal("stub must exit 2")
 	}
 }
 
@@ -275,7 +254,7 @@ func TestAtRuleKeyBreakpointInToken(t *testing.T) {
 	if errs != nil {
 		t.Fatal(errs)
 	}
-	if css := v.render(); !strings.Contains(css, "@media (min-width: 64em) {") {
+	if css := v.Render(); !strings.Contains(css, "@media (min-width: 64em) {") {
 		t.Errorf("breakpoint not resolved:\n%s", css)
 	}
 }
@@ -304,7 +283,7 @@ func TestHideBelow(t *testing.T) {
 	if errs != nil {
 		t.Fatal(errs)
 	}
-	css := v.render()
+	css := v.Render()
 	if !strings.Contains(css, "@media (width < 64em) {\n  .tg-hide-below\\(md\\) {\n    display: none;\n  }\n}") {
 		t.Errorf("hide-below rule missing:\n%s", css)
 	}

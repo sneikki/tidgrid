@@ -1,4 +1,4 @@
-package main
+package vocab
 
 import (
 	"strconv"
@@ -32,45 +32,46 @@ type multiVal struct {
 
 // numbered builds the values of tg-cols and tg-span.
 func numbered(list []int, decl func(n string) [][2]string) []multiVal {
-	var o []multiVal
+	var out []multiVal
 	for _, n := range list {
 		s := strconv.Itoa(n)
-		o = append(o, multiVal{s, decl(s)})
+		out = append(out, multiVal{s, decl(s)})
 	}
-	return o
+	return out
 }
 
 func upTo(n int) []int {
-	var o []int
+	var out []int
 	for i := 1; i <= n; i++ {
-		o = append(o, i)
+		out = append(out, i)
 	}
-	return o
+	return out
 }
 
-func d(kv ...string) [][2]string {
-	var o [][2]string
+// pairs turns a flat key, value, key, value list into pairs.
+func pairs(kv ...string) [][2]string {
+	var out [][2]string
 	for i := 0; i < len(kv); i += 2 {
-		o = append(o, [2]string{kv[i], kv[i+1]})
+		out = append(out, [2]string{kv[i], kv[i+1]})
 	}
-	return o
+	return out
 }
 
 var (
-	alignEnum   = d("start", "flex-start", "center", "center", "end", "flex-end", "baseline", "baseline", "stretch", "stretch")
-	justifyEnum = d("start", "flex-start", "center", "center", "end", "flex-end", "between", "space-between", "around", "space-around", "evenly", "space-evenly")
-	selfEnum    = d("start", "flex-start", "center", "center", "end", "flex-end", "stretch", "stretch")
-	textEnum    = d("start", "start", "center", "center", "end", "end")
+	alignEnum   = pairs("start", "flex-start", "center", "center", "end", "flex-end", "baseline", "baseline", "stretch", "stretch")
+	justifyEnum = pairs("start", "flex-start", "center", "center", "end", "flex-end", "between", "space-between", "around", "space-around", "evenly", "space-evenly")
+	selfEnum    = pairs("start", "flex-start", "center", "center", "end", "flex-end", "stretch", "stretch")
+	textEnum    = pairs("start", "start", "center", "center", "end", "end")
 )
 
 // families is the README atom table, in its order.
 var families = []family{
-	{name: "row", static: d("display", "flex", "flex-direction", "row")},
-	{name: "col", static: d("display", "flex", "flex-direction", "column")},
-	{name: "wrap", static: d("flex-wrap", "wrap")},
-	{name: "grow", static: d("flex", "1 1 0", "min-width", "0")},
-	{name: "fixed", static: d("flex", "none")},
-	{name: "center", static: d("margin-inline", "auto")},
+	{name: "row", static: pairs("display", "flex", "flex-direction", "row")},
+	{name: "col", static: pairs("display", "flex", "flex-direction", "column")},
+	{name: "wrap", static: pairs("flex-wrap", "wrap")},
+	{name: "grow", static: pairs("flex", "1 1 0", "min-width", "0")},
+	{name: "fixed", static: pairs("flex", "none")},
+	{name: "center", static: pairs("margin-inline", "auto")},
 	{name: "align", props: []string{"align-items"}, enum: alignEnum},
 	{name: "justify", props: []string{"justify-content"}, enum: justifyEnum},
 	{name: "self", props: []string{"align-self"}, enum: selfEnum},
@@ -91,12 +92,12 @@ var families = []family{
 	{name: "height", props: []string{"height"}, group: "size"},
 	{name: "min-height", props: []string{"min-height"}, group: "size"},
 	{name: "cols", multi: numbered(append(upTo(6), 12), func(n string) [][2]string {
-		return d("display", "grid", "grid-template-columns", "repeat("+n+", minmax(0, 1fr))")
+		return pairs("display", "grid", "grid-template-columns", "repeat("+n+", minmax(0, 1fr))")
 	})},
-	{name: "span", multi: numbered(upTo(12), func(n string) [][2]string { return d("grid-column", "span "+n) })},
-	{name: "order", multi: []multiVal{{"first", d("order", "-1")}, {"last", d("order", "1")}}},
-	{name: "hide", static: d("display", "none")}, // last atom of its block
-	{name: "hide-below", below: true},            // one per breakpoint; written after every breakpoint block
+	{name: "span", multi: numbered(upTo(12), func(n string) [][2]string { return pairs("grid-column", "span "+n) })},
+	{name: "order", multi: []multiVal{{"first", pairs("order", "-1")}, {"last", pairs("order", "1")}}},
+	{name: "hide", static: pairs("display", "none")}, // last atom of its block
+	{name: "hide-below", below: true},                // one per breakpoint; written after every breakpoint block
 }
 
 func isAtomName(n string) bool {
@@ -116,7 +117,7 @@ func atoms(prefix string, tokens map[string][]string, bps []Breakpoint) []Atom {
 		switch {
 		case f.below:
 			for _, bp := range bps {
-				out = append(out, Atom{f.name, bp.Name, base + "(" + bp.Name + ")", d("display", "none"), bp.Value})
+				out = append(out, Atom{f.name, bp.Name, base + "(" + bp.Name + ")", pairs("display", "none"), bp.Value})
 			}
 		case f.static != nil:
 			out = append(out, Atom{Family: f.name, Class: base, Decls: f.static})
@@ -126,12 +127,12 @@ func atoms(prefix string, tokens map[string][]string, bps []Breakpoint) []Atom {
 			}
 		case f.enum != nil:
 			for _, e := range f.enum {
-				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1]), ""})
+				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", pairs(f.props[0], e[1]), ""})
 			}
 		default:
 			for _, n := range tokens[f.group] {
 				out = append(out, Atom{f.name, n, base + "(" + n + ")",
-					d(f.props[0], "var(--"+prefix+"-"+f.group+"-"+n+")"), ""})
+					pairs(f.props[0], "var(--"+prefix+"-"+f.group+"-"+n+")"), ""})
 			}
 		}
 	}

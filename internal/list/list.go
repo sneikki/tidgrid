@@ -1,30 +1,49 @@
-package main
+// Package list prints the vocabulary as plain text for an agent: roles, tokens,
+// atoms and the allowed exceptions, with no token values.
+package list
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
-// listRules are the three lines of README "Working with an agent".
-const listRules = "Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.\n" +
+// rules are the three lines of README "Working with an agent".
+const rules = "Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.\n" +
 	"Run `tidgrid check` before every commit; it must exit 0.\n" +
 	"A new role is a change to tidgrid.toml in its own commit, never mixed into page work.\n"
 
-func runList(args []string) int {
-	v, code := loadFlag("list", args)
+// Run is the list command: the agent-facing summary of the vocabulary.
+func Run(args []string) int {
+	v, code := vocab.LoadFlag("list", args)
 	if v == nil {
 		return code
 	}
-	fmt.Print(listText(v))
+	fmt.Print(text(v))
 	return 0
 }
 
-// listText is the agent-facing summary: plain text, class names and use texts,
+// text is the agent-facing summary: plain text, class names and use texts,
 // no token values.
-func listText(v *Vocabulary) string {
+func text(v *vocab.Vocabulary) string {
 	var b strings.Builder
+	breakpoints(v, &b)
+	b.WriteString("\n# tokens\n")
+	tokens(v, &b)
+	b.WriteString("\n# atoms\n")
+	atoms(v, &b)
+	b.WriteString("\n# roles\n")
+	roles(v, &b)
+	b.WriteString("\n# allow\n")
+	allow(v, &b)
+	b.WriteString("\n# rules\n")
+	b.WriteString(rules)
+	return b.String()
+}
 
+func breakpoints(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("# breakpoints\n")
 	if len(v.Breakpoints) == 0 {
 		b.WriteString("none\n")
@@ -33,20 +52,23 @@ func listText(v *Vocabulary) string {
 		for _, bp := range v.Breakpoints {
 			names = append(names, bp.Name)
 		}
-		fmt.Fprintf(&b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
+		fmt.Fprintf(b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
 			strings.Join(names, " "), names[0], v.Project.Prefix, names[0])
 	}
+}
 
-	b.WriteString("\n# tokens\n")
+func tokens(v *vocab.Vocabulary, b *strings.Builder) {
 	for _, g := range v.Tokens {
 		names := make([]string, 0, len(g.Tokens))
 		for _, t := range g.Tokens {
 			names = append(names, t.Name)
 		}
-		fmt.Fprintf(&b, "%s: %s\n", g.Name, strings.Join(names, " "))
+		fmt.Fprintf(b, "%s: %s\n", g.Name, strings.Join(names, " "))
 	}
+}
 
-	b.WriteString("\n# atoms\n")
+// atoms prints one line per atom family; valueless atoms share a line.
+func atoms(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("S = a name in space, Z = a name in size, B = a breakpoint name (no breakpoint prefix on this one)\n")
 	var statics []string
 	flush := func() {
@@ -67,50 +89,48 @@ func listText(v *Vocabulary) string {
 			statics = append(statics, base)
 		case first.Below != "":
 			flush()
-			fmt.Fprintf(&b, "%s(B)\n", base)
+			fmt.Fprintf(b, "%s(B)\n", base)
 		case strings.HasPrefix(first.Decls[0][1], "var("):
 			flush()
-			fmt.Fprintf(&b, "%s(%s)\n", base, scaleLetter(listScale(v, first.Decls[0][1])))
+			fmt.Fprintf(b, "%s(%s)\n", base, scaleLetter(scale(v, first.Decls[0][1])))
 		default:
 			flush()
 			vals := make([]string, 0, j-i)
 			for _, a := range v.Atoms[i:j] {
 				vals = append(vals, a.Value)
 			}
-			fmt.Fprintf(&b, "%s(%s)\n", base, strings.Join(rangeNums(vals), "|"))
+			fmt.Fprintf(b, "%s(%s)\n", base, strings.Join(rangeNums(vals), "|"))
 		}
 		i = j
 	}
 	flush()
+}
 
-	b.WriteString("\n# roles\n")
-	kinds, byKind := listRoleKinds(v)
+func roles(v *vocab.Vocabulary, b *strings.Builder) {
+	kinds, byKind := v.RoleKinds()
 	for _, k := range kinds {
 		if k == "state" {
 			b.WriteString("## set by scripts\n")
 		} else {
-			fmt.Fprintf(&b, "## %s\n", k)
+			fmt.Fprintf(b, "## %s\n", k)
 		}
 		for _, r := range byKind[k] {
-			fmt.Fprintf(&b, "%s  %s\n", r.Class, oneLine(r.Use))
+			fmt.Fprintf(b, "%s  %s\n", r.Class, oneLine(r.Use))
 		}
 	}
-
-	b.WriteString("\n# allow\n")
-	for _, a := range v.AllowClass {
-		fmt.Fprintf(&b, "class %s  %s\n", a.Name, a.Reason)
-	}
-	for _, a := range v.AllowCSS {
-		fmt.Fprintf(&b, "css %s  %s\n", a.Name, a.Reason)
-	}
-
-	b.WriteString("\n# rules\n")
-	b.WriteString(listRules)
-	return b.String()
 }
 
-// listScale names the token group a valued atom reads, from its var() declaration.
-func listScale(v *Vocabulary, decl string) string {
+func allow(v *vocab.Vocabulary, b *strings.Builder) {
+	for _, a := range v.AllowClass {
+		fmt.Fprintf(b, "class %s  %s\n", a.Name, a.Reason)
+	}
+	for _, a := range v.AllowCSS {
+		fmt.Fprintf(b, "css %s  %s\n", a.Name, a.Reason)
+	}
+}
+
+// scale names the token group a valued atom reads, from its var() declaration.
+func scale(v *vocab.Vocabulary, decl string) string {
 	for _, g := range v.Tokens {
 		if strings.HasPrefix(decl, "var(--"+v.Project.Prefix+"-"+g.Name+"-") {
 			return g.Name
@@ -148,19 +168,6 @@ func rangeNums(vals []string) []string {
 		}
 	}
 	return out
-}
-
-// listRoleKinds returns the kinds in file order and the roles of each, in file order.
-func listRoleKinds(v *Vocabulary) ([]string, map[string][]Role) {
-	byKind := map[string][]Role{}
-	var kinds []string
-	for _, r := range v.Roles {
-		if _, ok := byKind[r.Kind]; !ok {
-			kinds = append(kinds, r.Kind)
-		}
-		byKind[r.Kind] = append(byKind[r.Kind], r)
-	}
-	return kinds, byKind
 }
 
 func oneLine(s string) string {

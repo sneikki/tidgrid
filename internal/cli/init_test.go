@@ -1,10 +1,12 @@
-package main
+package cli
 
 import (
 	"bytes"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 func TestStarterLoadsAndRenders(t *testing.T) {
@@ -13,11 +15,11 @@ func TestStarterLoadsAndRenders(t *testing.T) {
 	if err := os.WriteFile(p, starter, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	v, errs := load(p)
+	v, errs := vocab.Load(p)
 	if len(errs) > 0 {
 		t.Fatalf("starter does not load: %v", errs)
 	}
-	if out := v.render(); out == "" {
+	if out := v.Render(); out == "" {
 		t.Fatal("starter renders empty")
 	}
 }

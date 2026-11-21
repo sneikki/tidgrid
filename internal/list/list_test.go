@@ -1,24 +1,17 @@
-package main
+package list
 
 import (
 	"strings"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab/vocabtest"
 )
 
-func loadExampleVocab(t *testing.T) *Vocabulary {
-	t.Helper()
-	v, errs := load("testdata/example.toml")
-	if len(errs) > 0 {
-		t.Fatal(errs)
-	}
-	return v
-}
-
 func TestListExample(t *testing.T) {
-	v := loadExampleVocab(t)
-	out := listText(v)
-	if again := listText(v); again != out {
-		t.Fatal("listText is not deterministic")
+	v := vocabtest.Example(t)
+	out := text(v)
+	if again := text(v); again != out {
+		t.Fatal("text is not deterministic")
 	}
 	for _, r := range v.Roles {
 		if !strings.Contains(out, r.Class+"  "+oneLine(r.Use)) {
@@ -66,7 +59,7 @@ func TestListExample(t *testing.T) {
 	if strings.Contains(out, "(space)") {
 		t.Error("scale repeated on atom lines")
 	}
-	if !strings.Contains(out, listRules) {
+	if !strings.Contains(out, rules) {
 		t.Error("agent rules missing")
 	}
 }
