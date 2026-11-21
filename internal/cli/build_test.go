@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"os"
@@ -21,19 +21,19 @@ func TestBuildCmd(t *testing.T) {
 	dir := t.TempDir()
 	cfg := filepath.Join(dir, "t.toml")
 	os.WriteFile(cfg, []byte(base), 0o644)
-	if run([]string{"build", "-c", cfg}) != 0 {
+	if Run([]string{"build", "-c", cfg}) != 0 {
 		t.Fatal("build failed")
 	}
 	a, _ := os.ReadFile(filepath.Join(dir, "o.css"))
-	run([]string{"build", "-c", cfg})
+	Run([]string{"build", "-c", cfg})
 	b, _ := os.ReadFile(filepath.Join(dir, "o.css"))
 	if len(a) == 0 || string(a) != string(b) {
 		t.Fatal("not deterministic")
 	}
-	if run([]string{"build", "-c", filepath.Join(dir, "missing.toml")}) != 2 {
+	if Run([]string{"build", "-c", filepath.Join(dir, "missing.toml")}) != 2 {
 		t.Fatal("missing file must exit 2")
 	}
-	if run([]string{"check"}) != 2 {
+	if Run([]string{"check"}) != 2 {
 		t.Fatal("stub must exit 2")
 	}
 }
