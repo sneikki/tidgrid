@@ -16,6 +16,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -96,12 +97,13 @@ func (v *Vocabulary) Takes(family string) ([]string, bool) {
 }
 
 type loader struct {
-	v    *Vocabulary
-	raw  map[string]any
-	kids map[string][]string
-	errs []error
-	tok  map[string]bool // "group.name"
-	kf   map[string]bool
+	v      *Vocabulary
+	raw    map[string]any
+	kids   map[string][]string
+	errs   []error
+	tok    map[string]bool   // "group.name"
+	tokRaw map[string]string // "group.name" -> value as written
+	kf     map[string]bool
 }
 
 func jk(p []string) string { return strings.Join(p, "\x00") }
@@ -178,23 +180,71 @@ func (l *loader) resolve(p []string, s string) string {
 	})
 }
 
-const units = `px|rem|em|ex|ch|lh|rlh|vw|vh|vmin|vmax|vi|vb|svw|svh|lvw|lvh|dvw|dvh|cqw|cqh|cqi|cqb|cqmin|cqmax|cm|mm|q|in|pt|pc|ms|s`
+// every CSS length and time unit (not %, fr or angles)
+// literal is resolve for places that cannot read custom properties (at-rule
+// keys): a token becomes its written value, references inside it resolved too.
+func (l *loader) literal(p []string, s string, depth int) string {
+	return refRe.ReplaceAllStringFunc(s, func(m string) string {
+		sm := refRe.FindStringSubmatch(m)
+		g, n := sm[1], sm[2]
+		if raw, ok := l.tokRaw[g+"."+n]; ok && g != "keyframes" && g != "breakpoints" && depth < 16 {
+			return l.literal(p, raw, depth+1)
+		}
+		if depth > 0 {
+			return m // loop or unknown inside a token: reported where it is written
+		}
+		return l.resolve(p, m)
+	})
+}
+
+const units = `px|rem|em|ex|ch|cap|ic|lh|rlh|rcap|rch|rex|ric|` +
+	`vw|vh|vmin|vmax|vi|vb|svw|svh|svmin|svmax|svi|svb|lvw|lvh|lvmin|lvmax|lvi|lvb|dvw|dvh|dvmin|dvmax|dvi|dvb|` +
+	`cqw|cqh|cqi|cqb|cqmin|cqmax|cm|mm|q|in|pt|pc|ms|s`
+
+const colorNames = `aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|` +
+	`cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgreen|` +
+	`darkgrey|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|` +
+	`darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|` +
+	`fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|green|greenyellow|grey|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|` +
+	`lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgreen|lightgrey|` +
+	`lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|` +
+	`magenta|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|` +
+	`mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|` +
+	`orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|` +
+	`rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|` +
+	`slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen`
 
 var (
 	hexRe    = regexp.MustCompile(`#[0-9A-Fa-f]{3,8}\b`)
 	colorFn  = regexp.MustCompile(`(?i)\b(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(`)
-	unitRe   = regexp.MustCompile(`(?i)(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)(?:` + units + `)\b`)
-	quotedRe = regexp.MustCompile(`"[^"]*"|'[^']*'`)
+	unitRe   = regexp.MustCompile(`(?i)(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?(?:` + units + `)\b`)
+	nameRe   = regexp.MustCompile(`(?i)(?:^|[^\w-])(` + colorNames + `)(?:$|[^\w-])`)
+	quotedRe = regexp.MustCompile(`"[^"]*"|'[^']*'|url\([^)]*\)`) // not looked at
 )
 
-// rawProblem names a raw colour, length or time in a value, or "".
-func rawProblem(s string) string {
+// identProps hold names the author picks, not colours: `grid-area: gold` is legal.
+func identProp(prop string) bool {
+	switch prop {
+	case "font-family", "animation-name", "container-name", "view-transition-name", "anchor-name", "will-change", "transition-property":
+		return true
+	}
+	return strings.HasPrefix(prop, "grid") || strings.HasPrefix(prop, "counter-")
+}
+
+// rawProblem names a raw colour, length or time in a value of property prop
+// (empty for an at-rule key), or "". References are masked first.
+func rawProblem(prop, s string) string {
 	s = quotedRe.ReplaceAllString(refRe.ReplaceAllString(s, "_"), `""`)
 	if m := hexRe.FindString(s); m != "" {
 		return "raw colour " + m
 	}
 	if m := colorFn.FindString(s); m != "" {
 		return "raw colour " + m + ")"
+	}
+	if !identProp(prop) {
+		if m := nameRe.FindStringSubmatch(s); m != nil {
+			return "raw colour " + m[1] + " (move it to [tokens])"
+		}
 	}
 	if m := unitRe.FindString(s); m != "" {
 		return "raw length or time " + strings.TrimLeft(m, " ,(") + " (move it to [tokens])"
@@ -238,7 +288,10 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 			r.Nodes = append(r.Nodes, Node{Sub: l.rule(kp, sub, l.subKey(kp, k), k, false)})
 			continue
 		}
-		if top && k == "use" {
+		if k == "use" {
+			if !top {
+				l.errf(kp, "use belongs directly in a role or element table, not in a nested rule")
+			}
 			continue
 		}
 		s, ok := scalar(val)
@@ -246,7 +299,7 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 			l.errf(kp, "value must be a string")
 			continue
 		}
-		if pr := rawProblem(s); pr != "" {
+		if pr := rawProblem(k, s); pr != "" {
 			l.errf(kp, "%s", pr)
 		}
 		r.Nodes = append(r.Nodes, Node{Prop: k, Raw: s, Value: l.resolve(kp, s)})
@@ -273,7 +326,10 @@ func (l *loader) subKey(p []string, k string) string {
 			l.errf(p, "unknown breakpoint %q", name)
 			return k
 		}
-		return l.resolve(p, k)
+		if pr := rawProblem("", k); pr != "" {
+			l.errf(p, "%s in at-rule key", pr)
+		}
+		return l.literal(p, k, 0)
 	}
 	if !strings.Contains(k, "&") {
 		l.errf(p, "selector must contain &")
@@ -283,7 +339,7 @@ func (l *loader) subKey(p []string, k string) string {
 }
 
 func load(path string) (*Vocabulary, []error) {
-	l := &loader{raw: map[string]any{}, kids: map[string][]string{}, tok: map[string]bool{}, kf: map[string]bool{}}
+	l := &loader{raw: map[string]any{}, kids: map[string][]string{}, tok: map[string]bool{}, tokRaw: map[string]string{}, kf: map[string]bool{}}
 	v := &Vocabulary{Path: path, valid: map[string]bool{}, takes: map[string][]string{}, bpValue: map[string]string{}}
 	l.v = v
 	md, err := toml.DecodeFile(path, &l.raw)
@@ -326,6 +382,9 @@ func load(path string) (*Vocabulary, []error) {
 	strs := func(key string, def []string) []string {
 		a, ok := pt[key].([]any)
 		if !ok {
+			if _, set := pt[key]; set {
+				l.errf([]string{"project", key}, "must be a list of strings")
+			}
 			return def
 		}
 		var o []string
@@ -341,6 +400,9 @@ func load(path string) (*Vocabulary, []error) {
 	pr.Scan = strs("scan", pr.Scan)
 	for i, s := range pr.Scan {
 		pr.Scan[i] = filepath.Join(dir, s)
+		if _, err := os.Stat(pr.Scan[i]); err != nil {
+			l.errf([]string{"project", "scan"}, "path %q does not exist", s)
+		}
 	}
 	pr.Helpers = strs("helpers", pr.Helpers)
 	v.Project = pr
@@ -361,12 +423,21 @@ func load(path string) (*Vocabulary, []error) {
 		if g == "keyframes" || g == "breakpoints" {
 			l.errf([]string{"tokens", g}, "reserved group name")
 		}
+		if !bare.MatchString(g) {
+			l.errf([]string{"tokens", g}, "group name must be letters, digits, - and _")
+		}
 		if l.table("tokens", g) == nil {
 			l.errf([]string{"tokens", g}, "must be a table of name = value")
 			continue
 		}
 		for _, n := range l.children("tokens", g) {
+			if !bare.MatchString(n) {
+				l.errf([]string{"tokens", g, n}, "token name must be letters, digits, - and _")
+			}
 			l.tok[g+"."+n] = true
+			if s, ok := scalar(l.table("tokens", g)[n]); ok {
+				l.tokRaw[g+"."+n] = s
+			}
 		}
 	}
 	for _, k := range l.children("keyframes") {

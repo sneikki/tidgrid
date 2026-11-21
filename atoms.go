@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 // Atom is one layout class (no breakpoint prefix): Family "gap", Value "sm",
 // Class "tg-gap(sm)".
@@ -17,6 +20,30 @@ type family struct {
 	props  []string    // properties set by a valued atom
 	group  string      // token group supplying values ("space", "size")
 	enum   [][2]string // fixed value -> css value
+	multi  []multiVal  // fixed value -> declarations
+}
+
+type multiVal struct {
+	val   string
+	decls [][2]string
+}
+
+// numbered builds the values of tg-cols and tg-span.
+func numbered(list []int, decl func(n string) [][2]string) []multiVal {
+	var o []multiVal
+	for _, n := range list {
+		s := strconv.Itoa(n)
+		o = append(o, multiVal{s, decl(s)})
+	}
+	return o
+}
+
+func upTo(n int) []int {
+	var o []int
+	for i := 1; i <= n; i++ {
+		o = append(o, i)
+	}
+	return o
 }
 
 func d(kv ...string) [][2]string {
@@ -61,6 +88,12 @@ var families = []family{
 	{name: "max-width", props: []string{"max-width"}, group: "size"},
 	{name: "height", props: []string{"height"}, group: "size"},
 	{name: "min-height", props: []string{"min-height"}, group: "size"},
+	{name: "cols", multi: numbered(append(upTo(6), 12), func(n string) [][2]string {
+		return d("display", "grid", "grid-template-columns", "repeat("+n+", minmax(0, 1fr))")
+	})},
+	{name: "span", multi: numbered(upTo(12), func(n string) [][2]string { return d("grid-column", "span "+n) })},
+	{name: "order", multi: []multiVal{{"first", d("order", "-1")}, {"last", d("order", "1")}}},
+	{name: "show", static: d("display", "revert")}, // show then hide: both last, so hide md:show works
 	{name: "hide", static: d("display", "none")},
 }
 
@@ -81,6 +114,10 @@ func atoms(prefix string, tokens map[string][]string) []Atom {
 		switch {
 		case f.static != nil:
 			out = append(out, Atom{Family: f.name, Class: base, Decls: f.static})
+		case f.multi != nil:
+			for _, m := range f.multi {
+				out = append(out, Atom{f.name, m.val, base + "(" + m.val + ")", m.decls})
+			}
 		case f.enum != nil:
 			for _, e := range f.enum {
 				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1])})

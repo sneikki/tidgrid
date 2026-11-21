@@ -4,6 +4,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -68,6 +69,18 @@ func TestValidationErrors(t *testing.T) {
 		{"empty reason", base + "[allow.class]\n\"x\" = \"\"\n", "allow.class.x: reason required"},
 		{"css outside", base + "[allow.css]\n\"../../secret.css\" = \"x\"\n", "path must stay inside"},
 		{"bad bp", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@lg\"]\ncolor = \"red\"\n", "unknown breakpoint"},
+		{"colour name", base + "[role.surface.card]\nuse = \"x\"\ncolor = \"red\"\n", "role.surface.card.color: raw colour red"},
+		{"colour name in shorthand", base + "[role.surface.card]\nuse = \"x\"\nborder = \"{space.sm} solid Tan\"\n", "raw colour Tan"},
+		{"unit dvmin", base + "[role.surface.card]\nuse = \"x\"\nwidth = \"10dvmin\"\n", "raw length or time 10dvmin"},
+		{"unit exponent", base + "[role.surface.card]\nuse = \"x\"\nwidth = \"1.5e3px\"\n", "raw length or time 1.5e3px"},
+		{"at-rule raw", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@media (min-width: 800px)\"]\ncolor = \"{color.ink}\"\n", "role.surface.card.\"@media (min-width: 800px)\": raw length or time 800px"},
+		{"at-rule unknown ref", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@media (min-width: {size.nope})\"]\ncolor = \"{color.ink}\"\n", "unknown reference {size.nope}"},
+		{"token name slash", "[project]\nout = \"o.css\"\n[tokens.size]\n\"1/2\" = \"50%\"\n", `tokens.size."1/2": token name`},
+		{"token group slash", "[project]\nout = \"o.css\"\n[tokens.\"a b\"]\nx = \"1\"\n", `tokens."a b": group name`},
+		{"use in sub-table", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"&:hover\"]\nuse = \"y\"\n", `role.surface.card."&:hover".use: use belongs`},
+		{"scan string", "[project]\nout = \"o.css\"\nscan = \"src\"\n", "project.scan: must be a list"},
+		{"helpers string", "[project]\nout = \"o.css\"\nhelpers = \"cn\"\n", "project.helpers: must be a list"},
+		{"scan missing", "[project]\nout = \"o.css\"\nscan = [\"nope\"]\n", `project.scan: path "nope" does not exist`},
 		{"token loop", base + "[tokens.t]\na = \"{t.b}\"\nb = \"{t.a}\"\n", "reference loop"},
 	}
 	for _, c := range cases {
@@ -83,7 +96,9 @@ func TestValidationErrors(t *testing.T) {
 }
 
 func TestNotRaw(t *testing.T) {
-	ok := base + `[tokens.size]
+	ok := base + `[tokens.hue]
+red = "#f00"
+[tokens.size]
 "2xl" = "9rem"
 [role.surface.card]
 use = "x"
@@ -94,7 +109,15 @@ flex = "1 1 0"
 transform = "translate3d(0, 0, 0) rotate(45deg)"
 height = "calc({size.2xl} * 2)"
 background = "color-mix(in srgb, {color.ink} 18%, transparent)"
-content = "\"10px\""
+content = "\"10px red\""
+background-image = "url(img-10px.png), url(#face)"
+font-family = "\"Tan Pearl\", serif"
+grid-area = "gold"
+transition = "tg-rise predicate {color.ink} transparent currentColor"
+border-color = "{hue.red}"
+rotate = "0.5turn"
+[role.surface.card."@media (max-height: {size.2xl})"]
+color = "{color.ink}"
 [role.surface.card."@below-md"]
 color = "{color.ink}"
 [role.surface.card."&:hover"."@md"."& h1"]
@@ -104,6 +127,18 @@ animation = "none"
 `
 	if _, errs := loadStr(t, ok); errs != nil {
 		t.Fatal(errs)
+	}
+}
+
+// A token in an at-rule key becomes its written value, nested references resolved, never var().
+func TestAtRuleKeyLiteral(t *testing.T) {
+	v, errs := loadStr(t, base+"[tokens.size]\nshort = \"{space.sm}\"\n[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@media (max-height: {size.short})\"]\ncolor = \"{color.ink}\"\n")
+	if errs != nil {
+		t.Fatal(errs)
+	}
+	css := v.render()
+	if !strings.Contains(css, "@media (max-height: 1rem) {") {
+		t.Errorf("at-rule key not literal:\n%s", css)
 	}
 }
 
@@ -141,7 +176,8 @@ func TestAtomTable(t *testing.T) {
 	want := map[string]string{
 		"tg-row": "display: flex; flex-direction: row", "tg-col": "display: flex; flex-direction: column",
 		"tg-wrap": "flex-wrap: wrap", "tg-grow": "flex: 1 1 0; min-width: 0", "tg-fixed": "flex: none",
-		"tg-center": "margin-inline: auto", "tg-hide": "display: none",
+		"tg-center": "margin-inline: auto", "tg-hide": "display: none", "tg-show": "display: revert",
+		"tg-order(first)": "order: -1", "tg-order(last)": "order: 1",
 		"tg-gap(sm)": "gap: " + sp, "tg-x-gap(sm)": "column-gap: " + sp, "tg-y-gap(sm)": "row-gap: " + sp,
 		"tg-pad(sm)": "padding: " + sp, "tg-pad-x(sm)": "padding-inline: " + sp, "tg-pad-y(sm)": "padding-block: " + sp,
 		"tg-pad-t(sm)": "padding-top: " + sp, "tg-pad-r(sm)": "padding-right: " + sp,
@@ -162,6 +198,14 @@ func TestAtomTable(t *testing.T) {
 	for _, k := range []string{"start", "center", "end"} {
 		want["tg-text-align("+k+")"] = "text-align: " + k
 	}
+	for _, n := range []int{1, 2, 3, 4, 5, 6, 12} {
+		s := strconv.Itoa(n)
+		want["tg-cols("+s+")"] = "display: grid; grid-template-columns: repeat(" + s + ", minmax(0, 1fr))"
+	}
+	for n := 1; n <= 12; n++ {
+		s := strconv.Itoa(n)
+		want["tg-span("+s+")"] = "grid-column: span " + s
+	}
 	for c, w := range want {
 		if got[c] != w {
 			t.Errorf("%s: got %q want %q", c, got[c], w)
@@ -173,8 +217,12 @@ func TestAtomTable(t *testing.T) {
 	if len(got) != len(want) {
 		t.Errorf("atoms: %d, table rows: %d", len(got), len(want))
 	}
-	if v.Atoms[len(v.Atoms)-1].Class != "tg-hide" {
-		t.Error("tg-hide must be last")
+	n := len(v.Atoms)
+	if v.Atoms[n-2].Class != "tg-show" || v.Atoms[n-1].Class != "tg-hide" {
+		t.Error("tg-show then tg-hide must be last")
+	}
+	if !strings.Contains(v.render(), ".md\\:tg-show {\n    display: revert;\n  }\n  .md\\:tg-hide {\n    display: none;\n  }\n}") {
+		t.Error("breakpoint block must end with show, hide")
 	}
 }
 

@@ -8,7 +8,9 @@ import (
 )
 
 func TestStarterLoadsAndRenders(t *testing.T) {
-	p := filepath.Join(t.TempDir(), "tidgrid.toml")
+	dir := t.TempDir()
+	os.Mkdir(filepath.Join(dir, "src"), 0o755) // project.scan must exist
+	p := filepath.Join(dir, "tidgrid.toml")
 	if err := os.WriteFile(p, starter, 0o644); err != nil {
 		t.Fatal(err)
 	}

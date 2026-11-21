@@ -57,8 +57,14 @@ func TestListExample(t *testing.T) {
 	if strings.Contains(out, "var(") {
 		t.Error("a resolved var() reached the list")
 	}
-	if !strings.Contains(out, "tg-gap (space)") {
-		t.Error("valued atom does not name its scale")
+	for _, s := range []string{"S = a name in space, Z = a name in size\n", "tg-gap(S)\n", "tg-width(Z)\n",
+		"tg-cols(1-6|12)\n", "tg-span(1-12)\n", "tg-order(first|last)\n", "tg-show tg-hide\n"} {
+		if !strings.Contains(out, s) {
+			t.Errorf("list lacks %q", s)
+		}
+	}
+	if strings.Contains(out, "(space)") {
+		t.Error("scale repeated on atom lines")
 	}
 	if !strings.Contains(out, listRules) {
 		t.Error("agent rules missing")
