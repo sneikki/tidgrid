@@ -42,12 +42,15 @@ Inside a class value, a template tag `{% raw %}{% … %}{% endraw %}` is skipped
 ## What it does not read
 
 - Fenced code blocks in Markdown.
+- Inline code in `.md` files. It is read in `.mdx`, where a backtick can build a class name.
 - `{% raw %}{% highlight %}{% endraw %}` and `{% raw %}{% raw %}{% endraw %}` blocks.
 - Anything between the comments `tidgrid-ignore-start` and `tidgrid-ignore-end`. Use them around code samples that show classes.
 
 ## Which files
 
 Sources: `.html .htm .astro .jsx .tsx .js .mjs .cjs .ts .vue .svelte .md .mdx .liquid .njk` under `project.scan`. Stylesheets: `.css .scss .sass .less .styl`. These are never entered: `node_modules .git dist build _site .astro vendor`.
+
+A symlinked directory is not entered either. `check` reports it unless its target is under `project.scan`, so add the target there.
 
 ## Known limit
 
@@ -63,6 +66,8 @@ const cls = kinds[kind];
 {% endcapture %}
 {% include code.html code=c %}
 <!-- tidgrid-ignore-end -->
+
+The names in such a table are whole, but the table is still a variable: `check` does not read it, and a role used only there is listed as unused. To have them checked, pass each name through one of the helper functions (`cn("tg-action(primary)")`).
 
 ## Next
 
