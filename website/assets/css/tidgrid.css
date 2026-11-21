@@ -183,6 +183,8 @@ svg {
 
 .tg-text\(keyword\) {
   display: inline-block;
+  max-width: var(--tg-size-full);
+  overflow-wrap: anywhere;
   padding: 0 var(--tg-space-xs);
   font-family: var(--tg-font-mono);
   color: var(--tg-color-keyword);
@@ -206,8 +208,42 @@ svg {
 
 .tg-text\(prose\) {
   font-family: var(--tg-font-sans);
+  overflow-wrap: anywhere;
   & > * + * {
     margin-top: var(--tg-space-lg);
+  }
+  & h3 {
+    font-family: var(--tg-font-title);
+    font-size: var(--tg-type-heading);
+    font-weight: 700;
+  }
+  & h4 {
+    font-family: var(--tg-font-title);
+    font-size: var(--tg-type-label);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  & table {
+    display: block;
+    max-width: var(--tg-size-full);
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: var(--tg-type-small);
+    line-height: 1.5;
+  }
+  & th {
+    padding: var(--tg-space-xs) var(--tg-space-sm);
+    font-family: var(--tg-font-title);
+    font-weight: 600;
+    text-align: start;
+    vertical-align: top;
+    background: var(--tg-color-tint);
+    border: var(--tg-border-hair) solid var(--tg-color-edge);
+  }
+  & td {
+    padding: var(--tg-space-xs) var(--tg-space-sm);
+    vertical-align: top;
+    border: var(--tg-border-hair) solid var(--tg-color-edge);
   }
   & p {
     line-height: 1.75;
@@ -265,6 +301,16 @@ svg {
   }
   &.tg-state\(current\) {
     color: var(--tg-color-accent);
+  }
+}
+
+.tg-link\(text\) {
+  font-weight: 600;
+  text-decoration: underline;
+  color: var(--tg-color-ink);
+  transition: color var(--tg-motion-fast);
+  &:hover {
+    color: var(--tg-color-ink-soft);
   }
 }
 

@@ -211,6 +211,8 @@ color       = "{color.muted}"
 [role.text.keyword]
 use           = "A short inline term, class name or command inside a sentence (shown as a chip)."
 display       = "inline-block"
+max-width     = "{size.full}"
+overflow-wrap = "anywhere"
 padding       = "0 {space.xs}"
 font-family   = "{font.mono}"
 color         = "{color.keyword}"
@@ -233,10 +235,44 @@ color       = "{color.ink}"
 
 [role.text.prose]
 use         = "Wrap rendered Markdown (a docs page body). Styles its p, h2, ul, ol, a and code so the Markdown source needs no classes."
-font-family = "{font.sans}"
+font-family   = "{font.sans}"
+overflow-wrap = "anywhere"
 
 [role.text.prose."& > * + *"]
 margin-top = "{space.lg}"
+
+[role.text.prose."& h3"]
+font-family = "{font.title}"
+font-size   = "{type.heading}"
+font-weight = "700"
+
+[role.text.prose."& h4"]
+font-family    = "{font.title}"
+font-size      = "{type.label}"
+font-weight    = "600"
+text-transform = "uppercase"
+
+[role.text.prose."& table"]
+display         = "block"
+max-width       = "{size.full}"
+overflow-x      = "auto"
+border-collapse = "collapse"
+font-size       = "{type.small}"
+line-height     = "1.5"
+
+[role.text.prose."& th"]
+padding        = "{space.xs} {space.sm}"
+font-family    = "{font.title}"
+font-weight    = "600"
+text-align     = "start"
+vertical-align = "top"
+background     = "{color.tint}"
+border         = "{border.hair} solid {color.edge}"
+
+[role.text.prose."& td"]
+padding        = "{space.xs} {space.sm}"
+vertical-align = "top"
+border         = "{border.hair} solid {color.edge}"
 
 [role.text.prose."& p"]
 line-height = "1.75"
@@ -289,8 +325,18 @@ color = "{color.ink-soft}"
 [role.link.nav."&.tg-state(current)"]
 color         = "{color.accent}"
 
+[role.link.text]
+use             = "A plain text link outside prose, such as the 'more' link under a block of text. Not for the header or the footer."
+font-weight     = "600"
+text-decoration = "underline"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.text."&:hover"]
+color = "{color.ink-soft}"
+
 [role.link.footer]
-use             = "A plain link in the footer, for example a documentation page."
+use            = "A plain link in the footer, for example a documentation page."
 font-family     = "{font.sans}"
 text-decoration = "none"
 color           = "{color.ink}"
