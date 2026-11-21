@@ -1,0 +1,2 @@
+src/Card.astro:3: own CSS: <style> block; make it a role in the vocabulary
+src/Card.module.css:1: own CSS: stylesheet not under allow.css; make it roles in the vocabulary

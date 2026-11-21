@@ -1,0 +1,6 @@
+src/a.html:1: appearance in style attribute: color; use a role (`tidgrid list`)
+src/a.html:2: appearance in style attribute: background-color; use a role (`tidgrid list`)
+src/a.html:2: appearance in style attribute: border-radius; use a role (`tidgrid list`)
+src/b.tsx:2: appearance in style attribute: background-color; use a role (`tidgrid list`)
+src/b.tsx:2: appearance in style attribute: letter-spacing; use a role (`tidgrid list`)
+src/b.tsx:2: appearance in style attribute: opacity; use a role (`tidgrid list`)

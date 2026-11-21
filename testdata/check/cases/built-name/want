@@ -1,0 +1,2 @@
+src/Card.tsx:1: class name built from pieces: is-${state}; write every whole name out in a lookup table
+src/page.liquid:2: class name built from pieces: page-content__{{ page.title | downcase }}; write every whole name out in a lookup table
