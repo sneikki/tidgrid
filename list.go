@@ -2,10 +2,131 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"strings"
 )
 
+// listRules are the three lines of README "Working with an agent".
+const listRules = "Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.\n" +
+	"Run `tidgrid check` before every commit; it must exit 0.\n" +
+	"A new role is a change to tidgrid.toml in its own commit, never mixed into page work.\n"
+
 func runList(args []string) int {
-	fmt.Fprintln(os.Stderr, "tidgrid list: not implemented")
-	return 2
+	v, code := loadFlag("list", args)
+	if v == nil {
+		return code
+	}
+	fmt.Print(listText(v))
+	return 0
+}
+
+// listText is the agent-facing summary: plain text, class names and use texts,
+// no token values.
+func listText(v *Vocabulary) string {
+	var b strings.Builder
+
+	b.WriteString("# breakpoints\n")
+	if len(v.Breakpoints) == 0 {
+		b.WriteString("none\n")
+	} else {
+		names := make([]string, 0, len(v.Breakpoints))
+		for _, bp := range v.Breakpoints {
+			names = append(names, bp.Name)
+		}
+		fmt.Fprintf(&b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
+			strings.Join(names, " "), names[0], v.Project.Prefix, names[0])
+	}
+
+	b.WriteString("\n# tokens\n")
+	for _, g := range v.Tokens {
+		names := make([]string, 0, len(g.Tokens))
+		for _, t := range g.Tokens {
+			names = append(names, t.Name)
+		}
+		fmt.Fprintf(&b, "%s: %s\n", g.Name, strings.Join(names, " "))
+	}
+
+	b.WriteString("\n# atoms\n")
+	var statics []string
+	flush := func() {
+		if len(statics) > 0 {
+			b.WriteString(strings.Join(statics, " ") + "\n")
+			statics = nil
+		}
+	}
+	for i := 0; i < len(v.Atoms); {
+		j := i + 1
+		for j < len(v.Atoms) && v.Atoms[j].Family == v.Atoms[i].Family {
+			j++
+		}
+		first := v.Atoms[i]
+		base, _, _ := strings.Cut(first.Class, "(")
+		switch {
+		case first.Value == "":
+			statics = append(statics, base)
+		case strings.HasPrefix(first.Decls[0][1], "var("):
+			flush()
+			fmt.Fprintf(&b, "%s (%s)\n", base, listScale(v, first.Decls[0][1]))
+		default:
+			flush()
+			vals := make([]string, 0, j-i)
+			for _, a := range v.Atoms[i:j] {
+				vals = append(vals, a.Value)
+			}
+			fmt.Fprintf(&b, "%s(%s)\n", base, strings.Join(vals, "|"))
+		}
+		i = j
+	}
+	flush()
+
+	b.WriteString("\n# roles\n")
+	kinds, byKind := listRoleKinds(v)
+	for _, k := range kinds {
+		if k == "state" {
+			b.WriteString("## set by scripts\n")
+		} else {
+			fmt.Fprintf(&b, "## %s\n", k)
+		}
+		for _, r := range byKind[k] {
+			fmt.Fprintf(&b, "%s  %s\n", r.Class, oneLine(r.Use))
+		}
+	}
+
+	b.WriteString("\n# allow\n")
+	for _, a := range v.AllowClass {
+		fmt.Fprintf(&b, "class %s  %s\n", a.Name, a.Reason)
+	}
+	for _, a := range v.AllowCSS {
+		fmt.Fprintf(&b, "css %s  %s\n", a.Name, a.Reason)
+	}
+
+	b.WriteString("\n# rules\n")
+	b.WriteString(listRules)
+	return b.String()
+}
+
+// listScale names the token group a valued atom reads, from its var() declaration.
+func listScale(v *Vocabulary, decl string) string {
+	for _, g := range v.Tokens {
+		if strings.HasPrefix(decl, "var(--"+v.Project.Prefix+"-"+g.Name+"-") {
+			return g.Name
+		}
+	}
+	return ""
+}
+
+// listRoleKinds returns the kinds in file order and the roles of each, in file order.
+func listRoleKinds(v *Vocabulary) ([]string, map[string][]Role) {
+	byKind := map[string][]Role{}
+	var kinds []string
+	for _, r := range v.Roles {
+		if _, ok := byKind[r.Kind]; !ok {
+			kinds = append(kinds, r.Kind)
+		}
+		byKind[r.Kind] = append(byKind[r.Kind], r)
+	}
+	return kinds, byKind
+}
+
+func oneLine(s string) string {
+	return strings.Join(strings.Fields(s), " ")
 }
