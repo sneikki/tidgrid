@@ -27,7 +27,7 @@ const sheetLayout = `
 .tgs-dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.3rem 1rem;margin:0}
 .tgs-dl>dt,.tgs-dl>dd{margin:0}
 .tgs-role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem 1.5rem;align-items:center;padding:.75rem 0;border-bottom:1px solid #8883}
-.tgs-sample{min-width:0;display:flex;align-items:flex-start}
+.tgs-sample{min-width:0;display:flex;align-items:flex-start;position:relative;contain:layout}
 .tgs-fill{display:inline-block;padding:1rem 1.5rem}
 .tgs-meta{min-width:0}
 .tgs-meta>code,.tgs-toggle>code{display:block;word-break:break-all;font-size:.85rem}

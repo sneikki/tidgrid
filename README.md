@@ -120,7 +120,10 @@ transform = "none"
 `{group.name}` is replaced with `var(--tg-group-name)`. Breakpoints are
 substituted literally (media queries cannot read custom properties).
 `{keyframes.<name>}` is replaced with the generated animation name
-`tg-<name>`.
+`tg-<name>`. Group and token names are made of letters, digits, `-` and `_`.
+
+`project.scan` and `project.helpers` are lists; a scan path that does not
+exist is an error.
 
 ### Layout atoms
 
@@ -144,14 +147,23 @@ Fixed grammar, the same in every project. `S` is every name in
 | `tg-pad-t(S)` `tg-pad-r(S)` `tg-pad-b(S)` `tg-pad-l(S)` | `padding-top` … `padding-left` |
 | `tg-width(Z)` `tg-min-width(Z)` `tg-max-width(Z)` | `width`, `min-width`, `max-width` |
 | `tg-height(Z)` `tg-min-height(Z)` | `height`, `min-height` |
+| `tg-cols(1…6\|12)` | `display: grid; grid-template-columns: repeat(N, minmax(0, 1fr))` |
+| `tg-span(1…12)` | `grid-column: span N` |
+| `tg-order(first\|last)` | `order: -1`, `order: 1` |
+| `tg-show` | `display: revert` |
 | `tg-hide` | `display: none` |
 
 Every atom also exists per breakpoint, mobile first: `md:tg-gap(md)` applies
-from `md` up. Layout the atoms do not cover (a grid, an overlay) is a role.
+from `md` up; `tg-hide md:tg-show` hides below `md`. Layout the atoms do not
+cover (an overlay, a fixed panel) is a role.
+
+An element takes a property from an atom or from a role, never both: atoms
+are written after roles and win.
 
 The stylesheet is written in this order, so a later part wins over an
 earlier one: tokens, elements, keyframes, roles, atoms, then the atoms of
-each breakpoint in file order. `tg-hide` is the last atom of its block.
+each breakpoint in file order. `tg-show` and `tg-hide` are the last atoms of
+their block.
 
 ### Roles
 
@@ -160,7 +172,7 @@ words (`surface`, `text`, `emphasis`, `action`, `state`, …) but may not
 collide with an atom name.
 
 - `use` is required: one or two sentences that tell an agent when the role
-  applies. It is not emitted as CSS.
+  applies. It is not emitted as CSS, and it is an error inside a sub-table.
 - Every other string key is a CSS declaration.
 - A sub-table is a nested rule. Its key is one of:
   - `@<breakpoint>`: from that breakpoint up.
@@ -181,11 +193,17 @@ Roles, declarations and nested rules are written in file order.
 ### What a value may contain
 
 Outside `[tokens]` and `[breakpoints]`, a value may not contain a raw colour
-(`#hex`, `rgb()`, `hsl()`, `oklch()` and the like), a raw length or a raw
-time (a number with a unit such as `px`, `rem`, `vw`, `ms`). Those live in
-tokens. Keywords, `0`, unitless numbers, percentages and functions over
-tokens (`calc({space.md} * 2)`,
-`color-mix(in srgb, {color.accent} 18%, transparent)`) are fine.
+(`#hex`, `rgb()`, `hsl()`, `oklch()` and the like, or a CSS colour name such
+as `red`), a raw length or a raw time (a number with any CSS length or time
+unit: `px`, `rem`, `vw`, `dvh`, `cqw`, `ms` …). Those live in tokens.
+Keywords, `transparent`, `currentColor`, `0`, unitless numbers, percentages,
+`fr`, angles and functions over tokens (`calc({space.md} * 2)`,
+`color-mix(in srgb, {color.accent} 18%, transparent)`) are fine. Text in
+quotes and inside `url()` is not looked at.
+
+The key of an at-rule sub-table follows the same rule. A reference in it is
+replaced with the token's written value, because a media query cannot read a
+custom property: `"@media (max-height: {size.short})"`.
 
 ## What `check` reports
 
@@ -196,6 +214,7 @@ tokens (`calc({space.md} * 2)`,
 | Appearance in a `style` attribute (geometry is allowed) | `style="color: red"` |
 | Own CSS: a `<style>` block, or a stylesheet not under `allow.css` | `Card.module.css` |
 | The stylesheet at `project.out` differs from what `build` would write | vocabulary edited, not rebuilt |
+| A `tidgrid-ignore-start` that is never closed | the rest of the file would go unchecked |
 
 A message names the fix where there is one:
 `src/pages/index.astro:14: unknown class tg-gap(2); tg-gap takes: sm md`.
@@ -208,11 +227,19 @@ the `allow` entries with their reasons.
 A scanner, not a parser, so it works the same in HTML, Astro, JSX, Vue and
 Svelte. It reads:
 
-- `class="…"` and `className="…"`;
-- every string literal inside `class={…}`, `className={…}`, `class:list={…}`;
+- `class="…"` and `className="…"` attributes, in any letter case;
+- every string literal inside `class={…}`, `className={…}`, `class:list={…}`,
+  `:class="…"`;
+- every string literal on the right of a `className = …` assignment in
+  script;
 - every string literal passed to `cn`, `clsx`, `cva`, `classNames`,
   `twMerge` (configurable: `project.helpers`) and to `classList.add`,
-  `remove`, `toggle`, `contains`.
+  `remove`, `toggle`, `contains`;
+- the name in a `class:name` directive (Svelte); `style:prop` counts as a
+  style attribute.
+
+A string literal that is only compared (`kind === "primary"`) is not a class
+and is not read.
 
 Inside a class value, a template tag `{% … %}` is skipped and the names
 around it are read. An interpolation (`{{ … }}`, `${…}`, `{…}`) glued to a
@@ -222,8 +249,8 @@ Not read: fenced code blocks in Markdown, `{% highlight %}` and `{% raw %}`
 blocks, and anything between the comments `tidgrid-ignore-start` and
 `tidgrid-ignore-end` (for code samples that show classes).
 
-Files: `.html .htm .astro .jsx .tsx .vue .svelte .md .mdx .liquid .njk` under
-`project.scan`. Stylesheets: `.css .scss .sass .less .styl`. Never entered:
+Files: `.html .htm .astro .jsx .tsx .js .mjs .cjs .ts .vue .svelte .md .mdx
+.liquid .njk` under `project.scan`. Stylesheets: `.css .scss .sass .less .styl`. Never entered:
 `node_modules .git dist build _site .astro vendor`.
 
 Known limit: a class kept in a variable far from these places is not seen.
