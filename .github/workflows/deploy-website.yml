@@ -21,11 +21,15 @@ jobs:
           go-version: stable
           cache: false
 
-      # Pinned to a commit: the tool has no release tag yet.
+      # Built from a pinned commit: the tool has no release tag yet, and
+      # `go install` trips over the repo's old tags, which have no go.mod.
       - name: Install tidgrid
         run: |
-          go install github.com/sneikki/tidgrid@dd43573b022056e4a5aef53d459f348b36938774
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          git clone --quiet https://github.com/sneikki/tidgrid "$RUNNER_TEMP/tidgrid-src"
+          cd "$RUNNER_TEMP/tidgrid-src"
+          git checkout --quiet dd43573b022056e4a5aef53d459f348b36938774
+          go build -o "$RUNNER_TEMP/bin/tidgrid" .
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
 
       - name: Check pages against the vocabulary
         run: cd website && tidgrid check
