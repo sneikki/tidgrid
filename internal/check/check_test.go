@@ -51,7 +51,7 @@ func runCase(t *testing.T, name string) (code int, violations []string, out stri
 		os.WriteFile(v.Project.Out, []byte(v.Render()), 0o644)
 	}
 	var buf bytes.Buffer
-	code = doCheck(v, &buf)
+	code = checkExitCode(v, &buf)
 	out = buf.String()
 	head, _, _ := strings.Cut(out, "\n\n")
 	if code == 1 {
@@ -129,7 +129,7 @@ func TestSymlinkedDirReported(t *testing.T) {
 		}
 		os.WriteFile(v.Project.Out, []byte(v.Render()), 0o644)
 		var buf bytes.Buffer
-		doCheck(v, &buf)
+		checkExitCode(v, &buf)
 		return buf.String()
 	}
 	if out := run(`["."]`); !strings.Contains(out, "docs:1: symlinked directory is not scanned") {
