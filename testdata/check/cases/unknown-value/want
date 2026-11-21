@@ -1,0 +1,6 @@
+src/a.html:2: unknown class md:tg-gap(lg); md:tg-gap takes: sm md
+src/a.html:2: unknown class tg-gap(2); tg-gap takes: sm md
+src/a.html:2: unknown class tg-gap; tg-gap takes: sm md
+src/a.html:2: unknown class tg-row(x); tg-row takes no value
+src/a.html:2: unknown class tg-surface(nope); tg-surface takes: card
+src/a.html:2: unknown class xl:tg-gap(md): xl is not a breakpoint

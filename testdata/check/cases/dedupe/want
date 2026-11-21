@@ -1,0 +1,2 @@
+src/a.tsx:1: unknown class bad-once: not in the vocabulary; run `tidgrid list`
+src/a.tsx:2: unknown class bad-b: not in the vocabulary; run `tidgrid list`

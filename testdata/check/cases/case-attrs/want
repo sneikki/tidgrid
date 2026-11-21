@@ -1,0 +1,4 @@
+src/a.html:1: unknown class border-l-4: not in the vocabulary; run `tidgrid list`
+src/a.html:2: unknown class bad-two: not in the vocabulary; run `tidgrid list`
+src/a.html:3: appearance in style attribute: color; use a role (`tidgrid list`)
+src/a.html:4: appearance in style attribute: background-color; use a role (`tidgrid list`)

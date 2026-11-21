@@ -1,0 +1,8 @@
+src/a.tsx:1: appearance in style attribute: background; use a role (`tidgrid list`)
+src/a.tsx:2: appearance in style attribute: caret-color; use a role (`tidgrid list`)
+src/a.tsx:2: appearance in style attribute: mix-blend-mode; use a role (`tidgrid list`)
+src/a.tsx:3: appearance in style attribute: column-rule-color; use a role (`tidgrid list`)
+src/a.tsx:3: appearance in style attribute: mask-image; use a role (`tidgrid list`)
+src/b.html:1: appearance in style attribute: color; use a role (`tidgrid list`)
+src/b.html:3: appearance in style attribute: column-rule; use a role (`tidgrid list`)
+src/b.html:3: appearance in style attribute: mask-image; use a role (`tidgrid list`)
