@@ -1,49 +1,56 @@
-name: Build and deploy website to GitHub Pages
-
+name: Check, build and deploy website to GitHub Pages
 
 on:
   push:
     branches:
       - master
+  pull_request:
 
+permissions:
+  contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Create Roby environment
-        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+      - uses: actions/setup-go@v5
         with:
-          ruby-version: "3.1"
+          go-version: stable
+          cache: false
+
+      # Pinned to a commit: the tool has no release tag yet.
+      - name: Install tidgrid
+        run: |
+          go install github.com/sneikki/tidgrid@dd43573b022056e4a5aef53d459f348b36938774
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Check pages against the vocabulary
+        run: cd website && tidgrid check
+
+      - name: Create Ruby environment
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
           bundler-cache: true
-
-      - name: Install Ruby gems
-        run: cd website && bundle install
-
-      - name: Install npm dependencies
-        run: cd website && npm ci
+          working-directory: website
 
       - name: Build website
         run: cd website && bundle exec jekyll build
         env:
           JEKYLL_ENV: production
 
-      - name: Archive build artifact
-        run: tar --directory website/_site/ -cvf "$RUNNER_TEMP/website-build.tar" .
-
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
-          path: ${{ runner.temp }}/website-build.tar
-          if-no-files-found: error
-
+          path: website/_site
 
   deploy:
-    runs-on: ubuntu-20.04
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
     needs: build
 
     permissions:
@@ -57,4 +64,4 @@ jobs:
     steps:
       - name: Deploy website
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
