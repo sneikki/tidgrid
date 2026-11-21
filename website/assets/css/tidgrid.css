@@ -1131,10 +1131,6 @@ svg {
   order: 1;
 }
 
-.tg-show {
-  display: revert;
-}
-
 .tg-hide {
   display: none;
 }
@@ -1614,9 +1610,6 @@ svg {
   }
   .xs\:tg-order\(last\) {
     order: 1;
-  }
-  .xs\:tg-show {
-    display: revert;
   }
   .xs\:tg-hide {
     display: none;
@@ -2099,9 +2092,6 @@ svg {
   .sm\:tg-order\(last\) {
     order: 1;
   }
-  .sm\:tg-show {
-    display: revert;
-  }
   .sm\:tg-hide {
     display: none;
   }
@@ -2582,9 +2572,6 @@ svg {
   }
   .md\:tg-order\(last\) {
     order: 1;
-  }
-  .md\:tg-show {
-    display: revert;
   }
   .md\:tg-hide {
     display: none;
@@ -3067,9 +3054,6 @@ svg {
   .lg\:tg-order\(last\) {
     order: 1;
   }
-  .lg\:tg-show {
-    display: revert;
-  }
   .lg\:tg-hide {
     display: none;
   }
@@ -3551,10 +3535,37 @@ svg {
   .xl\:tg-order\(last\) {
     order: 1;
   }
-  .xl\:tg-show {
-    display: revert;
-  }
   .xl\:tg-hide {
+    display: none;
+  }
+}
+
+@media (width < 36em) {
+  .tg-hide-below\(xs\) {
+    display: none;
+  }
+}
+
+@media (width < 48em) {
+  .tg-hide-below\(sm\) {
+    display: none;
+  }
+}
+
+@media (width < 64em) {
+  .tg-hide-below\(md\) {
+    display: none;
+  }
+}
+
+@media (width < 75em) {
+  .tg-hide-below\(lg\) {
+    display: none;
+  }
+}
+
+@media (width < 90em) {
+  .tg-hide-below\(xl\) {
     display: none;
   }
 }
