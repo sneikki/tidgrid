@@ -1,0 +1,3 @@
+src/a.js:2: unknown class bad-one: not in the vocabulary; run `tidgrid list`
+src/a.js:5: unknown class bad-two: not in the vocabulary; run `tidgrid list`
+src/a.js:8: unknown class bad-three: not in the vocabulary; run `tidgrid list`

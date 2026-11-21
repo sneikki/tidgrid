@@ -269,6 +269,22 @@ func (f *fileScan) compared(i, j int) bool {
 	return strings.HasSuffix(b, "==") || strings.HasSuffix(b, "!=") || strings.HasPrefix(a, "==") || strings.HasPrefix(a, "!=")
 }
 
+// continues reports whether the statement from i goes on after the newline
+// at nl: the line ends in a binary operator or the next one starts with one.
+func continues(s string, i, nl int) bool {
+	ls := strings.LastIndexByte(s[i:nl], '\n') + 1 + i
+	b := strings.TrimRight(s[ls:nl], " \t\r")
+	if b != "" && strings.ContainsRune("+-*/%?:,=&|^~!", rune(b[len(b)-1])) &&
+		!strings.HasSuffix(b, "++") && !strings.HasSuffix(b, "--") && !strings.HasSuffix(b, "*/") {
+		return true
+	}
+	a := strings.TrimLeft(s[nl:], " \t\r\n")
+	if strings.HasPrefix(a, "//") || strings.HasPrefix(a, "/*") || a == "" {
+		return false
+	}
+	return strings.ContainsRune("?:.+-*/%|&=,", rune(a[0]))
+}
+
 // stmtEnd returns the end of the statement that starts at i: a `;` or newline
 // outside brackets, or the bracket that closes the enclosing one.
 func stmtEnd(s string, i int) int {
@@ -285,8 +301,13 @@ func stmtEnd(s string, i int) int {
 				return k
 			}
 			k++
-		case depth == 0 && (c == ';' || c == '\n'):
+		case depth == 0 && c == ';':
 			return k
+		case depth == 0 && c == '\n':
+			if !continues(s, i, k) {
+				return k
+			}
+			k++
 		default:
 			k++
 		}
