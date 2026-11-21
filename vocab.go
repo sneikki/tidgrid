@@ -103,6 +103,7 @@ type loader struct {
 	tok    map[string]bool   // "group.name"
 	tokRaw map[string]string // "group.name" -> value as written
 	kf     map[string]bool
+	lits   map[string]*lit // "group.name" -> literal expansion, see literalTok
 }
 
 func jk(p []string) string { return strings.Join(p, "\x00") }
@@ -182,18 +183,59 @@ func (l *loader) resolve(p []string, s string) string {
 // every CSS length and time unit (not %, fr or angles)
 // literal is resolve for places that cannot read custom properties (at-rule
 // keys): a token becomes its written value, references inside it resolved too.
-func (l *loader) literal(p []string, s string, depth int) string {
-	return refRe.ReplaceAllStringFunc(s, func(m string) string {
+func (l *loader) literal(p []string, s string) string {
+	big := false
+	out := refRe.ReplaceAllStringFunc(s, func(m string) string {
 		sm := refRe.FindStringSubmatch(m)
 		g, n := sm[1], sm[2]
-		if raw, ok := l.tokRaw[g+"."+n]; ok && g != "keyframes" && g != "breakpoints" && depth < 16 {
-			return l.literal(p, raw, depth+1)
-		}
-		if depth > 0 {
-			return m // loop or unknown inside a token: reported where it is written
+		if _, ok := l.tokRaw[g+"."+n]; ok && g != "keyframes" && g != "breakpoints" {
+			lit := l.literalTok(g + "." + n)
+			big = big || lit.big
+			return lit.s
 		}
 		return l.resolve(p, m)
 	})
+	if big || len(out) > maxLiteral {
+		l.errf(p, "references expand past %d bytes", maxLiteral)
+		return ""
+	}
+	return out
+}
+
+type lit struct {
+	s    string
+	big  bool // cut at maxLiteral, here or in a token it references
+	busy bool
+}
+
+const maxLiteral = 4096
+
+// literalTok expands one token once and remembers it. Tokens that each
+// repeat the next one would otherwise cost exponential work and output.
+func (l *loader) literalTok(key string) lit {
+	if e, ok := l.lits[key]; ok {
+		if e.busy {
+			return lit{s: "{" + key + "}"} // loop: reported where it is written
+		}
+		return *e
+	}
+	e := &lit{busy: true}
+	l.lits[key] = e
+	e.s = refRe.ReplaceAllStringFunc(l.tokRaw[key], func(m string) string {
+		sm := refRe.FindStringSubmatch(m)
+		k := sm[1] + "." + sm[2]
+		if _, ok := l.tokRaw[k]; !ok || sm[1] == "keyframes" || sm[1] == "breakpoints" {
+			return m // unknown inside a token: reported where it is written
+		}
+		sub := l.literalTok(k)
+		e.big = e.big || sub.big
+		return sub.s
+	})
+	if len(e.s) > maxLiteral {
+		e.s, e.big = "", true
+	}
+	e.busy = false
+	return *e
 }
 
 const units = `px|rem|em|ex|ch|cap|ic|lh|rlh|rcap|rch|rex|ric|` +
@@ -328,7 +370,7 @@ func (l *loader) subKey(p []string, k string) string {
 		if pr := rawProblem("", k); pr != "" {
 			l.errf(p, "%s in at-rule key", pr)
 		}
-		return l.literal(p, k, 0)
+		return l.literal(p, k)
 	}
 	if !strings.Contains(k, "&") {
 		l.errf(p, "selector must contain &")
@@ -338,7 +380,7 @@ func (l *loader) subKey(p []string, k string) string {
 }
 
 func load(path string) (*Vocabulary, []error) {
-	l := &loader{raw: map[string]any{}, kids: map[string][]string{}, tok: map[string]bool{}, tokRaw: map[string]string{}, kf: map[string]bool{}}
+	l := &loader{raw: map[string]any{}, kids: map[string][]string{}, tok: map[string]bool{}, tokRaw: map[string]string{}, kf: map[string]bool{}, lits: map[string]*lit{}}
 	v := &Vocabulary{Path: path, valid: map[string]bool{}, takes: map[string][]string{}, bpValue: map[string]string{}}
 	l.v = v
 	md, err := toml.DecodeFile(path, &l.raw)

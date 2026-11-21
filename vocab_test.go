@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -126,6 +127,25 @@ animation = "none"
 `
 	if _, errs := loadStr(t, ok); errs != nil {
 		t.Fatal(errs)
+	}
+}
+
+// Twenty tokens that each repeat the next twice would expand to a megabyte
+// per at-rule key; load must cut it and say so instead of grinding.
+func TestAtRuleKeyExpansionBounded(t *testing.T) {
+	var b strings.Builder
+	b.WriteString(base + "[tokens.t]\n")
+	for i := 0; i < 15; i++ {
+		fmt.Fprintf(&b, "a%d = \"{t.a%d}{t.a%d}{t.a%d}{t.a%d}\"\n", i, i+1, i+1, i+1, i+1)
+	}
+	b.WriteString("a15 = \"xxxxxxxxxxxxxxxx\"\n[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@media (max-height: {t.a0})\"]\ncolor = \"{color.ink}\"\n")
+	_, errs := loadStr(t, b.String())
+	var all []string
+	for _, e := range errs {
+		all = append(all, e.Error())
+	}
+	if n := strings.Count(strings.Join(all, "\n"), "references expand past"); n != 1 {
+		t.Errorf("want one expansion error, got %d in %v", n, all)
 	}
 }
 
