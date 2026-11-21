@@ -224,6 +224,9 @@ func (l *loader) literalTok(key string) lit {
 	e.s = refRe.ReplaceAllStringFunc(l.tokRaw[key], func(m string) string {
 		sm := refRe.FindStringSubmatch(m)
 		k := sm[1] + "." + sm[2]
+		if x, ok := l.v.bpValue[sm[2]]; ok && sm[1] == "breakpoints" {
+			return x
+		}
 		if _, ok := l.tokRaw[k]; !ok || sm[1] == "keyframes" || sm[1] == "breakpoints" {
 			return m // unknown inside a token: reported where it is written
 		}
@@ -266,10 +269,16 @@ var (
 // identProps hold names the author picks, not colours: `grid-area: gold` is legal.
 func identProp(prop string) bool {
 	switch prop {
-	case "font-family", "animation-name", "container-name", "view-transition-name", "anchor-name", "will-change", "transition-property":
+	case "font-family", "animation-name", "container-name", "container", "view-transition-name", "anchor-name", "position-anchor",
+		"timeline-scope", "will-change", "transition-property":
 		return true
 	}
-	return strings.HasPrefix(prop, "grid") || strings.HasPrefix(prop, "counter-")
+	for _, p := range []string{"grid", "counter-", "scroll-timeline", "view-timeline"} {
+		if strings.HasPrefix(prop, p) {
+			return true
+		}
+	}
+	return false
 }
 
 // rawProblem names a raw colour, length or time in a value of property prop
@@ -348,7 +357,9 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 	return r
 }
 
-var oneWord = regexp.MustCompile(`^@[A-Za-z0-9_-]+$`)
+var containerName = regexp.MustCompile(`^(@container)\s+[^\s(]+`) // the name is the author's pick, not a colour
+
+var oneWord =regexp.MustCompile(`^@[A-Za-z0-9_-]+$`)
 
 func (l *loader) subKey(p []string, k string) string {
 	if strings.HasPrefix(k, "@") {
@@ -367,7 +378,7 @@ func (l *loader) subKey(p []string, k string) string {
 			l.errf(p, "unknown breakpoint %q", name)
 			return k
 		}
-		if pr := rawProblem("", k); pr != "" {
+		if pr := rawProblem("", containerName.ReplaceAllString(k, "$1")); pr != "" {
 			l.errf(p, "%s in at-rule key", pr)
 		}
 		return l.literal(p, k)
@@ -515,7 +526,7 @@ func load(path string) (*Vocabulary, []error) {
 			names[g.Name] = append(names[g.Name], t.Name)
 		}
 	}
-	v.Atoms = atoms(v.Project.Prefix, names)
+	v.Atoms = atoms(v.Project.Prefix, names, v.Breakpoints)
 	add := func(c string) {
 		if !v.valid[c] {
 			v.valid[c] = true
@@ -532,7 +543,9 @@ func load(path string) (*Vocabulary, []error) {
 	}
 	for _, b := range v.Breakpoints {
 		for _, a := range v.Atoms {
-			add(b.Name + ":" + a.Class)
+			if a.Below == "" {
+				add(b.Name + ":" + a.Class)
+			}
 		}
 	}
 	// roles: names first

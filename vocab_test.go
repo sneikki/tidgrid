@@ -195,7 +195,7 @@ func TestAtomTable(t *testing.T) {
 	want := map[string]string{
 		"tg-row": "display: flex; flex-direction: row", "tg-col": "display: flex; flex-direction: column",
 		"tg-wrap": "flex-wrap: wrap", "tg-grow": "flex: 1 1 0; min-width: 0", "tg-fixed": "flex: none",
-		"tg-center": "margin-inline: auto", "tg-hide": "display: none", "tg-show": "display: revert",
+		"tg-center": "margin-inline: auto", "tg-hide": "display: none",
 		"tg-order(first)": "order: -1", "tg-order(last)": "order: 1",
 		"tg-gap(sm)": "gap: " + sp, "tg-x-gap(sm)": "column-gap: " + sp, "tg-y-gap(sm)": "row-gap: " + sp,
 		"tg-pad(sm)": "padding: " + sp, "tg-pad-x(sm)": "padding-inline: " + sp, "tg-pad-y(sm)": "padding-block: " + sp,
@@ -233,15 +233,18 @@ func TestAtomTable(t *testing.T) {
 			t.Errorf("no breakpoint variant of %s", c)
 		}
 	}
-	if len(got) != len(want) {
+	if got["tg-hide-below(md)"] != "display: none" {
+		t.Errorf("tg-hide-below(md): %q", got["tg-hide-below(md)"])
+	}
+	if len(got) != len(want)+1 { // + tg-hide-below(md), the one breakpoint of the example
 		t.Errorf("atoms: %d, table rows: %d", len(got), len(want))
 	}
 	n := len(v.Atoms)
-	if v.Atoms[n-2].Class != "tg-show" || v.Atoms[n-1].Class != "tg-hide" {
-		t.Error("tg-show then tg-hide must be last")
+	if v.Atoms[n-2].Class != "tg-hide" || v.Atoms[n-1].Class != "tg-hide-below(md)" {
+		t.Error("tg-hide must be the last plain atom")
 	}
-	if !strings.Contains(v.render(), ".md\\:tg-show {\n    display: revert;\n  }\n  .md\\:tg-hide {\n    display: none;\n  }\n}") {
-		t.Error("breakpoint block must end with show, hide")
+	if !strings.Contains(v.render(), "  .md\\:tg-hide {\n    display: none;\n  }\n}") {
+		t.Error("breakpoint block must end with hide")
 	}
 }
 
@@ -263,5 +266,52 @@ func TestBuildCmd(t *testing.T) {
 	}
 	if run([]string{"check"}) != 2 {
 		t.Fatal("stub must exit 2")
+	}
+}
+
+// A token whose value names a breakpoint resolves it in an at-rule key.
+func TestAtRuleKeyBreakpointInToken(t *testing.T) {
+	v, errs := loadStr(t, base+"[tokens.size]\ntab = \"{breakpoints.md}\"\n[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@media (min-width: {size.tab})\"]\ncolor = \"{color.ink}\"\n")
+	if errs != nil {
+		t.Fatal(errs)
+	}
+	if css := v.render(); !strings.Contains(css, "@media (min-width: 64em) {") {
+		t.Errorf("breakpoint not resolved:\n%s", css)
+	}
+}
+
+// Names the author picks are not colours.
+func TestNameProps(t *testing.T) {
+	for _, p := range []string{"container", "scroll-timeline", "scroll-timeline-name", "view-timeline-name", "timeline-scope", "position-anchor"} {
+		if rawProblem(p, "gold") != "" {
+			t.Errorf("%s: name read as colour", p)
+		}
+	}
+	if rawProblem("color", "gold") == "" {
+		t.Error("colour name not caught")
+	}
+	_, errs := loadStr(t, base+"[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@container gold (min-width: 1px)\"]\ncolor = \"{color.ink}\"\n")
+	for _, e := range errs {
+		if strings.Contains(e.Error(), "raw colour") {
+			t.Errorf("container name read as colour: %v", e)
+		}
+	}
+}
+
+// hide-below is one class per breakpoint, written after every breakpoint block.
+func TestHideBelow(t *testing.T) {
+	v, errs := loadStr(t, base+"[role.surface.card]\nuse = \"x\"\n")
+	if errs != nil {
+		t.Fatal(errs)
+	}
+	css := v.render()
+	if !strings.Contains(css, "@media (width < 64em) {\n  .tg-hide-below\\(md\\) {\n    display: none;\n  }\n}") {
+		t.Errorf("hide-below rule missing:\n%s", css)
+	}
+	if strings.Index(css, "tg-hide-below") < strings.LastIndex(css, "@media (min-width: 64em)") {
+		t.Error("hide-below before breakpoint block")
+	}
+	if !v.Valid("tg-hide-below(md)") || v.Valid("md:tg-hide-below(md)") || v.Valid("tg-show") {
+		t.Error("class set wrong")
 	}
 }
