@@ -6,16 +6,16 @@ import "os"
 // <style> block (scanStyleTags). The built stylesheet is the one CSS file that
 // must exist and match the vocabulary.
 
-// checkStylesheet reports a CSS file that is neither the built output nor
+// judgeStylesheet reports a CSS file that is neither the built output nor
 // listed under allow.css.
-func (c *checkRun) checkStylesheet(abs, rel string) {
+func (c *run) judgeStylesheet(abs, rel string) {
 	if !c.allowedCSS[abs] {
 		c.add(rel, 1, "own CSS: stylesheet not under allow.css; make it roles in the vocabulary")
 	}
 }
 
-// checkOutputFresh reports a built stylesheet that is missing or stale.
-func (c *checkRun) checkOutputFresh() {
+// judgeOutputFresh reports a built stylesheet that is missing or stale.
+func (c *run) judgeOutputFresh() {
 	out := c.v.Project.Out
 	b, err := os.ReadFile(out)
 	switch {

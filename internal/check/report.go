@@ -34,7 +34,7 @@ func (u *roleUse) record(file, class string) {
 }
 
 // sortedViolations orders by path, line, message so output is stable.
-func (c *checkRun) sortedViolations() []violation {
+func (c *run) sortedViolations() []violation {
 	vios := c.vios
 	sort.Slice(vios, func(i, j int) bool {
 		a, b := vios[i], vios[j]

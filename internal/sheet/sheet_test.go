@@ -20,9 +20,9 @@ func loadExampleVocab(t *testing.T) *vocab.Vocabulary {
 
 func TestSheetExample(t *testing.T) {
 	v := loadExampleVocab(t)
-	out := sheetHTML(v)
-	if again := sheetHTML(v); again != out {
-		t.Fatal("sheetHTML is not deterministic")
+	out := page(v)
+	if again := page(v); again != out {
+		t.Fatal("page is not deterministic")
 	}
 	if !strings.Contains(out, v.Render()) {
 		t.Error("rendered stylesheet not inlined")
@@ -76,7 +76,7 @@ color = "{color.ink}"
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}
-	out := sheetHTML(v)
+	out := page(v)
 	if strings.Contains(out, "<b>this</b>") {
 		t.Error("use text not escaped")
 	}
@@ -112,7 +112,7 @@ func TestSheetRefusesSymlinkOut(t *testing.T) {
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}
-	if strings.Contains(sheetHTML(v), "SECRET-MARK") {
+	if strings.Contains(page(v), "SECRET-MARK") {
 		t.Error("file outside the project inlined through a symlink")
 	}
 }

@@ -10,7 +10,7 @@ import (
 
 // filesUnderScan walks every project.scan root and returns the absolute paths
 // of the files found, sorted. A path it cannot read is reported, not skipped.
-func (c *checkRun) filesUnderScan() []string {
+func (c *run) filesUnderScan() []string {
 	files := map[string]bool{}
 	for _, root := range c.v.Project.Scan {
 		filepath.WalkDir(root, c.visit(root, files))
@@ -24,7 +24,7 @@ func (c *checkRun) filesUnderScan() []string {
 }
 
 // visit is the walk callback for one root: it adds files to the set.
-func (c *checkRun) visit(root string, files map[string]bool) fs.WalkDirFunc {
+func (c *run) visit(root string, files map[string]bool) fs.WalkDirFunc {
 	return func(p string, d fs.DirEntry, err error) error {
 		if err != nil { // an unreadable path must not pass as clean
 			msg := err.Error()
@@ -51,7 +51,7 @@ func (c *checkRun) visit(root string, files map[string]bool) fs.WalkDirFunc {
 // isSymlinkedDir reports whether the entry is a symlink to a directory. The
 // walk does not enter one, and passing over it in silence would leave its
 // pages unchecked, so it is reported unless a scan root reaches it anyway.
-func (c *checkRun) isSymlinkedDir(p string, d fs.DirEntry) bool {
+func (c *run) isSymlinkedDir(p string, d fs.DirEntry) bool {
 	if d.Type()&fs.ModeSymlink == 0 || skipDirs[d.Name()] {
 		return false
 	}

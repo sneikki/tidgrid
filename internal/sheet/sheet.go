@@ -13,9 +13,9 @@ import (
 	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
-// sheetLayout styles the sheet only. Every selector is a tgs- class, so the
+// layout styles the sheet only. Every selector is a tgs- class, so the
 // samples keep the project's own look.
-const sheetLayout = `
+const layout = `
 .tgs-page{box-sizing:border-box;max-width:72rem;margin:0 auto;padding:1rem}
 .tgs-title{font-size:1.5rem;margin:1rem 0}
 .tgs-h{font-size:1.125rem;margin:2.5rem 0 .75rem;padding-bottom:.25rem;border-bottom:1px solid #8886}
@@ -38,18 +38,18 @@ const sheetLayout = `
 @media (max-width:40em){.tgs-role{grid-template-columns:minmax(0,1fr)}}
 `
 
-const sheetSentence = "The quick brown fox jumps over the lazy dog."
+const sentence = "The quick brown fox jumps over the lazy dog."
 
-var sheetStyleEnd = regexp.MustCompile(`(?i)</style`)
+var styleEnd = regexp.MustCompile(`(?i)</style`)
 
-// sheetCSS makes CSS safe to inline in a <style> element: a token value or a
+// safeCSS makes CSS safe to inline in a <style> element: a token value or a
 // font file holding "</style" must not close it. Other "<" stay, the
 // stylesheet uses them in range media queries.
-func sheetCSS(css string) string {
-	return sheetStyleEnd.ReplaceAllString(css, `<\/style`)
+func safeCSS(css string) string {
+	return styleEnd.ReplaceAllString(css, `<\/style`)
 }
 
-func sheetHasPadding(r *vocab.Rule) bool {
+func hasPadding(r *vocab.Rule) bool {
 	if r == nil {
 		return false
 	}
@@ -61,10 +61,10 @@ func sheetHasPadding(r *vocab.Rule) bool {
 	return false
 }
 
-// sheetTextKinds get a sentence as sample; other kinds get a short label.
-var sheetTextKinds = map[string]bool{"text": true, "emphasis": true}
+// textKinds get a sentence as sample; other kinds get a short label.
+var textKinds = map[string]bool{"text": true, "emphasis": true}
 
-const sheetScript = `<script>
+const script = `<script>
 for (const box of document.querySelectorAll('input[data-state]')) {
   box.addEventListener('change', () => document.body.classList.toggle(box.dataset.state, box.checked));
 }
@@ -86,7 +86,7 @@ func Run(args []string) int {
 		}
 		return 2
 	}
-	if err := os.WriteFile(*out, []byte(sheetHTML(v)), 0o644); err != nil {
+	if err := os.WriteFile(*out, []byte(page(v)), 0o644); err != nil {
 		fmt.Fprintln(os.Stderr, "tidgrid sheet:", err)
 		return 2
 	}
@@ -94,17 +94,17 @@ func Run(args []string) int {
 	return 0
 }
 
-// sheetHTML is one self-contained page. The project's stylesheet and the
+// page is one self-contained page. The project's stylesheet and the
 // allow.css files that exist are inlined, so the project's own rules style
 // the samples. Output depends only on the vocabulary.
-func sheetHTML(v *vocab.Vocabulary) string {
+func page(v *vocab.Vocabulary) string {
 	var b strings.Builder
 	b.WriteString("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n")
 	b.WriteString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
 	b.WriteString("<title>tidgrid sheet</title>\n")
-	b.WriteString("<style>" + sheetLayout + "</style>\n")
-	b.WriteString("<style>\n" + sheetCSS(v.Render()) + "</style>\n")
-	found := sheetFonts(v, &b)
+	b.WriteString("<style>" + layout + "</style>\n")
+	b.WriteString("<style>\n" + safeCSS(v.Render()) + "</style>\n")
+	found := inlineAllowedCSS(v, &b)
 	b.WriteString("</head>\n")
 
 	var stateClasses []string
@@ -115,17 +115,17 @@ func sheetHTML(v *vocab.Vocabulary) string {
 	}
 	fmt.Fprintf(&b, "<body class=\"%s\">\n", html.EscapeString(strings.Join(stateClasses, " ")))
 	b.WriteString("<main class=\"tgs-page\">\n<h1 class=\"tgs-title\">tidgrid sheet</h1>\n")
-	sheetTokens(v, &b)
-	sheetRoles(v, &b)
-	sheetAtoms(v, &b)
-	sheetAllow(v, found, &b)
-	b.WriteString("</main>\n" + sheetScript + "</body>\n</html>\n")
+	tokens(v, &b)
+	roles(v, &b)
+	atoms(v, &b)
+	allow(v, found, &b)
+	b.WriteString("</main>\n" + script + "</body>\n</html>\n")
 	return b.String()
 }
 
-// sheetFonts inlines each allow.css file that exists, in file order, and
+// inlineAllowedCSS inlines each allow.css file that exists, in file order, and
 // reports which ones were found. Paths are relative to the vocabulary.
-func sheetFonts(v *vocab.Vocabulary, b *strings.Builder) map[string]bool {
+func inlineAllowedCSS(v *vocab.Vocabulary, b *strings.Builder) map[string]bool {
 	found := map[string]bool{}
 	// os.Root refuses a path or symlink that leaves the vocabulary's
 	// directory: the sheet must not carry a file from elsewhere on the disk.
@@ -145,12 +145,12 @@ func sheetFonts(v *vocab.Vocabulary, b *strings.Builder) map[string]bool {
 			continue
 		}
 		found[a.Name] = true
-		b.WriteString("<style>\n" + sheetCSS(string(data)) + "</style>\n")
+		b.WriteString("<style>\n" + safeCSS(string(data)) + "</style>\n")
 	}
 	return found
 }
 
-func sheetTokens(v *vocab.Vocabulary, b *strings.Builder) {
+func tokens(v *vocab.Vocabulary, b *strings.Builder) {
 	pre := v.Project.Prefix
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">tokens</h2>\n")
 	for _, g := range v.Tokens {
@@ -172,7 +172,7 @@ func sheetTokens(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("</section>\n")
 }
 
-func sheetRoles(v *vocab.Vocabulary, b *strings.Builder) {
+func roles(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">roles</h2>\n")
 	kinds, byKind := v.RoleKinds()
 	for _, k := range kinds {
@@ -187,13 +187,13 @@ func sheetRoles(v *vocab.Vocabulary, b *strings.Builder) {
 		fmt.Fprintf(b, "<h3 class=\"tgs-sub\">%s</h3>\n", html.EscapeString(k))
 		for _, r := range byKind[k] {
 			var sample string
-			if sheetTextKinds[r.Kind] {
-				sample = "<p class=\"" + html.EscapeString(r.Class) + "\">" + sheetSentence + "</p>"
+			if textKinds[r.Kind] {
+				sample = "<p class=\"" + html.EscapeString(r.Class) + "\">" + sentence + "</p>"
 			} else {
 				// Roles leave padding to the atoms, so a bare sample is a thin strip.
 				// Pad the inside unless the role brings its own.
 				inner := html.EscapeString(r.Name)
-				if !sheetHasPadding(r.Rule) {
+				if !hasPadding(r.Rule) {
 					inner = "<span class=\"tgs-fill\">" + inner + "</span>"
 				}
 				sample = "<div class=\"" + html.EscapeString(r.Class) + "\">" + inner + "</div>"
@@ -205,7 +205,7 @@ func sheetRoles(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("</section>\n")
 }
 
-func sheetAtoms(v *vocab.Vocabulary, b *strings.Builder) {
+func atoms(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">atoms</h2>\n")
 	if len(v.Breakpoints) > 0 {
 		fmt.Fprintf(b, "<p class=\"tgs-desc\">Every atom also takes a breakpoint prefix, mobile first: %s:%s-row applies from %s up.</p>\n",
@@ -232,7 +232,7 @@ func sheetAtoms(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("</dl>\n</section>\n")
 }
 
-func sheetAllow(v *vocab.Vocabulary, found map[string]bool, b *strings.Builder) {
+func allow(v *vocab.Vocabulary, found map[string]bool, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">allow</h2>\n<h3 class=\"tgs-sub\">class</h3>\n<dl class=\"tgs-dl\">\n")
 	for _, a := range v.AllowClass {
 		fmt.Fprintf(b, "<dt><code>%s</code></dt><dd>%s</dd>\n", html.EscapeString(a.Name), html.EscapeString(a.Reason))

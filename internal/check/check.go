@@ -16,15 +16,15 @@ func Run(args []string) int {
 	if v == nil {
 		return code
 	}
-	return checkExitCode(v, os.Stdout)
+	return reportProject(v, os.Stdout)
 }
 
-// checkExitCode checks the project, writes the report to w and returns the
+// reportProject checks the project, writes the report to w and returns the
 // exit code: 1 when any violation was found, else 0.
-func checkExitCode(v *vocab.Vocabulary, w io.Writer) int {
-	c := newCheckRun(v)
+func reportProject(v *vocab.Vocabulary, w io.Writer) int {
+	c := newRun(v)
 	use := c.scanFiles(c.filesUnderScan())
-	c.checkOutputFresh()
+	c.judgeOutputFresh()
 	vios := c.sortedViolations()
 	writeViolations(w, vios)
 	writeRolesUsed(w, use)
@@ -36,9 +36,9 @@ func checkExitCode(v *vocab.Vocabulary, w io.Writer) int {
 	return 0
 }
 
-// checkRun is one check of one project: the violations found so far and the
+// run is one check of one project: the violations found so far and the
 // lookups the file readers share.
-type checkRun struct {
+type run struct {
 	v            *vocab.Vocabulary
 	dir          string // absolute directory of the vocabulary file; paths in the report are relative to it
 	vios         []violation
@@ -48,8 +48,8 @@ type checkRun struct {
 	roleClass    map[string]bool
 }
 
-func newCheckRun(v *vocab.Vocabulary) *checkRun {
-	c := &checkRun{v: v, seenViolated: map[violation]bool{}, allowedClass: map[string]bool{}, roleClass: map[string]bool{}}
+func newRun(v *vocab.Vocabulary) *run {
+	c := &run{v: v, seenViolated: map[violation]bool{}, allowedClass: map[string]bool{}, roleClass: map[string]bool{}}
 	c.dir = c.abs(filepath.Dir(v.Path))
 	for _, a := range v.AllowClass {
 		c.allowedClass[a.Name] = true
@@ -64,7 +64,7 @@ func newCheckRun(v *vocab.Vocabulary) *checkRun {
 	return c
 }
 
-func (c *checkRun) abs(p string) string {
+func (c *run) abs(p string) string {
 	a, err := filepath.Abs(p)
 	if err != nil {
 		return p
@@ -73,7 +73,7 @@ func (c *checkRun) abs(p string) string {
 }
 
 // rel is the path as the report prints it.
-func (c *checkRun) rel(p string) string {
+func (c *run) rel(p string) string {
 	if r, err := filepath.Rel(c.dir, p); err == nil {
 		p = r
 	}
@@ -81,7 +81,7 @@ func (c *checkRun) rel(p string) string {
 }
 
 // add records a violation once; the same one found twice is reported once.
-func (c *checkRun) add(path string, line int, msg string) {
+func (c *run) add(path string, line int, msg string) {
 	x := violation{path, line, msg}
 	if !c.seenViolated[x] {
 		c.seenViolated[x] = true
@@ -90,13 +90,13 @@ func (c *checkRun) add(path string, line int, msg string) {
 }
 
 // scanFiles judges each file by its kind and returns which roles were used.
-func (c *checkRun) scanFiles(paths []string) *roleUse {
+func (c *run) scanFiles(paths []string) *roleUse {
 	use := newRoleUse()
 	for _, p := range paths {
 		ext := strings.ToLower(filepath.Ext(p))
 		switch {
 		case cssExts[ext]:
-			c.checkStylesheet(p, c.rel(p))
+			c.judgeStylesheet(p, c.rel(p))
 		case srcExts[ext]:
 			c.scanSource(p, ext, use)
 		}
@@ -105,7 +105,7 @@ func (c *checkRun) scanFiles(paths []string) *roleUse {
 }
 
 // scanSource reads one source file for class names and style attributes.
-func (c *checkRun) scanSource(p, ext string, use *roleUse) {
+func (c *run) scanSource(p, ext string, use *roleUse) {
 	r := c.rel(p)
 	raw, err := os.ReadFile(p)
 	if err != nil {
