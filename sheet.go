@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"html"
+	"io"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -123,8 +124,20 @@ func sheetHTML(v *Vocabulary) string {
 // reports which ones were found. Paths are relative to the vocabulary.
 func sheetFonts(v *Vocabulary, b *strings.Builder) map[string]bool {
 	found := map[string]bool{}
+	// os.Root refuses a path or symlink that leaves the vocabulary's
+	// directory: the sheet must not carry a file from elsewhere on the disk.
+	root, err := os.OpenRoot(filepath.Dir(v.Path))
+	if err != nil {
+		return found
+	}
+	defer root.Close()
 	for _, a := range v.AllowCSS {
-		data, err := os.ReadFile(filepath.Join(filepath.Dir(v.Path), a.Name))
+		f, err := root.Open(filepath.FromSlash(a.Name))
+		if err != nil {
+			continue
+		}
+		data, err := io.ReadAll(f)
+		f.Close()
 		if err != nil {
 			continue
 		}

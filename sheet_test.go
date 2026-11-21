@@ -82,3 +82,26 @@ color = "{color.ink}"
 		t.Error("existing allow.css listed as missing")
 	}
 }
+
+// A symlink inside the project that points outside it must not be inlined.
+func TestSheetRefusesSymlinkOut(t *testing.T) {
+	outside := filepath.Join(t.TempDir(), "secret.css")
+	if err := os.WriteFile(outside, []byte("/*SECRET-MARK*/"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	vocab := "[project]\nout = \"out.css\"\n\n[allow.css]\n\"link.css\" = \"x\"\n"
+	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outside, filepath.Join(dir, "link.css")); err != nil {
+		t.Skip(err)
+	}
+	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
+	if len(errs) > 0 {
+		t.Fatal(errs)
+	}
+	if strings.Contains(sheetHTML(v), "SECRET-MARK") {
+		t.Error("file outside the project inlined through a symlink")
+	}
+}
