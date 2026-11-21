@@ -47,7 +47,7 @@ func listText(v *Vocabulary) string {
 	}
 
 	b.WriteString("\n# atoms\n")
-	b.WriteString("S = a name in space, Z = a name in size\n")
+	b.WriteString("S = a name in space, Z = a name in size, B = a breakpoint name (no breakpoint prefix on this one)\n")
 	var statics []string
 	flush := func() {
 		if len(statics) > 0 {
@@ -65,6 +65,9 @@ func listText(v *Vocabulary) string {
 		switch {
 		case first.Value == "":
 			statics = append(statics, base)
+		case first.Below != "":
+			flush()
+			fmt.Fprintf(&b, "%s(B)\n", base)
 		case strings.HasPrefix(first.Decls[0][1], "var("):
 			flush()
 			fmt.Fprintf(&b, "%s(%s)\n", base, scaleLetter(listScale(v, first.Decls[0][1])))

@@ -12,6 +12,7 @@ type Atom struct {
 	Value  string
 	Class  string
 	Decls  [][2]string
+	Below  string // breakpoint value: the atom applies under it, only inside @media (width < Below)
 }
 
 type family struct {
@@ -21,6 +22,7 @@ type family struct {
 	group  string      // token group supplying values ("space", "size")
 	enum   [][2]string // fixed value -> css value
 	multi  []multiVal  // fixed value -> declarations
+	below  bool        // one atom per breakpoint: display none under its width
 }
 
 type multiVal struct {
@@ -93,8 +95,8 @@ var families = []family{
 	})},
 	{name: "span", multi: numbered(upTo(12), func(n string) [][2]string { return d("grid-column", "span "+n) })},
 	{name: "order", multi: []multiVal{{"first", d("order", "-1")}, {"last", d("order", "1")}}},
-	{name: "show", static: d("display", "revert")}, // show then hide: both last, so hide md:show works
-	{name: "hide", static: d("display", "none")},
+	{name: "hide", static: d("display", "none")}, // last atom of its block
+	{name: "hide-below", below: true},            // one per breakpoint; written after every breakpoint block
 }
 
 func isAtomName(n string) bool {
@@ -107,25 +109,29 @@ func isAtomName(n string) bool {
 }
 
 // atoms expands the families for the given token names (file order).
-func atoms(prefix string, tokens map[string][]string) []Atom {
+func atoms(prefix string, tokens map[string][]string, bps []Breakpoint) []Atom {
 	var out []Atom
 	for _, f := range families {
 		base := prefix + "-" + f.name
 		switch {
+		case f.below:
+			for _, bp := range bps {
+				out = append(out, Atom{f.name, bp.Name, base + "(" + bp.Name + ")", d("display", "none"), bp.Value})
+			}
 		case f.static != nil:
 			out = append(out, Atom{Family: f.name, Class: base, Decls: f.static})
 		case f.multi != nil:
 			for _, m := range f.multi {
-				out = append(out, Atom{f.name, m.val, base + "(" + m.val + ")", m.decls})
+				out = append(out, Atom{f.name, m.val, base + "(" + m.val + ")", m.decls, ""})
 			}
 		case f.enum != nil:
 			for _, e := range f.enum {
-				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1])})
+				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1]), ""})
 			}
 		default:
 			for _, n := range tokens[f.group] {
 				out = append(out, Atom{f.name, n, base + "(" + n + ")",
-					d(f.props[0], "var(--"+prefix+"-"+f.group+"-"+n+")")})
+					d(f.props[0], "var(--"+prefix+"-"+f.group+"-"+n+")"), ""})
 			}
 		}
 	}

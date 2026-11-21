@@ -150,11 +150,12 @@ Fixed grammar, the same in every project. `S` is every name in
 | `tg-cols(1…6\|12)` | `display: grid; grid-template-columns: repeat(N, minmax(0, 1fr))` |
 | `tg-span(1…12)` | `grid-column: span N` |
 | `tg-order(first\|last)` | `order: -1`, `order: 1` |
-| `tg-show` | `display: revert` |
 | `tg-hide` | `display: none` |
+| `tg-hide-below(B)` | `display: none` under breakpoint B (B = a breakpoint name) |
 
-Every atom also exists per breakpoint, mobile first: `md:tg-gap(md)` applies
-from `md` up; `tg-hide md:tg-show` hides below `md`. Layout the atoms do not
+Every atom except `tg-hide-below` also exists per breakpoint, mobile first:
+`md:tg-gap(md)` applies from `md` up; `tg-hide-below(md)` hides below `md`,
+and nothing has to be restored above it. Layout the atoms do not
 cover (an overlay, a fixed panel) is a role.
 
 An element takes a property from an atom or from a role, never both: atoms
@@ -162,8 +163,9 @@ are written after roles and win.
 
 The stylesheet is written in this order, so a later part wins over an
 earlier one: tokens, elements, keyframes, roles, atoms, then the atoms of
-each breakpoint in file order. `tg-show` and `tg-hide` are the last atoms of
-their block.
+each breakpoint in file order, then the `tg-hide-below` atoms, so they win
+over a `md:tg-row` on the same element. `tg-hide` is the last atom of its
+block.
 
 ### Roles
 

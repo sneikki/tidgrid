@@ -359,10 +359,6 @@ body {
   order: 1;
 }
 
-.tg-show {
-  display: revert;
-}
-
 .tg-hide {
   display: none;
 }
@@ -602,9 +598,6 @@ body {
   }
   .sm\:tg-order\(last\) {
     order: 1;
-  }
-  .sm\:tg-show {
-    display: revert;
   }
   .sm\:tg-hide {
     display: none;
@@ -847,10 +840,19 @@ body {
   .md\:tg-order\(last\) {
     order: 1;
   }
-  .md\:tg-show {
-    display: revert;
-  }
   .md\:tg-hide {
+    display: none;
+  }
+}
+
+@media (width < 40em) {
+  .tg-hide-below\(sm\) {
+    display: none;
+  }
+}
+
+@media (width < 64em) {
+  .tg-hide-below\(md\) {
     display: none;
   }
 }
