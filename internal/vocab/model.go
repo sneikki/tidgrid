@@ -27,16 +27,16 @@ type TokenGroup struct {
 // Allow is an [allow] entry: a name (class or css path) and the reason it is allowed.
 type Allow struct{ Name, Reason string }
 
-// Node is a declaration (Prop, Value, Raw) or a nested rule (Sub).
+// Node is a declaration (Prop, Value) or a nested rule (Sub).
 type Node struct {
-	Prop, Value, Raw string
-	Sub              *Rule
+	Prop, Value string
+	Sub         *Rule
 }
 
-// Rule is a block: Key is the rendered selector or at-rule prelude, Written the key as in the file.
+// Rule is a block: Key is the rendered selector or at-rule prelude.
 type Rule struct {
-	Key, Written string
-	Nodes        []Node
+	Key   string
+	Nodes []Node
 }
 
 // Role is one [role.<kind>.<name>] table; Use says when the role applies.
@@ -68,7 +68,6 @@ type Vocabulary struct {
 	AllowCSS    []Allow // file order, paths as written
 	Atoms       []Atom  // README table order, no breakpoint variants
 
-	classes []string
 	valid   map[string]bool
 	takes   map[string][]string
 	bpValue map[string]string
@@ -99,10 +98,7 @@ func (v *Vocabulary) RoleKinds() ([]string, map[string][]Role) {
 	return kinds, byKind
 }
 
-// addClass registers a valid class once, keeping first-seen order.
+// addClass registers a valid class.
 func (v *Vocabulary) addClass(c string) {
-	if !v.valid[c] {
-		v.valid[c] = true
-		v.classes = append(v.classes, c)
-	}
+	v.valid[c] = true
 }

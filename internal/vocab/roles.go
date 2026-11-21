@@ -37,6 +37,9 @@ func (l *loader) registerRoleClasses() {
 	}
 }
 
+// loadRoles appends each valid [role.<kind>.<name>] table to l.v.Roles, in file
+// order. Invalid entries are skipped here without a second report;
+// registerRoleClasses reports them.
 func (l *loader) loadRoles() {
 	for _, kind := range l.children("role") {
 		if l.table("role", kind) == nil || isAtomName(kind) {
@@ -61,6 +64,6 @@ func (l *loader) buildRole(p []string, t map[string]any, kind, name string) Role
 	} else {
 		r.Use = u
 	}
-	r.Rule = l.buildRule(p, t, "."+esc(class), class, true)
+	r.Rule = l.buildRule(p, t, "."+esc(class), true)
 	return r
 }

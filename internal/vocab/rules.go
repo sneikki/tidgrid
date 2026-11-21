@@ -7,13 +7,13 @@ import (
 
 // buildRule builds the rule for table t at path p; topLevel is true for the
 // direct table of a role or element, the only place `use` may appear.
-func (l *loader) buildRule(p []string, t map[string]any, key, written string, topLevel bool) *Rule {
-	r := &Rule{Key: key, Written: written}
+func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bool) *Rule {
+	r := &Rule{Key: key}
 	for _, k := range l.children(p...) {
 		kp := extend(p, k)
 		val := t[k]
 		if sub, ok := val.(map[string]any); ok {
-			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, l.nestedKey(kp, k), k, false)})
+			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, l.nestedKey(kp, k), false)})
 			continue
 		}
 		if k == "use" {
@@ -30,7 +30,7 @@ func (l *loader) buildRule(p []string, t map[string]any, key, written string, to
 		if pr := rawProblem(k, s); pr != "" {
 			l.errf(kp, "%s", pr)
 		}
-		r.Nodes = append(r.Nodes, Node{Prop: k, Raw: s, Value: l.resolve(kp, s)})
+		r.Nodes = append(r.Nodes, Node{Prop: k, Value: l.resolve(kp, s)})
 	}
 	return r
 }
