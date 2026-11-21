@@ -1,0 +1,533 @@
+[project]
+prefix = "tg"
+out    = "assets/css/tidgrid.css"
+scan   = ["."]
+
+[breakpoints]
+xs = "36em"
+sm = "48em"
+md = "64em"
+lg = "75em"
+xl = "90em"
+
+# ---------------------------------------------------------------- tokens
+
+[tokens.color]
+ink         = "#32495d"
+ink-soft    = "#4d708e"
+muted       = "#92adc4"
+paper       = "#ffffff"
+tint        = "#f7f7f7"
+drawer      = "#f8f8f8"
+drawer-edge = "#ececec"
+edge        = "#f0f0f0"
+sand        = "#f8f3ed"
+sand-ink    = "#c3a888"
+accent      = "#da526b"
+keyword     = "#fa8383"
+shade       = "#00000011"
+shade-deep  = "#00000021"
+code-ground = "#fafafa"
+code-edge   = "#f2f2f2"
+code-ink    = "#383a42"
+syn-comment = "#a0a1a7"
+syn-keyword = "#a626a4"
+syn-tag     = "#e45649"
+syn-literal = "#0184bb"
+syn-string  = "#50a14f"
+syn-attr    = "#986801"
+syn-title   = "#4078f2"
+syn-builtin = "#c18401"
+
+[tokens.space]
+none = "0"
+xs   = "0.5rem"
+sm   = "1rem"
+md   = "1.5rem"
+lg   = "2rem"
+xl   = "3rem"
+xxl  = "5rem"
+
+[tokens.size]
+full    = "100%"
+measure = "72rem"
+drawer  = "20rem"
+icon-sm = "2rem"
+icon-md = "3rem"
+cell    = "5rem"
+hero    = "60vh"
+screen  = "100vh"
+
+[tokens.font]
+sans  = "Lato, sans-serif"
+title = "Montserrat, Lato, sans-serif"
+mono  = "\"Source Code Pro\", monospace"
+
+[tokens.type]
+small     = "0.9rem"
+label     = "0.95rem"
+base      = "1rem"
+heading   = "1.1rem"
+crumb     = "1.15rem"
+lead      = "1.2rem"
+subtitle  = "1.5rem"
+h2        = "2rem"
+h1        = "2.5rem"
+display   = "3rem"
+hero      = "4rem"
+hero-wide = "5rem"
+
+[tokens.border]
+hair = "1px"
+
+[tokens.radius]
+sm = "0.25rem"
+md = "0.5rem"
+
+[tokens.shadow]
+card       = "0 0 1rem 0 {color.shade}"
+card-hover = "0 0 1rem 0 {color.shade-deep}"
+
+[tokens.motion]
+fast   = "200ms"
+medium = "300ms"
+
+# ---------------------------------------------------------------- elements
+
+[element."*"]
+box-sizing = "border-box"
+margin     = "0"
+padding    = "0"
+
+[element.body]
+min-height       = "{size.screen}"
+overflow-x       = "hidden"
+display          = "flex"
+flex-direction   = "column"
+font-family      = "{font.sans}"
+color            = "{color.ink}"
+background-size  = "{size.cell} {size.cell}"
+background-image = "linear-gradient(to right, {color.tint} {border.hair}, transparent {border.hair}), linear-gradient(to bottom, {color.tint} {border.hair}, transparent {border.hair})"
+
+[element.img]
+display = "block"
+
+[element.svg]
+display = "block"
+
+# ---------------------------------------------------------------- text
+
+[role.text.page-title]
+use         = "The one title of a page (h1 or the first line). Never twice on a page."
+font-family = "{font.title}"
+font-size   = "{type.h2}"
+font-weight = "700"
+color       = "{color.ink}"
+
+[role.text.page-title."@sm"]
+font-size = "{type.h1}"
+
+[role.text.page-title."@md"]
+font-size = "{type.display}"
+
+[role.text.section-title]
+use         = "Heading of a section inside a page. Lighter than the page title."
+font-family = "{font.title}"
+font-size   = "{type.h2}"
+font-weight = "400"
+color       = "{color.ink}"
+
+[role.text.lead]
+use         = "Opening sentence under a title that sums up the page. One per page, bold."
+font-size   = "{type.lead}"
+font-weight = "700"
+line-height = "2"
+color       = "{color.ink}"
+
+[role.text.body]
+use         = "Ordinary running text. The default for any paragraph."
+line-height = "1.75"
+color       = "{color.ink}"
+
+[role.text.tagline]
+use         = "The one big statement under the hero wordmark on the front page."
+font-family = "{font.title}"
+font-size   = "{type.subtitle}"
+font-weight = "400"
+text-align  = "center"
+color       = "{color.ink}"
+
+[role.text.tagline."@lg"]
+font-size  = "{type.h2}"
+text-align = "start"
+
+[role.text.label]
+use            = "Small uppercase caption: the header of a note, a footer heading."
+font-family    = "{font.title}"
+font-size      = "{type.label}"
+font-weight    = "600"
+text-transform = "uppercase"
+color          = "{color.ink}"
+
+[role.text.fine-print]
+use         = "Small muted text such as licence lines in the footer."
+font-size   = "{type.small}"
+line-height = "1.75"
+color       = "{color.muted}"
+
+[role.text.wordmark]
+use            = "The product name set in monospace, lowercase. Footer size; one per area."
+font-family    = "{font.mono}"
+font-size      = "{type.h2}"
+text-transform = "lowercase"
+color          = "{color.ink}"
+user-select    = "none"
+
+[role.text.wordmark-hero]
+use         = "The huge product name of the front page hero. Pair with text(wordmark-accent) for the accent part."
+font-family = "{font.mono}"
+font-size   = "{type.hero}"
+line-height = "1.2"
+color       = "{color.ink}"
+user-select = "none"
+
+[role.text.wordmark-hero."@sm"]
+font-size = "{type.hero-wide}"
+
+[role.text.wordmark-accent]
+use   = "Accent colour for a part of a wordmark (the .dev)."
+color = "{color.accent}"
+
+[role.text.version]
+use         = "A version number next to the wordmark."
+font-family = "{font.mono}"
+font-size   = "{type.base}"
+color       = "{color.muted}"
+
+[role.text.keyword]
+use           = "A short inline term, class name or command inside a sentence (shown as a chip)."
+display       = "inline-block"
+padding       = "0 {space.xs}"
+font-family   = "{font.mono}"
+color         = "{color.keyword}"
+background    = "{color.sand}"
+border-radius = "{radius.sm}"
+
+[role.text.error-code]
+use         = "The huge number on an error page."
+font-family = "{font.title}"
+font-size   = "{type.hero}"
+font-weight = "900"
+text-align  = "center"
+color       = "{color.ink}"
+
+[role.text.error-message]
+use         = "The sentence under an error code."
+font-size   = "{type.subtitle}"
+text-align  = "center"
+color       = "{color.ink}"
+
+[role.text.prose]
+use         = "Wrap rendered Markdown (a docs page body). Styles its p, h2, ul, ol, a and code so the Markdown source needs no classes."
+font-family = "{font.sans}"
+
+[role.text.prose."& > * + *"]
+margin-top = "{space.lg}"
+
+[role.text.prose."& p"]
+line-height = "1.75"
+
+[role.text.prose."& h2"]
+font-family = "{font.title}"
+font-size   = "{type.h2}"
+font-weight = "400"
+
+[role.text.prose."& ul"]
+margin-left = "{space.lg}"
+
+[role.text.prose."& ol"]
+margin-left = "{space.lg}"
+
+[role.text.prose."& li + li"]
+margin-top = "{space.sm}"
+
+[role.text.prose."& a"]
+font-weight     = "600"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.text.prose."& a:hover"]
+color = "{color.ink-soft}"
+
+[role.text.prose."& :not(pre) > code"]
+padding       = "0 {space.xs}"
+font-family   = "{font.mono}"
+color         = "{color.keyword}"
+background    = "{color.sand}"
+border-radius = "{radius.sm}"
+
+# ---------------------------------------------------------------- links and navigation
+
+[role.link.nav]
+use             = "A link in the main header navigation. Mark the page you are on with state(current)."
+font-family     = "{font.title}"
+font-size       = "{type.label}"
+font-weight     = "600"
+text-transform  = "uppercase"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.nav."&:hover"]
+color = "{color.ink-soft}"
+
+[role.link.nav."&.tg-state(current)"]
+color         = "{color.accent}"
+
+[role.link.footer]
+use             = "A plain link in the footer, for example a documentation page."
+font-family     = "{font.sans}"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.footer."&:hover"]
+color = "{color.ink-soft}"
+
+[role.link.footer-heading]
+use             = "A main link in the footer (Home, Get started, a section name) or a licence name; uppercase."
+font-family     = "{font.title}"
+font-size       = "{type.small}"
+font-weight     = "600"
+text-transform  = "uppercase"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.footer-heading."&:hover"]
+color = "{color.ink-soft}"
+
+[role.link.breadcrumb]
+use             = "One step of a breadcrumb trail, a link to a parent page. The last step is the page itself: add state(current). The arrow between steps is drawn by the role."
+font-size       = "{type.crumb}"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.breadcrumb."&:hover"]
+color = "{color.ink-soft}"
+
+[role.link.breadcrumb."&:not(:last-child)::after"]
+content = "\"›\""
+margin  = "0 {space.xs}"
+
+[role.link.breadcrumb."&.tg-state(current)"]
+font-weight = "900"
+
+[role.link.card]
+use             = "The link that makes a whole card clickable. Wraps a surface(card)."
+text-decoration = "none"
+color           = "{color.ink}"
+
+[role.state.current]
+use = "Set on the navigation or breadcrumb link of the page being shown."
+
+[role.state.open]
+use = "Set by a script on an element that is currently open, for example the header menu panel on small screens."
+
+[role.list.plain]
+use        = "A list without bullets or indent, for navigation links."
+list-style = "none"
+
+[role.icon.ink]
+use  = "Colours an inline svg icon with the text colour."
+fill = "{color.ink}"
+
+# ---------------------------------------------------------------- actions
+
+[role.action.primary]
+use             = "The one main button of a view: dark, filled. Put it first."
+display         = "block"
+padding         = "{space.sm}"
+border-radius   = "{radius.sm}"
+font-family     = "{font.title}"
+font-weight     = "700"
+text-align      = "center"
+text-decoration = "none"
+color           = "{color.paper}"
+background      = "{color.ink}"
+
+[role.action.secondary]
+use             = "A second button beside the primary one: quiet, sand coloured."
+display         = "block"
+padding         = "{space.sm}"
+border-radius   = "{radius.sm}"
+font-family     = "{font.title}"
+font-weight     = "700"
+text-align      = "center"
+text-decoration = "none"
+color           = "{color.ink}"
+background      = "{color.sand}"
+
+[role.action.icon]
+use         = "A bare button that holds only an icon (open or close the menu)."
+padding     = "0"
+appearance  = "none"
+border      = "none"
+outline     = "none"
+background  = "transparent"
+cursor      = "pointer"
+
+# ---------------------------------------------------------------- surfaces
+
+[role.surface.footer]
+use        = "The page footer band. Once per page."
+background = "{color.tint}"
+
+[role.surface.drawer]
+use        = "Look of the header menu panel: tinted slide-in panel on small screens, no look at all from sm up. Goes with layout(drawer)."
+background = "{color.drawer}"
+border-left = "{border.hair} solid {color.drawer-edge}"
+
+[role.surface.drawer."@sm"]
+background  = "transparent"
+border-left = "none"
+
+[role.surface.card]
+use           = "A clickable panel for one entry of a list of pages (title and a line of text). Put inside link(card)."
+padding       = "{space.md}"
+border        = "{border.hair} solid {color.edge}"
+border-radius = "{radius.md}"
+background    = "{color.paper}"
+box-shadow    = "{shadow.card}"
+transition    = "box-shadow {motion.medium}"
+
+[role.surface.card."&:hover"]
+box-shadow = "{shadow.card-hover}"
+
+[role.surface.note]
+use           = "A callout that sets a remark apart from the text: a heading line (text(note-title)) and a body. Use for notices such as 'under development'."
+border        = "{border.hair} solid {color.edge}"
+border-radius = "{radius.md}"
+background    = "{color.tint}"
+color         = "{color.ink}"
+
+[role.text.note-title]
+use           = "The heading line of a surface(note)."
+font-family   = "{font.title}"
+font-size     = "{type.label}"
+font-weight   = "600"
+text-transform = "uppercase"
+border-bottom = "{border.hair} solid {color.edge}"
+
+[role.surface.code]
+use           = "A panel for a code sample or shell command, on a pre. Colours highlight.js syntax inside it. One per sample."
+overflow      = "auto"
+padding       = "{space.md}"
+font-family   = "{font.mono}"
+line-height   = "1.75"
+color         = "{color.code-ink}"
+background    = "{color.code-ground}"
+border        = "{border.hair} solid {color.code-edge}"
+border-radius = "{radius.md}"
+
+[role.surface.code."& code"]
+font-family = "{font.mono}"
+color       = "inherit"
+background  = "transparent"
+padding     = "0"
+
+[role.surface.code."& .hljs-comment"]
+color      = "{color.syn-comment}"
+font-style = "italic"
+
+[role.surface.code."& .hljs-keyword"]
+color = "{color.syn-keyword}"
+
+[role.surface.code."& .hljs-name"]
+color = "{color.syn-tag}"
+
+[role.surface.code."& .hljs-selector-tag"]
+color = "{color.syn-tag}"
+
+[role.surface.code."& .hljs-literal"]
+color = "{color.syn-literal}"
+
+[role.surface.code."& .hljs-string"]
+color = "{color.syn-string}"
+
+[role.surface.code."& .hljs-attribute"]
+color = "{color.syn-string}"
+
+[role.surface.code."& .hljs-attr"]
+color = "{color.syn-attr}"
+
+[role.surface.code."& .hljs-number"]
+color = "{color.syn-attr}"
+
+[role.surface.code."& .hljs-title"]
+color = "{color.syn-title}"
+
+[role.surface.code."& .hljs-built_in"]
+color = "{color.syn-builtin}"
+
+[role.surface.demo]
+use           = "A coloured block that stands for an element in a layout demonstration. Accent colour, white bold centred label."
+padding       = "{space.lg}"
+font-family   = "{font.title}"
+font-weight   = "700"
+text-align    = "center"
+white-space   = "nowrap"
+color         = "{color.paper}"
+background    = "{color.accent}"
+border-radius = "{radius.md}"
+
+[role.surface.demo-alt]
+use           = "Second colour of a demo block, dark, to tell neighbours apart in a demonstration."
+padding       = "{space.lg}"
+font-family   = "{font.title}"
+font-weight   = "700"
+text-align    = "center"
+white-space   = "nowrap"
+color         = "{color.paper}"
+background    = "{color.ink}"
+border-radius = "{radius.md}"
+
+# ---------------------------------------------------------------- layout the atoms cannot express
+
+[role.layout.drawer]
+use       = "The header navigation container. On small screens a panel fixed to the right edge, hidden until a script sets state(open); from sm up an ordinary inline block. Goes with surface(drawer)."
+display   = "none"
+position  = "fixed"
+top       = "0"
+right     = "0"
+z-index   = "1"
+width     = "{size.full}"
+max-width = "{size.drawer}"
+height    = "{size.full}"
+
+[role.layout.drawer."&.tg-state(open)"]
+display = "block"
+
+[role.layout.drawer."@sm"]
+display   = "block"
+position  = "static"
+width     = "auto"
+max-width = "none"
+height    = "auto"
+
+[role.layout.corner]
+use      = "Pins an element to the top-right corner of the screen (a close button on the drawer)."
+position = "absolute"
+top      = "{space.lg}"
+right    = "{space.lg}"
+
+[role.layout.card-grid]
+use                   = "A grid of equal cards, one column on a phone, two from sm up. For a list of doc cards."
+display               = "grid"
+grid-template-columns = "1fr"
+gap                   = "{space.lg}"
+
+[role.layout.card-grid."@sm"]
+grid-template-columns = "1fr 1fr"

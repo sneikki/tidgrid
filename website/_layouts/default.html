@@ -21,11 +21,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>{{ page.title }} - {{ site.title }}</title>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/tidgrid.css">
   </head>
   <body>
     {% include header.html %}
-    <main class="page-content page-content__{{ page.title | downcase }}">
+    <main class="tg-grow tg-col {{ page.main_class }}">
       {{ content }}
     </main>
     {% include footer.html %}
