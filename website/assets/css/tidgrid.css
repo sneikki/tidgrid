@@ -227,6 +227,7 @@ svg {
     display: block;
     max-width: var(--tg-size-full);
     overflow-x: auto;
+    overflow-wrap: normal;
     border-collapse: collapse;
     font-size: var(--tg-type-small);
     line-height: 1.5;
