@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 //go:embed starter.toml
@@ -16,7 +18,7 @@ var starter []byte
 // existence check and the create one step.
 func runInit(args []string) int {
 	fset := flag.NewFlagSet("init", flag.ContinueOnError)
-	cfg := fset.String("c", defaultConfig, "vocabulary file to create")
+	cfg := fset.String("c", vocab.DefaultConfig, "vocabulary file to create")
 	if err := fset.Parse(args); err != nil {
 		return 2
 	}

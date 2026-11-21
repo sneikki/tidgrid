@@ -1,4 +1,4 @@
-package main
+package vocab
 
 import (
 	"strconv"
@@ -7,7 +7,7 @@ import (
 
 // Atom is one layout class (no breakpoint prefix): Family "gap", Value "sm",
 // Class "tg-gap(sm)".
-type Atom struct {
+type atom struct {
 	Family string
 	Value  string
 	Class  string
@@ -109,28 +109,28 @@ func isAtomName(n string) bool {
 }
 
 // atoms expands the families for the given token names (file order).
-func atoms(prefix string, tokens map[string][]string, bps []Breakpoint) []Atom {
-	var out []Atom
+func atoms(prefix string, tokens map[string][]string, bps []breakpoint) []atom {
+	var out []atom
 	for _, f := range families {
 		base := prefix + "-" + f.name
 		switch {
 		case f.below:
 			for _, bp := range bps {
-				out = append(out, Atom{f.name, bp.Name, base + "(" + bp.Name + ")", d("display", "none"), bp.Value})
+				out = append(out, atom{f.name, bp.Name, base + "(" + bp.Name + ")", d("display", "none"), bp.Value})
 			}
 		case f.static != nil:
-			out = append(out, Atom{Family: f.name, Class: base, Decls: f.static})
+			out = append(out, atom{Family: f.name, Class: base, Decls: f.static})
 		case f.multi != nil:
 			for _, m := range f.multi {
-				out = append(out, Atom{f.name, m.val, base + "(" + m.val + ")", m.decls, ""})
+				out = append(out, atom{f.name, m.val, base + "(" + m.val + ")", m.decls, ""})
 			}
 		case f.enum != nil:
 			for _, e := range f.enum {
-				out = append(out, Atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1]), ""})
+				out = append(out, atom{f.name, e[0], base + "(" + e[0] + ")", d(f.props[0], e[1]), ""})
 			}
 		default:
 			for _, n := range tokens[f.group] {
-				out = append(out, Atom{f.name, n, base + "(" + n + ")",
+				out = append(out, atom{f.name, n, base + "(" + n + ")",
 					d(f.props[0], "var(--"+prefix+"-"+f.group+"-"+n+")"), ""})
 			}
 		}

@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 func TestSheetExample(t *testing.T) {
@@ -13,7 +15,7 @@ func TestSheetExample(t *testing.T) {
 	if again := sheetHTML(v); again != out {
 		t.Fatal("sheetHTML is not deterministic")
 	}
-	if !strings.Contains(out, v.render()) {
+	if !strings.Contains(out, v.Render()) {
 		t.Error("rendered stylesheet not inlined")
 	}
 	states := 0
@@ -42,7 +44,7 @@ func TestSheetExample(t *testing.T) {
 
 func TestSheetEscapesUseAndInlinesFonts(t *testing.T) {
 	dir := t.TempDir()
-	vocab := `[project]
+	src := `[project]
 out = "out.css"
 
 [tokens.color]
@@ -55,13 +57,13 @@ color = "{color.ink}"
 [allow.css]
 "fonts.css" = "self-hosted"
 `
-	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(src), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(dir, "fonts.css"), []byte("/*FONT-MARK*/</STYLE><script>x</script>"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
+	v, errs := vocab.Load(filepath.Join(dir, "tidgrid.toml"))
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}
@@ -90,14 +92,14 @@ func TestSheetRefusesSymlinkOut(t *testing.T) {
 		t.Fatal(err)
 	}
 	dir := t.TempDir()
-	vocab := "[project]\nout = \"out.css\"\n\n[allow.css]\n\"link.css\" = \"x\"\n"
-	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
+	src := "[project]\nout = \"out.css\"\n\n[allow.css]\n\"link.css\" = \"x\"\n"
+	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(src), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.Symlink(outside, filepath.Join(dir, "link.css")); err != nil {
 		t.Skip(err)
 	}
-	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
+	v, errs := vocab.Load(filepath.Join(dir, "tidgrid.toml"))
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}

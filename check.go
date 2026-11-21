@@ -10,6 +10,8 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 var (
@@ -115,7 +117,7 @@ func codeSpans(ln string) (spans [][2]int) {
 }
 
 type fileScan struct {
-	v       *Vocabulary
+	v       *vocab.Vocabulary
 	src     string
 	nl      []int
 	seen    map[int]bool
@@ -542,7 +544,7 @@ func (f *fileScan) scan(helpers []string) {
 }
 
 func runCheck(args []string) int {
-	v, code := loadFlag("check", args)
+	v, code := vocab.LoadFlag("check", args)
 	if v == nil {
 		return code
 	}
@@ -567,7 +569,7 @@ func underScan(link string, roots []string) bool {
 	return false
 }
 
-func doCheck(v *Vocabulary, w io.Writer) int {
+func doCheck(v *vocab.Vocabulary, w io.Writer) int {
 	dir := filepath.Dir(v.Path)
 	rel := func(p string) string {
 		if r, err := filepath.Rel(dir, p); err == nil {
@@ -688,7 +690,7 @@ func doCheck(v *Vocabulary, w io.Writer) int {
 	out := v.Project.Out
 	if b, err := os.ReadFile(out); err != nil {
 		addV(rel(abs(out)), 1, "stylesheet missing; run `tidgrid build`")
-	} else if string(b) != v.render() {
+	} else if string(b) != v.Render() {
 		addV(rel(abs(out)), 1, "stylesheet differs from the vocabulary; run `tidgrid build`")
 	}
 

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 // listRules are the three lines of README "Working with an agent".
@@ -12,7 +14,7 @@ const listRules = "Style only with the classes `tidgrid list` prints. No <style>
 	"A new role is a change to tidgrid.toml in its own commit, never mixed into page work.\n"
 
 func runList(args []string) int {
-	v, code := loadFlag("list", args)
+	v, code := vocab.LoadFlag("list", args)
 	if v == nil {
 		return code
 	}
@@ -22,7 +24,7 @@ func runList(args []string) int {
 
 // listText is the agent-facing summary: plain text, class names and use texts,
 // no token values.
-func listText(v *Vocabulary) string {
+func listText(v *vocab.Vocabulary) string {
 	var b strings.Builder
 
 	b.WriteString("# breakpoints\n")
@@ -84,7 +86,7 @@ func listText(v *Vocabulary) string {
 	flush()
 
 	b.WriteString("\n# roles\n")
-	kinds, byKind := listRoleKinds(v)
+	kinds, byKind := v.RoleKinds()
 	for _, k := range kinds {
 		if k == "state" {
 			b.WriteString("## set by scripts\n")
@@ -110,7 +112,7 @@ func listText(v *Vocabulary) string {
 }
 
 // listScale names the token group a valued atom reads, from its var() declaration.
-func listScale(v *Vocabulary, decl string) string {
+func listScale(v *vocab.Vocabulary, decl string) string {
 	for _, g := range v.Tokens {
 		if strings.HasPrefix(decl, "var(--"+v.Project.Prefix+"-"+g.Name+"-") {
 			return g.Name
@@ -148,19 +150,6 @@ func rangeNums(vals []string) []string {
 		}
 	}
 	return out
-}
-
-// listRoleKinds returns the kinds in file order and the roles of each, in file order.
-func listRoleKinds(v *Vocabulary) ([]string, map[string][]Role) {
-	byKind := map[string][]Role{}
-	var kinds []string
-	for _, r := range v.Roles {
-		if _, ok := byKind[r.Kind]; !ok {
-			kinds = append(kinds, r.Kind)
-		}
-		byKind[r.Kind] = append(byKind[r.Kind], r)
-	}
-	return kinds, byKind
 }
 
 func oneLine(s string) string {

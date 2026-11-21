@@ -1,21 +1,11 @@
-// Shared API (other commands build on these; do not change signatures):
-//
-//	load(path) (*Vocabulary, []error)  parse + validate; errors name the table path and key
-//	Vocabulary.Project                 Prefix, Out, Scan (resolved against the vocabulary dir), Helpers
-//	Vocabulary.Breakpoints             []Breakpoint, file order
-//	Vocabulary.Tokens                  []TokenGroup{Name, Tokens []Token}, file order
-//	Vocabulary.Roles                   []Role{Kind, Name, Use, Class, Rule}, file order
-//	Vocabulary.Elements, Keyframes     file order; Rule/Node hold resolved CSS (Raw = as written)
-//	Vocabulary.AllowClass, AllowCSS    []Allow{Name, Reason}, file order (AllowCSS paths as written)
-//	Vocabulary.Atoms                   []Atom, README table order (no breakpoint variants)
-//	Vocabulary.Classes()               every valid class name, in output order
-//	Vocabulary.Valid(class)            is the class in the vocabulary
-//	Vocabulary.Takes(family)           allowed values of "tg-gap" / "md:tg-gap" / "tg-surface"
-//	Vocabulary.render()                the full stylesheet, byte-deterministic
-package main
+// Package vocab loads and validates the vocabulary file and renders its
+// stylesheet.
+package vocab
 
 import (
+	"flag"
 	"fmt"
+	"os"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -25,57 +15,58 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type Project struct {
+type project struct {
 	Prefix  string
 	Out     string
 	Scan    []string
 	Helpers []string
 }
 
-type Breakpoint struct{ Name, Value string }
-type Token struct{ Name, Value, CSS string } // Value as written, CSS with references resolved
-type TokenGroup struct {
+type breakpoint struct{ Name, Value string }
+type token struct{ Name, Value, CSS string } // Value as written, CSS with references resolved
+type tokenGroup struct {
 	Name   string
-	Tokens []Token
+	Tokens []token
 }
-type Allow struct{ Name, Reason string }
+type allow struct{ Name, Reason string }
 
-// Node is a declaration (Prop, Value, Raw) or a nested rule (Sub).
-type Node struct {
+// node is a declaration (Prop, Value, Raw) or a nested rule (Sub).
+type node struct {
 	Prop, Value, Raw string
 	Sub              *Rule
 }
 
-// Rule: Key is the rendered selector or at-rule prelude, Written the key as in the file.
+// Rule is a block: Key is the rendered selector or at-rule prelude, Written the key as in the file.
 type Rule struct {
 	Key, Written string
-	Nodes        []Node
+	Nodes        []node
 }
 
-type Role struct {
+type role struct {
 	Kind, Name, Use, Class string
 	Rule                   *Rule
 }
-type Element struct {
+type element struct {
 	Selector, Use string
 	Rule          *Rule
 }
-type Keyframe struct {
+type keyframe struct {
 	Name  string
 	Stops []*Rule
 }
 
+// Vocabulary is a loaded, validated vocabulary file.
 type Vocabulary struct {
-	Path        string
-	Project     Project
-	Breakpoints []Breakpoint
-	Tokens      []TokenGroup
-	Elements    []Element
-	Keyframes   []Keyframe
-	Roles       []Role
-	AllowClass  []Allow
-	AllowCSS    []Allow
-	Atoms       []Atom
+	Path        string       // file path as given to Load
+	Project     project      // Prefix, Out, Scan (resolved against the vocabulary dir), Helpers
+	Breakpoints []breakpoint // file order
+	Tokens      []tokenGroup // file order
+	elements    []element
+	keyframes   []keyframe
+	Roles       []role  // file order
+	AllowClass  []allow // file order
+	AllowCSS    []allow // file order, paths as written
+	Atoms       []atom  // README table order, no breakpoint variants
 
 	classes []string
 	valid   map[string]bool
@@ -83,7 +74,9 @@ type Vocabulary struct {
 	bpValue map[string]string
 }
 
-func (v *Vocabulary) Classes() []string   { return v.classes }
+func (v *Vocabulary) classNames() []string { return v.classes }
+
+// Valid reports whether c is a class in the vocabulary.
 func (v *Vocabulary) Valid(c string) bool { return v.valid[c] }
 
 // Takes returns the allowed values of a class family, e.g. "tg-gap" -> sm md.
@@ -93,6 +86,19 @@ func (v *Vocabulary) Takes(family string) ([]string, bool) {
 	}
 	t, ok := v.takes[family]
 	return t, ok
+}
+
+// RoleKinds returns the role kinds in file order and the roles of each, in file order.
+func (v *Vocabulary) RoleKinds() ([]string, map[string][]role) {
+	byKind := map[string][]role{}
+	var kinds []string
+	for _, r := range v.Roles {
+		if _, ok := byKind[r.Kind]; !ok {
+			kinds = append(kinds, r.Kind)
+		}
+		byKind[r.Kind] = append(byKind[r.Kind], r)
+	}
+	return kinds, byKind
 }
 
 type loader struct {
@@ -335,7 +341,7 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 		kp := append(append([]string{}, p...), k)
 		val := t[k]
 		if sub, ok := val.(map[string]any); ok {
-			r.Nodes = append(r.Nodes, Node{Sub: l.rule(kp, sub, l.subKey(kp, k), k, false)})
+			r.Nodes = append(r.Nodes, node{Sub: l.rule(kp, sub, l.subKey(kp, k), k, false)})
 			continue
 		}
 		if k == "use" {
@@ -352,7 +358,7 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 		if pr := rawProblem(k, s); pr != "" {
 			l.errf(kp, "%s", pr)
 		}
-		r.Nodes = append(r.Nodes, Node{Prop: k, Raw: s, Value: l.resolve(kp, s)})
+		r.Nodes = append(r.Nodes, node{Prop: k, Raw: s, Value: l.resolve(kp, s)})
 	}
 	return r
 }
@@ -390,7 +396,28 @@ func (l *loader) subKey(p []string, k string) string {
 	return l.selector(p, k)
 }
 
-func load(path string) (*Vocabulary, []error) {
+// DefaultConfig is the vocabulary file name used when -c is not given.
+const DefaultConfig = "tidgrid.toml"
+
+// LoadFlag parses -c and loads the vocabulary; on failure it prints the errors and returns exit code 2.
+func LoadFlag(name string, args []string) (*Vocabulary, int) {
+	fs := flag.NewFlagSet(name, flag.ContinueOnError)
+	cfg := fs.String("c", DefaultConfig, "vocabulary file")
+	if err := fs.Parse(args); err != nil {
+		return nil, 2
+	}
+	v, errs := Load(*cfg)
+	if len(errs) > 0 {
+		for _, e := range errs {
+			fmt.Fprintf(os.Stderr, "%s: %v\n", *cfg, e)
+		}
+		return nil, 2
+	}
+	return v, 0
+}
+
+// Load parses and validates the vocabulary file at path; errors name the table path and key.
+func Load(path string) (*Vocabulary, []error) {
 	l := &loader{raw: map[string]any{}, kids: map[string][]string{}, tok: map[string]bool{}, tokRaw: map[string]string{}, kf: map[string]bool{}, lits: map[string]*lit{}}
 	v := &Vocabulary{Path: path, valid: map[string]bool{}, takes: map[string][]string{}, bpValue: map[string]string{}}
 	l.v = v
@@ -417,7 +444,7 @@ func load(path string) (*Vocabulary, []error) {
 	}
 
 	// project
-	pr := Project{Prefix: "tg", Scan: []string{"."}, Helpers: []string{"cn", "clsx", "cva", "classNames", "twMerge"}}
+	pr := project{Prefix: "tg", Scan: []string{"."}, Helpers: []string{"cn", "clsx", "cva", "classNames", "twMerge"}}
 	dir := filepath.Dir(path)
 	pt := l.table("project")
 	if s, ok := pt["prefix"].(string); ok {
@@ -465,7 +492,7 @@ func load(path string) (*Vocabulary, []error) {
 			l.errf([]string{"breakpoints", k}, "value must be a string")
 			continue
 		}
-		v.Breakpoints = append(v.Breakpoints, Breakpoint{k, s})
+		v.Breakpoints = append(v.Breakpoints, breakpoint{k, s})
 		v.bpValue[k] = s
 	}
 
@@ -502,7 +529,7 @@ func load(path string) (*Vocabulary, []error) {
 		if gt == nil {
 			continue
 		}
-		tg := TokenGroup{Name: g}
+		tg := tokenGroup{Name: g}
 		for _, n := range l.children("tokens", g) {
 			p := []string{"tokens", g, n}
 			s, ok := scalar(gt[n])
@@ -513,7 +540,7 @@ func load(path string) (*Vocabulary, []error) {
 			for _, m := range refRe.FindAllStringSubmatch(s, -1) {
 				deps[g+"."+n] = append(deps[g+"."+n], m[1]+"."+m[2])
 			}
-			tg.Tokens = append(tg.Tokens, Token{n, s, l.resolve(p, s)})
+			tg.Tokens = append(tg.Tokens, token{n, s, l.resolve(p, s)})
 		}
 		v.Tokens = append(v.Tokens, tg)
 	}
@@ -587,10 +614,10 @@ func load(path string) (*Vocabulary, []error) {
 			l.errf(p, "must be a table")
 			continue
 		}
-		e := Element{Selector: sel}
+		e := element{Selector: sel}
 		e.Use, _ = t["use"].(string)
 		e.Rule = l.rule(p, t, sel, sel, true)
-		v.Elements = append(v.Elements, e)
+		v.elements = append(v.elements, e)
 	}
 	for _, name := range l.children("keyframes") {
 		p := []string{"keyframes", name}
@@ -599,7 +626,7 @@ func load(path string) (*Vocabulary, []error) {
 			l.errf(p, "must be a table of stops")
 			continue
 		}
-		kf := Keyframe{Name: name}
+		kf := keyframe{Name: name}
 		for _, stop := range l.children(p...) {
 			sp := append(append([]string{}, p...), stop)
 			st := l.table(sp...)
@@ -609,7 +636,7 @@ func load(path string) (*Vocabulary, []error) {
 			}
 			kf.Stops = append(kf.Stops, l.rule(sp, st, stop, stop, false))
 		}
-		v.Keyframes = append(v.Keyframes, kf)
+		v.keyframes = append(v.keyframes, kf)
 	}
 	for _, kind := range l.children("role") {
 		if l.table("role", kind) == nil || isAtomName(kind) {
@@ -622,7 +649,7 @@ func load(path string) (*Vocabulary, []error) {
 				continue
 			}
 			class := v.Project.Prefix + "-" + kind + "(" + name + ")"
-			r := Role{Kind: kind, Name: name, Class: class}
+			r := role{Kind: kind, Name: name, Class: class}
 			if u, ok := t["use"].(string); !ok || strings.TrimSpace(u) == "" {
 				l.errf(append(p, "use"), "required: when the role applies")
 			} else {
@@ -649,9 +676,9 @@ func load(path string) (*Vocabulary, []error) {
 				continue
 			}
 			if kind == "class" {
-				v.AllowClass = append(v.AllowClass, Allow{k, s})
+				v.AllowClass = append(v.AllowClass, allow{k, s})
 			} else {
-				v.AllowCSS = append(v.AllowCSS, Allow{k, s})
+				v.AllowCSS = append(v.AllowCSS, allow{k, s})
 			}
 		}
 	}

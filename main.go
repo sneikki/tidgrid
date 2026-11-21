@@ -6,8 +6,6 @@ import (
 	"os"
 )
 
-const defaultConfig = "tidgrid.toml"
-
 func main() { os.Exit(run(os.Args[1:])) }
 
 func run(args []string) int {

@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 // sheetLayout styles the sheet only. Every selector is a tgs- class, so the
@@ -47,7 +49,7 @@ func sheetCSS(css string) string {
 	return sheetStyleEnd.ReplaceAllString(css, `<\/style`)
 }
 
-func sheetHasPadding(r *Rule) bool {
+func sheetHasPadding(r *vocab.Rule) bool {
 	if r == nil {
 		return false
 	}
@@ -71,12 +73,12 @@ for (const box of document.querySelectorAll('input[data-state]')) {
 
 func runSheet(args []string) int {
 	fs := flag.NewFlagSet("sheet", flag.ContinueOnError)
-	cfg := fs.String("c", defaultConfig, "vocabulary file")
+	cfg := fs.String("c", vocab.DefaultConfig, "vocabulary file")
 	out := fs.String("o", "tidgrid-sheet.html", "output file")
 	if err := fs.Parse(args); err != nil {
 		return 2
 	}
-	v, errs := load(*cfg)
+	v, errs := vocab.Load(*cfg)
 	if len(errs) > 0 {
 		for _, e := range errs {
 			fmt.Fprintf(os.Stderr, "%s: %v\n", *cfg, e)
@@ -94,13 +96,13 @@ func runSheet(args []string) int {
 // sheetHTML is one self-contained page. The project's stylesheet and the
 // allow.css files that exist are inlined, so the project's own rules style
 // the samples. Output depends only on the vocabulary.
-func sheetHTML(v *Vocabulary) string {
+func sheetHTML(v *vocab.Vocabulary) string {
 	var b strings.Builder
 	b.WriteString("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n")
 	b.WriteString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
 	b.WriteString("<title>tidgrid sheet</title>\n")
 	b.WriteString("<style>" + sheetLayout + "</style>\n")
-	b.WriteString("<style>\n" + sheetCSS(v.render()) + "</style>\n")
+	b.WriteString("<style>\n" + sheetCSS(v.Render()) + "</style>\n")
 	found := sheetFonts(v, &b)
 	b.WriteString("</head>\n")
 
@@ -122,7 +124,7 @@ func sheetHTML(v *Vocabulary) string {
 
 // sheetFonts inlines each allow.css file that exists, in file order, and
 // reports which ones were found. Paths are relative to the vocabulary.
-func sheetFonts(v *Vocabulary, b *strings.Builder) map[string]bool {
+func sheetFonts(v *vocab.Vocabulary, b *strings.Builder) map[string]bool {
 	found := map[string]bool{}
 	// os.Root refuses a path or symlink that leaves the vocabulary's
 	// directory: the sheet must not carry a file from elsewhere on the disk.
@@ -147,7 +149,7 @@ func sheetFonts(v *Vocabulary, b *strings.Builder) map[string]bool {
 	return found
 }
 
-func sheetTokens(v *Vocabulary, b *strings.Builder) {
+func sheetTokens(v *vocab.Vocabulary, b *strings.Builder) {
 	pre := v.Project.Prefix
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">tokens</h2>\n")
 	for _, g := range v.Tokens {
@@ -169,9 +171,9 @@ func sheetTokens(v *Vocabulary, b *strings.Builder) {
 	b.WriteString("</section>\n")
 }
 
-func sheetRoles(v *Vocabulary, b *strings.Builder) {
+func sheetRoles(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">roles</h2>\n")
-	kinds, byKind := listRoleKinds(v)
+	kinds, byKind := v.RoleKinds()
 	for _, k := range kinds {
 		if k == "state" {
 			b.WriteString("<h3 class=\"tgs-sub\">set by scripts</h3>\n")
@@ -202,7 +204,7 @@ func sheetRoles(v *Vocabulary, b *strings.Builder) {
 	b.WriteString("</section>\n")
 }
 
-func sheetAtoms(v *Vocabulary, b *strings.Builder) {
+func sheetAtoms(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">atoms</h2>\n")
 	if len(v.Breakpoints) > 0 {
 		fmt.Fprintf(b, "<p class=\"tgs-desc\">Every atom also takes a breakpoint prefix, mobile first: %s:%s-row applies from %s up.</p>\n",
@@ -229,7 +231,7 @@ func sheetAtoms(v *Vocabulary, b *strings.Builder) {
 	b.WriteString("</dl>\n</section>\n")
 }
 
-func sheetAllow(v *Vocabulary, found map[string]bool, b *strings.Builder) {
+func sheetAllow(v *vocab.Vocabulary, found map[string]bool, b *strings.Builder) {
 	b.WriteString("<section>\n<h2 class=\"tgs-h\">allow</h2>\n<h3 class=\"tgs-sub\">class</h3>\n<dl class=\"tgs-dl\">\n")
 	for _, a := range v.AllowClass {
 		fmt.Fprintf(b, "<dt><code>%s</code></dt><dd>%s</dd>\n", html.EscapeString(a.Name), html.EscapeString(a.Reason))

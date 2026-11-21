@@ -3,11 +3,13 @@ package main
 import (
 	"strings"
 	"testing"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
-func loadExampleVocab(t *testing.T) *Vocabulary {
+func loadExampleVocab(t *testing.T) *vocab.Vocabulary {
 	t.Helper()
-	v, errs := load("testdata/example.toml")
+	v, errs := vocab.Load("internal/vocab/testdata/example.toml")
 	if len(errs) > 0 {
 		t.Fatal(errs)
 	}

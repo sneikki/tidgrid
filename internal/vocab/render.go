@@ -1,4 +1,4 @@
-package main
+package vocab
 
 import "strings"
 
@@ -15,35 +15,35 @@ func (r *Rule) write(b *strings.Builder, depth int) {
 	b.WriteString(ind + "}\n")
 }
 
-func atomRule(key string, a Atom) *Rule {
+func atomRule(key string, a atom) *Rule {
 	r := &Rule{Key: key}
 	for _, kv := range a.Decls {
-		r.Nodes = append(r.Nodes, Node{Prop: kv[0], Value: kv[1]})
+		r.Nodes = append(r.Nodes, node{Prop: kv[0], Value: kv[1]})
 	}
 	return r
 }
 
-// render writes the stylesheet: tokens, elements, keyframes, roles, atoms,
+// Render writes the stylesheet: tokens, elements, keyframes, roles, atoms,
 // then the atoms of each breakpoint in file order.
-func (v *Vocabulary) render() string {
+func (v *Vocabulary) Render() string {
 	var blocks []*Rule
 	pre := v.Project.Prefix
 	root := &Rule{Key: ":root"}
 	for _, g := range v.Tokens {
 		for _, t := range g.Tokens {
-			root.Nodes = append(root.Nodes, Node{Prop: "--" + pre + "-" + g.Name + "-" + t.Name, Value: t.CSS})
+			root.Nodes = append(root.Nodes, node{Prop: "--" + pre + "-" + g.Name + "-" + t.Name, Value: t.CSS})
 		}
 	}
 	if len(root.Nodes) > 0 {
 		blocks = append(blocks, root)
 	}
-	for _, e := range v.Elements {
+	for _, e := range v.elements {
 		blocks = append(blocks, e.Rule)
 	}
-	for _, k := range v.Keyframes {
+	for _, k := range v.keyframes {
 		r := &Rule{Key: "@keyframes " + pre + "-" + k.Name}
 		for _, s := range k.Stops {
-			r.Nodes = append(r.Nodes, Node{Sub: s})
+			r.Nodes = append(r.Nodes, node{Sub: s})
 		}
 		blocks = append(blocks, r)
 	}
@@ -59,14 +59,14 @@ func (v *Vocabulary) render() string {
 		m := &Rule{Key: "@media (min-width: " + bp.Value + ")"}
 		for _, a := range v.Atoms {
 			if a.Below == "" {
-				m.Nodes = append(m.Nodes, Node{Sub: atomRule("."+esc(bp.Name+":"+a.Class), a)})
+				m.Nodes = append(m.Nodes, node{Sub: atomRule("."+esc(bp.Name+":"+a.Class), a)})
 			}
 		}
 		blocks = append(blocks, m)
 	}
 	for _, a := range v.Atoms { // after every breakpoint block, so they beat md:tg-row
 		if a.Below != "" {
-			blocks = append(blocks, &Rule{Key: "@media (width < " + a.Below + ")", Nodes: []Node{{Sub: atomRule("."+esc(a.Class), a)}}})
+			blocks = append(blocks, &Rule{Key: "@media (width < " + a.Below + ")", Nodes: []node{{Sub: atomRule("."+esc(a.Class), a)}}})
 		}
 	}
 	var b strings.Builder
