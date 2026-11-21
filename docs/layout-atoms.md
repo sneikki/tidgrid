@@ -5,57 +5,54 @@ title: Layout atoms
 
 Atoms are the classes for layout. Their grammar is fixed and the same in every project, so an agent that knows one Tidgrid project knows the atoms of all of them. Rows, gaps, padding and widths are free to combine, and always run on the project's token scales.
 
-In the lists below, `S` is every name in `tokens.space` and `Z` is every name in `tokens.size`. Each line is a class, then the CSS it sets.
+In the tables below, `S` is every name in `tokens.space` and `Z` is every name in `tokens.size`. Each row is a class and the CSS it sets.
 
-## Flex
+## The atoms
 
-{% capture c %}
-tg-row                                              display: flex; flex-direction: row
-tg-col                                              display: flex; flex-direction: column
-tg-wrap                                             flex-wrap: wrap
-tg-grow                                             flex: 1 1 0; min-width: 0
-tg-fixed                                            flex: none
-tg-center                                           margin-inline: auto
-tg-align(start|center|end|baseline|stretch)         align-items
-tg-justify(start|center|end|between|around|evenly)  justify-content
-tg-self(start|center|end|stretch)                   align-self
-tg-text-align(start|center|end)                     text-align
-{% endcapture %}
-{% include code.html code=c %}
+### Flex
 
-## Space
+| Class | CSS |
+|---|---|
+| `tg-row` | `display: flex; flex-direction: row` |
+| `tg-col` | `display: flex; flex-direction: column` |
+| `tg-wrap` | `flex-wrap: wrap` |
+| `tg-grow` | `flex: 1 1 0; min-width: 0` |
+| `tg-fixed` | `flex: none` |
+| `tg-center` | `margin-inline: auto` |
+| `tg-align(start|center|end|baseline|stretch)` | `align-items` |
+| `tg-justify(start|center|end|between|around|evenly)` | `justify-content` |
+| `tg-self(start|center|end|stretch)` | `align-self` |
+| `tg-text-align(start|center|end)` | `text-align` |
 
-{% capture c %}
-tg-gap(S)  tg-x-gap(S)  tg-y-gap(S)                 gap, column-gap, row-gap
-tg-pad(S)  tg-pad-x(S)  tg-pad-y(S)                 padding, padding-inline, padding-block
-tg-pad-t(S)  tg-pad-r(S)  tg-pad-b(S)  tg-pad-l(S)  padding-top ... padding-left
-{% endcapture %}
-{% include code.html code=c %}
+### Space
 
-## Size
+| Class | CSS |
+|---|---|
+| `tg-gap(S)` `tg-x-gap(S)` `tg-y-gap(S)` | `gap`, `column-gap`, `row-gap` |
+| `tg-pad(S)` `tg-pad-x(S)` `tg-pad-y(S)` | `padding`, `padding-inline`, `padding-block` |
+| `tg-pad-t(S)` `tg-pad-r(S)` `tg-pad-b(S)` `tg-pad-l(S)` | `padding-top` … `padding-left` |
 
-{% capture c %}
-tg-width(Z)   tg-min-width(Z)   tg-max-width(Z)     width, min-width, max-width
-tg-height(Z)  tg-min-height(Z)                      height, min-height
-{% endcapture %}
-{% include code.html code=c %}
+### Size
 
-## Grid and order
+| Class | CSS |
+|---|---|
+| `tg-width(Z)` `tg-min-width(Z)` `tg-max-width(Z)` | `width`, `min-width`, `max-width` |
+| `tg-height(Z)` `tg-min-height(Z)` | `height`, `min-height` |
 
-{% capture c %}
-tg-cols(1...6|12)       display: grid; grid-template-columns: repeat(N, minmax(0, 1fr))
-tg-span(1...12)         grid-column: span N
-tg-order(first|last)    order: -1, order: 1
-{% endcapture %}
-{% include code.html code=c %}
+### Grid and order
 
-## Display
+| Class | CSS |
+|---|---|
+| `tg-cols(1…6|12)` | `display: grid; grid-template-columns: repeat(N, minmax(0, 1fr))` |
+| `tg-span(1…12)` | `grid-column: span N` |
+| `tg-order(first|last)` | `order: -1`, `order: 1` |
 
-{% capture c %}
-tg-hide             display: none
-tg-hide-below(B)    display: none below breakpoint B
-{% endcapture %}
-{% include code.html code=c %}
+### Display
+
+| Class | CSS |
+|---|---|
+| `tg-hide` | `display: none` |
+| `tg-hide-below(B)` | `display: none` under breakpoint B |
 
 `B` is a breakpoint name. `tg-hide-below(B)` takes no breakpoint prefix.
 

@@ -77,7 +77,26 @@ color = "{color.accent}"
 {% endcapture %}
 {% include code.html code=page %}
 <!-- tidgrid-ignore-end -->
-        <p class="tg-text(body)">Layout comes from atoms (<span class="tg-text(keyword)">tg-col</span>, <span class="tg-text(keyword)">tg-gap(md)</span>) that take their values from the space tokens. Colour and border come only from the roles. <span class="tg-text(keyword)">tidgrid check</span> passes on this page. It would fail on <span class="tg-text(keyword)">tg-gap(2)</span>, on an inline colour and on a <span class="tg-text(keyword)">&lt;style&gt;</span> block.</p>
+        <p class="tg-text(body)">Layout comes from atoms (<span class="tg-text(keyword)">tg-col</span>, <span class="tg-text(keyword)">tg-gap(md)</span>) that take their values from the space tokens. Colour and border come only from the roles. <span class="tg-text(keyword)">tidgrid check</span> passes on this page.</p>
+        <p class="tg-text(label)">tidgrid list, what the agent reads</p>
+<!-- tidgrid-ignore-start -->
+{% capture listing %}
+tg-surface(card)  A lifted panel.
+tg-text(title)    The one title of a page.
+tg-gap(sm|md)     gap on the space tokens
+{% endcapture %}
+{% include code.html code=listing %}
+<!-- tidgrid-ignore-end -->
+        <p class="tg-text(label)">tidgrid check, after a slip</p>
+<!-- tidgrid-ignore-start -->
+{% capture slip %}
+index.html:3: unknown class tg-gap(2)
+index.html:4: style attribute sets a colour
+index.html:9: own CSS in a style block
+{% endcapture %}
+{% include code.html code=slip %}
+<!-- tidgrid-ignore-end -->
+        <p class="tg-text(body)">An unknown atom value, an inline colour and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1.</p>
       </div>
     </div>
   </div>
@@ -91,13 +110,13 @@ color = "{color.accent}"
       <div class="tg-grow tg-col tg-y-gap(sm)">
         <p class="tg-text(label)">Layout is atoms</p>
         <p class="tg-text(body)">Rows, gaps, padding and widths are free to combine. They always run on the project's token scales, so a gap is <span class="tg-text(keyword)">tg-gap(md)</span> and never an arbitrary number.</p>
-        <a class="tg-link(footer-heading)" href="{{ site.baseurl }}/docs/layout-atoms">Layout atoms</a>
+        <a class="tg-link(text) tg-self(start)" href="{{ site.baseurl }}/docs/layout-atoms">Layout atoms</a>
       </div>
 
       <div class="tg-grow tg-col tg-y-gap(sm)">
         <p class="tg-text(label)">Appearance is roles</p>
         <p class="tg-text(body)">Colour, border, shadow and type are reachable only through named roles such as <span class="tg-text(keyword)">tg-surface(card)</span>. What a role looks like is decided once, in the vocabulary file. There is no border atom and no colour atom.</p>
-        <a class="tg-link(footer-heading)" href="{{ site.baseurl }}/docs/roles">Roles</a>
+        <a class="tg-link(text) tg-self(start)" href="{{ site.baseurl }}/docs/roles">Roles</a>
       </div>
     </div>
   </div>
@@ -117,7 +136,7 @@ color = "{color.accent}"
 
 </div>
     <p class="tg-text(body)">A message names the fix where there is one, for example <span class="tg-text(keyword)">src/pages/index.astro:14: unknown class tg-gap(2); tg-gap takes: sm md</span>.</p>
-    <a class="tg-link(footer-heading)" href="{{ site.baseurl }}/docs/checker">How the checker works</a>
+    <a class="tg-link(text) tg-self(start)" href="{{ site.baseurl }}/docs/checker">How the checker works</a>
   </div>
 </section>
 

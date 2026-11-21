@@ -7,12 +7,14 @@ title: The checker and how classes are found
 
 ## What it reports
 
-- A class that is not in the vocabulary or under `allow.class`, such as `border-l-4` or `card-accent`.
-- A class name built from pieces, such as `is-${state}`.
-- Appearance in a `style` attribute. Geometry is allowed.
-- Own CSS: a style block, or a stylesheet that is not under `allow.css`, such as `Card.module.css`.
-- The stylesheet at `project.out` differs from what `build` would write. The vocabulary was edited and not rebuilt.
-- An ignore region (see below) that is never closed. The rest of the file would go unchecked.
+| Violation | Example |
+|---|---|
+| A class that is not in the vocabulary or under `allow.class` | `border-l-4`, `card-accent` |
+| A class name built from pieces | `is-${state}` |
+| Appearance in a `style` attribute (geometry is allowed) | `style="color: red"` |
+| Own CSS: a style block, or a stylesheet not under `allow.css` | `Card.module.css` |
+| The stylesheet at `project.out` differs from what `build` would write | vocabulary edited, not rebuilt |
+| An ignore region (see below) that is never closed | the rest of the file would go unchecked |
 
 A message names the fix where there is one:
 
@@ -27,13 +29,11 @@ After the violations come three lists: per file, the roles it uses; the roles no
 
 The checker is a scanner, not a parser, so it works the same in HTML, Astro, JSX, Vue and Svelte. It reads:
 
-<!-- tidgrid-ignore-start -->
 - `class="…"` and `className="…"` attributes, in any letter case.
 - Every string literal inside `class={…}`, `className={…}`, `class:list={…}` and `:class="…"`.
 - Every string literal on the right of a `className = …` assignment in script.
 - Every string literal passed to `cn`, `clsx`, `cva`, `classNames` or `twMerge`, and to `classList.add`, `remove`, `toggle` and `contains`. The helper names are configurable with `project.helpers`.
 - The name in a `class:name` directive (Svelte). `style:prop` counts as a style attribute.
-<!-- tidgrid-ignore-end -->
 
 A string literal that is only compared, such as `kind === "primary"`, is not a class and is not read.
 

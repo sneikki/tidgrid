@@ -7,16 +7,20 @@ Outside `[tokens]` and `[breakpoints]`, a value in the vocabulary file may not c
 
 ## Not allowed
 
-- A raw colour: `#hex`, `rgb()`, `hsl()`, `oklch()` and the like, or a CSS colour name such as `red`.
-- A raw length: a number with any CSS length unit, such as `px`, `rem`, `vw`, `dvh` or `cqw`.
-- A raw time: a number with `ms` or `s`.
+| Not allowed | Examples |
+|---|---|
+| A raw colour | `#hex`, `rgb()`, `hsl()`, `oklch()` and the like, or a CSS colour name such as `red` |
+| A raw length | a number with any CSS length unit: `px`, `rem`, `vw`, `dvh`, `cqw` |
+| A raw time | a number with `ms` or `s` |
 
 ## Allowed
 
-- Keywords, `transparent` and `currentColor`.
-- `0` and unitless numbers.
-- Percentages, `fr` and angles.
-- Functions over tokens.
+| Allowed | Examples |
+|---|---|
+| Keywords | `transparent`, `currentColor` |
+| Zero and unitless numbers | `0`, `1.75` |
+| Percentages, `fr` and angles | `50%`, `1fr`, `45deg` |
+| Functions over tokens | shown below |
 
 {% capture c %}
 padding    = "calc({space.md} * 2)"

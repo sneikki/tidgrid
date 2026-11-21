@@ -12,11 +12,13 @@ go install github.com/sneikki/tidgrid@latest
 
 ## The five commands
 
-- `tidgrid init` writes a starter `tidgrid.toml`. It refuses to overwrite one.
-- `tidgrid build` validates the vocabulary and writes the stylesheet to `project.out`.
-- `tidgrid check` scans the sources. It prints `path:line: message` per violation, then the usage summary. See [the checker](/docs/checker).
-- `tidgrid list` prints the vocabulary as compact text. It is what an agent reads before UI work.
-- `tidgrid sheet` writes one HTML page that renders every token and role. It is what a person reads to see the look.
+| Command | Does |
+|---|---|
+| `tidgrid init` | Writes a starter `tidgrid.toml`. Refuses to overwrite one. |
+| `tidgrid build` | Validates the vocabulary and writes the stylesheet to `project.out`. |
+| `tidgrid check` | Scans the sources. Prints `path:line: message` per violation, then the usage summary. See [the checker](/docs/checker). |
+| `tidgrid list` | Prints the vocabulary as compact text: what an agent reads before UI work. |
+| `tidgrid sheet` | Writes one HTML page that renders every token and role: what a person reads to see the look. |
 
 ## Flags
 
@@ -26,9 +28,11 @@ All commands take `-c <file>`, the vocabulary file. The default is `./tidgrid.to
 
 ## Exit codes
 
-- 0: fine.
-- 1: violations.
-- 2: the vocabulary file itself is invalid or missing.
+| Code | Means |
+|---|---|
+| 0 | Fine. |
+| 1 | Violations. |
+| 2 | The vocabulary file itself is invalid or missing. |
 
 ## In a project
 
