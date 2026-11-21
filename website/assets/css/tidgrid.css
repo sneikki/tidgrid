@@ -37,6 +37,7 @@
   --tg-size-full: 100%;
   --tg-size-measure: 72rem;
   --tg-size-drawer: 20rem;
+  --tg-size-specimen: 19rem;
   --tg-size-icon-sm: 2rem;
   --tg-size-icon-md: 3rem;
   --tg-size-cell: 5rem;
@@ -147,6 +148,12 @@ svg {
   font-weight: 600;
   text-transform: uppercase;
   color: var(--tg-color-ink);
+}
+
+.tg-text\(entry-title\) {
+  font-family: var(--tg-font-title);
+  font-size: var(--tg-type-lead);
+  font-weight: 600;
 }
 
 .tg-text\(fine-print\) {
@@ -318,6 +325,17 @@ svg {
   transition: color var(--tg-motion-fast);
   &:hover {
     color: var(--tg-color-ink-soft);
+  }
+}
+
+.tg-link\(entry\) {
+  display: block;
+  border-top: var(--tg-border-hair) solid var(--tg-color-drawer-edge);
+  text-decoration: none;
+  color: var(--tg-color-ink);
+  transition: color var(--tg-motion-fast);
+  &:is(:hover, :focus-visible) {
+    color: var(--tg-color-accent);
   }
 }
 
@@ -565,15 +583,6 @@ svg {
       grid-area: 2 / 2;
       align-self: end;
     }
-  }
-}
-
-.tg-layout\(card-grid\) {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--tg-space-lg);
-  @media (min-width: 48em) {
-    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -968,6 +977,10 @@ svg {
   width: var(--tg-size-drawer);
 }
 
+.tg-width\(specimen\) {
+  width: var(--tg-size-specimen);
+}
+
 .tg-width\(icon-sm\) {
   width: var(--tg-size-icon-sm);
 }
@@ -998,6 +1011,10 @@ svg {
 
 .tg-min-width\(drawer\) {
   min-width: var(--tg-size-drawer);
+}
+
+.tg-min-width\(specimen\) {
+  min-width: var(--tg-size-specimen);
 }
 
 .tg-min-width\(icon-sm\) {
@@ -1032,6 +1049,10 @@ svg {
   max-width: var(--tg-size-drawer);
 }
 
+.tg-max-width\(specimen\) {
+  max-width: var(--tg-size-specimen);
+}
+
 .tg-max-width\(icon-sm\) {
   max-width: var(--tg-size-icon-sm);
 }
@@ -1064,6 +1085,10 @@ svg {
   height: var(--tg-size-drawer);
 }
 
+.tg-height\(specimen\) {
+  height: var(--tg-size-specimen);
+}
+
 .tg-height\(icon-sm\) {
   height: var(--tg-size-icon-sm);
 }
@@ -1094,6 +1119,10 @@ svg {
 
 .tg-min-height\(drawer\) {
   min-height: var(--tg-size-drawer);
+}
+
+.tg-min-height\(specimen\) {
+  min-height: var(--tg-size-specimen);
 }
 
 .tg-min-height\(icon-sm\) {
@@ -1506,6 +1535,9 @@ svg {
   .xs\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
+  .xs\:tg-width\(specimen\) {
+    width: var(--tg-size-specimen);
+  }
   .xs\:tg-width\(icon-sm\) {
     width: var(--tg-size-icon-sm);
   }
@@ -1529,6 +1561,9 @@ svg {
   }
   .xs\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
+  }
+  .xs\:tg-min-width\(specimen\) {
+    min-width: var(--tg-size-specimen);
   }
   .xs\:tg-min-width\(icon-sm\) {
     min-width: var(--tg-size-icon-sm);
@@ -1554,6 +1589,9 @@ svg {
   .xs\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
+  .xs\:tg-max-width\(specimen\) {
+    max-width: var(--tg-size-specimen);
+  }
   .xs\:tg-max-width\(icon-sm\) {
     max-width: var(--tg-size-icon-sm);
   }
@@ -1578,6 +1616,9 @@ svg {
   .xs\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
+  .xs\:tg-height\(specimen\) {
+    height: var(--tg-size-specimen);
+  }
   .xs\:tg-height\(icon-sm\) {
     height: var(--tg-size-icon-sm);
   }
@@ -1601,6 +1642,9 @@ svg {
   }
   .xs\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
+  }
+  .xs\:tg-min-height\(specimen\) {
+    min-height: var(--tg-size-specimen);
   }
   .xs\:tg-min-height\(icon-sm\) {
     min-height: var(--tg-size-icon-sm);
@@ -1987,6 +2031,9 @@ svg {
   .sm\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
+  .sm\:tg-width\(specimen\) {
+    width: var(--tg-size-specimen);
+  }
   .sm\:tg-width\(icon-sm\) {
     width: var(--tg-size-icon-sm);
   }
@@ -2010,6 +2057,9 @@ svg {
   }
   .sm\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
+  }
+  .sm\:tg-min-width\(specimen\) {
+    min-width: var(--tg-size-specimen);
   }
   .sm\:tg-min-width\(icon-sm\) {
     min-width: var(--tg-size-icon-sm);
@@ -2035,6 +2085,9 @@ svg {
   .sm\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
+  .sm\:tg-max-width\(specimen\) {
+    max-width: var(--tg-size-specimen);
+  }
   .sm\:tg-max-width\(icon-sm\) {
     max-width: var(--tg-size-icon-sm);
   }
@@ -2059,6 +2112,9 @@ svg {
   .sm\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
+  .sm\:tg-height\(specimen\) {
+    height: var(--tg-size-specimen);
+  }
   .sm\:tg-height\(icon-sm\) {
     height: var(--tg-size-icon-sm);
   }
@@ -2082,6 +2138,9 @@ svg {
   }
   .sm\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
+  }
+  .sm\:tg-min-height\(specimen\) {
+    min-height: var(--tg-size-specimen);
   }
   .sm\:tg-min-height\(icon-sm\) {
     min-height: var(--tg-size-icon-sm);
@@ -2468,6 +2527,9 @@ svg {
   .md\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
+  .md\:tg-width\(specimen\) {
+    width: var(--tg-size-specimen);
+  }
   .md\:tg-width\(icon-sm\) {
     width: var(--tg-size-icon-sm);
   }
@@ -2491,6 +2553,9 @@ svg {
   }
   .md\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
+  }
+  .md\:tg-min-width\(specimen\) {
+    min-width: var(--tg-size-specimen);
   }
   .md\:tg-min-width\(icon-sm\) {
     min-width: var(--tg-size-icon-sm);
@@ -2516,6 +2581,9 @@ svg {
   .md\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
+  .md\:tg-max-width\(specimen\) {
+    max-width: var(--tg-size-specimen);
+  }
   .md\:tg-max-width\(icon-sm\) {
     max-width: var(--tg-size-icon-sm);
   }
@@ -2540,6 +2608,9 @@ svg {
   .md\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
+  .md\:tg-height\(specimen\) {
+    height: var(--tg-size-specimen);
+  }
   .md\:tg-height\(icon-sm\) {
     height: var(--tg-size-icon-sm);
   }
@@ -2563,6 +2634,9 @@ svg {
   }
   .md\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
+  }
+  .md\:tg-min-height\(specimen\) {
+    min-height: var(--tg-size-specimen);
   }
   .md\:tg-min-height\(icon-sm\) {
     min-height: var(--tg-size-icon-sm);
@@ -2949,6 +3023,9 @@ svg {
   .lg\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
+  .lg\:tg-width\(specimen\) {
+    width: var(--tg-size-specimen);
+  }
   .lg\:tg-width\(icon-sm\) {
     width: var(--tg-size-icon-sm);
   }
@@ -2972,6 +3049,9 @@ svg {
   }
   .lg\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
+  }
+  .lg\:tg-min-width\(specimen\) {
+    min-width: var(--tg-size-specimen);
   }
   .lg\:tg-min-width\(icon-sm\) {
     min-width: var(--tg-size-icon-sm);
@@ -2997,6 +3077,9 @@ svg {
   .lg\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
+  .lg\:tg-max-width\(specimen\) {
+    max-width: var(--tg-size-specimen);
+  }
   .lg\:tg-max-width\(icon-sm\) {
     max-width: var(--tg-size-icon-sm);
   }
@@ -3021,6 +3104,9 @@ svg {
   .lg\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
+  .lg\:tg-height\(specimen\) {
+    height: var(--tg-size-specimen);
+  }
   .lg\:tg-height\(icon-sm\) {
     height: var(--tg-size-icon-sm);
   }
@@ -3044,6 +3130,9 @@ svg {
   }
   .lg\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
+  }
+  .lg\:tg-min-height\(specimen\) {
+    min-height: var(--tg-size-specimen);
   }
   .lg\:tg-min-height\(icon-sm\) {
     min-height: var(--tg-size-icon-sm);
@@ -3430,6 +3519,9 @@ svg {
   .xl\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
+  .xl\:tg-width\(specimen\) {
+    width: var(--tg-size-specimen);
+  }
   .xl\:tg-width\(icon-sm\) {
     width: var(--tg-size-icon-sm);
   }
@@ -3453,6 +3545,9 @@ svg {
   }
   .xl\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
+  }
+  .xl\:tg-min-width\(specimen\) {
+    min-width: var(--tg-size-specimen);
   }
   .xl\:tg-min-width\(icon-sm\) {
     min-width: var(--tg-size-icon-sm);
@@ -3478,6 +3573,9 @@ svg {
   .xl\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
+  .xl\:tg-max-width\(specimen\) {
+    max-width: var(--tg-size-specimen);
+  }
   .xl\:tg-max-width\(icon-sm\) {
     max-width: var(--tg-size-icon-sm);
   }
@@ -3502,6 +3600,9 @@ svg {
   .xl\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
+  .xl\:tg-height\(specimen\) {
+    height: var(--tg-size-specimen);
+  }
   .xl\:tg-height\(icon-sm\) {
     height: var(--tg-size-icon-sm);
   }
@@ -3525,6 +3626,9 @@ svg {
   }
   .xl\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
+  }
+  .xl\:tg-min-height\(specimen\) {
+    min-height: var(--tg-size-specimen);
   }
   .xl\:tg-min-height\(icon-sm\) {
     min-height: var(--tg-size-icon-sm);

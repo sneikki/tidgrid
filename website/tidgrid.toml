@@ -55,6 +55,7 @@ xxl  = "5rem"
 full    = "100%"
 measure = "72rem"
 drawer  = "20rem"
+specimen = "19rem"
 icon-sm = "2rem"
 icon-md = "3rem"
 cell    = "5rem"
@@ -176,6 +177,12 @@ font-size      = "{type.label}"
 font-weight    = "600"
 text-transform = "uppercase"
 color          = "{color.ink}"
+
+[role.text.entry-title]
+use         = "The name of one entry in a list of pages, inside link(entry). Takes the link's colour, so it lights up with it."
+font-family = "{font.title}"
+font-size   = "{type.lead}"
+font-weight = "600"
 
 [role.text.fine-print]
 use         = "Small muted text such as licence lines in the footer."
@@ -342,6 +349,17 @@ transition      = "color {motion.fast}"
 
 [role.link.text."&:hover"]
 color = "{color.ink-soft}"
+
+[role.link.entry]
+use             = "One row of a list of pages: the whole row is the link, with a rule above it. Holds a sample on one side and text(entry-title) with a line of text(body) on the other."
+display         = "block"
+border-top      = "{border.hair} solid {color.drawer-edge}"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.entry."&:is(:hover, :focus-visible)"]
+color = "{color.accent}"
 
 [role.link.footer]
 use            = "A plain link in the footer, for example a documentation page."
@@ -603,15 +621,6 @@ grid-area = "1 / 1 / 3 / 2"
 [role.layout.footer."@md"."& > :nth-child(3)"]
 grid-area  = "2 / 2"
 align-self = "end"
-
-[role.layout.card-grid]
-use                  = "A grid of equal cards, one column on a phone, two from sm up. For a list of doc cards."
-display               = "grid"
-grid-template-columns = "1fr"
-gap                   = "{space.lg}"
-
-[role.layout.card-grid."@sm"]
-grid-template-columns = "1fr 1fr"
 
 # ---------------------------------------------------------------- exceptions
 
