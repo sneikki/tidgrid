@@ -1,0 +1,33 @@
+[project]
+out  = "out/tidgrid.css"
+scan = ["src"]
+
+[breakpoints]
+sm = "40em"
+md = "64em"
+
+[tokens.color]
+ink = "#111111"
+
+[tokens.space]
+sm = "0.5rem"
+md = "1rem"
+
+[tokens.size]
+full = "100%"
+
+[role.surface.card]
+use = "A panel."
+color = "{color.ink}"
+
+[role.text.title]
+use = "The title."
+
+[role.state.ready]
+use = "Set by a script."
+
+[allow.class]
+"has-js" = "set by an inline script before first paint"
+
+[allow.css]
+"src/fonts.css" = "self-hosted @font-face only"
