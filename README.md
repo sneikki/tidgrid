@@ -25,7 +25,7 @@ lives in the git history.
 ## Install
 
 ```
-go install github.com/sneikki/tidgrid@latest
+go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
 ```
 
 ## Commands
