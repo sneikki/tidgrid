@@ -3,67 +3,61 @@ layout: page
 title: Get started
 ---
 
-<section class="tg-section">
-    <p class="page-ingress page-ingress--lg">
-        Introducing Tidgrid, a compact yet expressive CSS library designed to revolutionize responsive web development.
-    </p>
+Five steps from nothing to a project whose agent can only use the classes you approved.
 
-    <p class="page-ingress">
-        Unlike traditional heavy and generic-looking UI libraries, Tidgrid offers a refreshing approach. It empowers developers with the freedom to craft their own distinct visual identities, rather than imposing a one-size-fits-all design. With Tidgrid, the struggle against complex structures becomes a thing of the past, freeing up more time for unleashing creativity and perfecting the look and feel of your web projects. Embrace Tidgrid, and unlock a world where responsiveness meets individuality seamlessly.
-    </p>
-</section>
+## 1. Install
 
-<section class="tg-section">
-    <h2 class="page__subtitle">Give it a try!</h2>
+{% capture c %}
+go install github.com/sneikki/tidgrid@latest
+{% endcapture %}
+{% include code.html code=c %}
 
-    <div class="tg-row md:tg-mode(auto) xl:tg-mode(auto) tg-space-x(between) tg-pos-y(center) tg-gap(lg)">
-        <div class="tg-cell">
-            <p class="page__text page__text--lg page__text--sb">
-                The quickest way to try Tidgrid is to install it in your project!
-            </p>
-        </div>
+## 2. Write a starter vocabulary
 
-        <div class="tg-cell">
-{% highlight sh %}
-npm install tidgrid
-{% endhighlight %}
-        </div>
-    </div>
+Run this in the root of your project:
 
-    <p class="page__text page__text--lg">
-        Check out the
-        <a href="{{ site.baseurl }}/docs/installation">installation guide</a>
-        for a more comprehensive guide.
-    </p>
-</section>
+{% capture c %}
+tidgrid init
+{% endcapture %}
+{% include code.html code=c %}
 
-<section class="tg-section">
-    <h2 class="page__subtitle page__text--centerized page__subtitle--important">Ready to delve in?</h2>
+It writes a starter `tidgrid.toml` and refuses to overwrite one that exists. Open it and set `project.out` to where the stylesheet should go, and `project.scan` to the folders that hold your pages. Then put your own colours, spacing and roles in. The [vocabulary file](/docs/vocabulary-file) page explains every table.
 
-    <div class="tg-row tg-y-gap(xl)">
-        <div class="tg-cell">
-            <p class="page__text page__text--xl page__text--centerized">
-                Learn better by reading or looking around?
-                <span class="page__text--sb">
-                    No problem, we've got both covered!
-                </span>
-            </p>
-        </div>
+## 3. Build the stylesheet
 
-        <div class="tg-cell tg-size(16)">
-            <div class="tg-row jumbo__buttons sm:tg-mode(auto) md:tg-span(7) lg:tg-span(6) xl:tg-span(5) tg-pos-x(center) tg-y-gap(lg) tg-gap(lg)">
-                <div class="tg-cell">
-                    <a href="{{ site.baseurl }}/examples" class="jumbo__button jumbo__button--red">
-                        Check out the examples
-                    </a>
-                </div>
+{% capture c %}
+tidgrid build
+{% endcapture %}
+{% include code.html code=c %}
 
-                <div class="tg-cell">
-                    <a href="{{ site.baseurl }}/docs" class="jumbo__button jumbo__button--primary">
-                        Jump into the documentation
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+This validates the vocabulary and writes one static stylesheet to `project.out`. Link it from your pages like any other stylesheet. Build again whenever you change `tidgrid.toml`.
+
+## 4. Check the pages
+
+{% capture c %}
+tidgrid check
+{% endcapture %}
+{% include code.html code=c %}
+
+Each violation prints as `path:line: message`. After them come the roles each file uses, the roles nothing uses, and the exceptions you allowed. Exit code 0 means fine, 1 means violations, 2 means the vocabulary file itself is invalid or missing. See [the checker](/docs/checker).
+
+## 5. Tell your agent
+
+Put these three lines in the project's agent instructions:
+
+<!-- tidgrid-ignore-start -->
+{% capture c %}
+Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.
+Run `tidgrid check` before every commit; it must exit 0.
+A new role is a change to tidgrid.toml in its own commit, never mixed into page work.
+{% endcapture %}
+{% include code.html code=c %}
+<!-- tidgrid-ignore-end -->
+
+`tidgrid list` prints the vocabulary as compact text. It is what the agent reads before UI work. To see the look yourself, run `tidgrid sheet`: it writes one HTML page that renders every token and role.
+
+## Next
+
+- [Documentation index](/docs)
+- [The vocabulary file](/docs/vocabulary-file)
+- [Commands](/docs/commands)

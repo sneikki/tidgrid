@@ -3,16 +3,15 @@ const headerNavigationToggler = document.getElementById("toggle-header-navigatio
 const sidebarCloseButton = document.getElementById("close-sidebar");
 
 document.body.addEventListener("click", ({ target }) => {
-  if (!(
-    headerNavigation.contains(target) ||
-    headerNavigation.classList.contains("header__navigation--collapsed")
-  )) {
-    headerNavigation.classList.add("header__navigation--collapsed")
+  const isOpen = headerNavigation.classList.contains("tg-state(open)");
+
+  if (isOpen && !headerNavigation.contains(target)) {
+    headerNavigation.classList.remove("tg-state(open)");
   } else if (headerNavigationToggler.contains(target)) {
-    headerNavigation.classList.remove("header__navigation--collapsed")
+    headerNavigation.classList.add("tg-state(open)");
   }
 });
 
 sidebarCloseButton.addEventListener("click", () =>
-  headerNavigation.classList.add("header__navigation--collapsed")
+  headerNavigation.classList.remove("tg-state(open)")
 );
