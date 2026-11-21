@@ -66,6 +66,7 @@ func TestValidationErrors(t *testing.T) {
 		{"no &", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\":hover\"]\ncolor = \"red\"\n", "role.surface.card.\":hover\": selector must contain &"},
 		{"unknown class", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\".tg-gap(zz) &\"]\ncolor = \"red\"\n", "unknown class tg-gap(zz); tg-gap takes: sm"},
 		{"empty reason", base + "[allow.class]\n\"x\" = \"\"\n", "allow.class.x: reason required"},
+		{"css outside", base + "[allow.css]\n\"../../secret.css\" = \"x\"\n", "path must stay inside"},
 		{"bad bp", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"@lg\"]\ncolor = \"red\"\n", "unknown breakpoint"},
 		{"token loop", base + "[tokens.t]\na = \"{t.b}\"\nb = \"{t.a}\"\n", "reference loop"},
 	}

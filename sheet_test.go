@@ -58,7 +58,7 @@ color = "{color.ink}"
 	if err := os.WriteFile(filepath.Join(dir, "tidgrid.toml"), []byte(vocab), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "fonts.css"), []byte("/*FONT-MARK*/"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "fonts.css"), []byte("/*FONT-MARK*/</STYLE><script>x</script>"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	v, errs := load(filepath.Join(dir, "tidgrid.toml"))
@@ -74,6 +74,9 @@ color = "{color.ink}"
 	}
 	if !strings.Contains(out, "/*FONT-MARK*/") {
 		t.Error("existing allow.css not inlined")
+	}
+	if strings.Contains(out, "</STYLE><script>") {
+		t.Error("inlined CSS can close the style element")
 	}
 	if strings.Contains(out, `tgs-missing">missing`) {
 		t.Error("existing allow.css listed as missing")

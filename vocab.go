@@ -518,6 +518,12 @@ func load(path string) (*Vocabulary, []error) {
 				l.errf(p, "reason required")
 				continue
 			}
+			// sheet inlines these files: a path that leaves the project would
+			// copy an arbitrary local file into a page people pass around.
+			if kind == "css" && !filepath.IsLocal(filepath.FromSlash(k)) {
+				l.errf(p, "path must stay inside the vocabulary's directory")
+				continue
+			}
 			if kind == "class" {
 				v.AllowClass = append(v.AllowClass, Allow{k, s})
 			} else {

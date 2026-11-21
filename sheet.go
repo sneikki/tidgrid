@@ -6,6 +6,7 @@ import (
 	"html"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -25,7 +26,8 @@ const sheetLayout = `
 .tgs-dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.3rem 1rem;margin:0}
 .tgs-dl>dt,.tgs-dl>dd{margin:0}
 .tgs-role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem 1.5rem;align-items:center;padding:.75rem 0;border-bottom:1px solid #8883}
-.tgs-sample{min-width:0}
+.tgs-sample{min-width:0;display:flex;align-items:flex-start}
+.tgs-fill{display:inline-block;padding:1rem 1.5rem}
 .tgs-meta{min-width:0}
 .tgs-meta>code,.tgs-toggle>code{display:block;word-break:break-all;font-size:.85rem}
 .tgs-toggle{display:flex;align-items:center;gap:.5rem}
@@ -34,6 +36,27 @@ const sheetLayout = `
 `
 
 const sheetSentence = "The quick brown fox jumps over the lazy dog."
+
+var sheetStyleEnd = regexp.MustCompile(`(?i)</style`)
+
+// sheetCSS makes CSS safe to inline in a <style> element: a token value or a
+// font file holding "</style" must not close it. Other "<" stay, the
+// stylesheet uses them in range media queries.
+func sheetCSS(css string) string {
+	return sheetStyleEnd.ReplaceAllString(css, `<\/style`)
+}
+
+func sheetHasPadding(r *Rule) bool {
+	if r == nil {
+		return false
+	}
+	for _, n := range r.Nodes {
+		if strings.HasPrefix(n.Prop, "padding") {
+			return true
+		}
+	}
+	return false
+}
 
 // sheetTextKinds get a sentence as sample; other kinds get a short label.
 var sheetTextKinds = map[string]bool{"text": true, "emphasis": true}
@@ -76,7 +99,7 @@ func sheetHTML(v *Vocabulary) string {
 	b.WriteString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
 	b.WriteString("<title>tidgrid sheet</title>\n")
 	b.WriteString("<style>" + sheetLayout + "</style>\n")
-	b.WriteString("<style>\n" + v.render() + "</style>\n")
+	b.WriteString("<style>\n" + sheetCSS(v.render()) + "</style>\n")
 	found := sheetFonts(v, &b)
 	b.WriteString("</head>\n")
 
@@ -106,7 +129,7 @@ func sheetFonts(v *Vocabulary, b *strings.Builder) map[string]bool {
 			continue
 		}
 		found[a.Name] = true
-		b.WriteString("<style>\n" + strings.ReplaceAll(string(data), "</style", `<\/style`) + "</style>\n")
+		b.WriteString("<style>\n" + sheetCSS(string(data)) + "</style>\n")
 	}
 	return found
 }
@@ -119,7 +142,7 @@ func sheetTokens(v *Vocabulary, b *strings.Builder) {
 		for _, t := range g.Tokens {
 			name := html.EscapeString(t.Name)
 			value := html.EscapeString(t.Value)
-			ref := "var(--" + pre + "-" + g.Name + "-" + t.Name + ")"
+			ref := html.EscapeString("var(--" + pre + "-" + g.Name + "-" + t.Name + ")")
 			switch g.Name {
 			case "color":
 				fmt.Fprintf(b, "<div class=\"tgs-row\"><span class=\"tgs-chip\" style=\"background: %s\"></span><code>%s</code><span class=\"tgs-value\">%s</span></div>\n", ref, name, value)
@@ -151,7 +174,13 @@ func sheetRoles(v *Vocabulary, b *strings.Builder) {
 			if sheetTextKinds[r.Kind] {
 				sample = "<p class=\"" + html.EscapeString(r.Class) + "\">" + sheetSentence + "</p>"
 			} else {
-				sample = "<div class=\"" + html.EscapeString(r.Class) + "\">" + html.EscapeString(r.Name) + "</div>"
+				// Roles leave padding to the atoms, so a bare sample is a thin strip.
+				// Pad the inside unless the role brings its own.
+				inner := html.EscapeString(r.Name)
+				if !sheetHasPadding(r.Rule) {
+					inner = "<span class=\"tgs-fill\">" + inner + "</span>"
+				}
+				sample = "<div class=\"" + html.EscapeString(r.Class) + "\">" + inner + "</div>"
 			}
 			fmt.Fprintf(b, "<div class=\"tgs-role\"><div class=\"tgs-sample\">%s</div><div class=\"tgs-meta\"><code>%s</code><p class=\"tgs-desc\">%s</p></div></div>\n",
 				sample, html.EscapeString(r.Class), html.EscapeString(r.Use))
