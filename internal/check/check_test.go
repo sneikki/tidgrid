@@ -1,4 +1,4 @@
-package main
+package check
 
 import (
 	"bytes"
@@ -149,7 +149,7 @@ func TestScriptUseCountsRole(t *testing.T) {
 }
 
 func TestRunCheckExit2(t *testing.T) {
-	if c := runCheck([]string{"-c", "testdata/check/nope.toml"}); c != 2 {
+	if c := Run([]string{"-c", "testdata/check/nope.toml"}); c != 2 {
 		t.Errorf("missing vocabulary: exit %d, want 2", c)
 	}
 }

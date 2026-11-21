@@ -1,4 +1,4 @@
-package main
+package check
 
 import (
 	"errors"
@@ -543,7 +543,8 @@ func (f *fileScan) scan(helpers []string) {
 	}
 }
 
-func runCheck(args []string) int {
+// Run is the check command: it reports source that uses classes or values outside the vocabulary.
+func Run(args []string) int {
 	v, code := vocab.LoadFlag("check", args)
 	if v == nil {
 		return code

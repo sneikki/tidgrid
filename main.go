@@ -4,6 +4,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/sneikki/tidgrid/internal/check"
 )
 
 func main() { os.Exit(run(os.Args[1:])) }
@@ -19,7 +21,7 @@ func run(args []string) int {
 	case "build":
 		return runBuild(args[1:])
 	case "check":
-		return runCheck(args[1:])
+		return check.Run(args[1:])
 	case "list":
 		return runList(args[1:])
 	case "sheet":
