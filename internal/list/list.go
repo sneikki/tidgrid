@@ -1,3 +1,5 @@
+// Package list prints the vocabulary as plain text for an agent: roles, tokens,
+// atoms and the allowed exceptions, with no token values.
 package list
 
 import (

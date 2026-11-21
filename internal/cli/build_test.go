@@ -34,6 +34,6 @@ func TestBuildCmd(t *testing.T) {
 		t.Fatal("missing file must exit 2")
 	}
 	if Run([]string{"check"}) != 2 {
-		t.Fatal("stub must exit 2")
+		t.Fatal("check without a vocabulary in the directory must exit 2")
 	}
 }

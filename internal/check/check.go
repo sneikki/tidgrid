@@ -1,3 +1,5 @@
+// Package check reports source that uses classes, style values or own CSS
+// outside the vocabulary, and a built stylesheet that is stale.
 package check
 
 import (

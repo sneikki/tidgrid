@@ -1,3 +1,5 @@
+// Package sheet writes one self-contained HTML page that shows every token,
+// role and atom of the vocabulary with the project's own stylesheet.
 package sheet
 
 import (
