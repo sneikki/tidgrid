@@ -4,20 +4,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sneikki/tidgrid/internal/vocab"
+	"github.com/sneikki/tidgrid/internal/vocab/vocabtest"
 )
 
-func loadExampleVocab(t *testing.T) *vocab.Vocabulary {
-	t.Helper()
-	v, errs := vocab.Load("../vocab/testdata/example.toml")
-	if len(errs) > 0 {
-		t.Fatal(errs)
-	}
-	return v
-}
-
 func TestListExample(t *testing.T) {
-	v := loadExampleVocab(t)
+	v := vocabtest.Example(t)
 	out := text(v)
 	if again := text(v); again != out {
 		t.Fatal("text is not deterministic")

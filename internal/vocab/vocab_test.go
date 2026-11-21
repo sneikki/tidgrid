@@ -22,17 +22,17 @@ func loadStr(t *testing.T, s string) (*Vocabulary, []error) {
 }
 
 func TestGolden(t *testing.T) {
-	v, errs := Load("testdata/example.toml")
+	v, errs := Load("vocabtest/example.toml")
 	if errs != nil {
 		t.Fatal(errs)
 	}
 	got := v.Render()
 	if *update {
-		os.WriteFile("testdata/example.css", []byte(got), 0o644)
+		os.WriteFile("vocabtest/example.css", []byte(got), 0o644)
 	}
-	want, _ := os.ReadFile("testdata/example.css")
+	want, _ := os.ReadFile("vocabtest/example.css")
 	if got != string(want) {
-		t.Fatal("output differs from testdata/example.css (go test -update)")
+		t.Fatal("output differs from vocabtest/example.css (go test -update)")
 	}
 	if v.Render() != got {
 		t.Fatal("render not deterministic")
