@@ -8,7 +8,7 @@ Five steps from nothing to a project whose agent can only use the classes you ap
 ## 1. Install
 
 {% capture c %}
-go install github.com/sneikki/tidgrid@latest
+go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
 {% endcapture %}
 {% include code.html code=c %}
 
