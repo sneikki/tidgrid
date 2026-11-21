@@ -78,25 +78,28 @@ color = "{color.accent}"
 {% include code.html code=page %}
 <!-- tidgrid-ignore-end -->
         <p class="tg-text(body)">Layout comes from atoms (<span class="tg-text(keyword)">tg-col</span>, <span class="tg-text(keyword)">tg-gap(md)</span>) that take their values from the space tokens. Colour and border come only from the roles. <span class="tg-text(keyword)">tidgrid check</span> passes on this page.</p>
-        <p class="tg-text(label)">tidgrid list, what the agent reads</p>
+        <p class="tg-text(label)">tidgrid list, the part about roles</p>
 <!-- tidgrid-ignore-start -->
 {% capture listing %}
-tg-surface(card)  A lifted panel.
-tg-text(title)    The one title of a page.
-tg-gap(sm|md)     gap on the space tokens
+# roles
+## surface
+tg-surface(card)  A panel that lifts off the ground. One per group of related content.
+## text
+tg-text(title)  The one title of a page.
 {% endcapture %}
 {% include code.html code=listing %}
 <!-- tidgrid-ignore-end -->
         <p class="tg-text(label)">tidgrid check, after a slip</p>
 <!-- tidgrid-ignore-start -->
 {% capture slip %}
-index.html:3: unknown class tg-gap(2)
-index.html:4: style attribute sets a colour
-index.html:9: own CSS in a style block
+slip.html:1: unknown class tg-gap(2); tg-gap takes: sm md
+slip.html:2: appearance in style attribute: color; use a role (`tidgrid list`)
+slip.html:3: unknown class border-l-4: not in the vocabulary; run `tidgrid list`
+slip.html:7: own CSS: <style> block; make it a role in the vocabulary
 {% endcapture %}
 {% include code.html code=slip %}
 <!-- tidgrid-ignore-end -->
-        <p class="tg-text(body)">An unknown atom value, an inline colour and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1.</p>
+        <p class="tg-text(body)">An unknown atom value, an inline colour, a class from nowhere and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1.</p>
       </div>
     </div>
   </div>
