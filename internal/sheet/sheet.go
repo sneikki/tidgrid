@@ -1,4 +1,4 @@
-package main
+package sheet
 
 import (
 	"flag"
@@ -71,7 +71,8 @@ for (const box of document.querySelectorAll('input[data-state]')) {
 </script>
 `
 
-func runSheet(args []string) int {
+// Run is the sheet command: it writes the self-contained style sheet page.
+func Run(args []string) int {
 	fs := flag.NewFlagSet("sheet", flag.ContinueOnError)
 	cfg := fs.String("c", vocab.DefaultConfig, "vocabulary file")
 	out := fs.String("o", "tidgrid-sheet.html", "output file")

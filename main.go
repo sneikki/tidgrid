@@ -7,6 +7,7 @@ import (
 
 	"github.com/sneikki/tidgrid/internal/check"
 	"github.com/sneikki/tidgrid/internal/list"
+	"github.com/sneikki/tidgrid/internal/sheet"
 )
 
 func main() { os.Exit(run(os.Args[1:])) }
@@ -26,7 +27,7 @@ func run(args []string) int {
 	case "list":
 		return list.Run(args[1:])
 	case "sheet":
-		return runSheet(args[1:])
+		return sheet.Run(args[1:])
 	}
 	fmt.Fprintf(os.Stderr, "tidgrid: unknown command %q\n", args[0])
 	return 2
