@@ -235,8 +235,9 @@ Svelte. It reads:
 - every string literal on the right of a `className = …` assignment in
   script;
 - every string literal passed to `cn`, `clsx`, `cva`, `classNames`,
-  `twMerge` (configurable: `project.helpers`) and to `classList.add`,
-  `remove`, `toggle`, `contains`;
+  `twMerge` and to `classList.add`, `remove`, `toggle`, `contains`.
+  `project.helpers` replaces that list of five, so repeat the ones still in
+  use;
 - the name in a `class:name` directive (Svelte); `style:prop` counts as a
   style attribute.
 
@@ -260,7 +261,9 @@ not entered either; `check` reports it unless its target is under
 
 Known limit: a class kept in a variable far from these places is not seen.
 A name built from pieces cannot be checked at all, which is why it is a
-violation: write the whole names out in a lookup table.
+violation: write the whole names out in a lookup table. The table is itself
+a variable, so pass each name through a helper to have it checked:
+`{ primary: cn("tg-action(primary)") }`.
 
 ## Working with an agent
 
