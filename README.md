@@ -214,6 +214,18 @@ Svelte. It reads:
   `twMerge` (configurable: `project.helpers`) and to `classList.add`,
   `remove`, `toggle`, `contains`.
 
+Inside a class value, a template tag `{% … %}` is skipped and the names
+around it are read. An interpolation (`{{ … }}`, `${…}`, `{…}`) glued to a
+name is a built name; standing alone between spaces it is skipped.
+
+Not read: fenced code blocks in Markdown, `{% highlight %}` and `{% raw %}`
+blocks, and anything between the comments `tidgrid-ignore-start` and
+`tidgrid-ignore-end` (for code samples that show classes).
+
+Files: `.html .htm .astro .jsx .tsx .vue .svelte .md .mdx .liquid .njk` under
+`project.scan`. Stylesheets: `.css .scss .sass .less .styl`. Never entered:
+`node_modules .git dist build _site .astro vendor`.
+
 Known limit: a class kept in a variable far from these places is not seen.
 A name built from pieces cannot be checked at all, which is why it is a
 violation: write the whole names out in a lookup table.
