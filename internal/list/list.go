@@ -27,7 +27,21 @@ func Run(args []string) int {
 // no token values.
 func listText(v *vocab.Vocabulary) string {
 	var b strings.Builder
+	listBreakpoints(v, &b)
+	b.WriteString("\n# tokens\n")
+	listTokens(v, &b)
+	b.WriteString("\n# atoms\n")
+	listAtoms(v, &b)
+	b.WriteString("\n# roles\n")
+	listRoles(v, &b)
+	b.WriteString("\n# allow\n")
+	listAllow(v, &b)
+	b.WriteString("\n# rules\n")
+	b.WriteString(listRules)
+	return b.String()
+}
 
+func listBreakpoints(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("# breakpoints\n")
 	if len(v.Breakpoints) == 0 {
 		b.WriteString("none\n")
@@ -36,20 +50,23 @@ func listText(v *vocab.Vocabulary) string {
 		for _, bp := range v.Breakpoints {
 			names = append(names, bp.Name)
 		}
-		fmt.Fprintf(&b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
+		fmt.Fprintf(b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
 			strings.Join(names, " "), names[0], v.Project.Prefix, names[0])
 	}
+}
 
-	b.WriteString("\n# tokens\n")
+func listTokens(v *vocab.Vocabulary, b *strings.Builder) {
 	for _, g := range v.Tokens {
 		names := make([]string, 0, len(g.Tokens))
 		for _, t := range g.Tokens {
 			names = append(names, t.Name)
 		}
-		fmt.Fprintf(&b, "%s: %s\n", g.Name, strings.Join(names, " "))
+		fmt.Fprintf(b, "%s: %s\n", g.Name, strings.Join(names, " "))
 	}
+}
 
-	b.WriteString("\n# atoms\n")
+// listAtoms prints one line per atom family; valueless atoms share a line.
+func listAtoms(v *vocab.Vocabulary, b *strings.Builder) {
 	b.WriteString("S = a name in space, Z = a name in size, B = a breakpoint name (no breakpoint prefix on this one)\n")
 	var statics []string
 	flush := func() {
@@ -70,46 +87,44 @@ func listText(v *vocab.Vocabulary) string {
 			statics = append(statics, base)
 		case first.Below != "":
 			flush()
-			fmt.Fprintf(&b, "%s(B)\n", base)
+			fmt.Fprintf(b, "%s(B)\n", base)
 		case strings.HasPrefix(first.Decls[0][1], "var("):
 			flush()
-			fmt.Fprintf(&b, "%s(%s)\n", base, scaleLetter(listScale(v, first.Decls[0][1])))
+			fmt.Fprintf(b, "%s(%s)\n", base, scaleLetter(listScale(v, first.Decls[0][1])))
 		default:
 			flush()
 			vals := make([]string, 0, j-i)
 			for _, a := range v.Atoms[i:j] {
 				vals = append(vals, a.Value)
 			}
-			fmt.Fprintf(&b, "%s(%s)\n", base, strings.Join(rangeNums(vals), "|"))
+			fmt.Fprintf(b, "%s(%s)\n", base, strings.Join(rangeNums(vals), "|"))
 		}
 		i = j
 	}
 	flush()
+}
 
-	b.WriteString("\n# roles\n")
+func listRoles(v *vocab.Vocabulary, b *strings.Builder) {
 	kinds, byKind := v.RoleKinds()
 	for _, k := range kinds {
 		if k == "state" {
 			b.WriteString("## set by scripts\n")
 		} else {
-			fmt.Fprintf(&b, "## %s\n", k)
+			fmt.Fprintf(b, "## %s\n", k)
 		}
 		for _, r := range byKind[k] {
-			fmt.Fprintf(&b, "%s  %s\n", r.Class, oneLine(r.Use))
+			fmt.Fprintf(b, "%s  %s\n", r.Class, oneLine(r.Use))
 		}
 	}
+}
 
-	b.WriteString("\n# allow\n")
+func listAllow(v *vocab.Vocabulary, b *strings.Builder) {
 	for _, a := range v.AllowClass {
-		fmt.Fprintf(&b, "class %s  %s\n", a.Name, a.Reason)
+		fmt.Fprintf(b, "class %s  %s\n", a.Name, a.Reason)
 	}
 	for _, a := range v.AllowCSS {
-		fmt.Fprintf(&b, "css %s  %s\n", a.Name, a.Reason)
+		fmt.Fprintf(b, "css %s  %s\n", a.Name, a.Reason)
 	}
-
-	b.WriteString("\n# rules\n")
-	b.WriteString(listRules)
-	return b.String()
 }
 
 // listScale names the token group a valued atom reads, from its var() declaration.
