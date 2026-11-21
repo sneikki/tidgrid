@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -12,15 +13,20 @@ import (
 )
 
 var (
-	srcExts   = map[string]bool{".html": true, ".htm": true, ".astro": true, ".jsx": true, ".tsx": true, ".vue": true, ".svelte": true, ".md": true, ".mdx": true, ".liquid": true, ".njk": true}
+	srcExts   = map[string]bool{".html": true, ".htm": true, ".astro": true, ".jsx": true, ".tsx": true, ".vue": true, ".svelte": true, ".md": true, ".mdx": true, ".liquid": true, ".njk": true, ".js": true, ".mjs": true, ".cjs": true, ".ts": true}
 	cssExts   = map[string]bool{".css": true, ".scss": true, ".sass": true, ".less": true, ".styl": true}
 	skipDirs  = map[string]bool{"node_modules": true, ".git": true, "dist": true, "build": true, "_site": true, ".astro": true, "vendor": true}
-	classAttr = regexp.MustCompile(`(?:^|[^\w.:-])((?:v-bind:|:)?class(?::list)?|className)\s*=\s*`)
-	styleAttr = regexp.MustCompile(`(?:^|[^\w.:-])((?:v-bind:|:)?style)\s*=\s*`)
-	styleTag  = regexp.MustCompile(`(?i)<style\b`)
+	classAttr = regexp.MustCompile(`(?i)(?:^|[^\w.:-])((?:v-bind:|:)?class(?::list)?|className)\s*=\s*`)
+	assignRe  = regexp.MustCompile(`\.\s*className\s*\+?=`)
+	declRe    = regexp.MustCompile(`\b(?:const|let|var)\s+$`)
+	classDir  = regexp.MustCompile(`(?i)(?:^|\s)class:([^\s=>/{}"'|]+)`)
+	styleAttr = regexp.MustCompile(`(?i)(?:^|[^\w.:-])((?:v-bind:|:)?style)\s*=\s*`)
+	styleDir  = regexp.MustCompile(`(?i)(?:^|\s)style:([A-Za-z-]+)`)
+	shortRe   = regexp.MustCompile(`[{,]\s*([A-Za-z]\w*)\s*(?:[,}]|$)`)
+	styleTag  = regexp.MustCompile(`(?i)<style(?:[\s>/]|$)`)
 	propRe    = regexp.MustCompile(`(?:^|[;{,\s'"])(-?[A-Za-z][A-Za-z0-9-]*)['"]?\s*:`)
 	capRe     = regexp.MustCompile(`[A-Z]`)
-	appearRe  = regexp.MustCompile(`^(?:(?:background|border|font|outline|text-decoration)(?:-.*)?|color|box-shadow|text-shadow|opacity|filter|backdrop-filter|letter-spacing|line-height|fill|stroke)$`)
+	appearRe  = regexp.MustCompile(`^(?:(?:background|border|font|outline|text-decoration|mask|column-rule)(?:-.*)?|color|box-shadow|text-shadow|opacity|filter|backdrop-filter|letter-spacing|line-height|fill|stroke|accent-color|caret-color|mix-blend-mode)$`)
 	rawBlock  = regexp.MustCompile(`(?s)\{%-?\s*(highlight|raw)\b.*?\{%-?\s*end(highlight|raw)\s*-?%\}`)
 	ignoreRe  = regexp.MustCompile(`(?s)tidgrid-ignore-start(?:.*?tidgrid-ignore-end|.*$)`)
 )
@@ -32,7 +38,8 @@ type violation struct {
 }
 
 // mask blanks out what is not read (code samples), keeping offsets and newlines.
-func mask(src, ext string) string {
+// open lists the offsets of a tidgrid-ignore-start that is never closed.
+func mask(src, ext string) (out string, open []int) {
 	b := []byte(src)
 	blank := func(s, e int) {
 		for i := s; i < e; i++ {
@@ -43,6 +50,9 @@ func mask(src, ext string) string {
 	}
 	for _, re := range []*regexp.Regexp{rawBlock, ignoreRe} {
 		for _, m := range re.FindAllIndex(b, -1) {
+			if re == ignoreRe && !strings.HasSuffix(string(b[m[0]:m[1]]), "tidgrid-ignore-end") {
+				open = append(open, m[0])
+			}
 			blank(m[0], m[1])
 		}
 	}
@@ -60,7 +70,7 @@ func mask(src, ext string) string {
 			off += len(ln)
 		}
 	}
-	return string(b)
+	return string(b), open
 }
 
 type fileScan struct {
@@ -251,6 +261,48 @@ func (f *fileScan) value(start, end, mode int) {
 	flush(end)
 }
 
+// compared reports whether the literal s[i:j] is an operand of ==, ===, != or !==.
+func (f *fileScan) compared(i, j int) bool {
+	s := f.src
+	b := strings.TrimRight(s[:i], " \t\r\n")
+	a := strings.TrimLeft(s[j:], " \t\r\n")
+	return strings.HasSuffix(b, "==") || strings.HasSuffix(b, "!=") || strings.HasPrefix(a, "==") || strings.HasPrefix(a, "!=")
+}
+
+// stmtEnd returns the end of the statement that starts at i: a `;` or newline
+// outside brackets, or the bracket that closes the enclosing one.
+func stmtEnd(s string, i int) int {
+	depth := 0
+	for k := i; k < len(s); {
+		switch c := s[k]; {
+		case c == '\'' || c == '"' || c == '`':
+			k, _ = skipString(s, k, len(s))
+		case c == '(' || c == '[' || c == '{':
+			depth++
+			k++
+		case c == ')' || c == ']' || c == '}':
+			if depth--; depth < 0 {
+				return k
+			}
+			k++
+		case depth == 0 && (c == ';' || c == '\n'):
+			return k
+		default:
+			k++
+		}
+	}
+	return len(s)
+}
+
+// attrEnd returns the end of an unquoted attribute value starting at p.
+func attrEnd(s string, p int) int {
+	e := p
+	for e < len(s) && !isSpace(s[e]) && s[e] != '>' && !strings.HasPrefix(s[e:], "/>") {
+		e++
+	}
+	return e
+}
+
 // collect reads every string literal in s[i:end].
 func (f *fileScan) collect(i, end int) {
 	s := f.src
@@ -262,7 +314,9 @@ func (f *fileScan) collect(i, end int) {
 			if c == '`' {
 				mode = modeTmpl
 			}
-			f.value(i+1, ie, mode)
+			if !f.compared(i, j) {
+				f.value(i+1, ie, mode)
+			}
 			i = j
 		case c == '/' && i+1 < end && s[i+1] == '/':
 			for i < end && s[i] != '\n' {
@@ -314,13 +368,34 @@ func (f *fileScan) class(t string, off int) {
 	f.add(f.line(off), msg)
 }
 
+// styleProp flags one property name (CSS or camelCase, any case) if it is appearance.
+func (f *fileScan) styleProp(name string, off int) {
+	p := name
+	if strings.ToUpper(p) == p || strings.Contains(p, "-") {
+		p = strings.ToLower(p)
+	} else {
+		p = strings.ToLower(p[:1]) + capRe.ReplaceAllStringFunc(p[1:], func(c string) string { return "-" + strings.ToLower(c) })
+	}
+	if appearRe.MatchString(p) {
+		f.add(f.line(off), fmt.Sprintf("appearance in style attribute: %s; use a role (`tidgrid list`)", p))
+	}
+}
+
 // style flags appearance properties in s[start:end], a style attribute value.
 func (f *fileScan) style(start, end int) {
 	text := f.src[start:end]
+	flag := f.styleProp
 	for _, m := range propRe.FindAllStringSubmatchIndex(text, -1) {
-		p := capRe.ReplaceAllStringFunc(text[m[2]:m[3]], func(c string) string { return "-" + strings.ToLower(c) })
-		if appearRe.MatchString(p) {
-			f.add(f.line(start+m[2]), fmt.Sprintf("appearance in style attribute: %s; use a role (`tidgrid list`)", p))
+		flag(text[m[2]:m[3]], start+m[2])
+	}
+	if strings.HasPrefix(strings.TrimSpace(text), "{") { // JSX object: { background } is shorthand
+		for at := 0; at < len(text); {
+			m := shortRe.FindStringSubmatchIndex(text[at:])
+			if m == nil {
+				break
+			}
+			flag(text[at+m[2]:at+m[3]], start+at+m[2])
+			at += m[3] // the comma after the name starts the next match
 		}
 	}
 }
@@ -328,9 +403,15 @@ func (f *fileScan) style(start, end int) {
 func (f *fileScan) scan(helpers []string) {
 	s := f.src
 	for _, m := range classAttr.FindAllStringSubmatchIndex(s, -1) {
-		name, p := s[m[2]:m[3]], m[1]
+		name, p := strings.ToLower(s[m[2]:m[3]]), m[1]
 		dynamic := strings.HasPrefix(name, ":") || strings.HasPrefix(name, "v-bind")
 		if p >= len(s) {
+			continue
+		}
+		if name == "classname" && declRe.MatchString(s[:m[2]]) { // const className = …: script, not an attribute
+			if p < len(s) && s[p] != '=' {
+				f.collect(p, stmtEnd(s, p))
+			}
 			continue
 		}
 		switch s[p] {
@@ -347,12 +428,21 @@ func (f *fileScan) scan(helpers []string) {
 				f.collect(p+1, e-1)
 			}
 		default:
-			e := p
-			for e < len(s) && !isSpace(s[e]) && s[e] != '>' {
-				e++
-			}
-			f.value(p, e, modeAttr)
+			f.value(p, attrEnd(s, p), modeAttr)
 		}
+	}
+	for _, m := range assignRe.FindAllStringIndex(s, -1) { // el.className = …
+		if m[1] < len(s) && s[m[1]] != '=' {
+			f.collect(m[1], stmtEnd(s, m[1]))
+		}
+	}
+	for _, m := range classDir.FindAllStringSubmatchIndex(s, -1) { // Svelte class:name
+		if n := s[m[2]:m[3]]; n != "list" {
+			f.class(n, m[2])
+		}
+	}
+	for _, m := range styleDir.FindAllStringSubmatchIndex(s, -1) { // Svelte style:prop
+		f.styleProp(s[m[2]:m[3]], m[2])
 	}
 	for _, m := range styleAttr.FindAllStringSubmatchIndex(s, -1) {
 		p := m[1]
@@ -368,6 +458,8 @@ func (f *fileScan) scan(helpers []string) {
 			if e := delimEnd(s, p, len(s), '{', '}'); e > 0 {
 				f.style(p+1, e-1)
 			}
+		default:
+			f.style(p, attrEnd(s, p))
 		}
 	}
 	hs := make([]string, 0, len(helpers)+1)
@@ -437,7 +529,12 @@ func doCheck(v *Vocabulary, w io.Writer) int {
 	files := map[string]bool{}
 	for _, root := range v.Project.Scan {
 		filepath.WalkDir(root, func(p string, d fs.DirEntry, err error) error {
-			if err != nil {
+			if err != nil { // an unreadable path must not pass as clean
+				msg := err.Error()
+				if u := errors.Unwrap(err); u != nil {
+					msg = u.Error()
+				}
+				addV(rel(abs(p)), 1, "cannot scan: "+msg)
 				return nil
 			}
 			if d.IsDir() {
@@ -472,10 +569,10 @@ func doCheck(v *Vocabulary, w io.Writer) int {
 		}
 		raw, err := os.ReadFile(p)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "tidgrid check:", err)
+			addV(r, 1, "cannot read file: "+errors.Unwrap(err).Error())
 			continue
 		}
-		src := mask(string(raw), ext)
+		src, open := mask(string(raw), ext)
 		f := &fileScan{v: v, src: src, seen: map[int]bool{}, allowed: allowedClass}
 		for i := 0; i < len(src); i++ {
 			if src[i] == '\n' {
@@ -491,6 +588,9 @@ func doCheck(v *Vocabulary, w io.Writer) int {
 				usedBy[r][c] = true
 				usedAny[c] = true
 			}
+		}
+		for _, o := range open {
+			f.add(f.line(o), "tidgrid-ignore-start is never closed; the rest of the file is not checked")
 		}
 		f.scan(v.Project.Helpers)
 	}

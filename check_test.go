@@ -59,7 +59,10 @@ func runCase(t *testing.T, name string) (code int, violations []string, out stri
 }
 
 func TestCheckCases(t *testing.T) {
-	ents, _ := os.ReadDir("testdata/check/cases")
+	ents, err := os.ReadDir("testdata/check/cases")
+	if err != nil || len(ents) == 0 {
+		t.Fatalf("no check cases: %v", err)
+	}
 	for _, e := range ents {
 		name := e.Name()
 		t.Run(name, func(t *testing.T) {
@@ -102,6 +105,13 @@ func TestCheckSummary(t *testing.T) {
 	_, _, out = runCase(t, "unknown-class")
 	if !strings.Contains(out, "roles unused:\n  tg-surface(card)\n  tg-text(title)\n  tg-state(ready)\n") {
 		t.Errorf("unused roles not listed\n%s", out)
+	}
+}
+
+func TestScriptUseCountsRole(t *testing.T) {
+	_, _, out := runCase(t, "script-use")
+	if !strings.Contains(out, "  src/menu.js: tg-state(ready)\n") {
+		t.Errorf("script use not counted\n%s", out)
 	}
 }
 

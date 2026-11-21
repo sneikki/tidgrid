@@ -1,0 +1,3 @@
+src/a.svelte:1: unknown class foo: not in the vocabulary; run `tidgrid list`
+src/a.svelte:2: appearance in style attribute: accent-color; use a role (`tidgrid list`)
+src/a.svelte:2: appearance in style attribute: color; use a role (`tidgrid list`)
