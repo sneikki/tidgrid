@@ -359,7 +359,7 @@ func (l *loader) rule(p []string, t map[string]any, key, written string, top boo
 
 var containerName = regexp.MustCompile(`^(@container)\s+[^\s(]+`) // the name is the author's pick, not a colour
 
-var oneWord =regexp.MustCompile(`^@[A-Za-z0-9_-]+$`)
+var oneWord = regexp.MustCompile(`^@[A-Za-z0-9_-]+$`)
 
 func (l *loader) subKey(p []string, k string) string {
 	if strings.HasPrefix(k, "@") {

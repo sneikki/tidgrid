@@ -48,6 +48,29 @@ func mask(src, ext string) (out string, open []int) {
 			}
 		}
 	}
+	// Markdown code goes first: an ignore marker a page only talks about, in
+	// a fence or in backticks, must not open a region.
+	if ext == ".md" || ext == ".mdx" {
+		in, off := false, 0
+		for _, ln := range strings.SplitAfter(string(b), "\n") {
+			t := strings.TrimLeft(ln, " \t")
+			fence := strings.HasPrefix(t, "```") || strings.HasPrefix(t, "~~~")
+			switch {
+			case fence || in:
+				blank(off, off+len(ln))
+			case ext == ".md":
+				// ponytail: not in .mdx, where a backtick is a JS template
+				// literal that can build a class name; fences cover MDX samples.
+				for _, s := range codeSpans(ln) {
+					blank(off+s[0], off+s[1])
+				}
+			}
+			if fence {
+				in = !in
+			}
+			off += len(ln)
+		}
+	}
 	for _, re := range []*regexp.Regexp{rawBlock, ignoreRe} {
 		for _, m := range re.FindAllIndex(b, -1) {
 			if re == ignoreRe && !strings.HasSuffix(string(b[m[0]:m[1]]), "tidgrid-ignore-end") {
@@ -56,21 +79,39 @@ func mask(src, ext string) (out string, open []int) {
 			blank(m[0], m[1])
 		}
 	}
-	if ext == ".md" || ext == ".mdx" {
-		in, off := false, 0
-		for _, ln := range strings.SplitAfter(string(b), "\n") {
-			t := strings.TrimLeft(ln, " \t")
-			fence := strings.HasPrefix(t, "```") || strings.HasPrefix(t, "~~~")
-			if fence || in {
-				blank(off, off+len(ln))
-			}
-			if fence {
-				in = !in
-			}
-			off += len(ln)
-		}
-	}
 	return string(b), open
+}
+
+// codeSpans returns the inline code spans of one Markdown line: a run of n
+// backticks up to the next run of exactly n.
+func codeSpans(ln string) (spans [][2]int) {
+	run := func(i int) int {
+		j := i
+		for j < len(ln) && ln[j] == '`' {
+			j++
+		}
+		return j - i
+	}
+	for i := 0; i < len(ln); i++ {
+		if ln[i] != '`' {
+			continue
+		}
+		n := run(i)
+		for j := i + n; j < len(ln); j++ {
+			if ln[j] != '`' {
+				continue
+			}
+			if m := run(j); m == n {
+				spans = append(spans, [2]int{i, j + n})
+				i = j
+				break
+			} else {
+				j += m - 1
+			}
+		}
+		i += n - 1
+	}
+	return
 }
 
 type fileScan struct {
@@ -508,6 +549,24 @@ func runCheck(args []string) int {
 	return doCheck(v, os.Stdout)
 }
 
+// underScan reports whether the directory a symlink points to is walked
+// anyway, through one of the scan roots.
+func underScan(link string, roots []string) bool {
+	target, err := filepath.EvalSymlinks(link)
+	if err != nil {
+		return false
+	}
+	for _, r := range roots {
+		if r, err = filepath.EvalSymlinks(r); err != nil {
+			continue
+		}
+		if rel, err := filepath.Rel(r, target); err == nil && filepath.IsLocal(rel) {
+			return true
+		}
+	}
+	return false
+}
+
 func doCheck(v *Vocabulary, w io.Writer) int {
 	dir := filepath.Dir(v.Path)
 	rel := func(p string) string {
@@ -563,6 +622,16 @@ func doCheck(v *Vocabulary, w io.Writer) int {
 					return filepath.SkipDir
 				}
 				return nil
+			}
+			// The walk does not enter a symlinked directory. Passing over it
+			// in silence would leave its pages unchecked.
+			if d.Type()&fs.ModeSymlink != 0 && !skipDirs[d.Name()] {
+				if st, err := os.Stat(p); err == nil && st.IsDir() {
+					if !underScan(p, v.Project.Scan) {
+						addV(rel(abs(p)), 1, "symlinked directory is not scanned; add its target to project.scan")
+					}
+					return nil
+				}
 			}
 			files[abs(p)] = true
 			return nil

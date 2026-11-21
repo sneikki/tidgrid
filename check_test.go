@@ -108,6 +108,37 @@ func TestCheckSummary(t *testing.T) {
 	}
 }
 
+// A symlinked directory is not walked: check must say so, unless its target
+// is scanned through another root.
+func TestSymlinkedDirReported(t *testing.T) {
+	dir := t.TempDir()
+	os.MkdirAll(filepath.Join(dir, "site"), 0o755)
+	os.MkdirAll(filepath.Join(dir, "docs"), 0o755)
+	os.WriteFile(filepath.Join(dir, "docs", "a.html"), []byte(`<p class="nope">`), 0o644)
+	if err := os.Symlink("../docs", filepath.Join(dir, "site", "docs")); err != nil {
+		t.Skip(err)
+	}
+	run := func(scan string) string {
+		cfg := filepath.Join(dir, "site", "tidgrid.toml")
+		os.WriteFile(cfg, []byte("[project]\nout = \"o.css\"\nscan = "+scan+"\n"), 0o644)
+		v, errs := load(cfg)
+		if errs != nil {
+			t.Fatal(errs)
+		}
+		os.WriteFile(v.Project.Out, []byte(v.render()), 0o644)
+		var buf bytes.Buffer
+		doCheck(v, &buf)
+		return buf.String()
+	}
+	if out := run(`["."]`); !strings.Contains(out, "docs:1: symlinked directory is not scanned") {
+		t.Errorf("symlinked directory passed in silence\n%s", out)
+	}
+	out := run(`[".", "../docs"]`)
+	if strings.Contains(out, "symlinked directory") || !strings.Contains(out, "unknown class nope") {
+		t.Errorf("target under scan: want its page checked and no symlink report\n%s", out)
+	}
+}
+
 func TestScriptUseCountsRole(t *testing.T) {
 	_, _, out := runCase(t, "script-use")
 	if !strings.Contains(out, "  src/menu.js: tg-state(ready)\n") {

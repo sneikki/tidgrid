@@ -247,13 +247,16 @@ Inside a class value, a template tag `{% … %}` is skipped and the names
 around it are read. An interpolation (`{{ … }}`, `${…}`, `{…}`) glued to a
 name is a built name; standing alone between spaces it is skipped.
 
-Not read: fenced code blocks in Markdown, `{% highlight %}` and `{% raw %}`
-blocks, and anything between the comments `tidgrid-ignore-start` and
-`tidgrid-ignore-end` (for code samples that show classes).
+Not read: fenced code blocks in Markdown, inline code in `.md` files (not
+`.mdx`, where a backtick can build a class name), `{% highlight %}` and
+`{% raw %}` blocks, and anything between the comments `tidgrid-ignore-start`
+and `tidgrid-ignore-end` (for code samples that show classes).
 
 Files: `.html .htm .astro .jsx .tsx .js .mjs .cjs .ts .vue .svelte .md .mdx
 .liquid .njk` under `project.scan`. Stylesheets: `.css .scss .sass .less .styl`. Never entered:
-`node_modules .git dist build _site .astro vendor`.
+`node_modules .git dist build _site .astro vendor`. A symlinked directory is
+not entered either; `check` reports it unless its target is under
+`project.scan`.
 
 Known limit: a class kept in a variable far from these places is not seen.
 A name built from pieces cannot be checked at all, which is why it is a
