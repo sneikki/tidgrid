@@ -52,14 +52,16 @@ tg-order(first|last)    order: -1, order: 1
 ## Display
 
 {% capture c %}
-tg-show    display: revert
-tg-hide    display: none
+tg-hide             display: none
+tg-hide-below(B)    display: none below breakpoint B
 {% endcapture %}
 {% include code.html code=c %}
 
+`B` is a breakpoint name. `tg-hide-below(B)` takes no breakpoint prefix.
+
 ## Breakpoints
 
-Every atom also exists per breakpoint, mobile first. A prefix such as `md:` applies the atom from that breakpoint up: `md:tg-gap(md)` sets the gap from `md` up, and `tg-hide md:tg-show` hides an element below `md`.
+Every atom also exists per breakpoint, mobile first. A prefix such as `md:` applies the atom from that breakpoint up: `md:tg-gap(md)` sets the gap from `md` up.
 
 A small example, a column on a phone and a row from `md` up:
 
