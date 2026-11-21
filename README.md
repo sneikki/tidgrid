@@ -122,8 +122,8 @@ substituted literally (media queries cannot read custom properties).
 `{keyframes.<name>}` is replaced with the generated animation name
 `tg-<name>`. Group and token names are made of letters, digits, `-` and `_`.
 
-`project.scan` and `project.helpers` are lists; a scan path that does not
-exist is an error.
+`project.scan` and `project.helpers` are lists. `check` reports a scan path
+that does not exist.
 
 ### Layout atoms
 

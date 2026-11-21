@@ -80,7 +80,6 @@ func TestValidationErrors(t *testing.T) {
 		{"use in sub-table", base + "[role.surface.card]\nuse = \"x\"\n[role.surface.card.\"&:hover\"]\nuse = \"y\"\n", `role.surface.card."&:hover".use: use belongs`},
 		{"scan string", "[project]\nout = \"o.css\"\nscan = \"src\"\n", "project.scan: must be a list"},
 		{"helpers string", "[project]\nout = \"o.css\"\nhelpers = \"cn\"\n", "project.helpers: must be a list"},
-		{"scan missing", "[project]\nout = \"o.css\"\nscan = [\"nope\"]\n", `project.scan: path "nope" does not exist`},
 		{"token loop", base + "[tokens.t]\na = \"{t.b}\"\nb = \"{t.a}\"\n", "reference loop"},
 	}
 	for _, c := range cases {

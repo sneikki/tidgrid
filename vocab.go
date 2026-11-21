@@ -16,7 +16,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -399,10 +398,9 @@ func load(path string) (*Vocabulary, []error) {
 	}
 	pr.Scan = strs("scan", pr.Scan)
 	for i, s := range pr.Scan {
+		// A missing scan path is check's violation, not a load error: build,
+		// list and sheet must work in a project that has no sources yet.
 		pr.Scan[i] = filepath.Join(dir, s)
-		if _, err := os.Stat(pr.Scan[i]); err != nil {
-			l.errf([]string{"project", "scan"}, "path %q does not exist", s)
-		}
 	}
 	pr.Helpers = strs("helpers", pr.Helpers)
 	v.Project = pr
