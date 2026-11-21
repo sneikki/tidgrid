@@ -527,8 +527,26 @@ position = "absolute"
 top      = "{space.lg}"
 right    = "{space.lg}"
 
+[role.layout.footer]
+use     = "The footer's three blocks, in this order: brand, navigation, legal. Stacked on small screens. From md up the navigation takes the left side, brand sits top right and legal bottom right."
+display = "grid"
+
+[role.layout.footer."@md"]
+grid-template-columns = "1fr auto"
+grid-template-rows    = "auto 1fr"
+
+[role.layout.footer."@md"."& > :nth-child(1)"]
+grid-area = "1 / 2"
+
+[role.layout.footer."@md"."& > :nth-child(2)"]
+grid-area = "1 / 1 / 3 / 2"
+
+[role.layout.footer."@md"."& > :nth-child(3)"]
+grid-area  = "2 / 2"
+align-self = "end"
+
 [role.layout.card-grid]
-use                   = "A grid of equal cards, one column on a phone, two from sm up. For a list of doc cards."
+use                  = "A grid of equal cards, one column on a phone, two from sm up. For a list of doc cards."
 display               = "grid"
 grid-template-columns = "1fr"
 gap                   = "{space.lg}"

@@ -492,6 +492,24 @@ svg {
   right: var(--tg-space-lg);
 }
 
+.tg-layout\(footer\) {
+  display: grid;
+  @media (min-width: 64em) {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    & > :nth-child(1) {
+      grid-area: 1 / 2;
+    }
+    & > :nth-child(2) {
+      grid-area: 1 / 1 / 3 / 2;
+    }
+    & > :nth-child(3) {
+      grid-area: 2 / 2;
+      align-self: end;
+    }
+  }
+}
+
 .tg-layout\(card-grid\) {
   display: grid;
   grid-template-columns: 1fr;
