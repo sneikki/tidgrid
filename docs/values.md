@@ -3,7 +3,7 @@ layout: doc-page
 title: Values
 ---
 
-Outside `[tokens]` and `[breakpoints]`, a value in the vocabulary file may not contain a raw colour, a raw length or a raw time. Those live in tokens. `build` refuses the file if one slips through.
+Outside `[tokens]` and `[breakpoints]`, a value in the vocabulary file may not contain a raw colour, a raw length, a raw time or a percentage used as a size. Those live in tokens. `build` refuses the file if one slips through.
 
 ## Not allowed
 
@@ -12,6 +12,9 @@ Outside `[tokens]` and `[breakpoints]`, a value in the vocabulary file may not c
 | A raw colour | `#hex`, `rgb()`, `hsl()`, `oklch()` and the like, or a CSS colour name such as `red` |
 | A raw length | a number with any CSS length unit: `px`, `rem`, `vw`, `dvh`, `cqw` |
 | A raw time | a number with `ms` or `s` |
+| A percentage that sizes a box, a spacing or a grid track | `width = "40%"`, `padding = "5%"`, `grid-template-columns = "50% 50%"` |
+
+The percentage rule covers `width`, `height`, `inline-size`, `block-size`, their `min-` and `max-` forms, `flex-basis`, `flex`, every `margin` and `padding` property, the three `gap` properties, and the `grid-template` and `grid-auto-` properties. Give the size a name instead: `half = "50%"` under `[tokens.size]`, then `width = "{size.half}"`.
 
 ## Allowed
 
@@ -19,7 +22,8 @@ Outside `[tokens]` and `[breakpoints]`, a value in the vocabulary file may not c
 |---|---|
 | Keywords | `transparent`, `currentColor` |
 | Zero and unitless numbers | `0`, `1.75` |
-| Percentages, `fr` and angles | `50%`, `1fr`, `45deg` |
+| Percentages anywhere else | `border-radius = "50%"`, `left = "50%"`, a gradient stop, `translate(-50%)` |
+| `fr` and angles | `1fr`, `45deg` |
 | Functions over tokens | shown below |
 
 {% capture c %}
