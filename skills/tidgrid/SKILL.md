@@ -31,7 +31,7 @@ A role that one element uses once is CSS with a longer name. Before adding one:
 - Name it by what it is for (`surface(note)`, `text(lead)`), not by where it sits (`surface(homepage-hero-left)`).
 - Check that it holds a look. If every declaration is direction, gap, padding or size, it is layout: use atoms. A role is right for layout only where atoms cannot reach (an overlay, a fixed panel, grid placement).
 - Write `use` for the next agent: when the role applies, and when it does not.
-- Values are token references (`{color.ink}`, `{space.md}`) or keywords, unitless numbers, `calc()` and `color-mix()` over tokens. A raw colour, length or time is refused: add a token first. So is a percentage that sizes a box (`width = "40%"`): it goes to `tokens.size`. A percentage elsewhere (`border-radius: 50%`, a gradient stop) is fine.
+- Values are token references (`{color.ink}`, `{space.md}`) or keywords, unitless numbers, `calc()` and `color-mix()` over tokens. A raw colour, length or time is refused: add a token first. So is a percentage that sizes a box, a spacing or a grid track (`width = "40%"`, `padding = "5%"`, `grid-template-columns = "50% 50%"`): it goes to a token. A percentage elsewhere (`border-radius: 50%`, `left: 50%`, a gradient stop) is fine.
 - Hover, focus, children and breakpoints are nested sub-tables of the role (`"&:hover"`, `"& a"`, `"@md"`), not new roles.
 - Commit the vocabulary change on its own (`tidgrid.toml` and the rebuilt stylesheet), before the page that uses it.
 

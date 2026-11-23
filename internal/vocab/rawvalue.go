@@ -32,12 +32,18 @@ var (
 	percentRe = regexp.MustCompile(`(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)%`)
 )
 
-// sizeProp holds a box size. A percentage there is a size like any other and
-// lives in tokens.size; in a gradient stop, a colour mix or a radius it is not.
+// sizeProp holds a box size, a spacing or a grid track. A percentage there is
+// a size like any other and lives in tokens; in a gradient stop, a colour mix,
+// a radius or an offset (`left: 50%`) it is not.
 func sizeProp(prop string) bool {
 	switch strings.TrimPrefix(strings.TrimPrefix(prop, "min-"), "max-") {
-	case "width", "height", "inline-size", "block-size", "flex-basis", "flex":
+	case "width", "height", "inline-size", "block-size", "flex-basis", "flex", "gap", "row-gap", "column-gap":
 		return true
+	}
+	for _, p := range []string{"margin", "padding", "grid-template", "grid-auto-"} {
+		if strings.HasPrefix(prop, p) {
+			return true
+		}
 	}
 	return false
 }
@@ -77,7 +83,7 @@ func rawProblem(prop, s string) string {
 	}
 	if sizeProp(prop) {
 		if m := percentRe.FindString(s); m != "" {
-			return "raw size " + strings.TrimLeft(m, " ,(") + " (move it to [tokens.size])"
+			return "raw size " + strings.TrimLeft(m, " ,(") + " (move it to [tokens])"
 		}
 	}
 	return ""

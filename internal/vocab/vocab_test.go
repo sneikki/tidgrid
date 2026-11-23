@@ -270,6 +270,12 @@ func TestPercentSize(t *testing.T) {
 		"flex":            "1 1 50%",
 		"max-inline-size": "clamp(10%, {size.2xl}, 50%)",
 		"min-width":       "-10%",
+
+		"grid-template-columns": "50% 50%",
+		"grid-auto-rows":        "minmax(10%, auto)",
+		"margin-inline":         "5%",
+		"padding":               "{space.sm} 10%",
+		"column-gap":            "2%",
 	}
 	for prop, value := range raw {
 		if got := rawProblem(prop, value); !strings.HasPrefix(got, "raw size ") {
@@ -285,6 +291,10 @@ func TestPercentSize(t *testing.T) {
 		"width":               "{size.full}",
 		"flex":                "1 1 0",
 		"left":                "50%",
+		"inset":               "0 50%",
+		"grid-template-areas": "\"a 50%\"",
+		"grid-template-rows":  "auto 1fr",
+		"margin":              "0 auto",
 		"":                    "@media (min-resolution: 100%)",
 	}
 	for prop, value := range fine {
