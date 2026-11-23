@@ -103,7 +103,7 @@ red = "#f00"
 [role.surface.card]
 use = "x"
 margin = "0 {space.sm}"
-width = "50%"
+border-radius = "50%"
 opacity = "0.5"
 flex = "1 1 0"
 transform = "translate3d(0, 0, 0) rotate(45deg)"
@@ -256,6 +256,41 @@ func TestAtRuleKeyBreakpointInToken(t *testing.T) {
 	}
 	if css := v.Render(); !strings.Contains(css, "@media (min-width: 64em) {") {
 		t.Errorf("breakpoint not resolved:\n%s", css)
+	}
+}
+
+// A percentage is a raw size only where it sizes a box; elsewhere it is an idiom.
+func TestPercentSize(t *testing.T) {
+	raw := map[string]string{
+		"width":           "40%",
+		"max-width":       "calc(100% - {space.sm})",
+		"min-height":      "12.5%",
+		"flex-basis":      "50%",
+		"block-size":      ".5%",
+		"flex":            "1 1 50%",
+		"max-inline-size": "clamp(10%, {size.2xl}, 50%)",
+		"min-width":       "-10%",
+	}
+	for prop, value := range raw {
+		if got := rawProblem(prop, value); !strings.HasPrefix(got, "raw size ") {
+			t.Errorf("%s: %s: want raw size, got %q", prop, value, got)
+		}
+	}
+	fine := map[string]string{
+		"border-radius":       "50%",
+		"background-position": "100% 0",
+		"background":          "linear-gradient(90deg, {color.ink} 0%, {color.ink} 100%)",
+		"color":               "color-mix(in srgb, {color.ink} 18%, transparent)",
+		"transform":           "translate(-50%, -50%)",
+		"width":               "{size.full}",
+		"flex":                "1 1 0",
+		"left":                "50%",
+		"":                    "@media (min-resolution: 100%)",
+	}
+	for prop, value := range fine {
+		if got := rawProblem(prop, value); got != "" {
+			t.Errorf("%s: %s: want fine, got %q", prop, value, got)
+		}
 	}
 }
 
