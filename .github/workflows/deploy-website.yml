@@ -23,7 +23,7 @@ jobs:
 
       - name: Install tidgrid
         run: |
-          go install github.com/sneikki/tidgrid/cmd/tidgrid@v0.2.2
+          go install github.com/sneikki/tidgrid/cmd/tidgrid@v0.2.3
           echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
 
       - name: Check pages against the vocabulary
