@@ -198,7 +198,11 @@ Outside `[tokens]` and `[breakpoints]`, a value may not contain a raw colour
 (`#hex`, `rgb()`, `hsl()`, `oklch()` and the like, or a CSS colour name such
 as `red`), a raw length or a raw time (a number with any CSS length or time
 unit: `px`, `rem`, `vw`, `dvh`, `cqw`, `ms` …). Those live in tokens.
-Keywords, `transparent`, `currentColor`, `0`, unitless numbers, percentages,
+So does a percentage that sizes a box: in `width`, `height`, `inline-size`,
+`block-size`, their `min-` and `max-` forms and `flex-basis`, write
+`{size.half}`, not `50%`.
+Keywords, `transparent`, `currentColor`, `0`, unitless numbers, percentages
+anywhere else (`border-radius: 50%`, a gradient stop, `translate(-50%)`),
 `fr`, angles and functions over tokens (`calc({space.md} * 2)`,
 `color-mix(in srgb, {color.accent} 18%, transparent)`) are fine. Text in
 quotes and inside `url()` is not looked at.

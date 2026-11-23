@@ -24,12 +24,23 @@ const colorNames = `aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|bl
 	`slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen`
 
 var (
-	hexRe    = regexp.MustCompile(`#[0-9A-Fa-f]{3,8}\b`)
-	colorFn  = regexp.MustCompile(`(?i)\b(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(`)
-	unitRe   = regexp.MustCompile(`(?i)(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?(?:` + units + `)\b`)
-	nameRe   = regexp.MustCompile(`(?i)(?:^|[^\w-])(` + colorNames + `)(?:$|[^\w-])`)
-	quotedRe = regexp.MustCompile(`"[^"]*"|'[^']*'|url\([^)]*\)`) // not looked at
+	hexRe     = regexp.MustCompile(`#[0-9A-Fa-f]{3,8}\b`)
+	colorFn   = regexp.MustCompile(`(?i)\b(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(`)
+	unitRe    = regexp.MustCompile(`(?i)(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?(?:` + units + `)\b`)
+	nameRe    = regexp.MustCompile(`(?i)(?:^|[^\w-])(` + colorNames + `)(?:$|[^\w-])`)
+	quotedRe  = regexp.MustCompile(`"[^"]*"|'[^']*'|url\([^)]*\)`) // not looked at
+	percentRe = regexp.MustCompile(`(?:^|[^\w.])-?(?:\d+\.?\d*|\.\d+)%`)
 )
+
+// sizeProp holds a box size. A percentage there is a size like any other and
+// lives in tokens.size; in a gradient stop, a colour mix or a radius it is not.
+func sizeProp(prop string) bool {
+	switch strings.TrimPrefix(strings.TrimPrefix(prop, "min-"), "max-") {
+	case "width", "height", "inline-size", "block-size", "flex-basis":
+		return true
+	}
+	return false
+}
 
 // identProps hold names the author picks, not colours: `grid-area: gold` is legal.
 func identProp(prop string) bool {
@@ -46,8 +57,8 @@ func identProp(prop string) bool {
 	return false
 }
 
-// rawProblem names a raw colour, length or time in a value of property prop
-// (empty for an at-rule key), or "". References are masked first.
+// rawProblem names a raw colour, length, time or percentage size in a value of
+// property prop (empty for an at-rule key), or "". References are masked first.
 func rawProblem(prop, s string) string {
 	s = quotedRe.ReplaceAllString(refRe.ReplaceAllString(s, "_"), `""`)
 	if m := hexRe.FindString(s); m != "" {
@@ -63,6 +74,11 @@ func rawProblem(prop, s string) string {
 	}
 	if m := unitRe.FindString(s); m != "" {
 		return "raw length or time " + strings.TrimLeft(m, " ,(") + " (move it to [tokens])"
+	}
+	if sizeProp(prop) {
+		if m := percentRe.FindString(s); m != "" {
+			return "raw size " + strings.TrimLeft(m, " ,(") + " (move it to [tokens.size])"
+		}
 	}
 	return ""
 }
