@@ -275,6 +275,15 @@ Run `tidgrid check` before every commit; it must exit 0.
 A new role is a change to tidgrid.toml in its own commit, never mixed into page work.
 ```
 
+For Claude Code there is a skill in `skills/tidgrid`: how to pick a class, when
+a new role is right, how names in code stay visible to the checker, dark
+mode. It loads by itself in a project that has a `tidgrid.toml`. Install it
+for yourself:
+
+```
+git clone https://github.com/sneikki/tidgrid && ln -s "$PWD/tidgrid/skills/tidgrid" ~/.claude/skills/tidgrid
+```
+
 ## License
 
 MIT
