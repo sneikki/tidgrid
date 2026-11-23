@@ -12,32 +12,35 @@ xl = "90em"
 
 # ---------------------------------------------------------------- tokens
 
+# Every colour is a pair: light-dark(light, dark). The browser picks by the
+# reader's system setting, switched on by color-scheme on html below.
 [tokens.color]
-ink         = "#32495d"
-ink-soft    = "#4d708e"
-muted       = "#92adc4"
-paper       = "#ffffff"
-tint        = "#f7f7f7"
-drawer      = "#f8f8f8"
-drawer-edge = "#ececec"
-edge        = "#f0f0f0"
-sand        = "#f8f3ed"
-sand-ink    = "#c3a888"
-accent      = "#da526b"
-keyword     = "#fa8383"
-shade       = "#00000011"
-shade-deep  = "#00000021"
-code-ground = "#fafafa"
-code-edge   = "#f2f2f2"
-code-ink    = "#383a42"
-syn-comment = "#a0a1a7"
-syn-keyword = "#a626a4"
-syn-tag     = "#e45649"
-syn-literal = "#0184bb"
-syn-string  = "#50a14f"
-syn-attr    = "#986801"
-syn-title   = "#4078f2"
-syn-builtin = "#c18401"
+ink         = "light-dark(#32495d, #d7e2ec)"
+ink-soft    = "light-dark(#4d708e, #a3bcd1)"
+muted       = "light-dark(#92adc4, #7b96ac)"
+paper       = "light-dark(#ffffff, #11171d)"
+raised      = "light-dark(#ffffff, #171f27)"
+tint        = "light-dark(#f7f7f7, #18212a)"
+drawer      = "light-dark(#f8f8f8, #151c24)"
+drawer-edge = "light-dark(#ececec, #27323d)"
+edge        = "light-dark(#f0f0f0, #232d38)"
+sand        = "light-dark(#f8f3ed, #2b251d)"
+sand-ink    = "light-dark(#c3a888, #d2b892)"
+accent      = "light-dark(#da526b, #ec6b82)"
+keyword     = "light-dark(#fa8383, #ff9b9b)"
+shade       = "light-dark(#00000011, #00000055)"
+shade-deep  = "light-dark(#00000021, #00000088)"
+code-ground = "light-dark(#fafafa, #0c1116)"
+code-edge   = "light-dark(#f2f2f2, #1e2832)"
+code-ink    = "light-dark(#383a42, #abb2bf)"
+syn-comment = "light-dark(#a0a1a7, #7f848e)"
+syn-keyword = "light-dark(#a626a4, #c678dd)"
+syn-tag     = "light-dark(#e45649, #e06c75)"
+syn-literal = "light-dark(#0184bb, #56b6c2)"
+syn-string  = "light-dark(#50a14f, #98c379)"
+syn-attr    = "light-dark(#986801, #d19a66)"
+syn-title   = "light-dark(#4078f2, #61afef)"
+syn-builtin = "light-dark(#c18401, #e5c07b)"
 
 [tokens.space]
 none = "0"
@@ -52,6 +55,7 @@ xxl  = "5rem"
 full    = "100%"
 measure = "72rem"
 drawer  = "20rem"
+specimen = "19rem"
 icon-sm = "2rem"
 icon-md = "3rem"
 cell    = "5rem"
@@ -100,6 +104,9 @@ box-sizing = "border-box"
 margin     = "0"
 padding    = "0"
 
+[element.html]
+color-scheme = "light dark"
+
 [element.body]
 min-height       = "{size.screen}"
 overflow-x       = "hidden"
@@ -107,6 +114,7 @@ display          = "flex"
 flex-direction   = "column"
 font-family      = "{font.sans}"
 color            = "{color.ink}"
+background-color = "{color.paper}"
 background-size  = "{size.cell} {size.cell}"
 background-image = "linear-gradient(to right, {color.tint} {border.hair}, transparent {border.hair}), linear-gradient(to bottom, {color.tint} {border.hair}, transparent {border.hair})"
 
@@ -169,6 +177,12 @@ font-size      = "{type.label}"
 font-weight    = "600"
 text-transform = "uppercase"
 color          = "{color.ink}"
+
+[role.text.entry-title]
+use         = "The name of one entry in a list of pages, inside link(entry). Takes the link's colour, so it lights up with it."
+font-family = "{font.title}"
+font-size   = "{type.lead}"
+font-weight = "600"
 
 [role.text.fine-print]
 use         = "Small muted text such as licence lines in the footer."
@@ -336,6 +350,17 @@ transition      = "color {motion.fast}"
 [role.link.text."&:hover"]
 color = "{color.ink-soft}"
 
+[role.link.entry]
+use             = "One row of a list of pages: the whole row is the link, with a rule above it. Holds a sample on one side and text(entry-title) with a line of text(body) on the other."
+display         = "block"
+border-top      = "{border.hair} solid {color.drawer-edge}"
+text-decoration = "none"
+color           = "{color.ink}"
+transition      = "color {motion.fast}"
+
+[role.link.entry."&:is(:hover, :focus-visible)"]
+color = "{color.accent}"
+
 [role.link.footer]
 use            = "A plain link in the footer, for example a documentation page."
 font-family     = "{font.sans}"
@@ -450,7 +475,7 @@ use           = "A clickable panel for one entry of a list of pages (title and a
 padding       = "{space.md}"
 border        = "{border.hair} solid {color.edge}"
 border-radius = "{radius.md}"
-background    = "{color.paper}"
+background    = "{color.raised}"
 box-shadow    = "{shadow.card}"
 transition    = "box-shadow {motion.medium}"
 
@@ -494,7 +519,12 @@ color      = "{color.syn-comment}"
 font-style = "italic"
 
 [role.surface.code."& .hljs-keyword"]
-color = "{color.syn-keyword}"
+color       = "{color.syn-keyword}"
+font-weight = "700"
+
+[role.surface.code."& .hljs-section"]
+color       = "{color.syn-tag}"
+font-weight = "700"
 
 [role.surface.code."& .hljs-name"]
 color = "{color.syn-tag}"
@@ -592,11 +622,7 @@ grid-area = "1 / 1 / 3 / 2"
 grid-area  = "2 / 2"
 align-self = "end"
 
-[role.layout.card-grid]
-use                  = "A grid of equal cards, one column on a phone, two from sm up. For a list of doc cards."
-display               = "grid"
-grid-template-columns = "1fr"
-gap                   = "{space.lg}"
+# ---------------------------------------------------------------- exceptions
 
-[role.layout.card-grid."@sm"]
-grid-template-columns = "1fr 1fr"
+[allow.class]
+nohighlight = "read by highlight.js: keeps a panel of plain text, a shell command or tool output uncoloured"
