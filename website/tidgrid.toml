@@ -83,7 +83,8 @@ hero      = "4rem"
 hero-wide = "5rem"
 
 [tokens.border]
-hair = "1px"
+hair  = "1px"
+focus = "2px"
 
 [tokens.radius]
 sm = "0.25rem"
@@ -106,6 +107,12 @@ padding    = "0"
 
 [element.html]
 color-scheme = "light dark"
+
+[element.html."&.tg-state(light)"]
+color-scheme = "light"
+
+[element.html."&.tg-state(dark)"]
+color-scheme = "dark"
 
 [element.body]
 min-height       = "{size.screen}"
@@ -412,6 +419,12 @@ use = "Set on the navigation or breadcrumb link of the page being shown."
 [role.state.open]
 use = "Set by a script on an element that is currently open, for example the header menu panel on small screens."
 
+[role.state.light]
+use = "Set by a script on html when the reader picked the light colours with the header button. Without it and state(dark) the page follows the system."
+
+[role.state.dark]
+use = "Set by a script on html when the reader picked the dark colours with the header button."
+
 [role.list.plain]
 use        = "A list without bullets or indent, for navigation links."
 list-style = "none"
@@ -454,6 +467,11 @@ border      = "none"
 outline     = "none"
 background  = "transparent"
 cursor      = "pointer"
+
+[role.action.icon."&:focus-visible"]
+outline        = "{border.focus} solid {color.accent}"
+outline-offset = "{border.focus}"
+border-radius  = "{radius.sm}"
 
 # ---------------------------------------------------------------- surfaces
 

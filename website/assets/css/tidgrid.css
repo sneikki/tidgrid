@@ -60,6 +60,7 @@
   --tg-type-hero: 4rem;
   --tg-type-hero-wide: 5rem;
   --tg-border-hair: 1px;
+  --tg-border-focus: 2px;
   --tg-radius-sm: 0.25rem;
   --tg-radius-md: 0.5rem;
   --tg-shadow-card: 0 0 1rem 0 var(--tg-color-shade);
@@ -76,6 +77,12 @@
 
 html {
   color-scheme: light dark;
+  &.tg-state\(light\) {
+    color-scheme: light;
+  }
+  &.tg-state\(dark\) {
+    color-scheme: dark;
+  }
 }
 
 body {
@@ -390,6 +397,12 @@ svg {
 .tg-state\(open\) {
 }
 
+.tg-state\(light\) {
+}
+
+.tg-state\(dark\) {
+}
+
 .tg-list\(plain\) {
   list-style: none;
 }
@@ -429,6 +442,11 @@ svg {
   outline: none;
   background: transparent;
   cursor: pointer;
+  &:focus-visible {
+    outline: var(--tg-border-focus) solid var(--tg-color-accent);
+    outline-offset: var(--tg-border-focus);
+    border-radius: var(--tg-radius-sm);
+  }
 }
 
 .tg-surface\(footer\) {
