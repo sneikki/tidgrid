@@ -4,7 +4,8 @@
       <svg class="tg-icon(ink) tg-width(icon-md) tg-height(icon-md)" viewBox="0 0 31.75 28.575" role="img" aria-label="Tidgrid" xmlns="http://www.w3.org/2000/svg"><use href="{{ site.baseurl }}/assets/img/logo.svg#layer1" /></svg>
     </a>
 
-    <button id="toggle-header-navigation" class="tg-action(icon) sm:tg-hide">
+    <div class="tg-row tg-align(center) tg-gap(md) sm:tg-gap(xl)">
+    <button id="toggle-header-navigation" class="tg-action(icon) sm:tg-hide" aria-label="Open the menu">
       <svg class="tg-icon(ink) tg-width(icon-md) tg-height(icon-md)"clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11 16.745c0-.414.336-.75.75-.75h9.5c.414 0 .75.336.75.75s-.336.75-.75.75h-9.5c-.414 0-.75-.336-.75-.75zm-9-5c0-.414.336-.75.75-.75h18.5c.414 0 .75.336.75.75s-.336.75-.75.75h-18.5c-.414 0-.75-.336-.75-.75zm4-5c0-.414.336-.75.75-.75h14.5c.414 0 .75.336.75.75s-.336.75-.75.75h-14.5c-.414 0-.75-.336-.75-.75z" fill-rule="nonzero"/></svg>
     </button>
       
@@ -22,5 +23,9 @@
           href="/docs" %}
       </ul>
     </nav>
+    <button id="toggle-theme" class="tg-action(icon) tg-order(first) sm:tg-order(last)" aria-label="Switch between light and dark">
+      <svg class="tg-icon(ink) tg-width(icon-sm) tg-height(icon-sm)" viewBox="0 0 24 24" fill-rule="evenodd" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20zm0 2v16a8 8 0 0 1 0-16z" /></svg>
+    </button>
+    </div>
   </div>
 </header>
