@@ -262,11 +262,14 @@ func TestAtRuleKeyBreakpointInToken(t *testing.T) {
 // A percentage is a raw size only where it sizes a box; elsewhere it is an idiom.
 func TestPercentSize(t *testing.T) {
 	raw := map[string]string{
-		"width":      "40%",
-		"max-width":  "calc(100% - {space.sm})",
-		"min-height": "12.5%",
-		"flex-basis": "50%",
-		"block-size": ".5%",
+		"width":           "40%",
+		"max-width":       "calc(100% - {space.sm})",
+		"min-height":      "12.5%",
+		"flex-basis":      "50%",
+		"block-size":      ".5%",
+		"flex":            "1 1 50%",
+		"max-inline-size": "clamp(10%, {size.2xl}, 50%)",
+		"min-width":       "-10%",
 	}
 	for prop, value := range raw {
 		if got := rawProblem(prop, value); !strings.HasPrefix(got, "raw size ") {
@@ -280,6 +283,8 @@ func TestPercentSize(t *testing.T) {
 		"color":               "color-mix(in srgb, {color.ink} 18%, transparent)",
 		"transform":           "translate(-50%, -50%)",
 		"width":               "{size.full}",
+		"flex":                "1 1 0",
+		"left":                "50%",
 		"":                    "@media (min-resolution: 100%)",
 	}
 	for prop, value := range fine {

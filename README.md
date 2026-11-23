@@ -199,8 +199,8 @@ Outside `[tokens]` and `[breakpoints]`, a value may not contain a raw colour
 as `red`), a raw length or a raw time (a number with any CSS length or time
 unit: `px`, `rem`, `vw`, `dvh`, `cqw`, `ms` …). Those live in tokens.
 So does a percentage that sizes a box: in `width`, `height`, `inline-size`,
-`block-size`, their `min-` and `max-` forms and `flex-basis`, write
-`{size.half}`, not `50%`.
+`block-size`, their `min-` and `max-` forms, `flex-basis` and `flex`, write
+`{size.half}`, not `50%`. Only those properties are checked for it.
 Keywords, `transparent`, `currentColor`, `0`, unitless numbers, percentages
 anywhere else (`border-radius: 50%`, a gradient stop, `translate(-50%)`),
 `fr`, angles and functions over tokens (`calc({space.md} * 2)`,

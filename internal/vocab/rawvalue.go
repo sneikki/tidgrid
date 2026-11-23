@@ -36,7 +36,7 @@ var (
 // lives in tokens.size; in a gradient stop, a colour mix or a radius it is not.
 func sizeProp(prop string) bool {
 	switch strings.TrimPrefix(strings.TrimPrefix(prop, "min-"), "max-") {
-	case "width", "height", "inline-size", "block-size", "flex-basis":
+	case "width", "height", "inline-size", "block-size", "flex-basis", "flex":
 		return true
 	}
 	return false
