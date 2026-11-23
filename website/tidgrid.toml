@@ -153,13 +153,6 @@ font-size   = "{type.h2}"
 font-weight = "400"
 color       = "{color.ink}"
 
-[role.text.lead]
-use         = "Opening sentence under a title that sums up the page. One per page, bold."
-font-size   = "{type.lead}"
-font-weight = "700"
-line-height = "2"
-color       = "{color.ink}"
-
 [role.text.body]
 use         = "Ordinary running text. The default for any paragraph."
 line-height = "1.75"
@@ -570,28 +563,6 @@ color = "{color.syn-title}"
 
 [role.surface.code."& .hljs-built_in"]
 color = "{color.syn-builtin}"
-
-[role.surface.demo]
-use           = "A coloured block that stands for an element in a layout demonstration. Accent colour, white bold centred label."
-padding       = "{space.lg}"
-font-family   = "{font.title}"
-font-weight   = "700"
-text-align    = "center"
-white-space   = "nowrap"
-color         = "{color.paper}"
-background    = "{color.accent}"
-border-radius = "{radius.md}"
-
-[role.surface.demo-alt]
-use           = "Second colour of a demo block, dark, to tell neighbours apart in a demonstration."
-padding       = "{space.lg}"
-font-family   = "{font.title}"
-font-weight   = "700"
-text-align    = "center"
-white-space   = "nowrap"
-color         = "{color.paper}"
-background    = "{color.ink}"
-border-radius = "{radius.md}"
 
 # ---------------------------------------------------------------- layout the atoms cannot express
 

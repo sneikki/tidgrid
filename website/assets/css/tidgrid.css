@@ -125,13 +125,6 @@ svg {
   color: var(--tg-color-ink);
 }
 
-.tg-text\(lead\) {
-  font-size: var(--tg-type-lead);
-  font-weight: 700;
-  line-height: 2;
-  color: var(--tg-color-ink);
-}
-
 .tg-text\(body\) {
   line-height: 1.75;
   color: var(--tg-color-ink);
@@ -535,28 +528,6 @@ svg {
   & .hljs-built_in {
     color: var(--tg-color-syn-builtin);
   }
-}
-
-.tg-surface\(demo\) {
-  padding: var(--tg-space-lg);
-  font-family: var(--tg-font-title);
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--tg-color-paper);
-  background: var(--tg-color-accent);
-  border-radius: var(--tg-radius-md);
-}
-
-.tg-surface\(demo-alt\) {
-  padding: var(--tg-space-lg);
-  font-family: var(--tg-font-title);
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--tg-color-paper);
-  background: var(--tg-color-ink);
-  border-radius: var(--tg-radius-md);
 }
 
 .tg-layout\(drawer\) {
