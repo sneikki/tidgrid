@@ -19,6 +19,16 @@ function windowsPaths(args) {
   });
 }
 
+// Node on Windows has no O_DIRECTORY, so Go refuses to open any directory.
+// Offer Go a bit for it and strip that bit again before Node sees the flags.
+function windowsFs() {
+  const O_DIRECTORY = 0x10000;
+  return Object.create(fs, {
+    constants: { value: { ...fs.constants, O_DIRECTORY } },
+    open: { value: (p, flags, ...rest) => fs.open(p, flags & ~O_DIRECTORY, ...rest) },
+  });
+}
+
 // Go's glue fits argv and environment in 8 KiB. npx and CI runners exceed
 // that, so shed the npm_* variables first, then the largest, until it fits.
 function fitEnv(env, args) {
@@ -37,7 +47,7 @@ function fitEnv(env, args) {
 
 function main() {
   globalThis.require = require;
-  globalThis.fs = fs;
+  globalThis.fs = process.platform === "win32" ? windowsFs() : fs;
   globalThis.path = path;
   globalThis.TextEncoder = require("util").TextEncoder;
   globalThis.TextDecoder = require("util").TextDecoder;
