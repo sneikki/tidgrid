@@ -81,7 +81,7 @@ $ tidgrid check
   <div data-clear class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(lg)">
     <h1 class="tg-text(wordmark-hero) tg-self(start)">tidgrid<span class="tg-text(wordmark-accent)">.dev</span></h1>
     <p class="tg-text(tagline) tg-self(start)">Your agent has opinions about CSS. Revoke them.</p>
-    <p class="tg-text(lead) tg-max-width(reading)">One file lists every class a page may use. Everything else fails the check.</p>
+    <p class="tg-text(lead) tg-max-width(reading)">One vocabulary lists every class a page may use. Everything else fails the check.</p>
     <div class="tg-col sm:tg-row sm:tg-self(start) tg-gap(sm)">
       <a class="tg-action(primary)" href="{{ site.baseurl }}/get-started">Get started</a>
       <a class="tg-action(secondary)" href="{{ site.baseurl }}/docs">Read the documentation</a>
@@ -150,11 +150,11 @@ text(refused) = outside it.
     </div>
   </section>
 
-  {% comment %}Scene: the one file, built up table by table.{% endcomment %}
+  {% comment %}Scene: the vocabulary, built up table by table.{% endcomment %}
   <section class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(xl) tg-pad-y(xxl)">
     <div class="tg-col tg-y-gap(md)">
-      <h2 class="tg-text(punch)">The whole look. One file.</h2>
-      <p class="tg-text(lead) tg-max-width(reading)">Colours, spacing and every class a page may use. Review that once, instead of four hundred diffs.</p>
+      <h2 class="tg-text(punch)">The whole look. Decided once.</h2>
+      <p class="tg-text(lead) tg-max-width(reading)">Colours, spacing and every named look live in the vocabulary. Nothing else gets to have an opinion.</p>
       <a class="tg-link(text) tg-self(start)" href="{{ site.baseurl }}/docs/vocabulary-file">The vocabulary file</a>
     </div>
     <div class="tg-max-width(reading) tg-col tg-y-gap(xs)">
