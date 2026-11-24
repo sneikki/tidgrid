@@ -77,16 +77,16 @@ role(
 role(
     "text", "punch",
     use = "The big statement that heads a scene of the front page: one or two short sentences. Not the heading of a docs section.",
-    include = [text.heading],
+    include = [text.heading, text.statement],
     css = {
-        "font-size": "{type.h1}",
-        "font-weight": "700",
-        "line-height": "1.1",
         "text-wrap": "balance",
-        "@lg": {
-            "font-size": "{type.hero}",
-        },
     },
+)
+
+role(
+    "text", "figure",
+    use = "One big figure of a result, with a sentence of text(body) under it. Several per page; not a heading.",
+    include = [text.heading, text.statement],
 )
 
 role(
