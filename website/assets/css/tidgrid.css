@@ -344,14 +344,6 @@ svg {
   }
 }
 
-.tg-text\(label\) {
-  font-family: var(--tg-font-title);
-  font-size: var(--tg-type-label);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--tg-color-ink);
-}
-
 .tg-text\(note-title\) {
   font-family: var(--tg-font-title);
   font-size: var(--tg-type-label);
@@ -429,16 +421,6 @@ svg {
   &.tg-state\(current\) {
     color: var(--tg-color-accent);
     font-weight: 700;
-  }
-}
-
-.tg-link\(footer\) {
-  font-family: var(--tg-font-sans);
-  text-decoration: none;
-  color: var(--tg-color-ink);
-  transition: color var(--tg-motion-fast);
-  &:hover {
-    color: var(--tg-color-ink-soft);
   }
 }
 
