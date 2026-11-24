@@ -57,7 +57,8 @@ Tokens first, then roles. Decide each one; the first value that comes to mind is
 - **Space.** One scale, with steps and density chosen for the use: a tool someone works in all day packs tighter than a page someone reads once.
 - **Shape and motion.** Corners, rules, borders, shadows, transitions: each a decision, and "none" is one. Every length and time is a token, the small ones too (an outline offset, a hover nudge, a shadow size): give them a group of their own, or `build` refuses each one.
 - **Roles.** One per kind of content in the brief, named by purpose, each `use` line saying when it applies and when it does not. Give the subject's own things roles of their own (its records, measures, statuses, objects), not only levels of text. A vocabulary of title, heading, body, label, card and button is the starter again under new colours.
-- **The unglamorous roles.** Tables, form fields with focus, disabled and error states, plain links, long words and code that must wrap, empty states. In our trial, pages written from a finished vocabulary had no generic patterns but came out dry: the vocabulary held text levels and a code panel and little else, so every page became heading, prose, panel.
+- **Base rules.** The starter has no `box-sizing` reset. Add `element("*", css = {"box-sizing": "border-box"})`, or every full-width box with padding is wider than the screen.
+- **The unglamorous roles.** Those the brief's content calls for, no more (a page without a form needs no field roles, and `check` fails on a role nothing uses): tables, and what a wide one does on a phone (rows that stack, or a role that scrolls by itself), form fields with focus, disabled and error states, plain links, long words and code that must wrap, empty states. In our trial, pages written from a finished vocabulary had no generic patterns but came out dry: the vocabulary held text levels and a code panel and little else, so every page became heading, prose, panel.
 
 `tidgrid build` must exit 0. `tidgrid check` lists every role as unused until pages use them; at this step that is expected.
 
@@ -79,9 +80,15 @@ The looks generated UIs fall into, so you recognise them in your own draft. They
 
 When a check fails, go back to the brief, not to the opposite of the symptom.
 
+A brand that already exists can sit on a symptom itself (a dark ground and one bright accent, say). The brand is the subject's own, so keep it; tell the person which symptom it is near, and let type, roles and composition carry what the palette cannot.
+
 ## 5. Show it once and get a yes
 
-Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. It does not load the pages' typefaces by itself: a `<link>` in the pages is not in it, and an `allow_css` file is copied in as written, so a relative `url()` in its `@font-face` breaks when the sheet sits elsewhere. Add the link to the sheet file, or use an absolute url, and confirm the faces show; otherwise the person approves a fallback face. If you can render HTML, look at it yourself first. Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
+Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. It does not load the pages' typefaces by itself: a `<link>` in the pages is not in it, and an `allow_css` file is copied in as written, so a relative `url()` in its `@font-face` breaks when the sheet sits elsewhere. Add the link to the sheet file, or use an absolute url, and confirm the faces show; otherwise the person approves a fallback face. If you can render HTML, look at it yourself first.
+
+The sheet shows the look, not a page. Its samples are placeholder text in a narrow column, so a headline wraps there as it never will on the page, and nothing about composition shows. Say so in the first line to the person, or they take the sheet for the page. Where the real words decide the matter (a headline, a figure, a struck-out correction), put them into the sheet file by hand; a rerun of `sheet` wipes that, so do it last.
+
+Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
 
 No page before the yes. If no one can answer, stop and say what is waiting; never approve your own look.
 
@@ -94,4 +101,4 @@ No page before the yes. If no one can answer, stop and say what is waiting; neve
 - **React or Next:** `out` inside the app (for Next, a file in `app/` imported once in the root layout); `scan` lists the source folders only, never the build output (`.next` is full of `style` attributes); add `"tg": "tidgrid build && tidgrid check"` to `package.json` and run it before `dev` and `build`; class names written whole, and tables of them through `cn()`.
 - Never write own CSS, a `<style>` block or appearance in `style=`, never edit the generated stylesheet, and never use `allow_class` or ignore comments to get past the check.
 
-Done means: `tidgrid build && tidgrid check` exit 0, the generated stylesheet committed, step 4 run on every page, and, if you can render, every page looked at at phone and desktop width.
+Done means: `tidgrid build && tidgrid check` exit 0, the generated stylesheet committed, step 4 run on every page, and, if you can render, every page looked at at phone and desktop width. `check` reads classes, not layout: a page that scrolls sideways passes it, and only the phone-width render shows it.
