@@ -76,12 +76,8 @@ for (const box of document.querySelectorAll('input[data-state]')) {
 // Run is the sheet command: it writes the self-contained style sheet page.
 func Run(args []string) int {
 	fs := flag.NewFlagSet("sheet", flag.ContinueOnError)
-	cfg := fs.String("c", vocab.DefaultConfig, "vocabulary file")
 	out := fs.String("o", "tidgrid-sheet.html", "output file")
-	if err := fs.Parse(args); err != nil {
-		return 2
-	}
-	v, code := vocab.LoadFile(*cfg)
+	v, code := vocab.LoadFlagSet(fs, args)
 	if v == nil {
 		return code
 	}

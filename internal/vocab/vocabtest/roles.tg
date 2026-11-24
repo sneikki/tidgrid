@@ -1,0 +1,22 @@
+load("tokens.tg", "border", "color", "motion", "rise")
+
+role("surface", "card",
+    use = "A panel that lifts off the ground. One per group of related content.",
+    css = {
+        "background": color.ground,
+        "border": border.hair + " solid " + color.accent,
+        "&:hover": {"border-color": color.ink},
+        "@md": {"border-width": border.hair},
+    })
+
+role("state", "ready", use = "Set on body when the intro animation has finished.")
+
+role("text", "title",
+    use = "The one title of a page.",
+    css = {
+        "opacity": "0",
+        ".tg-state(ready) &": {
+            "opacity": "1",
+            "animation": rise + " " + motion.slow + " ease",
+        },
+    })
