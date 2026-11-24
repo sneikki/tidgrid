@@ -7,13 +7,14 @@ import (
 
 	"github.com/sneikki/tidgrid/internal/check"
 	"github.com/sneikki/tidgrid/internal/list"
+	"github.com/sneikki/tidgrid/internal/plan"
 	"github.com/sneikki/tidgrid/internal/sheet"
 )
 
 // Run executes the command named by args[0] and returns its exit code.
 func Run(args []string) int {
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "usage: tidgrid init|convert|build|check|list|sheet [file]")
+		fmt.Fprintln(os.Stderr, "usage: tidgrid init|convert|build|check|list|plan|sheet [file]")
 		return 2
 	}
 	switch args[0] {
@@ -27,6 +28,8 @@ func Run(args []string) int {
 		return check.Run(args[1:])
 	case "list":
 		return list.Run(args[1:])
+	case "plan":
+		return plan.Run(args[1:])
 	case "sheet":
 		return sheet.Run(args[1:])
 	}
