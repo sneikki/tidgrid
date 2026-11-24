@@ -24,7 +24,7 @@ function currentScheme() {
 applyScheme(storedScheme());
 
 document.addEventListener("click", ({ target }) => {
-  if (!target.closest("#toggle-theme")) return;
+  if (!target.closest("[data-theme-toggle]")) return;
   const next = currentScheme() === "dark" ? "light" : "dark";
   applyScheme(next);
   try {

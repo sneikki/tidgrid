@@ -25,9 +25,18 @@
         {% include navigation-link.html
           name="Documentation"
           href="/docs" %}
+
+        <li class="sm:tg-hide">
+          <button data-theme-toggle class="tg-action(secondary) tg-width(full)">
+            <span class="tg-row tg-align(center) tg-justify(center) tg-gap(sm)">
+              <svg class="tg-icon(ink) tg-width(icon-sm) tg-height(icon-sm)" viewBox="0 0 24 24" fill-rule="evenodd" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20zm0 2v16a8 8 0 0 1 0-16z" /></svg>
+              Light / dark
+            </span>
+          </button>
+        </li>
       </ul>
     </nav>
-    <button id="toggle-theme" class="tg-action(icon) tg-order(first) sm:tg-order(last)" aria-label="Switch between light and dark">
+    <button data-theme-toggle class="tg-action(icon) tg-hide-below(sm) tg-order(first) sm:tg-order(last)" aria-label="Switch between light and dark">
       <svg class="tg-icon(ink) tg-width(icon-sm) tg-height(icon-sm)" viewBox="0 0 24 24" fill-rule="evenodd" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20zm0 2v16a8 8 0 0 1 0-16z" /></svg>
     </button>
     </div>
