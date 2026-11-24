@@ -19,6 +19,10 @@ const (
 // LoadFile loads the vocabulary at path. On failure it prints each error to
 // stderr and returns a nil vocabulary with exit code 2; else the vocabulary and 0.
 func LoadFile(path string) (*Vocabulary, int) {
+	if _, err := os.Stat(path); errors.Is(err, fs.ErrNotExist) {
+		fmt.Fprintf(os.Stderr, "%s: no such file; run `tidgrid init` to create a vocabulary, or give the file as an argument\n", path)
+		return nil, 2
+	}
 	v, errs := Load(path)
 	if len(errs) > 0 {
 		for _, e := range errs {
@@ -40,7 +44,11 @@ func LoadFlag(name string, args []string) (*Vocabulary, int) {
 
 // LoadFlagSet is LoadFlag for a command with flags of its own.
 func LoadFlagSet(set *flag.FlagSet, args []string) (*Vocabulary, int) {
-	if err := set.Parse(args); err != nil || set.NArg() > 1 {
+	if err := set.Parse(args); err != nil {
+		return nil, 2
+	}
+	if set.NArg() > 1 {
+		fmt.Fprintf(os.Stderr, "tidgrid %s: want at most one vocabulary file, got %d arguments\n", set.Name(), set.NArg())
 		return nil, 2
 	}
 	path := DefaultEntry

@@ -55,7 +55,7 @@ func TestErrorNamesDeclaringCall(t *testing.T) {
 		"index.tg": projectLine + `source("roles.tg")`,
 		"roles.tg": "\n\nrole(\"surface\", \"badge\", use = \"x\", css = {\"padding\": \"12px\"})\n",
 	})
-	want := "roles.tg:3: role.surface.badge.padding: raw length or time 12px (move it to [tokens])"
+	want := "roles.tg:3: role.surface.badge.padding: raw length or time 12px (move it to tokens)"
 	if !strings.Contains(got, want) {
 		t.Fatalf("got %q, want it to contain %q", got, want)
 	}

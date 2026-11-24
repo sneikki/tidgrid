@@ -1,24 +1,20 @@
 package vocab
 
 import (
-	"fmt"
 	"strings"
 )
 
 // Convert reads the TOML vocabulary at path and returns the Starlark files that
 // declare the same vocabulary: index.tg, tokens.tg and roles.tg. Values stay
-// strings as written; TOML comments are lost.
-func Convert(path string) (map[string]string, error) {
+// strings as written; TOML comments are lost. The TOML is validated as
+// Load does first; its errors are returned and nothing is converted.
+func Convert(path string) (map[string]string, []error) {
 	l := newLoader(path)
 	if err := l.decodeTOML(path); err != nil {
-		return nil, err
+		return nil, []error{err}
 	}
-	for _, k := range l.children() {
-		switch k {
-		case "project", "breakpoints", "tokens", "element", "role", "keyframes", "allow":
-		default:
-			return nil, fmt.Errorf("%s: unknown table", showPath([]string{k}))
-		}
+	if _, errs := l.validate(); len(errs) > 0 {
+		return nil, errs
 	}
 	return map[string]string{
 		"index.tg":  l.convertIndex(),
@@ -52,9 +48,10 @@ func (l *loader) convertIndex() string {
 
 func (l *loader) convertTokens() string {
 	var b strings.Builder
+	taken := map[string]bool{}
 	for _, g := range l.children("tokens") {
 		if t := l.table("tokens", g); t != nil {
-			b.WriteString("tokens(" + quote(g) + ", " + l.dict([]string{"tokens", g}, t, 0) + ")\n\n")
+			b.WriteString(safeName(g, taken) + " = tokens(" + quote(g) + ", " + l.dict([]string{"tokens", g}, t, 0) + ")\n\n")
 		}
 	}
 	return b.String()

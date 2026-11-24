@@ -1,6 +1,8 @@
 package vocab
 
 import (
+	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -8,19 +10,40 @@ import (
 // quote is a Starlark string literal; Go's escapes are a subset of Starlark's.
 func quote(s string) string { return strconv.Quote(s) }
 
-// call writes `fn(lead, use = "...", css = {...})` for the table t at p.
+// call writes fn(lead, use = "...", css = {...}) over several lines, one argument per line after lead.
 func (l *loader) call(fn string, p []string, t map[string]any, lead string) string {
 	use, hasUse := t["use"].(string)
-	css := l.dictExcept(p, t, 0, "use")
-	var args []string
-	args = append(args, lead)
+	css := l.dictExcept(p, t, 1, "use")
+	args := []string{lead}
 	if hasUse {
 		args = append(args, "use = "+quote(use))
 	}
 	if css != "{}" {
 		args = append(args, "css = "+css)
 	}
-	return fn + "(" + strings.Join(args, ", ") + ")\n\n"
+	return fn + "(\n    " + strings.Join(args, ",\n    ") + ",\n)\n\n"
+}
+
+// pyReserved are the names a token group variable must not take: Starlark's
+// keywords and reserved words, its constants, and the vocabulary builtins.
+var pyReserved = strings.Fields(`and as assert async await break class continue def del elif else except
+	finally for from global if import in is lambda load nonlocal not or pass raise return try while with yield
+	True False None project breakpoints tokens element keyframes role allow_class allow_css source`)
+
+var nonIdent = regexp.MustCompile(`[^A-Za-z0-9_]`)
+
+// safeName turns a group name into a variable name that is a valid identifier,
+// not reserved and not in taken; the chosen name is added to taken.
+func safeName(group string, taken map[string]bool) string {
+	n := nonIdent.ReplaceAllString(group, "_")
+	if n == "" || (n[0] >= '0' && n[0] <= '9') {
+		n = "_" + n
+	}
+	for taken[n] || slices.Contains(pyReserved, n) {
+		n += "_"
+	}
+	taken[n] = true
+	return n
 }
 
 // args writes the keys of t as keyword arguments, in file order.

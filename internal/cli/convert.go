@@ -1,7 +1,9 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"sort"
@@ -20,28 +22,59 @@ func runConvert(args []string) int {
 	if len(args) == 1 {
 		src = args[0]
 	}
-	files, err := vocab.Convert(src)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "tidgrid convert: %s: %v\n", src, err)
+	files, errs := vocab.Convert(src)
+	for _, err := range errs {
+		fmt.Fprintf(os.Stderr, "%s: %v\n", src, err)
+	}
+	if len(errs) > 0 {
 		return 2
 	}
-	dir := filepath.Dir(src)
-	names := sortedNames(files)
-	for _, n := range names {
-		if _, err := os.Stat(filepath.Join(dir, n)); err == nil {
-			fmt.Fprintf(os.Stderr, "tidgrid convert: %s exists; nothing written\n", filepath.Join(dir, n))
-			return 2
-		}
+	written, err := writeNew(filepath.Dir(src), files)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "tidgrid convert:", err)
+		return 2
 	}
-	for _, n := range names {
-		if err := os.WriteFile(filepath.Join(dir, n), []byte(files[n]), 0o644); err != nil {
-			fmt.Fprintln(os.Stderr, "tidgrid convert:", err)
-			return 2
-		}
-		fmt.Println("wrote", filepath.Join(dir, n))
+	for _, p := range written {
+		fmt.Println("wrote", p)
 	}
 	fmt.Println("note: TOML comments are not carried over")
 	return 0
+}
+
+// writeNew creates each file in dir exclusively, so an existing file is never touched.
+// When one fails, the files this call created are removed again.
+func writeNew(dir string, files map[string]string) ([]string, error) {
+	var written []string
+	for _, n := range sortedNames(files) {
+		p := filepath.Join(dir, n)
+		err := createFile(p, files[n])
+		if err != nil {
+			for _, w := range written {
+				os.Remove(w)
+			}
+			if errors.Is(err, fs.ErrExist) {
+				return nil, fmt.Errorf("%s exists; nothing written", p)
+			}
+			return nil, err
+		}
+		written = append(written, p)
+	}
+	return written, nil
+}
+
+func createFile(p, text string) error {
+	f, err := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+	if err != nil {
+		return err
+	}
+	_, err = f.WriteString(text)
+	if cerr := f.Close(); err == nil {
+		err = cerr
+	}
+	if err != nil {
+		os.Remove(p)
+	}
+	return err
 }
 
 func sortedNames(files map[string]string) []string {

@@ -7,6 +7,11 @@ import (
 
 // loadAllow reads [allow.class] and [allow.css]: each entry needs a reason.
 func (l *loader) loadAllow() {
+	for _, k := range l.children("allow") {
+		if k != "class" && k != "css" {
+			l.errf([]string{"allow", k}, "unknown table: want allow.class or allow.css")
+		}
+	}
 	for _, kind := range []string{"class", "css"} {
 		for _, k := range l.children("allow", kind) {
 			p := []string{"allow", kind, k}

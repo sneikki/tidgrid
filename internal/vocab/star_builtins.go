@@ -41,7 +41,8 @@ func (e *evaluator) source(th *starlark.Thread, args starlark.Tuple, kw []starla
 	if err := starlark.UnpackArgs("source", args, kw, "path", &module); err != nil {
 		return nil, err
 	}
-	name, err := resolveModule(th.Name, module)
+	// the file the call is written in, which inside a function is not th.Name
+	name, err := resolveModule(th.CallFrame(1).Pos.Filename(), module)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +202,9 @@ func dictArg(fn string, args starlark.Tuple, kw []starlark.Tuple) (*starlark.Dic
 		}
 	}
 	for _, kv := range kw {
+		if _, dup, _ := d.Get(kv[0]); dup {
+			return nil, fmt.Errorf("%s: %s given twice", fn, kv[0])
+		}
 		if err := d.SetKey(kv[0], kv[1]); err != nil {
 			return nil, err
 		}
