@@ -10,6 +10,20 @@ import (
 	"github.com/sneikki/tidgrid/internal/vocab/vocabtest"
 )
 
+// The full reset sets headings to font-weight: inherit; the chrome's own
+// classes must say bold themselves, or its headings go plain.
+func TestChromeHeadingsKeepWeightUnderFullReset(t *testing.T) {
+	v := vocabtest.Example(t)
+	v.Tidiness = "full"
+	out := page(v)
+	for _, c := range []string{".tgs-title{", ".tgs-h{", ".tgs-sub{"} {
+		i := strings.Index(out, c)
+		if i < 0 || !strings.Contains(out[i:i+strings.Index(out[i:], "}")], "font-weight:700") {
+			t.Errorf("%s has no font-weight:700", c)
+		}
+	}
+}
+
 func TestSheetExample(t *testing.T) {
 	v := vocabtest.Example(t)
 	out := page(v)

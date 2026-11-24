@@ -71,6 +71,7 @@ type Vocabulary struct {
 	Breakpoints []Breakpoint // file order
 	Tokens      []TokenGroup // file order
 	Tidiness    string       // "", "minimal" or "full": the reset written after :root
+	tidyRules   []*Rule      // the chosen level's parsed rules, written after :root
 	elements    []element
 	keyframes   []keyframe
 	Mixins      []Mixin // declaration order

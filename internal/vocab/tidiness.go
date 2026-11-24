@@ -3,8 +3,6 @@ package vocab
 import (
 	"embed"
 	"fmt"
-	"regexp"
-	"strings"
 
 	"go.starlark.net/starlark"
 )
@@ -20,106 +18,50 @@ func (e *evaluator) tidiness(th *starlark.Thread, args starlark.Tuple, kw []star
 	if err := starlark.UnpackArgs("tidiness", args, kw, "level", &level); err != nil {
 		return nil, err
 	}
-	s, ok := level.(starlark.String)
-	if !ok || (string(s) != "minimal" && string(s) != "full") {
-		return nil, fmt.Errorf(`tidiness: level must be "minimal" or "full", got %s`, level.String())
+	s, _ := level.(starlark.String)
+	rules, err := tidinessUpTo(string(s))
+	if rules == nil && err == nil {
+		return nil, fmt.Errorf("tidiness: level must be %q or %q, got %s", TidinessLevels[0], TidinessLevels[1], level.String())
+	}
+	if err != nil {
+		return nil, fmt.Errorf("tidiness(%q): %w", string(s), err)
 	}
 	if e.l.tidinessAt != "" {
 		return nil, fmt.Errorf("tidiness: called twice (%s and %s)", e.l.tidinessAt, at(th))
 	}
 	e.l.tidinessAt = at(th)
-	e.l.v.Tidiness = string(s)
+	e.l.v.Tidiness, e.l.v.tidyRules = string(s), rules
 	return starlark.None, nil
 }
 
-// tidinessRules are the rules of the chosen level: minimal's, then full's.
-func (v *Vocabulary) tidinessRules() []*Rule {
+// tidinessUpTo parses the files from the first level through level; nil rules
+// and no error when level is not one of TidinessLevels.
+func tidinessUpTo(level string) ([]*Rule, error) {
 	var out []*Rule
 	for _, lvl := range TidinessLevels {
-		src, _ := tidinessFS.ReadFile("tidiness/" + lvl + ".css")
-		out = append(out, parseRules(string(src))...)
-		if lvl == v.Tidiness {
-			break
+		rules, err := parseLevel(lvl)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, rules...)
+		if lvl == level {
+			return out, nil
 		}
 	}
-	if v.Tidiness == "" {
-		return nil
+	return nil, nil
+}
+
+func parseLevel(level string) ([]*Rule, error) {
+	src, err := tidinessFS.ReadFile("tidiness/" + level + ".css")
+	if err != nil {
+		return nil, err
 	}
-	return out
-}
-
-var cssComment = regexp.MustCompile(`(?s)/\*.*?\*/`)
-
-// parseRules reads the embedded stylesheets: rules, @-blocks and declarations.
-// Comments go; blank runs and line breaks inside a selector list collapse.
-func parseRules(src string) []*Rule {
-	p := &cssParser{src: cssComment.ReplaceAllString(src, "")}
-	return p.rules()
-}
-
-type cssParser struct {
-	src string
-	pos int
-}
-
-// rules reads blocks up to the closing brace (consumed) or the end.
-func (p *cssParser) rules() []*Rule {
-	var out []*Rule
-	for p.pos < len(p.src) {
-		key, delim := p.chunk()
-		switch delim {
-		case '{':
-			out = append(out, p.block(key))
-		case '}':
-			return out
-		}
+	rules, err := parseRules(string(src))
+	if err != nil {
+		return nil, fmt.Errorf("%s.css: %w", level, err)
 	}
-	return out
+	return rules, nil
 }
 
-// block reads the body of the rule whose prelude is key; its '{' is consumed.
-func (p *cssParser) block(key string) *Rule {
-	r := &Rule{Key: strings.ReplaceAll(strings.Join(strings.Fields(key), " "), " ,", ",")}
-	p.body(r)
-	return r
-}
-
-// body fills r with declarations and nested blocks up to its closing brace.
-func (p *cssParser) body(r *Rule) {
-	for p.pos < len(p.src) {
-		text, delim := p.chunk()
-		switch delim {
-		case ';':
-			r.Nodes = append(r.Nodes, declNode(text))
-		case '{':
-			r.Nodes = append(r.Nodes, Node{Sub: p.block(text)})
-		default:
-			if strings.TrimSpace(text) != "" {
-				r.Nodes = append(r.Nodes, declNode(text))
-			}
-			return
-		}
-	}
-}
-
-func declNode(text string) Node {
-	prop, value, _ := strings.Cut(text, ":")
-	return Node{Prop: strings.TrimSpace(prop), Value: strings.Join(strings.Fields(value), " ")}
-}
-
-// chunk reads up to a '{', ';' or '}' outside parentheses and consumes it.
-func (p *cssParser) chunk() (string, byte) {
-	start, depth := p.pos, 0
-	for ; p.pos < len(p.src); p.pos++ {
-		switch c := p.src[p.pos]; {
-		case c == '(':
-			depth++
-		case c == ')':
-			depth--
-		case depth == 0 && (c == '{' || c == ';' || c == '}'):
-			p.pos++
-			return p.src[start : p.pos-1], c
-		}
-	}
-	return p.src[start:], 0
-}
+// tidinessRules are the chosen level's rules, parsed when tidiness() ran.
+func (v *Vocabulary) tidinessRules() []*Rule { return v.tidyRules }
