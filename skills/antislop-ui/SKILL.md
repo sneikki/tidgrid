@@ -52,10 +52,10 @@ Every later decision must trace back to a sentence here. One that does not is a 
 
 Tokens first, then roles. Decide each one; the first value that comes to mind is the probable one.
 
-- **Colour.** Start with the ground the pages sit on and the ink on it, then add colours one job at a time: one colour per job, and only as many accents as there are things that must stand out. Decide light and dark together (`light-dark()` pairs) if both are wanted. Check that every ink reaches WCAG AA contrast on every ground it sits on; no command checks this.
+- **Colour.** Start with the ground the pages sit on and the ink on it, then add colours one job at a time: one colour per job, and only as many accents as there are things that must stand out. Decide light and dark together (`light-dark()` pairs) if both are wanted. Compute the contrast ratio of every ink on every ground it sits on and reach WCAG AA; do not judge it by eye, and no command checks it.
 - **Type.** Choose by what is read most here: long prose, figures, labels or code. The display face, the reading face and the scale are three decisions; the distance between scale steps sets the tone as much as the face does. A face that is not on every machine needs a load path: a remote `<link>` passes the check, a local `@font-face` file needs `allow_css(path, reason)`, and in Next `next/font` with `variable`, the font token pointing at that custom property.
 - **Space.** One scale, with steps and density chosen for the use: a tool someone works in all day packs tighter than a page someone reads once.
-- **Shape and motion.** Corners, rules, borders, shadows, transitions: each a decision, and "none" is one.
+- **Shape and motion.** Corners, rules, borders, shadows, transitions: each a decision, and "none" is one. Every length and time is a token, the small ones too (an outline offset, a hover nudge, a shadow size): give them a group of their own, or `build` refuses each one.
 - **Roles.** One per kind of content in the brief, named by purpose, each `use` line saying when it applies and when it does not. Give the subject's own things roles of their own (its records, measures, statuses, objects), not only levels of text. A vocabulary of title, heading, body, label, card and button is the starter again under new colours.
 - **The unglamorous roles.** Tables, form fields with focus, disabled and error states, plain links, long words and code that must wrap, empty states. In our trial, pages written from a finished vocabulary had no generic patterns but came out dry: the vocabulary held text levels and a code panel and little else, so every page became heading, prose, panel.
 
@@ -71,7 +71,7 @@ Run it on the vocabulary before showing it, and on every page before calling it 
 
 The looks generated UIs fall into, so you recognise them in your own draft. They are symptoms, not a list to avoid: steering around them one at a time only finds the next one.
 
-- **Colour:** white or near-black ground, a grey ramp, one saturated blue, indigo or violet accent on every link, button and highlight; a blue-to-violet gradient behind the hero or inside the headline.
+- **Colour:** white or near-black ground, a grey ramp, one saturated blue, indigo or violet accent on every link, button and highlight; a blue-to-violet gradient behind the hero or inside the headline. And the two looks agents reach for when told to avoid that one: a warm cream ground with a serif headline and a clay or terracotta accent, and near-black with one acid-green or orange accent.
 - **Type:** the system stack, or the one geometric sans every template ships, for everything; headings that are the body face made bigger and bolder; small upper-case tracked labels above every heading.
 - **Surfaces:** every group in a rounded card with a soft shadow or a hairline border; a coloured bar on a box's left edge; frosted glass; pill badges on everything.
 - **Composition:** a centred hero with headline, subline and two buttons; three or four equal cards with an icon each; a row of big numbers; every section in the same centred column with the same padding; emoji as icons.
@@ -81,7 +81,7 @@ When a check fails, go back to the brief, not to the opposite of the symptom.
 
 ## 5. Show it once and get a yes
 
-Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. If you can render HTML, look at it yourself first. Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
+Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. It loads a typeface only when the vocabulary does (`allow_css`); if the pages load theirs with a `<link>`, add the same link to the sheet file, or the person approves a fallback face. If you can render HTML, look at it yourself first. Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
 
 No page before the yes. If no one can answer, stop and say what is waiting; never approve your own look.
 
@@ -90,7 +90,7 @@ No page before the yes. If no one can answer, stop and say what is waiting; neve
 - Read `tidgrid list` and pick classes in the usage skill's order: atoms for layout, an existing role for a look, a change to a role, a new role last.
 - A page needs a look the vocabulary lacks: add the role, with its `use` line, in the same commit as the page (`check` fails on a role nothing uses). A role inside the approved look needs no new yes. A change to tokens or to the look of existing roles does: show `tidgrid plan` and a new sheet first.
 - Composition is the part no command sees. Shape each page by what it is for, not by the last page, and run step 4 on it.
-- **Plain HTML:** `project(out = ..., scan = [...])` with `scan` covering the pages, and the stylesheet linked from each page.
+- **Plain HTML:** `project(out = ..., scan = [...])` with `scan` naming the folder the pages are in, not each file (a listed file that does not exist yet fails `check`, and a new page would need an edit), and the stylesheet linked from each page.
 - **React or Next:** `out` inside the app (for Next, a file in `app/` imported once in the root layout); `scan` lists the source folders only, never the build output (`.next` is full of `style` attributes); add `"tg": "tidgrid build && tidgrid check"` to `package.json` and run it before `dev` and `build`; class names written whole, and tables of them through `cn()`.
 - Never write own CSS, a `<style>` block or appearance in `style=`, never edit the generated stylesheet, and never use `allow_class` or ignore comments to get past the check.
 
