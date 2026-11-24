@@ -27,6 +27,7 @@ edge        = "light-dark(#f0f0f0, #232d38)"
 sand        = "light-dark(#f8f3ed, #222e3a)"
 sand-ink    = "light-dark(#c3a888, #d2b892)"
 accent      = "light-dark(#da526b, #ec6b82)"
+pass        = "light-dark(#1d7a62, #6fd0b0)"   # in the vocabulary: built, allowed, passes (accent is its opposite)
 keyword     = "light-dark(#fa8383, #ff9b9b)"
 shade       = "light-dark(#00000011, #00000055)"
 shade-deep  = "light-dark(#00000021, #00000088)"
@@ -65,6 +66,10 @@ cell    = "5rem"
 hero    = "calc(100svh - 7rem)"   # the first screen under the header (its 3rem logo + twice space.lg)
 reading = "44rem"                 # a line of running text
 aside   = "20rem"                 # the heading column beside a section
+step    = "58vh"                  # the least height of one step of a story on a wide screen
+stage   = "38vh"                  # the most a story drawing takes, pinned above the steps
+stage-wide = "74vh"               # and pinned beside them
+pin     = "12vh"                  # how far from the top the drawing is pinned beside the steps
 screen  = "100vh"
 
 [tokens.font]
@@ -88,10 +93,15 @@ hero      = "4rem"
 hero-wide = "5rem"
 hero-max  = "7rem"
 cell      = "0.7rem"
+# Inside a story drawing, in the units of its viewBox (400 wide).
+draw-title = "12.5px"
+draw-note  = "9.5px"
+draw-mono  = "9px"
 
 [tokens.border]
 hair  = "1px"
 focus = "2px"
+bar   = "3px"
 
 [tokens.radius]
 sm = "0.25rem"
@@ -104,6 +114,7 @@ card-hover = "0 0 1rem 0 {color.shade-deep}"
 [tokens.motion]
 fast   = "200ms"
 medium = "300ms"
+slow   = "500ms"
 cell   = "3600ms"   # how long one lit grid cell lives
 
 # ---------------------------------------------------------------- elements
@@ -428,6 +439,21 @@ use = "Set by a script on html when the reader picked the dark colours with the 
 [role.state.foreign]
 use = "Set by the backdrop script on a surface(cell) that shows a class name from outside the vocabulary: accent colour, struck out."
 
+[role.state.scripted]
+use = "Set on html by story.js once it runs. Without it a story reads as a plain page: the pinned drawing stays hidden and every step is fully visible."
+
+[role.state.active]
+use = "Set by story.js on the surface(step) being read."
+
+[role.state.shown]
+use = "Set by story.js on a motion(rise) block once it has scrolled into view."
+
+[role.state.on]
+use = "Set by story.js on a drawing(part) that exists at the step being read."
+
+[role.state.hot]
+use = "Set by story.js on a drawing(box) or drawing(chip) that the step being read is about."
+
 [role.list.plain]
 use        = "A list without bullets or indent, for navigation links."
 list-style = "none"
@@ -574,6 +600,159 @@ color = "{color.syn-title}"
 [role.surface.code."& .hljs-built_in"]
 color = "{color.syn-builtin}"
 
+# ---------------------------------------------------------------- a story
+# One column of steps read by scrolling, each headed by the question it answers, beside a
+# pinned drawing of the system that changes with the step being read (story.js).
+# Two colours carry a meaning in it: pass = in the vocabulary, accent = outside it.
+
+[role.surface.progress]
+use              = "The thin bar on the top edge that shows how far a story has been read. Once per page; story.js scales it."
+position         = "fixed"
+top              = "0"
+left             = "0"
+z-index          = "2"
+width            = "{size.full}"
+height           = "{border.bar}"
+background       = "{color.pass}"
+transform        = "scaleX(0)"
+transform-origin = "left"
+
+[role.surface.stage]
+use           = "The pinned panel that holds the drawing of a story: above the steps on a narrow screen, beside them from lg. Hidden until state(scripted). One per story."
+display       = "none"
+position      = "sticky"
+top           = "0"
+z-index       = "1"   # above the steps (a dimmed step is its own layer), below the drawer and the progress bar
+padding-block = "{space.xs}"
+background    = "{color.paper}"
+border-bottom = "{border.hair} solid {color.drawer-edge}"
+
+[role.surface.stage.".tg-state(scripted) &"]
+display = "block"
+
+[role.surface.stage."@lg"]
+top           = "{size.pin}"
+padding-block = "{space.none}"
+background    = "none"
+border-bottom = "none"
+
+[role.text.badge]
+use            = "The short name of the step being read, above a story drawing. story.js writes it."
+font-family    = "{font.mono}"
+font-size      = "{type.small}"
+text-transform = "uppercase"
+color          = "{color.muted}"
+
+[role.surface.step]
+use = "One step of a story: a section headed by the question it answers. Dimmed while another step is being read."
+
+[role.surface.step.".tg-state(scripted) &"]
+opacity    = "0.4"
+transition = "opacity {motion.medium}"
+
+[role.surface.step.".tg-state(scripted) &.tg-state(active)"]
+opacity = "1"
+
+[role.motion.rise]
+use = "A block inside a step that fades and rises in once, when it scrolls into view (story.js sets state(shown); with reduced motion asked for, on every block at once)."
+
+[role.motion.rise.".tg-state(scripted) &"]
+opacity    = "0"
+transform  = "translateY({space.sm})"
+transition = "opacity {motion.slow}, transform {motion.slow}"
+
+[role.motion.rise.".tg-state(scripted) &.tg-state(shown)"]
+opacity   = "1"
+transform = "none"
+
+[role.drawing.canvas]
+use           = "The svg of a story drawing, inside surface(stage). Sets the colour its wires, notes and chips draw with unless drawing(in) or drawing(out) says otherwise."
+display       = "block"
+width         = "{size.full}"
+max-height    = "{size.stage}"
+margin-inline = "auto"
+color         = "{color.muted}"
+
+[role.drawing.canvas."@lg"]
+max-height = "{size.stage-wide}"
+
+[role.drawing.part]
+use        = "A piece of a drawing that exists only at some steps (data-show=\"1-4,7\"). Invisible until story.js sets state(on)."
+opacity    = "0"
+transition = "opacity {motion.slow}"
+
+[role.drawing.part."&.tg-state(on)"]
+opacity = "1"
+
+[role.drawing.box]
+use          = "A part of the system in a drawing: a rect. Outlined stronger while state(hot)."
+fill         = "{color.raised}"
+stroke       = "{color.drawer-edge}"
+stroke-width = "1.2"
+transition   = "stroke {motion.medium}, stroke-width {motion.medium}"
+
+[role.drawing.box."&.tg-state(hot)"]
+stroke       = "{color.ink-soft}"
+stroke-width = "2.2"
+
+[role.drawing.wire]
+use          = "A call or a flow between two boxes: a path, in the drawing's current colour."
+fill         = "none"
+stroke       = "currentColor"
+stroke-width = "1.4"
+
+[role.drawing.fill]
+use  = "A filled shape in the drawing's current colour: an arrowhead, a legend square."
+fill = "currentColor"
+
+[role.drawing.chip]
+use = "A small named piece inside a box, such as a class name: a g holding a rect and a text, in the drawing's current colour. Filled while state(hot)."
+
+[role.drawing.chip."& rect"]
+fill         = "{color.raised}"
+stroke       = "currentColor"
+stroke-width = "1"
+transition   = "fill {motion.medium}"
+
+[role.drawing.chip."& text"]
+font-family = "{font.mono}"
+font-size   = "{type.draw-mono}"
+fill        = "currentColor"
+transition  = "fill {motion.medium}"
+
+[role.drawing.chip."&.tg-state(hot) rect"]
+fill = "currentColor"
+
+[role.drawing.chip."&.tg-state(hot) text"]
+fill = "{color.paper}"
+
+[role.drawing.title]
+use         = "The name of a box in a drawing."
+font-family = "{font.title}"
+font-weight = "700"
+font-size   = "{type.draw-title}"
+fill        = "{color.ink}"
+
+[role.drawing.note]
+use         = "A line of small text in a drawing: what a box does, what a wire carries."
+font-family = "{font.sans}"
+font-size   = "{type.draw-note}"
+fill        = "currentColor"
+
+[role.drawing.mono]
+use         = "A command or a result written on a drawing, in monospace."
+font-family = "{font.mono}"
+font-size   = "{type.draw-mono}"
+fill        = "currentColor"
+
+[role.drawing.in]
+use   = "Colours a wire, note, chip or fill as inside the vocabulary: built, allowed, passing."
+color = "{color.pass}"
+
+[role.drawing.out]
+use   = "Colours a wire, note, chip or fill as outside the vocabulary: refused."
+color = "{color.accent}"
+
 # ---------------------------------------------------------------- the backdrop
 
 [keyframes.cell."0%"]
@@ -626,7 +805,7 @@ display   = "none"
 position  = "fixed"
 top       = "0"
 right     = "0"
-z-index   = "1"
+z-index   = "3"
 width     = "{size.full}"
 max-width = "{size.drawer}"
 height    = "{size.full}"
