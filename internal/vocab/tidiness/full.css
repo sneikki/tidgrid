@@ -1,0 +1,117 @@
+/*
+ * tidiness("full"): minimal, then every browser default look taken away.
+ *
+ * After this nothing has a margin, a padding, a border, a heading size, a
+ * list marker or a link colour until an element rule or a role gives it one.
+ * It removes; it decides nothing: no typeface, no line height, no colour.
+ * Those belong to the vocabulary.
+ *
+ * Written after minimal.css, so where both name a property this file wins.
+ * After Tailwind CSS 4 preflight (MIT), checked rule by rule 2026-11.
+ */
+
+/* Spacing comes from atoms and roles. A border needs only a width to show. */
+*,
+::before,
+::after,
+::backdrop,
+::file-selector-button {
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+/* The browser centres these two with its own margin; without it they sit in a corner. */
+dialog,
+[popover] {
+  margin: auto;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A heading is as large and as heavy as a role says. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* Safari's screen reader stops announcing a list without markers: add role="list" where it is one. */
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+table {
+  border-color: inherit;
+  border-collapse: collapse;
+}
+
+hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+
+/* Media as blocks: no gap under an image from the text baseline. */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+}
+
+/* A control looks like nothing until a role says so. */
+button,
+input,
+optgroup,
+select,
+textarea,
+::file-selector-button {
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
+
+/* A list box keeps what tells its groups and options apart. */
+:where(select:is([multiple], [size])) optgroup {
+  font-weight: bolder;
+}
+
+:where(select:is([multiple], [size])) optgroup option {
+  padding-inline-start: 20px;
+}
+
+::file-selector-button {
+  margin-inline-end: 4px;
+}
+
+/* Half of the text colour, whatever that is; old Safari crashes on it. */
+@supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+  ::placeholder {
+    color: color-mix(in oklab, currentcolor 50%, transparent);
+  }
+}
+
+/* Dragged sideways a textarea breaks the layout around it. */
+textarea {
+  resize: vertical;
+}

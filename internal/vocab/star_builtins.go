@@ -17,6 +17,7 @@ func (e *evaluator) builtins() starlark.StringDict {
 		"keyframes":   e.keyframes,
 		"role":        e.role,
 		"mixin":       e.mixin,
+		"tidiness":    e.tidiness,
 		"allow_class": e.allow("class"),
 		"allow_css":   e.allow("css"),
 		"source":      e.source,

@@ -1,0 +1,174 @@
+/*
+ * tidiness("minimal"): fixes only.
+ *
+ * What browsers get wrong or do differently from each other, and the defaults
+ * that push a page wider than the screen. Nothing here takes a look away:
+ * headings, lists, links and form controls keep the browser's style.
+ *
+ * After modern-normalize 3 and Tailwind CSS 4 preflight (both MIT), checked
+ * rule by rule 2026-11. Comments are not written to the stylesheet.
+ */
+
+/* Padding and border count inside a width, so width: 100% with padding fits. */
+*,
+::before,
+::after,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+}
+
+/* iOS enlarges text when the phone turns sideways. */
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
+  margin: 0;
+}
+
+/* Media and a fieldset are the two elements that overflow by default. */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+fieldset {
+  min-width: 0;
+}
+
+/* hidden loses to any display rule without this; until-found must stay searchable. */
+[hidden]:where(:not([hidden='until-found'])) {
+  display: none !important;
+}
+
+/* Chrome and Safari draw b and strong at the parent's weight inside a bold parent. */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/* A bare monospace family is drawn at 13px instead of the parent's size. */
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+/* sub and sup must not push their line apart. */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+
+/* Chrome and Safari do not pass the border colour into a table. */
+table {
+  border-color: currentcolor;
+  text-indent: 0;
+}
+
+/* Form controls do not take the page's typeface by themselves; Safari adds a margin. */
+button,
+input,
+optgroup,
+select,
+textarea,
+::file-selector-button {
+  font: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+}
+
+/* Without this iOS Safari ignores a border radius on buttons. */
+button,
+input:where([type='button'], [type='reset'], [type='submit']),
+::file-selector-button {
+  appearance: button;
+}
+
+legend {
+  padding: 0;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+summary {
+  display: list-item;
+}
+
+/* Firefox dims placeholders and paints its own red shadow on invalid fields. */
+::placeholder {
+  opacity: 1;
+}
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+:-moz-focusring:where(:not(iframe)) {
+  outline: auto;
+}
+
+/* Safari: search, number and date fields carry inner parts of their own size. */
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+::-webkit-date-and-time-value {
+  min-height: 1lh;
+  text-align: inherit;
+}
+
+::-webkit-datetime-edit {
+  display: inline-flex;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+::-webkit-datetime-edit,
+::-webkit-datetime-edit-year-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-second-field,
+::-webkit-datetime-edit-millisecond-field,
+::-webkit-datetime-edit-meridiem-field {
+  padding-block: 0;
+}
+
+::-webkit-calendar-picker-indicator {
+  line-height: 1;
+}

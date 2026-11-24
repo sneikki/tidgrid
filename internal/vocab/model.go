@@ -70,6 +70,7 @@ type Vocabulary struct {
 	Project     Project      // Prefix, Out, Scan (resolved against the vocabulary dir), Helpers
 	Breakpoints []Breakpoint // file order
 	Tokens      []TokenGroup // file order
+	Tidiness    string       // "", "minimal" or "full": the reset written after :root
 	elements    []element
 	keyframes   []keyframe
 	Mixins      []Mixin // declaration order

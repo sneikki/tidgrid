@@ -30,6 +30,7 @@ func (v *Vocabulary) Render() string {
 	if root := v.rootRule(); len(root.Nodes) > 0 {
 		blocks = append(blocks, root)
 	}
+	blocks = append(blocks, v.tidinessRules()...)
 	for _, e := range v.elements {
 		blocks = append(blocks, e.Rule)
 	}
