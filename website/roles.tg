@@ -567,6 +567,16 @@ role(
 )
 
 role(
+    "surface", "shot",
+    use = "A screenshot of a page, on the img: keeps its proportions (size it with tg-width(full)), with a hairline edge.",
+    css = {
+        "height": "auto",
+        "border": "{border.hair} solid {color.edge}",
+        "border-radius": "{radius.md}",
+    },
+)
+
+role(
     "surface", "code",
     use = "A panel for a code sample or shell command: on a pre, or on a div that holds several pre blocks or text(line) rows built up one by one. Colours highlight.js syntax inside it. With data-alarm it is the panel where something outside the vocabulary ended up.",
     css = {

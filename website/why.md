@@ -31,6 +31,22 @@ $ go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
   </div>
 </section>
 
+<section class="tg-pad-t(xl)">
+  <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(md)">
+    <div class="tg-col md:tg-row tg-gap(md)">
+      <figure class="tg-col tg-y-gap(xs) tg-grow">
+        <a href="{{ site.baseurl }}/assets/img/home-tailwind.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/home-tailwind.png" width="1280" height="1081" alt="Home page of a bicycle repair shop: green header and hero with a yellow booking button, a list of six services with prices, a card of opening hours, a dark footer."></a>
+        <figcaption class="tg-text(caption)">Styled with Tailwind CSS</figcaption>
+      </figure>
+      <figure class="tg-col tg-y-gap(xs) tg-grow">
+        <a href="{{ site.baseurl }}/assets/img/home-tidgrid.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/home-tidgrid.png" width="1280" height="1145" alt="Home page of a bicycle repair shop: cream background, heavy serif headline, an opening-hours tag, a dark panel of eight prices in two columns, a dark footer."></a>
+        <figcaption class="tg-text(caption)">Written with the <a class="tg-link(text)" href="https://github.com/sneikki/tidgrid/tree/master/skills/antislop-ui">antislop-ui skill</a> and Tidgrid</figcaption>
+      </figure>
+    </div>
+    <p class="tg-text(body) tg-max-width(reading)">The same request, "a two-page website for a small family-run bicycle repair shop: a home page with services, prices and opening hours, and a booking-request form. Plain HTML.", given once to each of two fresh agents on the same model. One was told to style it with Tailwind CSS; the other had the skill and Tidgrid. One run each; click a picture for its full size.</p>
+  </div>
+</section>
+
 <section class="tg-pad-y(xl)">
   <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(xl)">
     <div class="tg-col tg-y-gap(xs)">
