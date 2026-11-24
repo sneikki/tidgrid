@@ -55,9 +55,24 @@ func runCase(t *testing.T, name string) (code int, violations []string, out stri
 	out = buf.String()
 	head, _, _ := strings.Cut(out, "\n\n")
 	if code == 1 {
-		violations = strings.Split(head, "\n")
+		violations = withoutUnusedRoles(strings.Split(head, "\n"))
+	}
+	if len(violations) == 0 {
+		code = 0
 	}
 	return
+}
+
+// withoutUnusedRoles drops the unused-role lines: the table cases test file
+// rules against one shared vocabulary, and TestUnusedRole* test the role rule.
+func withoutUnusedRoles(lines []string) []string {
+	var kept []string
+	for _, l := range lines {
+		if !strings.Contains(l, " is not used in the scanned sources: ") {
+			kept = append(kept, l)
+		}
+	}
+	return kept
 }
 
 func TestCheckCases(t *testing.T) {
@@ -96,7 +111,6 @@ func TestCheckSummary(t *testing.T) {
 		"roles used:\n",
 		"  src/b.astro: tg-surface(card)\n",
 		"  src/index.html: tg-state(ready) tg-surface(card) tg-text(title)\n",
-		"roles unused:\n  none\n",
 		"  class has-js: set by an inline script before first paint\n",
 		"  css src/fonts.css: self-hosted @font-face only\n",
 	} {
@@ -104,9 +118,14 @@ func TestCheckSummary(t *testing.T) {
 			t.Errorf("summary lacks %q\n%s", s, out)
 		}
 	}
+	if strings.Contains(out, "roles unused:") {
+		t.Errorf("summary repeats the unused roles\n%s", out)
+	}
 	_, _, out = runCase(t, "unknown-class")
-	if !strings.Contains(out, "roles unused:\n  tg-surface(card)\n  tg-text(title)\n  tg-state(ready)\n") {
-		t.Errorf("unused roles not listed\n%s", out)
+	for _, r := range []string{"tg-surface(card)", "tg-text(title)", "tg-state(ready)"} {
+		if n := strings.Count(out, "role "+r+" is not used"); n != 1 {
+			t.Errorf("unused role %s reported %d times, want 1\n%s", r, n, out)
+		}
 	}
 }
 

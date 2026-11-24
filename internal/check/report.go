@@ -78,20 +78,6 @@ func writeRolesUsed(w io.Writer, use *roleUse) {
 	}
 }
 
-func writeRolesUnused(w io.Writer, v *vocab.Vocabulary, use *roleUse) {
-	fmt.Fprintln(w, "roles unused:")
-	n := 0
-	for _, r := range v.Roles {
-		if !use.any[r.Class] {
-			fmt.Fprintf(w, "  %s\n", r.Class)
-			n++
-		}
-	}
-	if n == 0 {
-		fmt.Fprintln(w, "  none")
-	}
-}
-
 func writeAllowed(w io.Writer, v *vocab.Vocabulary) {
 	fmt.Fprintln(w, "allow:")
 	for _, a := range v.AllowClass {
