@@ -1,6 +1,6 @@
 ---
 name: antislop-ui
-description: Use before building any new UI (a site, a page, an app screen, a set of components), when asked to make a UI look good, better or less generic, and when someone says a UI looks generic, templated or AI-made. Decides the look once, with the person, as a Tidgrid vocabulary; pages are then built only from it, and `tidgrid check` fails on anything outside it.
+description: Use before building any new UI (a site, a page, an app screen, a set of components), when asked to make a UI look good, better or less generic, and when someone says a UI looks generic, templated or AI-made. Works through a Tidgrid vocabulary (`index.tg`) and sets Tidgrid up when the project has none.
 ---
 
 # Anti-slop UI
@@ -15,7 +15,7 @@ The command is Tidgrid, a closed CSS vocabulary: tokens, layout atoms on the tok
 |---|---|
 | Pages use only classes from the vocabulary: no `<style>`, no own stylesheet, no appearance in `style=`, no class name built from pieces | `tidgrid check` fails |
 | The stylesheet matches the vocabulary; no role sits unused | `tidgrid check` fails |
-| Raw colours, lengths and times only in tokens; every role has a `use` line; the same lines are not copied across roles | `tidgrid build` fails |
+| Raw colours, lengths and times only in tokens; every role has a `use` line; the same lines are not repeated across roles past a threshold (by default 3 lines in 2 roles, or 2 lines in 4) | `tidgrid build` fails |
 | The vocabulary fits this subject and does not read as a default | your judgement (step 4), then the person |
 | The person said yes to the look before pages were written | you; no command knows |
 | Composition: what goes where, how large, how dense | your judgement; layout atoms are free, so a centred hero over three equal cards passes every check |
@@ -24,7 +24,7 @@ Never say a passing check means the design is good. It means the pages keep to t
 
 ## Running the tool
 
-`npx tidgrid <command>` needs only Node (npm package `tidgrid`, 0.3.0 or later). In a project with a `package.json`, add it with `npm install -D tidgrid` so the version is fixed. A `tidgrid` binary on the PATH (`go install github.com/sneikki/tidgrid/cmd/tidgrid@latest`) works the same. Below, `tidgrid` means either.
+`npx tidgrid <command>` needs only Node (npm package `tidgrid`, 0.3.0 or later; anything older under that name is an unrelated library, so if a command is unknown, check the version). In a project with a `package.json`, add it with `npm install -D tidgrid` so the version is fixed. A `tidgrid` binary on the PATH (`go install github.com/sneikki/tidgrid/cmd/tidgrid@latest`) works the same. Below, `tidgrid` means either.
 
 Commands read `index.tg` in the current folder unless given a file. Exit 0 is fine, 1 means check violations, 2 means the vocabulary does not load.
 
@@ -34,7 +34,7 @@ How to write `.tg` files, pick a class, add a mixin, a state or dark mode, and k
 
 - **`index.tg` exists.** Run `tidgrid list`, and `tidgrid sheet -o <file>` to see it (step 5 says where the file may go). Run step 4 on what you see. If it reads as a default, tell the person before building on it; do not redesign it unasked. Otherwise go to step 6.
 - **Only a `tidgrid.toml`.** Run `tidgrid convert`, then as above.
-- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, one blue accent): that is the default look itself. Keep the structure, replace every value, and replace the starter roles with your own.
+- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, one blue accent): that is the default look itself. Keep the structure, replace every value, and write your own roles: the commented ones are examples.
 - **Styled some other way** (own CSS, a utility framework, a component library). Moving it to Tidgrid is a migration: propose it and wait for a yes. The current look is material for step 2, not a decision already made.
 
 ## 2. Write the brief of the look
@@ -81,7 +81,7 @@ When a check fails, go back to the brief, not to the opposite of the symptom.
 
 ## 5. Show it once and get a yes
 
-Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. It loads a typeface only when the vocabulary does (`allow_css`); if the pages load theirs with a `<link>`, add the same link to the sheet file, or the person approves a fallback face. If you can render HTML, look at it yourself first. Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
+Run `tidgrid build`, then `tidgrid sheet -o <file>` with the file outside the `scan` folders: inside them, `check` reads the sheet's own markup and fails. The sheet renders every token and role. It does not load the pages' typefaces by itself: a `<link>` in the pages is not in it, and an `allow_css` file is copied in as written, so a relative `url()` in its `@font-face` breaks when the sheet sits elsewhere. Add the link to the sheet file, or use an absolute url, and confirm the faces show; otherwise the person approves a fallback face. If you can render HTML, look at it yourself first. Give the person the file, the brief, and one line per decision on why it fits the subject. Ask one question: yes, or what to change. Revise and show again until the answer is yes.
 
 No page before the yes. If no one can answer, stop and say what is waiting; never approve your own look.
 
