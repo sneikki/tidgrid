@@ -13,6 +13,7 @@
   --tg-color-sand: light-dark(#f8f3ed, #222e3a);
   --tg-color-sand-ink: light-dark(#c3a888, #d2b892);
   --tg-color-accent: light-dark(#da526b, #ec6b82);
+  --tg-color-pass: light-dark(#1d7a62, #6fd0b0);
   --tg-color-keyword: light-dark(#fa8383, #ff9b9b);
   --tg-color-shade: light-dark(#00000011, #00000055);
   --tg-color-shade-deep: light-dark(#00000021, #00000088);
@@ -45,6 +46,10 @@
   --tg-size-hero: calc(100svh - 7rem);
   --tg-size-reading: 44rem;
   --tg-size-aside: 20rem;
+  --tg-size-step: 58vh;
+  --tg-size-stage: 38vh;
+  --tg-size-stage-wide: 74vh;
+  --tg-size-pin: 12vh;
   --tg-size-screen: 100vh;
   --tg-font-sans: Lato, sans-serif;
   --tg-font-title: Montserrat, Lato, sans-serif;
@@ -64,14 +69,19 @@
   --tg-type-hero-wide: 5rem;
   --tg-type-hero-max: 7rem;
   --tg-type-cell: 0.7rem;
+  --tg-type-draw-title: 12.5px;
+  --tg-type-draw-note: 9.5px;
+  --tg-type-draw-mono: 9px;
   --tg-border-hair: 1px;
   --tg-border-focus: 2px;
+  --tg-border-bar: 3px;
   --tg-radius-sm: 0.25rem;
   --tg-radius-md: 0.5rem;
   --tg-shadow-card: 0 0 1rem 0 var(--tg-color-shade);
   --tg-shadow-card-hover: 0 0 1rem 0 var(--tg-color-shade-deep);
   --tg-motion-fast: 200ms;
   --tg-motion-medium: 300ms;
+  --tg-motion-slow: 500ms;
   --tg-motion-cell: 3600ms;
 }
 
@@ -322,6 +332,13 @@ svg {
   border-bottom: var(--tg-border-hair) solid var(--tg-color-edge);
 }
 
+.tg-text\(badge\) {
+  font-family: var(--tg-font-mono);
+  font-size: var(--tg-type-small);
+  text-transform: uppercase;
+  color: var(--tg-color-muted);
+}
+
 .tg-link\(nav\) {
   font-family: var(--tg-font-title);
   font-size: var(--tg-type-label);
@@ -417,6 +434,21 @@ svg {
 }
 
 .tg-state\(foreign\) {
+}
+
+.tg-state\(scripted\) {
+}
+
+.tg-state\(active\) {
+}
+
+.tg-state\(shown\) {
+}
+
+.tg-state\(on\) {
+}
+
+.tg-state\(hot\) {
 }
 
 .tg-list\(plain\) {
@@ -553,6 +585,47 @@ svg {
   }
 }
 
+.tg-surface\(progress\) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: var(--tg-size-full);
+  height: var(--tg-border-bar);
+  background: var(--tg-color-pass);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.tg-surface\(stage\) {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-block: var(--tg-space-xs);
+  background: var(--tg-color-paper);
+  border-bottom: var(--tg-border-hair) solid var(--tg-color-drawer-edge);
+  .tg-state\(scripted\) & {
+    display: block;
+  }
+  @media (min-width: 75em) {
+    top: var(--tg-size-pin);
+    padding-block: var(--tg-space-none);
+    background: none;
+    border-bottom: none;
+  }
+}
+
+.tg-surface\(step\) {
+  .tg-state\(scripted\) & {
+    opacity: 0.4;
+    transition: opacity var(--tg-motion-medium);
+  }
+  .tg-state\(scripted\) &.tg-state\(active\) {
+    opacity: 1;
+  }
+}
+
 .tg-surface\(grid\) {
   position: fixed;
   top: 0;
@@ -583,12 +656,112 @@ svg {
   }
 }
 
+.tg-motion\(rise\) {
+  .tg-state\(scripted\) & {
+    opacity: 0;
+    transform: translateY(var(--tg-space-sm));
+    transition: opacity var(--tg-motion-slow), transform var(--tg-motion-slow);
+  }
+  .tg-state\(scripted\) &.tg-state\(shown\) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tg-drawing\(canvas\) {
+  display: block;
+  width: var(--tg-size-full);
+  max-height: var(--tg-size-stage);
+  margin-inline: auto;
+  color: var(--tg-color-muted);
+  @media (min-width: 75em) {
+    max-height: var(--tg-size-stage-wide);
+  }
+}
+
+.tg-drawing\(part\) {
+  opacity: 0;
+  transition: opacity var(--tg-motion-slow);
+  &.tg-state\(on\) {
+    opacity: 1;
+  }
+}
+
+.tg-drawing\(box\) {
+  fill: var(--tg-color-raised);
+  stroke: var(--tg-color-drawer-edge);
+  stroke-width: 1.2;
+  transition: stroke var(--tg-motion-medium), stroke-width var(--tg-motion-medium);
+  &.tg-state\(hot\) {
+    stroke: var(--tg-color-ink-soft);
+    stroke-width: 2.2;
+  }
+}
+
+.tg-drawing\(wire\) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.tg-drawing\(fill\) {
+  fill: currentColor;
+}
+
+.tg-drawing\(chip\) {
+  & rect {
+    fill: var(--tg-color-raised);
+    stroke: currentColor;
+    stroke-width: 1;
+    transition: fill var(--tg-motion-medium);
+  }
+  & text {
+    font-family: var(--tg-font-mono);
+    font-size: var(--tg-type-draw-mono);
+    fill: currentColor;
+    transition: fill var(--tg-motion-medium);
+  }
+  &.tg-state\(hot\) rect {
+    fill: currentColor;
+  }
+  &.tg-state\(hot\) text {
+    fill: var(--tg-color-paper);
+  }
+}
+
+.tg-drawing\(title\) {
+  font-family: var(--tg-font-title);
+  font-weight: 700;
+  font-size: var(--tg-type-draw-title);
+  fill: var(--tg-color-ink);
+}
+
+.tg-drawing\(note\) {
+  font-family: var(--tg-font-sans);
+  font-size: var(--tg-type-draw-note);
+  fill: currentColor;
+}
+
+.tg-drawing\(mono\) {
+  font-family: var(--tg-font-mono);
+  font-size: var(--tg-type-draw-mono);
+  fill: currentColor;
+}
+
+.tg-drawing\(in\) {
+  color: var(--tg-color-pass);
+}
+
+.tg-drawing\(out\) {
+  color: var(--tg-color-accent);
+}
+
 .tg-layout\(drawer\) {
   display: none;
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 3;
   width: var(--tg-size-full);
   max-width: var(--tg-size-drawer);
   height: var(--tg-size-full);
@@ -1051,6 +1224,22 @@ svg {
   width: var(--tg-size-aside);
 }
 
+.tg-width\(step\) {
+  width: var(--tg-size-step);
+}
+
+.tg-width\(stage\) {
+  width: var(--tg-size-stage);
+}
+
+.tg-width\(stage-wide\) {
+  width: var(--tg-size-stage-wide);
+}
+
+.tg-width\(pin\) {
+  width: var(--tg-size-pin);
+}
+
 .tg-width\(screen\) {
   width: var(--tg-size-screen);
 }
@@ -1097,6 +1286,22 @@ svg {
 
 .tg-min-width\(aside\) {
   min-width: var(--tg-size-aside);
+}
+
+.tg-min-width\(step\) {
+  min-width: var(--tg-size-step);
+}
+
+.tg-min-width\(stage\) {
+  min-width: var(--tg-size-stage);
+}
+
+.tg-min-width\(stage-wide\) {
+  min-width: var(--tg-size-stage-wide);
+}
+
+.tg-min-width\(pin\) {
+  min-width: var(--tg-size-pin);
 }
 
 .tg-min-width\(screen\) {
@@ -1147,6 +1352,22 @@ svg {
   max-width: var(--tg-size-aside);
 }
 
+.tg-max-width\(step\) {
+  max-width: var(--tg-size-step);
+}
+
+.tg-max-width\(stage\) {
+  max-width: var(--tg-size-stage);
+}
+
+.tg-max-width\(stage-wide\) {
+  max-width: var(--tg-size-stage-wide);
+}
+
+.tg-max-width\(pin\) {
+  max-width: var(--tg-size-pin);
+}
+
 .tg-max-width\(screen\) {
   max-width: var(--tg-size-screen);
 }
@@ -1195,6 +1416,22 @@ svg {
   height: var(--tg-size-aside);
 }
 
+.tg-height\(step\) {
+  height: var(--tg-size-step);
+}
+
+.tg-height\(stage\) {
+  height: var(--tg-size-stage);
+}
+
+.tg-height\(stage-wide\) {
+  height: var(--tg-size-stage-wide);
+}
+
+.tg-height\(pin\) {
+  height: var(--tg-size-pin);
+}
+
 .tg-height\(screen\) {
   height: var(--tg-size-screen);
 }
@@ -1241,6 +1478,22 @@ svg {
 
 .tg-min-height\(aside\) {
   min-height: var(--tg-size-aside);
+}
+
+.tg-min-height\(step\) {
+  min-height: var(--tg-size-step);
+}
+
+.tg-min-height\(stage\) {
+  min-height: var(--tg-size-stage);
+}
+
+.tg-min-height\(stage-wide\) {
+  min-height: var(--tg-size-stage-wide);
+}
+
+.tg-min-height\(pin\) {
+  min-height: var(--tg-size-pin);
 }
 
 .tg-min-height\(screen\) {
@@ -1661,6 +1914,18 @@ svg {
   .xs\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .xs\:tg-width\(step\) {
+    width: var(--tg-size-step);
+  }
+  .xs\:tg-width\(stage\) {
+    width: var(--tg-size-stage);
+  }
+  .xs\:tg-width\(stage-wide\) {
+    width: var(--tg-size-stage-wide);
+  }
+  .xs\:tg-width\(pin\) {
+    width: var(--tg-size-pin);
+  }
   .xs\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -1696,6 +1961,18 @@ svg {
   }
   .xs\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .xs\:tg-min-width\(step\) {
+    min-width: var(--tg-size-step);
+  }
+  .xs\:tg-min-width\(stage\) {
+    min-width: var(--tg-size-stage);
+  }
+  .xs\:tg-min-width\(stage-wide\) {
+    min-width: var(--tg-size-stage-wide);
+  }
+  .xs\:tg-min-width\(pin\) {
+    min-width: var(--tg-size-pin);
   }
   .xs\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -1733,6 +2010,18 @@ svg {
   .xs\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .xs\:tg-max-width\(step\) {
+    max-width: var(--tg-size-step);
+  }
+  .xs\:tg-max-width\(stage\) {
+    max-width: var(--tg-size-stage);
+  }
+  .xs\:tg-max-width\(stage-wide\) {
+    max-width: var(--tg-size-stage-wide);
+  }
+  .xs\:tg-max-width\(pin\) {
+    max-width: var(--tg-size-pin);
+  }
   .xs\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -1769,6 +2058,18 @@ svg {
   .xs\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .xs\:tg-height\(step\) {
+    height: var(--tg-size-step);
+  }
+  .xs\:tg-height\(stage\) {
+    height: var(--tg-size-stage);
+  }
+  .xs\:tg-height\(stage-wide\) {
+    height: var(--tg-size-stage-wide);
+  }
+  .xs\:tg-height\(pin\) {
+    height: var(--tg-size-pin);
+  }
   .xs\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -1804,6 +2105,18 @@ svg {
   }
   .xs\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .xs\:tg-min-height\(step\) {
+    min-height: var(--tg-size-step);
+  }
+  .xs\:tg-min-height\(stage\) {
+    min-height: var(--tg-size-stage);
+  }
+  .xs\:tg-min-height\(stage-wide\) {
+    min-height: var(--tg-size-stage-wide);
+  }
+  .xs\:tg-min-height\(pin\) {
+    min-height: var(--tg-size-pin);
   }
   .xs\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -2202,6 +2515,18 @@ svg {
   .sm\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .sm\:tg-width\(step\) {
+    width: var(--tg-size-step);
+  }
+  .sm\:tg-width\(stage\) {
+    width: var(--tg-size-stage);
+  }
+  .sm\:tg-width\(stage-wide\) {
+    width: var(--tg-size-stage-wide);
+  }
+  .sm\:tg-width\(pin\) {
+    width: var(--tg-size-pin);
+  }
   .sm\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -2237,6 +2562,18 @@ svg {
   }
   .sm\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .sm\:tg-min-width\(step\) {
+    min-width: var(--tg-size-step);
+  }
+  .sm\:tg-min-width\(stage\) {
+    min-width: var(--tg-size-stage);
+  }
+  .sm\:tg-min-width\(stage-wide\) {
+    min-width: var(--tg-size-stage-wide);
+  }
+  .sm\:tg-min-width\(pin\) {
+    min-width: var(--tg-size-pin);
   }
   .sm\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -2274,6 +2611,18 @@ svg {
   .sm\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .sm\:tg-max-width\(step\) {
+    max-width: var(--tg-size-step);
+  }
+  .sm\:tg-max-width\(stage\) {
+    max-width: var(--tg-size-stage);
+  }
+  .sm\:tg-max-width\(stage-wide\) {
+    max-width: var(--tg-size-stage-wide);
+  }
+  .sm\:tg-max-width\(pin\) {
+    max-width: var(--tg-size-pin);
+  }
   .sm\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -2310,6 +2659,18 @@ svg {
   .sm\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .sm\:tg-height\(step\) {
+    height: var(--tg-size-step);
+  }
+  .sm\:tg-height\(stage\) {
+    height: var(--tg-size-stage);
+  }
+  .sm\:tg-height\(stage-wide\) {
+    height: var(--tg-size-stage-wide);
+  }
+  .sm\:tg-height\(pin\) {
+    height: var(--tg-size-pin);
+  }
   .sm\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -2345,6 +2706,18 @@ svg {
   }
   .sm\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .sm\:tg-min-height\(step\) {
+    min-height: var(--tg-size-step);
+  }
+  .sm\:tg-min-height\(stage\) {
+    min-height: var(--tg-size-stage);
+  }
+  .sm\:tg-min-height\(stage-wide\) {
+    min-height: var(--tg-size-stage-wide);
+  }
+  .sm\:tg-min-height\(pin\) {
+    min-height: var(--tg-size-pin);
   }
   .sm\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -2743,6 +3116,18 @@ svg {
   .md\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .md\:tg-width\(step\) {
+    width: var(--tg-size-step);
+  }
+  .md\:tg-width\(stage\) {
+    width: var(--tg-size-stage);
+  }
+  .md\:tg-width\(stage-wide\) {
+    width: var(--tg-size-stage-wide);
+  }
+  .md\:tg-width\(pin\) {
+    width: var(--tg-size-pin);
+  }
   .md\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -2778,6 +3163,18 @@ svg {
   }
   .md\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .md\:tg-min-width\(step\) {
+    min-width: var(--tg-size-step);
+  }
+  .md\:tg-min-width\(stage\) {
+    min-width: var(--tg-size-stage);
+  }
+  .md\:tg-min-width\(stage-wide\) {
+    min-width: var(--tg-size-stage-wide);
+  }
+  .md\:tg-min-width\(pin\) {
+    min-width: var(--tg-size-pin);
   }
   .md\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -2815,6 +3212,18 @@ svg {
   .md\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .md\:tg-max-width\(step\) {
+    max-width: var(--tg-size-step);
+  }
+  .md\:tg-max-width\(stage\) {
+    max-width: var(--tg-size-stage);
+  }
+  .md\:tg-max-width\(stage-wide\) {
+    max-width: var(--tg-size-stage-wide);
+  }
+  .md\:tg-max-width\(pin\) {
+    max-width: var(--tg-size-pin);
+  }
   .md\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -2851,6 +3260,18 @@ svg {
   .md\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .md\:tg-height\(step\) {
+    height: var(--tg-size-step);
+  }
+  .md\:tg-height\(stage\) {
+    height: var(--tg-size-stage);
+  }
+  .md\:tg-height\(stage-wide\) {
+    height: var(--tg-size-stage-wide);
+  }
+  .md\:tg-height\(pin\) {
+    height: var(--tg-size-pin);
+  }
   .md\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -2886,6 +3307,18 @@ svg {
   }
   .md\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .md\:tg-min-height\(step\) {
+    min-height: var(--tg-size-step);
+  }
+  .md\:tg-min-height\(stage\) {
+    min-height: var(--tg-size-stage);
+  }
+  .md\:tg-min-height\(stage-wide\) {
+    min-height: var(--tg-size-stage-wide);
+  }
+  .md\:tg-min-height\(pin\) {
+    min-height: var(--tg-size-pin);
   }
   .md\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -3284,6 +3717,18 @@ svg {
   .lg\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .lg\:tg-width\(step\) {
+    width: var(--tg-size-step);
+  }
+  .lg\:tg-width\(stage\) {
+    width: var(--tg-size-stage);
+  }
+  .lg\:tg-width\(stage-wide\) {
+    width: var(--tg-size-stage-wide);
+  }
+  .lg\:tg-width\(pin\) {
+    width: var(--tg-size-pin);
+  }
   .lg\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -3319,6 +3764,18 @@ svg {
   }
   .lg\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .lg\:tg-min-width\(step\) {
+    min-width: var(--tg-size-step);
+  }
+  .lg\:tg-min-width\(stage\) {
+    min-width: var(--tg-size-stage);
+  }
+  .lg\:tg-min-width\(stage-wide\) {
+    min-width: var(--tg-size-stage-wide);
+  }
+  .lg\:tg-min-width\(pin\) {
+    min-width: var(--tg-size-pin);
   }
   .lg\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -3356,6 +3813,18 @@ svg {
   .lg\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .lg\:tg-max-width\(step\) {
+    max-width: var(--tg-size-step);
+  }
+  .lg\:tg-max-width\(stage\) {
+    max-width: var(--tg-size-stage);
+  }
+  .lg\:tg-max-width\(stage-wide\) {
+    max-width: var(--tg-size-stage-wide);
+  }
+  .lg\:tg-max-width\(pin\) {
+    max-width: var(--tg-size-pin);
+  }
   .lg\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -3392,6 +3861,18 @@ svg {
   .lg\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .lg\:tg-height\(step\) {
+    height: var(--tg-size-step);
+  }
+  .lg\:tg-height\(stage\) {
+    height: var(--tg-size-stage);
+  }
+  .lg\:tg-height\(stage-wide\) {
+    height: var(--tg-size-stage-wide);
+  }
+  .lg\:tg-height\(pin\) {
+    height: var(--tg-size-pin);
+  }
   .lg\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -3427,6 +3908,18 @@ svg {
   }
   .lg\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .lg\:tg-min-height\(step\) {
+    min-height: var(--tg-size-step);
+  }
+  .lg\:tg-min-height\(stage\) {
+    min-height: var(--tg-size-stage);
+  }
+  .lg\:tg-min-height\(stage-wide\) {
+    min-height: var(--tg-size-stage-wide);
+  }
+  .lg\:tg-min-height\(pin\) {
+    min-height: var(--tg-size-pin);
   }
   .lg\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -3825,6 +4318,18 @@ svg {
   .xl\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .xl\:tg-width\(step\) {
+    width: var(--tg-size-step);
+  }
+  .xl\:tg-width\(stage\) {
+    width: var(--tg-size-stage);
+  }
+  .xl\:tg-width\(stage-wide\) {
+    width: var(--tg-size-stage-wide);
+  }
+  .xl\:tg-width\(pin\) {
+    width: var(--tg-size-pin);
+  }
   .xl\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -3860,6 +4365,18 @@ svg {
   }
   .xl\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .xl\:tg-min-width\(step\) {
+    min-width: var(--tg-size-step);
+  }
+  .xl\:tg-min-width\(stage\) {
+    min-width: var(--tg-size-stage);
+  }
+  .xl\:tg-min-width\(stage-wide\) {
+    min-width: var(--tg-size-stage-wide);
+  }
+  .xl\:tg-min-width\(pin\) {
+    min-width: var(--tg-size-pin);
   }
   .xl\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -3897,6 +4414,18 @@ svg {
   .xl\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .xl\:tg-max-width\(step\) {
+    max-width: var(--tg-size-step);
+  }
+  .xl\:tg-max-width\(stage\) {
+    max-width: var(--tg-size-stage);
+  }
+  .xl\:tg-max-width\(stage-wide\) {
+    max-width: var(--tg-size-stage-wide);
+  }
+  .xl\:tg-max-width\(pin\) {
+    max-width: var(--tg-size-pin);
+  }
   .xl\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -3933,6 +4462,18 @@ svg {
   .xl\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .xl\:tg-height\(step\) {
+    height: var(--tg-size-step);
+  }
+  .xl\:tg-height\(stage\) {
+    height: var(--tg-size-stage);
+  }
+  .xl\:tg-height\(stage-wide\) {
+    height: var(--tg-size-stage-wide);
+  }
+  .xl\:tg-height\(pin\) {
+    height: var(--tg-size-pin);
+  }
   .xl\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -3968,6 +4509,18 @@ svg {
   }
   .xl\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .xl\:tg-min-height\(step\) {
+    min-height: var(--tg-size-step);
+  }
+  .xl\:tg-min-height\(stage\) {
+    min-height: var(--tg-size-stage);
+  }
+  .xl\:tg-min-height\(stage-wide\) {
+    min-height: var(--tg-size-stage-wide);
+  }
+  .xl\:tg-min-height\(pin\) {
+    min-height: var(--tg-size-pin);
   }
   .xl\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
