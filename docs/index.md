@@ -31,6 +31,7 @@ title: Documentation
       {% include doc-entry.html href="/docs/values" sample="calc({space.md} * 2)" title="Values" description="What a value in the vocabulary file may and may not contain." %}
       {% include doc-entry.html href="/docs/checker" sample="index.html:3: unknown class" title="The checker and how classes are found" description="What check reports, and what the scanner reads and does not read." %}
       {% include doc-entry.html href="/docs/commands" sample="tidgrid build" title="Commands" description="init, build, check, list and sheet, with their flags and exit codes." %}
+      {% include doc-entry.html href="/docs/pitfalls" sample="Not like this" title="Pitfalls" description="Mistakes agents made in real projects, each beside its fix. Half of them pass the check." %}
     </div>
   </div>
 </section>

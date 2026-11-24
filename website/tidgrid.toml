@@ -66,6 +66,7 @@ cell    = "5rem"
 hero    = "calc(100svh - 7rem)"   # the first screen under the header (its 3rem logo + twice space.lg)
 reading = "44rem"                 # a line of running text
 aside   = "20rem"                 # the heading column beside a section
+rail    = "13rem"                 # the list of pages beside a docs page
 pin     = "16vh"                  # how far from the top a scene's question stays pinned
 screen  = "100vh"
 
@@ -171,21 +172,36 @@ color       = "{color.ink}"
 
 [role.text.tagline]
 use         = "The one big statement under the hero wordmark on the front page."
+text-wrap   = "balance"
 font-family = "{font.title}"
 font-size   = "{type.subtitle}"
 font-weight = "400"
 color       = "{color.ink}"
 
 [role.text.tagline."@lg"]
-font-size = "{type.h2}"
+font-size = "{type.display}"
 
-[role.text.label]
-use            = "Small uppercase caption: the header of a note, a footer heading."
-font-family    = "{font.title}"
-font-size      = "{type.label}"
-font-weight    = "600"
-text-transform = "uppercase"
-color          = "{color.ink}"
+[role.text.punch]
+use         = "The big statement that heads a scene of the front page: one or two short sentences. Not the heading of a docs section."
+font-family = "{font.title}"
+font-size   = "{type.h1}"
+font-weight = "700"
+line-height = "1.1"
+text-wrap   = "balance"
+color       = "{color.ink}"
+
+[role.text.punch."@lg"]
+font-size = "{type.hero}"
+
+[role.text.lead]
+use         = "The sentence or two under a text(punch), a tagline or a page title: larger than body, quieter than the statement above it."
+font-size   = "{type.lead}"
+line-height = "1.6"
+text-wrap   = "pretty"
+color       = "{color.ink-soft}"
+
+[role.text.lead."@lg"]
+font-size = "{type.subtitle}"
 
 [role.text.entry-title]
 use         = "The name of one entry in a list of pages, inside link(entry). Takes the link's colour, so it lights up with it."
@@ -373,15 +389,19 @@ transition      = "color {motion.fast}"
 [role.link.entry."&:is(:hover, :focus-visible)"]
 color = "{color.accent}"
 
-[role.link.footer]
-use            = "A plain link in the footer, for example a documentation page."
+[role.link.page]
+use            = "A plain link in a list of pages: the documentation pages in the footer or beside a docs page. Mark the page being shown with state(current)."
 font-family     = "{font.sans}"
 text-decoration = "none"
 color           = "{color.ink}"
 transition      = "color {motion.fast}"
 
-[role.link.footer."&:hover"]
+[role.link.page."&:hover"]
 color = "{color.ink-soft}"
+
+[role.link.page."&.tg-state(current)"]
+color       = "{color.accent}"
+font-weight = "700"
 
 [role.link.footer-heading]
 use             = "A main link in the footer (Home, Get started, a section name) or a licence name; uppercase."
@@ -419,7 +439,7 @@ text-decoration = "none"
 color           = "{color.ink}"
 
 [role.state.current]
-use = "Set on the navigation or breadcrumb link of the page being shown."
+use = "Set on the link of the page being shown: in the header navigation, a breadcrumb or a list of pages."
 
 [role.state.open]
 use = "Set by a script on an element that is currently open, for example the header menu panel on small screens."
@@ -607,14 +627,14 @@ transform        = "scaleX(0)"
 transform-origin = "left"
 
 [role.layout.pinned]
-use = "Keeps a scene's question in view from lg while the taller picture beside it scrolls past. One per scene."
+use = "Keeps the shorter side of a two-column block in view from lg while the taller side scrolls past: a scene's question beside its picture, the list of pages beside a docs page. One per block."
 
 [role.layout.pinned."@lg"]
 position = "sticky"
 top      = "{size.pin}"
 
 [role.text.caption]
-use         = "A small label above or inside a panel of a scene: who or what the panel is (Agent, tidgrid.toml, a command)."
+use         = "A small label above a panel: who or what the panel is (Agent, tidgrid.toml, a command, Not like this). On a div when inside text(prose)."
 font-family = "{font.mono}"
 font-size   = "{type.small}"
 color       = "{color.ink-soft}"

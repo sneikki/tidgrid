@@ -1,0 +1,17 @@
+# The documentation pages, in reading order. The footer and the list beside a docs page read this.
+- title: The vocabulary file
+  href: /docs/vocabulary-file
+- title: Tokens
+  href: /docs/tokens
+- title: Layout atoms
+  href: /docs/layout-atoms
+- title: Roles
+  href: /docs/roles
+- title: Values
+  href: /docs/values
+- title: The checker
+  href: /docs/checker
+- title: Commands
+  href: /docs/commands
+- title: Pitfalls
+  href: /docs/pitfalls

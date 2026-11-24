@@ -1,1 +1,6 @@
-<pre class="tg-surface(code)"><code{% if include.plain %} class="nohighlight"{% endif %}>{{ include.code | strip | escape }}</code></pre>
+{% comment %}
+A code sample. include.code: the text. plain=true: a shell command, tool output or prose.
+caption: what the panel is (a file name, "Your terminal"). alarm=true: an example of what
+not to do, in the outlined panel.
+{% endcomment %}
+{% if include.caption %}<div class="tg-col tg-y-gap(xs)"><div class="tg-text(caption)">{{ include.caption }}</div>{% endif %}<pre class="tg-surface(code)"{% if include.alarm %} data-alarm{% endif %}><code{% if include.plain %} class="nohighlight"{% endif %}>{{ include.code | strip | escape }}</code></pre>{% if include.caption %}</div>{% endif %}

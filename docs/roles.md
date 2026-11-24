@@ -14,7 +14,7 @@ border     = "{border.hair} solid {color.accent}"
 [role.surface.card."&:hover"]
 border-color = "{color.ink}"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 `[role.<kind>.<name>]` becomes the class `tg-<kind>(<name>)`. The role above is `tg-surface(card)`. Kinds are free words (`surface`, `text`, `emphasis`, `action`, `state` and so on), but a kind may not have the name of an atom.
 
@@ -46,7 +46,7 @@ opacity = "0"
 [role.text.title.".tg-state(ready) &"]
 opacity = "1"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 ## Elements and keyframes
 

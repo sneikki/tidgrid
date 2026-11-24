@@ -8,7 +8,7 @@ Install with Go:
 {% capture c %}
 go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
 {% endcapture %}
-{% include code.html code=c plain=true %}
+{% include code.html code=c plain=true caption="Your terminal" %}
 
 ## The five commands
 

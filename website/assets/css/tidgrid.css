@@ -46,6 +46,7 @@
   --tg-size-hero: calc(100svh - 7rem);
   --tg-size-reading: 44rem;
   --tg-size-aside: 20rem;
+  --tg-size-rail: 13rem;
   --tg-size-pin: 16vh;
   --tg-size-screen: 100vh;
   --tg-font-sans: Lato, sans-serif;
@@ -164,21 +165,36 @@ svg {
 }
 
 .tg-text\(tagline\) {
+  text-wrap: balance;
   font-family: var(--tg-font-title);
   font-size: var(--tg-type-subtitle);
   font-weight: 400;
   color: var(--tg-color-ink);
   @media (min-width: 75em) {
-    font-size: var(--tg-type-h2);
+    font-size: var(--tg-type-display);
   }
 }
 
-.tg-text\(label\) {
+.tg-text\(punch\) {
   font-family: var(--tg-font-title);
-  font-size: var(--tg-type-label);
-  font-weight: 600;
-  text-transform: uppercase;
+  font-size: var(--tg-type-h1);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
   color: var(--tg-color-ink);
+  @media (min-width: 75em) {
+    font-size: var(--tg-type-hero);
+  }
+}
+
+.tg-text\(lead\) {
+  font-size: var(--tg-type-lead);
+  line-height: 1.6;
+  text-wrap: pretty;
+  color: var(--tg-color-ink-soft);
+  @media (min-width: 75em) {
+    font-size: var(--tg-type-subtitle);
+  }
 }
 
 .tg-text\(entry-title\) {
@@ -394,13 +410,17 @@ svg {
   }
 }
 
-.tg-link\(footer\) {
+.tg-link\(page\) {
   font-family: var(--tg-font-sans);
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
   &:hover {
     color: var(--tg-color-ink-soft);
+  }
+  &.tg-state\(current\) {
+    color: var(--tg-color-accent);
+    font-weight: 700;
   }
 }
 
@@ -1163,6 +1183,10 @@ svg {
   width: var(--tg-size-aside);
 }
 
+.tg-width\(rail\) {
+  width: var(--tg-size-rail);
+}
+
 .tg-width\(pin\) {
   width: var(--tg-size-pin);
 }
@@ -1213,6 +1237,10 @@ svg {
 
 .tg-min-width\(aside\) {
   min-width: var(--tg-size-aside);
+}
+
+.tg-min-width\(rail\) {
+  min-width: var(--tg-size-rail);
 }
 
 .tg-min-width\(pin\) {
@@ -1267,6 +1295,10 @@ svg {
   max-width: var(--tg-size-aside);
 }
 
+.tg-max-width\(rail\) {
+  max-width: var(--tg-size-rail);
+}
+
 .tg-max-width\(pin\) {
   max-width: var(--tg-size-pin);
 }
@@ -1319,6 +1351,10 @@ svg {
   height: var(--tg-size-aside);
 }
 
+.tg-height\(rail\) {
+  height: var(--tg-size-rail);
+}
+
 .tg-height\(pin\) {
   height: var(--tg-size-pin);
 }
@@ -1369,6 +1405,10 @@ svg {
 
 .tg-min-height\(aside\) {
   min-height: var(--tg-size-aside);
+}
+
+.tg-min-height\(rail\) {
+  min-height: var(--tg-size-rail);
 }
 
 .tg-min-height\(pin\) {
@@ -1793,6 +1833,9 @@ svg {
   .xs\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .xs\:tg-width\(rail\) {
+    width: var(--tg-size-rail);
+  }
   .xs\:tg-width\(pin\) {
     width: var(--tg-size-pin);
   }
@@ -1831,6 +1874,9 @@ svg {
   }
   .xs\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .xs\:tg-min-width\(rail\) {
+    min-width: var(--tg-size-rail);
   }
   .xs\:tg-min-width\(pin\) {
     min-width: var(--tg-size-pin);
@@ -1871,6 +1917,9 @@ svg {
   .xs\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .xs\:tg-max-width\(rail\) {
+    max-width: var(--tg-size-rail);
+  }
   .xs\:tg-max-width\(pin\) {
     max-width: var(--tg-size-pin);
   }
@@ -1910,6 +1959,9 @@ svg {
   .xs\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .xs\:tg-height\(rail\) {
+    height: var(--tg-size-rail);
+  }
   .xs\:tg-height\(pin\) {
     height: var(--tg-size-pin);
   }
@@ -1948,6 +2000,9 @@ svg {
   }
   .xs\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .xs\:tg-min-height\(rail\) {
+    min-height: var(--tg-size-rail);
   }
   .xs\:tg-min-height\(pin\) {
     min-height: var(--tg-size-pin);
@@ -2349,6 +2404,9 @@ svg {
   .sm\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .sm\:tg-width\(rail\) {
+    width: var(--tg-size-rail);
+  }
   .sm\:tg-width\(pin\) {
     width: var(--tg-size-pin);
   }
@@ -2387,6 +2445,9 @@ svg {
   }
   .sm\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .sm\:tg-min-width\(rail\) {
+    min-width: var(--tg-size-rail);
   }
   .sm\:tg-min-width\(pin\) {
     min-width: var(--tg-size-pin);
@@ -2427,6 +2488,9 @@ svg {
   .sm\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .sm\:tg-max-width\(rail\) {
+    max-width: var(--tg-size-rail);
+  }
   .sm\:tg-max-width\(pin\) {
     max-width: var(--tg-size-pin);
   }
@@ -2466,6 +2530,9 @@ svg {
   .sm\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .sm\:tg-height\(rail\) {
+    height: var(--tg-size-rail);
+  }
   .sm\:tg-height\(pin\) {
     height: var(--tg-size-pin);
   }
@@ -2504,6 +2571,9 @@ svg {
   }
   .sm\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .sm\:tg-min-height\(rail\) {
+    min-height: var(--tg-size-rail);
   }
   .sm\:tg-min-height\(pin\) {
     min-height: var(--tg-size-pin);
@@ -2905,6 +2975,9 @@ svg {
   .md\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .md\:tg-width\(rail\) {
+    width: var(--tg-size-rail);
+  }
   .md\:tg-width\(pin\) {
     width: var(--tg-size-pin);
   }
@@ -2943,6 +3016,9 @@ svg {
   }
   .md\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .md\:tg-min-width\(rail\) {
+    min-width: var(--tg-size-rail);
   }
   .md\:tg-min-width\(pin\) {
     min-width: var(--tg-size-pin);
@@ -2983,6 +3059,9 @@ svg {
   .md\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .md\:tg-max-width\(rail\) {
+    max-width: var(--tg-size-rail);
+  }
   .md\:tg-max-width\(pin\) {
     max-width: var(--tg-size-pin);
   }
@@ -3022,6 +3101,9 @@ svg {
   .md\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .md\:tg-height\(rail\) {
+    height: var(--tg-size-rail);
+  }
   .md\:tg-height\(pin\) {
     height: var(--tg-size-pin);
   }
@@ -3060,6 +3142,9 @@ svg {
   }
   .md\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .md\:tg-min-height\(rail\) {
+    min-height: var(--tg-size-rail);
   }
   .md\:tg-min-height\(pin\) {
     min-height: var(--tg-size-pin);
@@ -3461,6 +3546,9 @@ svg {
   .lg\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .lg\:tg-width\(rail\) {
+    width: var(--tg-size-rail);
+  }
   .lg\:tg-width\(pin\) {
     width: var(--tg-size-pin);
   }
@@ -3499,6 +3587,9 @@ svg {
   }
   .lg\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .lg\:tg-min-width\(rail\) {
+    min-width: var(--tg-size-rail);
   }
   .lg\:tg-min-width\(pin\) {
     min-width: var(--tg-size-pin);
@@ -3539,6 +3630,9 @@ svg {
   .lg\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .lg\:tg-max-width\(rail\) {
+    max-width: var(--tg-size-rail);
+  }
   .lg\:tg-max-width\(pin\) {
     max-width: var(--tg-size-pin);
   }
@@ -3578,6 +3672,9 @@ svg {
   .lg\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .lg\:tg-height\(rail\) {
+    height: var(--tg-size-rail);
+  }
   .lg\:tg-height\(pin\) {
     height: var(--tg-size-pin);
   }
@@ -3616,6 +3713,9 @@ svg {
   }
   .lg\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .lg\:tg-min-height\(rail\) {
+    min-height: var(--tg-size-rail);
   }
   .lg\:tg-min-height\(pin\) {
     min-height: var(--tg-size-pin);
@@ -4017,6 +4117,9 @@ svg {
   .xl\:tg-width\(aside\) {
     width: var(--tg-size-aside);
   }
+  .xl\:tg-width\(rail\) {
+    width: var(--tg-size-rail);
+  }
   .xl\:tg-width\(pin\) {
     width: var(--tg-size-pin);
   }
@@ -4055,6 +4158,9 @@ svg {
   }
   .xl\:tg-min-width\(aside\) {
     min-width: var(--tg-size-aside);
+  }
+  .xl\:tg-min-width\(rail\) {
+    min-width: var(--tg-size-rail);
   }
   .xl\:tg-min-width\(pin\) {
     min-width: var(--tg-size-pin);
@@ -4095,6 +4201,9 @@ svg {
   .xl\:tg-max-width\(aside\) {
     max-width: var(--tg-size-aside);
   }
+  .xl\:tg-max-width\(rail\) {
+    max-width: var(--tg-size-rail);
+  }
   .xl\:tg-max-width\(pin\) {
     max-width: var(--tg-size-pin);
   }
@@ -4134,6 +4243,9 @@ svg {
   .xl\:tg-height\(aside\) {
     height: var(--tg-size-aside);
   }
+  .xl\:tg-height\(rail\) {
+    height: var(--tg-size-rail);
+  }
   .xl\:tg-height\(pin\) {
     height: var(--tg-size-pin);
   }
@@ -4172,6 +4284,9 @@ svg {
   }
   .xl\:tg-min-height\(aside\) {
     min-height: var(--tg-size-aside);
+  }
+  .xl\:tg-min-height\(rail\) {
+    min-height: var(--tg-size-rail);
   }
   .xl\:tg-min-height\(pin\) {
     min-height: var(--tg-size-pin);
