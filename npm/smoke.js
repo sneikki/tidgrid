@@ -67,7 +67,7 @@ function play(sc, name, launch) {
   const dir = path.join(tmp, name);
   fs.mkdirSync(dir);
   for (const [f, c] of Object.entries(sc.files)) fs.writeFileSync(path.join(dir, f), c);
-  const norm = (s) => s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n");
+  const norm = (s) => s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n").replace(/\\/g, "/"); // native Windows prints "\" in paths, wasm "/"
   const log = [];
   sc.steps.forEach((step, i) => {
     if (i === 3 && sc.after) {
