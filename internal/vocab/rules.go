@@ -19,6 +19,8 @@ func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bo
 		if k == "use" {
 			if !topLevel {
 				l.errf(kp, "use belongs directly in a role or element table, not in a nested rule")
+			} else if _, ok := val.(string); !ok {
+				l.errf(kp, "use must be a string")
 			}
 			continue
 		}

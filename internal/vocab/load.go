@@ -1,9 +1,7 @@
 package vocab
 
 import (
-	"flag"
 	"fmt"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -12,40 +10,32 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-// DefaultConfig is the vocabulary file name used when -c is not given.
-const DefaultConfig = "tidgrid.toml"
-
-// LoadFile loads the vocabulary at path. On failure it prints each error to
-// stderr and returns a nil vocabulary with exit code 2; else the vocabulary and 0.
-func LoadFile(path string) (*Vocabulary, int) {
-	v, errs := Load(path)
-	if len(errs) > 0 {
-		for _, e := range errs {
-			fmt.Fprintf(os.Stderr, "%s: %v\n", path, e)
-		}
-		return nil, 2
-	}
-	return v, 0
-}
-
-// LoadFlag parses -c and loads that vocabulary with LoadFile; a bad flag returns exit code 2.
-func LoadFlag(name string, args []string) (*Vocabulary, int) {
-	fs := flag.NewFlagSet(name, flag.ContinueOnError)
-	cfg := fs.String("c", DefaultConfig, "vocabulary file")
-	if err := fs.Parse(args); err != nil {
-		return nil, 2
-	}
-	return LoadFile(*cfg)
-}
-
 // Load parses and validates the vocabulary file at path; errors name the table path and key.
+// A .tg file is evaluated as Starlark, anything else is read as TOML.
 func Load(path string) (*Vocabulary, []error) {
 	l := newLoader(path)
-	md, err := toml.DecodeFile(path, &l.raw)
-	if err != nil {
+	if filepath.Ext(path) == ".tg" {
+		if errs := l.evalStarlark(path); len(errs) > 0 {
+			return nil, errs
+		}
+	} else if err := l.decodeTOML(path); err != nil {
 		return nil, []error{err}
 	}
+	return l.validate()
+}
+
+func (l *loader) decodeTOML(path string) error {
+	md, err := toml.DecodeFile(path, &l.raw)
+	if err != nil {
+		return err
+	}
 	l.indexKeys(md.Keys())
+	return nil
+}
+
+// validate runs every load step over the filled raw tables and kids.
+func (l *loader) validate() (*Vocabulary, []error) {
+	path := l.v.Path
 	l.checkTopLevelTables()
 	l.loadProject(filepath.Dir(path))
 	l.loadBreakpoints()
@@ -69,7 +59,8 @@ type loader struct {
 	raw   map[string]any
 	kids  map[string][]string // table path -> child keys in file order
 	errs  []error
-	known map[string]bool // "group.name" of every declared token
+	pos   map[string]string // table path -> "file:line" of the declaring call (Starlark only)
+	known map[string]bool   // "group.name" of every declared token
 	// written maps "group.name" to the token value as written.
 	written map[string]string
 	// keyframeNames holds every declared keyframes name.
@@ -82,6 +73,7 @@ func newLoader(path string) *loader {
 		v:             &Vocabulary{Path: path, valid: map[string]bool{}, takes: map[string][]string{}, bpValue: map[string]string{}},
 		raw:           map[string]any{},
 		kids:          map[string][]string{},
+		pos:           map[string]string{},
 		known:         map[string]bool{},
 		written:       map[string]string{},
 		keyframeNames: map[string]bool{},
@@ -132,7 +124,21 @@ func showPath(p []string) string {
 }
 
 func (l *loader) errf(p []string, f string, a ...any) {
-	l.errs = append(l.errs, fmt.Errorf("%s: %s", showPath(p), fmt.Sprintf(f, a...)))
+	msg := fmt.Sprintf("%s: %s", showPath(p), fmt.Sprintf(f, a...))
+	if at := l.declaredAt(p); at != "" {
+		msg = at + ": " + msg
+	}
+	l.errs = append(l.errs, fmt.Errorf("%s", msg))
+}
+
+// declaredAt is the position of the nearest enclosing declaration of path p.
+func (l *loader) declaredAt(p []string) string {
+	for n := len(p); n > 0; n-- {
+		if at, ok := l.pos[pathKey(p[:n])]; ok {
+			return at
+		}
+	}
+	return ""
 }
 
 func (l *loader) children(p ...string) []string { return l.kids[pathKey(p)] }

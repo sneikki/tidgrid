@@ -59,6 +59,7 @@ func (l *loader) loadRoles() {
 func (l *loader) buildRole(p []string, t map[string]any, kind, name string) Role {
 	class := l.v.Project.Prefix + "-" + kind + "(" + name + ")"
 	r := Role{Kind: kind, Name: name, Class: class}
+	r.File, r.Line = splitPos(l.pos[pathKey(p)])
 	if u, ok := t["use"].(string); !ok || strings.TrimSpace(u) == "" {
 		l.errf(extend(p, "use"), "required: when the role applies")
 	} else {

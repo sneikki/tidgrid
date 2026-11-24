@@ -75,15 +75,15 @@ func rawProblem(prop, s string) string {
 	}
 	if !identProp(prop) {
 		if m := nameRe.FindStringSubmatch(s); m != nil {
-			return "raw colour " + m[1] + " (move it to [tokens])"
+			return "raw colour " + m[1] + " (move it to tokens)"
 		}
 	}
 	if m := unitRe.FindString(s); m != "" {
-		return "raw length or time " + strings.TrimLeft(m, " ,(") + " (move it to [tokens])"
+		return "raw length or time " + strings.TrimLeft(m, " ,(") + " (move it to tokens)"
 	}
 	if sizeProp(prop) {
 		if m := percentRe.FindString(s); m != "" {
-			return "raw size " + strings.TrimLeft(m, " ,(") + " (move it to [tokens])"
+			return "raw size " + strings.TrimLeft(m, " ,(") + " (move it to tokens)"
 		}
 	}
 	return ""

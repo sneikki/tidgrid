@@ -1,0 +1,16 @@
+color = tokens("color", {
+    "ground": "#0f1214",
+    "ink": "#e6e9eb",
+    "accent": "#5ed5dc",
+    "link": "{color.accent}",
+})
+
+space = tokens("space", sm = "0.5rem", md = "1rem")
+tokens("size", {"full": "100%", "measure": "80rem"})
+border = tokens("border", hair = "1px")
+motion = tokens("motion", slow = "1.1s")
+
+rise = keyframes("rise", {
+    "0%": {"transform": "translateY(" + space.sm + ")"},
+    "100%": {"transform": "none"},
+})

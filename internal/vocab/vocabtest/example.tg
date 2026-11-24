@@ -1,0 +1,14 @@
+project(out = "src/styles/tidgrid.css", scan = ["."])
+
+breakpoints(sm = "40em", md = "64em")
+
+element("body", {
+    "background": "{color.ground}",
+    "color": "{color.ink}",
+})
+
+allow_class("has-js", "set by an inline script before first paint")
+allow_css("src/styles/fonts.css", "self-hosted @font-face only")
+
+source("tokens.tg")
+source("roles.tg")

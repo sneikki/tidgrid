@@ -13,10 +13,12 @@ import (
 // Run executes the command named by args[0] and returns its exit code.
 func Run(args []string) int {
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "usage: tidgrid init|build|check|list|sheet [-c file]")
+		fmt.Fprintln(os.Stderr, "usage: tidgrid init|convert|build|check|list|sheet [file]")
 		return 2
 	}
 	switch args[0] {
+	case "convert":
+		return runConvert(args[1:])
 	case "init":
 		return runInit(args[1:])
 	case "build":
