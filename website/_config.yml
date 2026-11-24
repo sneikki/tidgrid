@@ -1,9 +1,9 @@
 domain: "tidgrid.dev"
-url: "https://tidgrid.sneikki.lol"
+url: "https://tidgrid.dev"
 baseurl: ""
 title: "Tidgrid"
-# The released tidgrid version this site documents. The footer shows it and
-# the workflow installs exactly this one, so the two cannot drift apart.
+# The released tidgrid version this site documents. The footer and the install
+# line show it; the workflow checks the site with the tool from the commit.
 version: "v0.3.0"
 
 exclude:
