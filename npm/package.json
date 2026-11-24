@@ -1,7 +1,7 @@
 {
   "name": "tidgrid",
   "version": "0.3.0",
-  "description": "A closed CSS vocabulary for coding agents: build, check and plan from one .tg file.",
+  "description": "A closed CSS vocabulary for coding agents: the build fails when a page or a role steps outside it.",
   "license": "MIT",
   "homepage": "https://tidgrid.dev",
   "repository": {
