@@ -11,6 +11,7 @@ A vocabulary is a Starlark program, and these are the functions it calls. They a
 | `breakpoints(sm="40em", ...)` or `breakpoints({...})` | Breakpoints, ascending in call order. Values are literal, because media queries cannot read custom properties. |
 | `tokens(group, {name: value})` or `tokens(group, name=value, ...)` | A token group. Returns the group, so `color.ink` is a reference to a token. See [tokens](/docs/tokens). |
 | `element(selector, css={...}, use="")` | A base rule for a bare element (`body`, `a`, `"*"`). `use` is optional. |
+| `tidiness(level)` | A reset, written before the element rules. `"minimal"` only fixes what browsers get wrong (`box-sizing: border-box` on everything, pictures no wider than their box); headings, lists, links and form controls keep the browser's look. `"full"` also takes that look away: nothing has a margin, a padding, a border, a heading size, a list marker or a link colour until an element rule or a role gives one. No call, no reset. Once. |
 | `keyframes(name, {stop: css})` | An animation. Returns a reference that becomes the animation name `tg-<name>`. |
 | `role(kind, name, use=..., css={...}, include=[...])` | The class `tg-<kind>(<name>)`. `use` is required. See [roles](/docs/roles). |
 | `mixin(name, use=..., sets={...})` | Named sets of lines that roles include. See [mixins](/docs/mixins). |
@@ -25,6 +26,7 @@ project(out = "tidgrid.css", scan = ["."], repeats = [(3, 2), (2, 4)])
 breakpoints(sm = "40em", md = "64em")
 color = tokens("color", ink = "#e6e9eb", accent = "#5ed5dc")
 motion = tokens("motion", {"slow": "1.1s"})
+tidiness("full")
 element("a", css = {"color": color.accent})
 spin = keyframes("spin", {"to": {"transform": "rotate(360deg)"}})
 bits = mixin("bits", use = "Two lines.", sets = {"pair": {"cursor": "pointer", "color": color.ink}})
