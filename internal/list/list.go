@@ -13,7 +13,7 @@ import (
 // rules are the three lines of README "Working with an agent".
 const rules = "Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.\n" +
 	"Run `tidgrid check` before every commit; it must exit 0.\n" +
-	"A new role is a change to tidgrid.toml in its own commit, never mixed into page work.\n"
+	"A new role goes in the same commit as the page that first uses it; `tidgrid check` fails on a role nothing uses.\n"
 
 // Run is the list command: the agent-facing summary of the vocabulary.
 func Run(args []string) int {
