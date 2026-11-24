@@ -4,10 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "tg": "tidgrid build && tidgrid check",
-    "predev": "npm run tg",
-    "dev": "next dev",
-    "prebuild": "npm run tg",
-    "build": "next build",
+    "dev": "npm run tg && next dev",
+    "build": "npm run tg && next build",
     "start": "next start"
   },
   "dependencies": {

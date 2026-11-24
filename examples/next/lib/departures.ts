@@ -7,7 +7,15 @@ export type Departure = {
   vessel: string;
   status: Status;
   note: string;
+  delay?: number; // minutes late; the note says the same
 };
+
+// Scheduled time plus the delay: the time the boat is expected to leave.
+export function expectedTime(d: Departure): string {
+  const [h, m] = d.time.split(":").map(Number);
+  const t = h * 60 + m + (d.delay ?? 0);
+  return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
+}
 
 export const routes = ["All", "Outer Loop", "Seal Rock", "Lantern Isle"] as const;
 
@@ -17,11 +25,11 @@ export const now = "09:15";
 export const departures: Departure[] = [
   { time: "07:40", route: "Outer Loop", to: "Brännskär", vessel: "Marta K", status: "ok", note: "Departed" },
   { time: "08:20", route: "Seal Rock", to: "Sälgrund", vessel: "Orn", status: "ok", note: "Departed" },
-  { time: "09:30", route: "Lantern Isle", to: "Fyrholm", vessel: "Linnea", status: "late", note: "Fog on the sound, +25 min" },
+  { time: "09:30", route: "Lantern Isle", to: "Fyrholm", vessel: "Linnea", status: "late", note: "Fog on the sound, +25 min", delay: 25 },
   { time: "10:05", route: "Outer Loop", to: "Brännskär", vessel: "Marta K", status: "ok", note: "Boarding from 09:50" },
   { time: "11:15", route: "Seal Rock", to: "Sälgrund", vessel: "Orn", status: "cancelled", note: "Crane repair at Sälgrund" },
   { time: "12:00", route: "Lantern Isle", to: "Fyrholm", vessel: "Linnea", status: "ok", note: "Cars and bicycles" },
   { time: "13:40", route: "Outer Loop", to: "Brännskär", vessel: "Marta K", status: "ok", note: "Last cars 13:25" },
-  { time: "15:10", route: "Seal Rock", to: "Sälgrund", vessel: "Orn", status: "late", note: "Waits for the mail boat, +10 min" },
+  { time: "15:10", route: "Seal Rock", to: "Sälgrund", vessel: "Orn", status: "late", note: "Waits for the mail boat, +10 min", delay: 10 },
   { time: "17:30", route: "Lantern Isle", to: "Fyrholm", vessel: "Linnea", status: "ok", note: "Evening crossing" },
 ];
