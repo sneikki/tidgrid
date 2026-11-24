@@ -17,7 +17,7 @@ func (l *loader) registerRoleClasses() {
 			continue
 		}
 		if !bareName.MatchString(kind) {
-			l.errf([]string{"role", kind}, "kind must be letters, digits, dashes")
+			l.errf([]string{"role", kind}, "kind must be letters, digits, - and _")
 			continue
 		}
 		fam := v.Project.Prefix + "-" + kind
@@ -28,7 +28,7 @@ func (l *loader) registerRoleClasses() {
 				continue
 			}
 			if !bareName.MatchString(n) {
-				l.errf([]string{"role", kind, n}, "name must be letters, digits, dashes")
+				l.errf([]string{"role", kind, n}, "name must be letters, digits, - and _")
 				continue
 			}
 			v.addClass(fam + "(" + n + ")")
