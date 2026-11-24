@@ -3,6 +3,7 @@
 // glue with its licence, and the repo's README and licence.
 const { execFileSync } = require("child_process");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const here = __dirname;
@@ -15,7 +16,7 @@ function checkVersion() {
   const version = require("./package.json").version;
   let tag;
   try {
-    tag = run("git", ["describe", "--exact-match", "--tags", "HEAD"], { cwd: repo });
+    tag = run("git", ["describe", "--exact-match", "--tags", "HEAD"], { cwd: repo, stdio: ["ignore", "pipe", "ignore"] });
   } catch {
     return;
   }
@@ -23,10 +24,17 @@ function checkVersion() {
 }
 
 function buildWasm() {
-  run("go", ["build", "-ldflags=-s -w", "-o", path.join(here, "tidgrid.wasm"), "./cmd/tidgrid"], {
+  const out = path.join(here, "tidgrid.wasm");
+  run("go", ["build", "-trimpath", "-ldflags=-s -w", "-o", out, "./cmd/tidgrid"], {
     cwd: repo,
     env: { ...process.env, GOOS: "js", GOARCH: "wasm", CGO_ENABLED: "0" },
   });
+  // The wasm is published: it must not carry this machine's paths or user.
+  const wasm = fs.readFileSync(out);
+  const home = os.homedir();
+  const user = os.userInfo().username;
+  const leaks = [home, home.replace(/\\/g, "/"), `/${user}/`, `\\${user}\\`].filter((s) => s.length > 3 && wasm.includes(s));
+  if (leaks.length) throw new Error(`tidgrid.wasm contains builder paths: ${leaks.join(", ")}`);
 }
 
 function copyGoGlue() {

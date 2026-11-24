@@ -9,13 +9,17 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 
 // Go's js port only knows "/" paths. On Windows, hand it "C:/dir" for the
-// working directory and forward-slash, cwd-relative paths for path arguments.
+// working directory and forward-slash, cwd-relative paths for path arguments,
+// also the value of `--flag=value`.
+// Limit: a path on another drive than the working directory stays "D:/x",
+// which Go reads as relative to the working directory (not supported).
 function windowsPaths(args) {
   const cwd = process.cwd();
   process.cwd = () => cwd.replace(/\\/g, "/");
   return args.map((a) => {
-    if (a.startsWith("-") || !/^[A-Za-z]:[\\/]|\\/.test(a)) return a;
-    return path.relative(cwd, path.resolve(cwd, a)).replace(/\\/g, "/") || ".";
+    const [, flag = "", v] = /^(-[^=]*=)?([^]*)$/.exec(a);
+    if ((!flag && v.startsWith("-")) || !/^[A-Za-z]:[\\/]|\\/.test(v)) return a;
+    return flag + (path.relative(cwd, path.resolve(cwd, v)).replace(/\\/g, "/") || ".");
   });
 }
 
@@ -42,6 +46,7 @@ function fitEnv(env, args) {
     drop.add(e[0]);
     total -= e[2];
   }
+  if (total > 7000) return null; // the arguments alone do not fit
   return Object.fromEntries(entries.filter((e) => !drop.has(e[0])).map((e) => e.slice(0, 2)));
 }
 
@@ -59,8 +64,16 @@ function main() {
   const go = new Go();
   go.argv = ["tidgrid", ...args];
   go.env = fitEnv({ TMPDIR: os.tmpdir(), ...process.env }, go.argv);
+  if (!go.env) {
+    process.stderr.write("tidgrid: arguments are too long (limit 8 KiB)\n");
+    process.exitCode = 2;
+    return;
+  }
   // Not process.exit: let the event loop drain so stdout and stderr arrive whole.
+  // A Go timer still pending would resume the exited program and throw.
   go.exit = (code) => {
+    for (const t of go._scheduledTimeouts.values()) clearTimeout(t);
+    go._scheduledTimeouts.clear();
     process.exitCode = code;
   };
   WebAssembly.instantiate(fs.readFileSync(path.join(root, "tidgrid.wasm")), go.importObject)

@@ -9,7 +9,8 @@ const path = require("path");
 
 const repo = path.join(__dirname, "..");
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "tidgrid-smoke-"));
-const exe = process.platform === "win32" ? ".exe" : "";
+const win = process.platform === "win32";
+const exe = win ? ".exe" : "";
 const native = path.join(tmp, "native" + exe);
 const toml = fs.readFileSync(path.join(repo, "internal/vocab/vocabtest/example.toml"));
 
@@ -42,11 +43,18 @@ const scenarios = [
     files: {},
     steps: [
       ["init"], ["init"], ["build"], ["check"], ["list"], ["plan"], ["sheet"], ["sheet", "-o", "s.html"],
-      ["check", "{dir}/index.tg"], ["build", "./index.tg"], ["nonsense"], [],
+      ["check", "{dir}/index.tg"], ["build", "./index.tg"], ["nonsense"], [], ["sheet", "-o={dir}/s2.html"],
     ],
     after: badPage,
   },
   { name: "no vocabulary", files: {}, steps: [["check"], ["build"], ["list"]] },
+  // a long failing check leaves a Go timer pending when the tool exits
+  {
+    name: "many unknown classes",
+    files: {},
+    steps: [["init"], ["build"], ["build"], ["check"]],
+    after: { "src/page.html": Array.from({ length: 10000 }, (_, i) => `<div class="tg-x${i}">x</div>\n`).join("") },
+  },
   { name: "old toml", files: { "tidgrid.toml": toml }, steps: [["check"], ["convert"], ["convert"], ["build"], ["check"]] },
 ];
 
@@ -67,7 +75,10 @@ function play(sc, name, launch) {
   const dir = path.join(tmp, name);
   fs.mkdirSync(dir);
   for (const [f, c] of Object.entries(sc.files)) fs.writeFileSync(path.join(dir, f), c);
-  const norm = (s) => s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n").replace(/\\/g, "/"); // native Windows prints "\" in paths, wasm "/"
+  const norm = (s) => {
+    s = s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n");
+    return win ? s.replace(/\\/g, "/") : s; // native Windows prints "\" in paths, wasm "/"
+  };
   const log = [];
   sc.steps.forEach((step, i) => {
     if (i === 3 && sc.after) {
@@ -112,6 +123,17 @@ function main() {
   if (!npxOk) {
     failed++;
     console.log(viaNpx.stdout + viaNpx.stderr);
+  }
+  // a reader that quits early must not make the launcher print anything
+  if (!win) {
+    const dir = path.join(tmp, "manyunknownclasses-npm");
+    const head = sh("sh", ["-c", `node "${wasm}" check 2>err.txt | head -1 >/dev/null; cat err.txt`], { cwd: dir });
+    const headOk = head.stdout === "" && head.stderr === "";
+    console.log(`${headOk ? "ok  " : "FAIL"} no stderr into | head -1`);
+    if (!headOk) {
+      failed++;
+      console.log(head.stdout + head.stderr);
+    }
   }
   fs.rmSync(tmp, { recursive: true, force: true });
   process.exit(failed ? 1 : 0);
