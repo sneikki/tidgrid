@@ -62,7 +62,9 @@ specimen = "19rem"
 icon-sm = "2rem"
 icon-md = "3rem"
 cell    = "5rem"
-hero    = "60vh"
+hero    = "calc(100svh - 6rem)"   # the first screen under the header
+reading = "44rem"                 # a line of running text
+aside   = "20rem"                 # the heading column beside a section
 screen  = "100vh"
 
 [tokens.font]
@@ -84,6 +86,8 @@ display   = "3rem"
 hero-narrow = "2.75rem"
 hero      = "4rem"
 hero-wide = "5rem"
+hero-max  = "7rem"
+cell      = "0.7rem"
 
 [tokens.border]
 hair  = "1px"
@@ -100,6 +104,7 @@ card-hover = "0 0 1rem 0 {color.shade-deep}"
 [tokens.motion]
 fast   = "200ms"
 medium = "300ms"
+cell   = "3600ms"   # how long one lit grid cell lives
 
 # ---------------------------------------------------------------- elements
 
@@ -125,8 +130,6 @@ flex-direction   = "column"
 font-family      = "{font.sans}"
 color            = "{color.ink}"
 background-color = "{color.paper}"
-background-size  = "{size.cell} {size.cell}"
-background-image = "linear-gradient(to right, {color.tint} {border.hair}, transparent {border.hair}), linear-gradient(to bottom, {color.tint} {border.hair}, transparent {border.hair})"
 
 [element.img]
 display = "block"
@@ -166,12 +169,10 @@ use         = "The one big statement under the hero wordmark on the front page."
 font-family = "{font.title}"
 font-size   = "{type.subtitle}"
 font-weight = "400"
-text-align  = "center"
 color       = "{color.ink}"
 
 [role.text.tagline."@lg"]
-font-size  = "{type.h2}"
-text-align = "start"
+font-size = "{type.h2}"
 
 [role.text.label]
 use            = "Small uppercase caption: the header of a note, a footer heading."
@@ -214,6 +215,9 @@ font-size = "{type.hero}"
 
 [role.text.wordmark-hero."@sm"]
 font-size = "{type.hero-wide}"
+
+[role.text.wordmark-hero."@lg"]
+font-size = "{type.hero-max}"
 
 [role.text.wordmark-accent]
 use   = "Accent colour for a part of a wordmark (the .dev)."
@@ -421,6 +425,9 @@ use = "Set by a script on html when the reader picked the light colours with the
 [role.state.dark]
 use = "Set by a script on html when the reader picked the dark colours with the header button."
 
+[role.state.foreign]
+use = "Set by the backdrop script on a surface(cell) that shows a class name from outside the vocabulary: accent colour, struck out."
+
 [role.list.plain]
 use        = "A list without bullets or indent, for navigation links."
 list-style = "none"
@@ -566,6 +573,50 @@ color = "{color.syn-title}"
 
 [role.surface.code."& .hljs-built_in"]
 color = "{color.syn-builtin}"
+
+# ---------------------------------------------------------------- the backdrop
+
+[keyframes.cell."0%"]
+opacity = "0"
+
+[keyframes.cell."12%"]
+opacity = "1"
+
+[keyframes.cell."75%"]
+opacity = "1"
+
+[keyframes.cell."100%"]
+opacity = "0"
+
+[role.surface.grid]
+use              = "The grid of fine lines behind every page: one fixed layer, first in body, hidden from assistive technology. The backdrop script moves it slower than the page."
+position         = "fixed"
+top              = "0"
+right            = "0"
+bottom           = "calc({size.cell} * -1)"
+left             = "0"
+z-index          = "-1"
+pointer-events   = "none"
+background-size  = "{size.cell} {size.cell}"
+background-image = "linear-gradient(to right, {color.tint} {border.hair}, transparent {border.hair}), linear-gradient(to bottom, {color.tint} {border.hair}, transparent {border.hair})"
+
+[role.surface.cell]
+use         = "One lit cell of the page grid, holding a class name. Created and placed by the backdrop script inside surface(grid); never written in a page."
+position    = "absolute"
+display     = "grid"
+place-items = "center"
+width       = "{size.cell}"
+height      = "{size.cell}"
+font-family = "{font.mono}"
+font-size   = "{type.cell}"
+color       = "{color.ink-soft}"
+background  = "color-mix(in srgb, {color.ink-soft} 9%, transparent)"
+animation   = "{keyframes.cell} {motion.cell} ease-in-out both"
+
+[role.surface.cell."&.tg-state(foreign)"]
+color           = "{color.accent}"
+background      = "color-mix(in srgb, {color.accent} 12%, transparent)"
+text-decoration = "line-through"
 
 # ---------------------------------------------------------------- layout the atoms cannot express
 

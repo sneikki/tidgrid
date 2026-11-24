@@ -42,7 +42,9 @@
   --tg-size-icon-sm: 2rem;
   --tg-size-icon-md: 3rem;
   --tg-size-cell: 5rem;
-  --tg-size-hero: 60vh;
+  --tg-size-hero: calc(100svh - 6rem);
+  --tg-size-reading: 44rem;
+  --tg-size-aside: 20rem;
   --tg-size-screen: 100vh;
   --tg-font-sans: Lato, sans-serif;
   --tg-font-title: Montserrat, Lato, sans-serif;
@@ -60,6 +62,8 @@
   --tg-type-hero-narrow: 2.75rem;
   --tg-type-hero: 4rem;
   --tg-type-hero-wide: 5rem;
+  --tg-type-hero-max: 7rem;
+  --tg-type-cell: 0.7rem;
   --tg-border-hair: 1px;
   --tg-border-focus: 2px;
   --tg-radius-sm: 0.25rem;
@@ -68,6 +72,7 @@
   --tg-shadow-card-hover: 0 0 1rem 0 var(--tg-color-shade-deep);
   --tg-motion-fast: 200ms;
   --tg-motion-medium: 300ms;
+  --tg-motion-cell: 3600ms;
 }
 
 * {
@@ -94,8 +99,6 @@ body {
   font-family: var(--tg-font-sans);
   color: var(--tg-color-ink);
   background-color: var(--tg-color-paper);
-  background-size: var(--tg-size-cell) var(--tg-size-cell);
-  background-image: linear-gradient(to right, var(--tg-color-tint) var(--tg-border-hair), transparent var(--tg-border-hair)), linear-gradient(to bottom, var(--tg-color-tint) var(--tg-border-hair), transparent var(--tg-border-hair));
 }
 
 img {
@@ -104,6 +107,21 @@ img {
 
 svg {
   display: block;
+}
+
+@keyframes tg-cell {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .tg-text\(page-title\) {
@@ -135,11 +153,9 @@ svg {
   font-family: var(--tg-font-title);
   font-size: var(--tg-type-subtitle);
   font-weight: 400;
-  text-align: center;
   color: var(--tg-color-ink);
   @media (min-width: 75em) {
     font-size: var(--tg-type-h2);
-    text-align: start;
   }
 }
 
@@ -182,6 +198,9 @@ svg {
   }
   @media (min-width: 48em) {
     font-size: var(--tg-type-hero-wide);
+  }
+  @media (min-width: 75em) {
+    font-size: var(--tg-type-hero-max);
   }
 }
 
@@ -397,6 +416,9 @@ svg {
 .tg-state\(dark\) {
 }
 
+.tg-state\(foreign\) {
+}
+
 .tg-list\(plain\) {
   list-style: none;
 }
@@ -528,6 +550,36 @@ svg {
   }
   & .hljs-built_in {
     color: var(--tg-color-syn-builtin);
+  }
+}
+
+.tg-surface\(grid\) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: calc(var(--tg-size-cell) * -1);
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-size: var(--tg-size-cell) var(--tg-size-cell);
+  background-image: linear-gradient(to right, var(--tg-color-tint) var(--tg-border-hair), transparent var(--tg-border-hair)), linear-gradient(to bottom, var(--tg-color-tint) var(--tg-border-hair), transparent var(--tg-border-hair));
+}
+
+.tg-surface\(cell\) {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--tg-size-cell);
+  height: var(--tg-size-cell);
+  font-family: var(--tg-font-mono);
+  font-size: var(--tg-type-cell);
+  color: var(--tg-color-ink-soft);
+  background: color-mix(in srgb, var(--tg-color-ink-soft) 9%, transparent);
+  animation: tg-cell var(--tg-motion-cell) ease-in-out both;
+  &.tg-state\(foreign\) {
+    color: var(--tg-color-accent);
+    background: color-mix(in srgb, var(--tg-color-accent) 12%, transparent);
+    text-decoration: line-through;
   }
 }
 
@@ -991,6 +1043,14 @@ svg {
   width: var(--tg-size-hero);
 }
 
+.tg-width\(reading\) {
+  width: var(--tg-size-reading);
+}
+
+.tg-width\(aside\) {
+  width: var(--tg-size-aside);
+}
+
 .tg-width\(screen\) {
   width: var(--tg-size-screen);
 }
@@ -1029,6 +1089,14 @@ svg {
 
 .tg-min-width\(hero\) {
   min-width: var(--tg-size-hero);
+}
+
+.tg-min-width\(reading\) {
+  min-width: var(--tg-size-reading);
+}
+
+.tg-min-width\(aside\) {
+  min-width: var(--tg-size-aside);
 }
 
 .tg-min-width\(screen\) {
@@ -1071,6 +1139,14 @@ svg {
   max-width: var(--tg-size-hero);
 }
 
+.tg-max-width\(reading\) {
+  max-width: var(--tg-size-reading);
+}
+
+.tg-max-width\(aside\) {
+  max-width: var(--tg-size-aside);
+}
+
 .tg-max-width\(screen\) {
   max-width: var(--tg-size-screen);
 }
@@ -1111,6 +1187,14 @@ svg {
   height: var(--tg-size-hero);
 }
 
+.tg-height\(reading\) {
+  height: var(--tg-size-reading);
+}
+
+.tg-height\(aside\) {
+  height: var(--tg-size-aside);
+}
+
 .tg-height\(screen\) {
   height: var(--tg-size-screen);
 }
@@ -1149,6 +1233,14 @@ svg {
 
 .tg-min-height\(hero\) {
   min-height: var(--tg-size-hero);
+}
+
+.tg-min-height\(reading\) {
+  min-height: var(--tg-size-reading);
+}
+
+.tg-min-height\(aside\) {
+  min-height: var(--tg-size-aside);
 }
 
 .tg-min-height\(screen\) {
@@ -1563,6 +1655,12 @@ svg {
   .xs\:tg-width\(hero\) {
     width: var(--tg-size-hero);
   }
+  .xs\:tg-width\(reading\) {
+    width: var(--tg-size-reading);
+  }
+  .xs\:tg-width\(aside\) {
+    width: var(--tg-size-aside);
+  }
   .xs\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -1592,6 +1690,12 @@ svg {
   }
   .xs\:tg-min-width\(hero\) {
     min-width: var(--tg-size-hero);
+  }
+  .xs\:tg-min-width\(reading\) {
+    min-width: var(--tg-size-reading);
+  }
+  .xs\:tg-min-width\(aside\) {
+    min-width: var(--tg-size-aside);
   }
   .xs\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -1623,6 +1727,12 @@ svg {
   .xs\:tg-max-width\(hero\) {
     max-width: var(--tg-size-hero);
   }
+  .xs\:tg-max-width\(reading\) {
+    max-width: var(--tg-size-reading);
+  }
+  .xs\:tg-max-width\(aside\) {
+    max-width: var(--tg-size-aside);
+  }
   .xs\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -1653,6 +1763,12 @@ svg {
   .xs\:tg-height\(hero\) {
     height: var(--tg-size-hero);
   }
+  .xs\:tg-height\(reading\) {
+    height: var(--tg-size-reading);
+  }
+  .xs\:tg-height\(aside\) {
+    height: var(--tg-size-aside);
+  }
   .xs\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -1682,6 +1798,12 @@ svg {
   }
   .xs\:tg-min-height\(hero\) {
     min-height: var(--tg-size-hero);
+  }
+  .xs\:tg-min-height\(reading\) {
+    min-height: var(--tg-size-reading);
+  }
+  .xs\:tg-min-height\(aside\) {
+    min-height: var(--tg-size-aside);
   }
   .xs\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -2074,6 +2196,12 @@ svg {
   .sm\:tg-width\(hero\) {
     width: var(--tg-size-hero);
   }
+  .sm\:tg-width\(reading\) {
+    width: var(--tg-size-reading);
+  }
+  .sm\:tg-width\(aside\) {
+    width: var(--tg-size-aside);
+  }
   .sm\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -2103,6 +2231,12 @@ svg {
   }
   .sm\:tg-min-width\(hero\) {
     min-width: var(--tg-size-hero);
+  }
+  .sm\:tg-min-width\(reading\) {
+    min-width: var(--tg-size-reading);
+  }
+  .sm\:tg-min-width\(aside\) {
+    min-width: var(--tg-size-aside);
   }
   .sm\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -2134,6 +2268,12 @@ svg {
   .sm\:tg-max-width\(hero\) {
     max-width: var(--tg-size-hero);
   }
+  .sm\:tg-max-width\(reading\) {
+    max-width: var(--tg-size-reading);
+  }
+  .sm\:tg-max-width\(aside\) {
+    max-width: var(--tg-size-aside);
+  }
   .sm\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -2164,6 +2304,12 @@ svg {
   .sm\:tg-height\(hero\) {
     height: var(--tg-size-hero);
   }
+  .sm\:tg-height\(reading\) {
+    height: var(--tg-size-reading);
+  }
+  .sm\:tg-height\(aside\) {
+    height: var(--tg-size-aside);
+  }
   .sm\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -2193,6 +2339,12 @@ svg {
   }
   .sm\:tg-min-height\(hero\) {
     min-height: var(--tg-size-hero);
+  }
+  .sm\:tg-min-height\(reading\) {
+    min-height: var(--tg-size-reading);
+  }
+  .sm\:tg-min-height\(aside\) {
+    min-height: var(--tg-size-aside);
   }
   .sm\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -2585,6 +2737,12 @@ svg {
   .md\:tg-width\(hero\) {
     width: var(--tg-size-hero);
   }
+  .md\:tg-width\(reading\) {
+    width: var(--tg-size-reading);
+  }
+  .md\:tg-width\(aside\) {
+    width: var(--tg-size-aside);
+  }
   .md\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -2614,6 +2772,12 @@ svg {
   }
   .md\:tg-min-width\(hero\) {
     min-width: var(--tg-size-hero);
+  }
+  .md\:tg-min-width\(reading\) {
+    min-width: var(--tg-size-reading);
+  }
+  .md\:tg-min-width\(aside\) {
+    min-width: var(--tg-size-aside);
   }
   .md\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -2645,6 +2809,12 @@ svg {
   .md\:tg-max-width\(hero\) {
     max-width: var(--tg-size-hero);
   }
+  .md\:tg-max-width\(reading\) {
+    max-width: var(--tg-size-reading);
+  }
+  .md\:tg-max-width\(aside\) {
+    max-width: var(--tg-size-aside);
+  }
   .md\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -2675,6 +2845,12 @@ svg {
   .md\:tg-height\(hero\) {
     height: var(--tg-size-hero);
   }
+  .md\:tg-height\(reading\) {
+    height: var(--tg-size-reading);
+  }
+  .md\:tg-height\(aside\) {
+    height: var(--tg-size-aside);
+  }
   .md\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -2704,6 +2880,12 @@ svg {
   }
   .md\:tg-min-height\(hero\) {
     min-height: var(--tg-size-hero);
+  }
+  .md\:tg-min-height\(reading\) {
+    min-height: var(--tg-size-reading);
+  }
+  .md\:tg-min-height\(aside\) {
+    min-height: var(--tg-size-aside);
   }
   .md\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -3096,6 +3278,12 @@ svg {
   .lg\:tg-width\(hero\) {
     width: var(--tg-size-hero);
   }
+  .lg\:tg-width\(reading\) {
+    width: var(--tg-size-reading);
+  }
+  .lg\:tg-width\(aside\) {
+    width: var(--tg-size-aside);
+  }
   .lg\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -3125,6 +3313,12 @@ svg {
   }
   .lg\:tg-min-width\(hero\) {
     min-width: var(--tg-size-hero);
+  }
+  .lg\:tg-min-width\(reading\) {
+    min-width: var(--tg-size-reading);
+  }
+  .lg\:tg-min-width\(aside\) {
+    min-width: var(--tg-size-aside);
   }
   .lg\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -3156,6 +3350,12 @@ svg {
   .lg\:tg-max-width\(hero\) {
     max-width: var(--tg-size-hero);
   }
+  .lg\:tg-max-width\(reading\) {
+    max-width: var(--tg-size-reading);
+  }
+  .lg\:tg-max-width\(aside\) {
+    max-width: var(--tg-size-aside);
+  }
   .lg\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -3186,6 +3386,12 @@ svg {
   .lg\:tg-height\(hero\) {
     height: var(--tg-size-hero);
   }
+  .lg\:tg-height\(reading\) {
+    height: var(--tg-size-reading);
+  }
+  .lg\:tg-height\(aside\) {
+    height: var(--tg-size-aside);
+  }
   .lg\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -3215,6 +3421,12 @@ svg {
   }
   .lg\:tg-min-height\(hero\) {
     min-height: var(--tg-size-hero);
+  }
+  .lg\:tg-min-height\(reading\) {
+    min-height: var(--tg-size-reading);
+  }
+  .lg\:tg-min-height\(aside\) {
+    min-height: var(--tg-size-aside);
   }
   .lg\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
@@ -3607,6 +3819,12 @@ svg {
   .xl\:tg-width\(hero\) {
     width: var(--tg-size-hero);
   }
+  .xl\:tg-width\(reading\) {
+    width: var(--tg-size-reading);
+  }
+  .xl\:tg-width\(aside\) {
+    width: var(--tg-size-aside);
+  }
   .xl\:tg-width\(screen\) {
     width: var(--tg-size-screen);
   }
@@ -3636,6 +3854,12 @@ svg {
   }
   .xl\:tg-min-width\(hero\) {
     min-width: var(--tg-size-hero);
+  }
+  .xl\:tg-min-width\(reading\) {
+    min-width: var(--tg-size-reading);
+  }
+  .xl\:tg-min-width\(aside\) {
+    min-width: var(--tg-size-aside);
   }
   .xl\:tg-min-width\(screen\) {
     min-width: var(--tg-size-screen);
@@ -3667,6 +3891,12 @@ svg {
   .xl\:tg-max-width\(hero\) {
     max-width: var(--tg-size-hero);
   }
+  .xl\:tg-max-width\(reading\) {
+    max-width: var(--tg-size-reading);
+  }
+  .xl\:tg-max-width\(aside\) {
+    max-width: var(--tg-size-aside);
+  }
   .xl\:tg-max-width\(screen\) {
     max-width: var(--tg-size-screen);
   }
@@ -3697,6 +3927,12 @@ svg {
   .xl\:tg-height\(hero\) {
     height: var(--tg-size-hero);
   }
+  .xl\:tg-height\(reading\) {
+    height: var(--tg-size-reading);
+  }
+  .xl\:tg-height\(aside\) {
+    height: var(--tg-size-aside);
+  }
   .xl\:tg-height\(screen\) {
     height: var(--tg-size-screen);
   }
@@ -3726,6 +3962,12 @@ svg {
   }
   .xl\:tg-min-height\(hero\) {
     min-height: var(--tg-size-hero);
+  }
+  .xl\:tg-min-height\(reading\) {
+    min-height: var(--tg-size-reading);
+  }
+  .xl\:tg-min-height\(aside\) {
+    min-height: var(--tg-size-aside);
   }
   .xl\:tg-min-height\(screen\) {
     min-height: var(--tg-size-screen);
