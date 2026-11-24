@@ -19,9 +19,9 @@ import (
 // samples keep the project's own look.
 const layout = `
 .tgs-page{box-sizing:border-box;max-width:72rem;margin:0 auto;padding:1rem}
-.tgs-title{font-size:1.5rem;margin:1rem 0}
-.tgs-h{font-size:1.125rem;margin:2.5rem 0 .75rem;padding-bottom:.25rem;border-bottom:1px solid #8886}
-.tgs-sub{font-size:.95rem;margin:1.25rem 0 .5rem;opacity:.7}
+.tgs-title{font-size:1.5rem;font-weight:700;margin:1rem 0}
+.tgs-h{font-size:1.125rem;font-weight:700;margin:2.5rem 0 .75rem;padding-bottom:.25rem;border-bottom:1px solid #8886}
+.tgs-sub{font-size:.95rem;font-weight:700;margin:1.25rem 0 .5rem;opacity:.7}
 .tgs-desc{margin:.25rem 0;font-size:.9rem}
 .tgs-row{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .75rem;margin:.4rem 0}
 .tgs-chip{display:inline-block;width:3rem;height:2rem;border:1px solid #8886;border-radius:.25rem}

@@ -65,6 +65,9 @@ motion = tokens("motion", {
     "quick": "120ms",
 })
 
+# Reset: removes every browser default look, so only this file gives one. "minimal" fixes only.
+tidiness("full")
+
 # Base rules for bare elements.
 element("body", css = {
     "background": color.ground,
@@ -72,7 +75,6 @@ element("body", css = {
     "font-family": font.sans,
     "font-size": text.body,
     "line-height": "1.5",
-    "margin": "0",
 })
 
 # Links: accent colour, underlined on hover.

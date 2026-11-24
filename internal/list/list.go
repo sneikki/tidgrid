@@ -30,6 +30,7 @@ func Run(args []string) int {
 func text(v *vocab.Vocabulary) string {
 	var b strings.Builder
 	breakpoints(v, &b)
+	tidiness(v, &b)
 	b.WriteString("\n# tokens\n")
 	tokens(v, &b)
 	b.WriteString("\n# atoms\n")
@@ -55,6 +56,16 @@ func breakpoints(v *vocab.Vocabulary, b *strings.Builder) {
 		}
 		fmt.Fprintf(b, "%s (ascending). Any atom takes a prefix: %s:%s-row applies from %s up.\n",
 			strings.Join(names, " "), names[0], v.Project.Prefix, names[0])
+	}
+}
+
+// tidiness says what the reset leaves to the project; nothing when unset.
+func tidiness(v *vocab.Vocabulary, b *strings.Builder) {
+	switch v.Tidiness {
+	case "full":
+		b.WriteString("\n# tidiness\nfull: nothing has margin, padding, border, heading size, list marker or link colour until an element rule or a role gives one.\n")
+	case "minimal":
+		b.WriteString("\n# tidiness\nminimal: browser fixes only; headings, lists, links and form controls keep the browser's look.\n")
 	}
 }
 
