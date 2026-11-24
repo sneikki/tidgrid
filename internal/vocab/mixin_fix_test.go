@@ -35,13 +35,13 @@ role("text", "c", use = "C.", css = {"font-weight": "700", "margin": "0"})
 }
 
 func TestMixinHandWrittenUsesSetAsCalled(t *testing.T) {
-	got := loadErr(t, map[string]string{"index.tg": projectLine + `d = {"font-weight": "600"}
+	got := loadErr(t, map[string]string{"index.tg": projectLine + `d = {"font-weight": "600", "margin": "0"}
 m = mixin("m", use = "u", sets = {"s": d})
 d["font-weight"] = "700"
 role("text", "a", use = "A.", include = [m.s])
 role("text", "b", use = "B.", include = [m.s])
-role("text", "c", use = "C.", css = {"font-weight": "600"})
-role("text", "d", use = "D.", css = {"font-weight": "700"})
+role("text", "c", use = "C.", css = {"font-weight": "600", "margin": "0"})
+role("text", "d", use = "D.", css = {"font-weight": "700", "margin": "0"})
 `})
 	wantIn(t, got, "role.text.c: own lines repeat set m.s")
 	if strings.Contains(got, "role.text.d") {
@@ -51,7 +51,7 @@ role("text", "d", use = "D.", css = {"font-weight": "700"})
 
 func TestMixinSetErrorReportedOnce(t *testing.T) {
 	got := loadErr(t, map[string]string{"index.tg": projectLine + `m = mixin("m", use = "u", sets = {
-    "s": {"color": "#fff"},
+    "s": {"color": "#fff", "margin": "0"},
 })
 role("text", "a", use = "A.", include = [m.s])
 role("text", "b", use = "B.", include = [m.s])
@@ -65,7 +65,7 @@ role("text", "c", use = "C.", include = [m.s])
 
 const nestedHead = projectLine + `m = mixin("m", use = "u", sets = {
     "s": {"font-weight": "600", "&:hover": {"font-weight": "500"}},
-    "t": {"&:hover": {"font-weight": "400"}},
+    "t": {"&:hover": {"font-weight": "400", "margin": "0"}},
 })
 `
 
@@ -120,7 +120,7 @@ role("text", "a", use = "A.", css = {"margin": "0", "&:hover": {"color": "red"}}
 func TestMixinUsersCountedAcrossFiles(t *testing.T) {
 	v := mixinLoad(t, map[string]string{
 		"index.tg": projectLine + "load(\"sets.tg\", \"m\")\nload(\"b.tg\", \"mk\")\nrole(\"text\", \"a\", use = \"A.\", include = [m.s])\nmk(m)\n",
-		"sets.tg":  `m = mixin("m", use = "u", sets = {"s": {"font-weight": "600"}})` + "\n",
+		"sets.tg":  `m = mixin("m", use = "u", sets = {"s": {"font-weight": "600", "margin": "0"}})` + "\n",
 		"b.tg":     "def mk(m):\n    role(\"text\", \"b\", use = \"B.\", include = [m.s])\n",
 	})
 	if got := v.Mixins[0].Sets[0].Roles; len(got) != 2 {

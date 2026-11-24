@@ -55,11 +55,28 @@ func (l *loader) checkSets() {
 	for _, m := range l.mix.defs {
 		for _, s := range m.sets {
 			p := []string{"mixin", m.name, s.name}
+			if declCount(s.tree) < 2 {
+				l.errf(p, "a set needs at least two lines; a single shared value belongs in a token")
+				continue
+			}
 			t := map[string]any{}
 			l.addLines(p, t, s.tree, "", map[string]string{})
 			l.buildRule(p, t, "", false)
 		}
 	}
+}
+
+// declCount counts every declaration in ls, nested rules included.
+func declCount(ls []cssLine) int {
+	n := 0
+	for _, ln := range ls {
+		if ln.nested {
+			n += declCount(ln.sub)
+		} else {
+			n++
+		}
+	}
+	return n
 }
 
 var (
