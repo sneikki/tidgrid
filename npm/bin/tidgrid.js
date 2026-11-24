@@ -63,7 +63,10 @@ function main() {
   const args = process.platform === "win32" ? windowsPaths(process.argv.slice(2)) : process.argv.slice(2);
   const go = new Go();
   go.argv = ["tidgrid", ...args];
-  go.env = fitEnv({ TMPDIR: os.tmpdir(), ...process.env }, go.argv);
+  // Go's js port has one thread: GOMAXPROCS above 1 (CI images set it) ends
+  // in "fatal error: newosproc: not implemented".
+  const { GOMAXPROCS, ...env } = process.env;
+  go.env = fitEnv({ TMPDIR: os.tmpdir(), ...env }, go.argv);
   if (!go.env) {
     process.stderr.write("tidgrid: arguments are too long (limit 8 KiB)\n");
     process.exitCode = 2;
