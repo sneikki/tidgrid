@@ -65,6 +65,8 @@ type loader struct {
 	known map[string]bool   // "group.name" of every declared token
 	// written maps "group.name" to the token value as written.
 	written map[string]string
+	// tidinessAt is "file:line" of the tidiness() call, empty before it.
+	tidinessAt string
 	// keyframeNames holds every declared keyframes name.
 	keyframeNames map[string]bool
 	expansions    map[string]*expansion // "group.name" -> literal expansion, see literalToken
