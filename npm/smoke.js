@@ -126,6 +126,14 @@ function main() {
     failed++;
     console.log(viaNpx.stdout + viaNpx.stderr);
   }
+  // GOMAXPROCS in the environment must not reach the one-threaded wasm runtime
+  const procs = sh(process.execPath, [wasm, "init"], { cwd: fs.mkdtempSync(path.join(tmp, "procs-")), env: { ...process.env, GOMAXPROCS: "4" } });
+  const procsOk = procs.status === 0 && !procs.stderr.includes("fatal error");
+  console.log(`${procsOk ? "ok  " : "FAIL"} runs with GOMAXPROCS=4 (exit ${procs.status})`);
+  if (!procsOk) {
+    failed++;
+    console.log(procs.stderr.slice(0, 400));
+  }
   // a reader that quits early must not make the launcher print anything
   if (!win) {
     const dir = path.join(tmp, "manyunknownclasses-npm");
