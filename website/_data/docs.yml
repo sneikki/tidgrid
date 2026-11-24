@@ -1,12 +1,18 @@
 # The documentation pages, in reading order. The footer and the list beside a docs page read this.
 - title: The vocabulary file
   href: /docs/vocabulary-file
+- title: Files and the entry file
+  href: /docs/files
+- title: Builtins
+  href: /docs/builtins
 - title: Tokens
   href: /docs/tokens
 - title: Layout atoms
   href: /docs/layout-atoms
 - title: Roles
   href: /docs/roles
+- title: Mixins
+  href: /docs/mixins
 - title: Values
   href: /docs/values
 - title: The checker

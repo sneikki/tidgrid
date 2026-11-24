@@ -5,7 +5,7 @@ title: Layout atoms
 
 Atoms are the classes for layout. Their grammar is fixed and the same in every project, so an agent that knows one Tidgrid project knows the atoms of all of them. Rows, gaps, padding and widths are free to combine, and always run on the project's token scales.
 
-In the tables below, `S` is every name in `tokens.space` and `Z` is every name in `tokens.size`. Each row is a class and the CSS it sets.
+In the tables below, `S` is every name in the `space` token group and `Z` is every name in `size`. Each row is a class and the CSS it sets.
 
 ## The atoms
 
@@ -76,7 +76,7 @@ A small example, a column on a phone and a row from `md` up:
 
 An element takes a property from an atom or from a role, never both: atoms are written after roles and win.
 
-Layout the atoms do not cover, such as an overlay or a fixed panel, is a role. Add it to the vocabulary file in its own commit.
+Layout the atoms do not cover, such as an overlay or a fixed panel, is a role. Add it to the vocabulary in the same commit as the first page that uses it.
 
 ## Next
 

@@ -141,9 +141,9 @@ svg {
 
 .tg-text\(page-title\) {
   font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
   font-size: var(--tg-type-h2);
   font-weight: 700;
-  color: var(--tg-color-ink);
   @media (min-width: 48em) {
     font-size: var(--tg-type-h1);
   }
@@ -154,9 +154,9 @@ svg {
 
 .tg-text\(section-title\) {
   font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
   font-size: var(--tg-type-h2);
   font-weight: 400;
-  color: var(--tg-color-ink);
 }
 
 .tg-text\(body\) {
@@ -165,11 +165,11 @@ svg {
 }
 
 .tg-text\(tagline\) {
-  text-wrap: balance;
   font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
+  text-wrap: balance;
   font-size: var(--tg-type-subtitle);
   font-weight: 400;
-  color: var(--tg-color-ink);
   @media (min-width: 75em) {
     font-size: var(--tg-type-display);
   }
@@ -177,11 +177,11 @@ svg {
 
 .tg-text\(punch\) {
   font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
   font-size: var(--tg-type-h1);
   font-weight: 700;
   line-height: 1.1;
   text-wrap: balance;
-  color: var(--tg-color-ink);
   @media (min-width: 75em) {
     font-size: var(--tg-type-hero);
   }
@@ -211,18 +211,18 @@ svg {
 
 .tg-text\(wordmark\) {
   font-family: var(--tg-font-mono);
-  font-size: var(--tg-type-h2);
-  text-transform: lowercase;
   color: var(--tg-color-ink);
   user-select: none;
+  font-size: var(--tg-type-h2);
+  text-transform: lowercase;
 }
 
 .tg-text\(wordmark-hero\) {
   font-family: var(--tg-font-mono);
-  font-size: var(--tg-type-hero-narrow);
-  line-height: 1.2;
   color: var(--tg-color-ink);
   user-select: none;
+  font-size: var(--tg-type-hero-narrow);
+  line-height: 1.2;
   @media (min-width: 36em) {
     font-size: var(--tg-type-hero);
   }
@@ -257,10 +257,10 @@ svg {
 
 .tg-text\(error-code\) {
   font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
   font-size: var(--tg-type-hero);
   font-weight: 900;
   text-align: center;
-  color: var(--tg-color-ink);
 }
 
 .tg-text\(error-message\) {
@@ -346,9 +346,9 @@ svg {
 
 .tg-text\(note-title\) {
   font-family: var(--tg-font-title);
-  font-size: var(--tg-type-label);
   font-weight: 600;
   text-transform: uppercase;
+  font-size: var(--tg-type-label);
   border-bottom: var(--tg-border-hair) solid var(--tg-color-edge);
 }
 
@@ -375,12 +375,12 @@ svg {
 
 .tg-link\(nav\) {
   font-family: var(--tg-font-title);
-  font-size: var(--tg-type-label);
   font-weight: 600;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
+  font-size: var(--tg-type-label);
   &:hover {
     color: var(--tg-color-ink-soft);
   }
@@ -400,21 +400,21 @@ svg {
 }
 
 .tg-link\(entry\) {
-  display: block;
-  border-top: var(--tg-border-hair) solid var(--tg-color-drawer-edge);
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
+  display: block;
+  border-top: var(--tg-border-hair) solid var(--tg-color-drawer-edge);
   &:is(:hover, :focus-visible) {
     color: var(--tg-color-accent);
   }
 }
 
 .tg-link\(page\) {
-  font-family: var(--tg-font-sans);
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
+  font-family: var(--tg-font-sans);
   &:hover {
     color: var(--tg-color-ink-soft);
   }
@@ -426,22 +426,22 @@ svg {
 
 .tg-link\(footer-heading\) {
   font-family: var(--tg-font-title);
-  font-size: var(--tg-type-small);
   font-weight: 600;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
+  font-size: var(--tg-type-small);
   &:hover {
     color: var(--tg-color-ink-soft);
   }
 }
 
 .tg-link\(breadcrumb\) {
-  font-size: var(--tg-type-crumb);
   text-decoration: none;
   color: var(--tg-color-ink);
   transition: color var(--tg-motion-fast);
+  font-size: var(--tg-type-crumb);
   &:hover {
     color: var(--tg-color-ink-soft);
   }
@@ -631,14 +631,14 @@ svg {
 }
 
 .tg-surface\(tag\) {
+  font-family: var(--tg-font-mono);
+  font-size: var(--tg-type-small);
+  color: var(--tg-color-ink-soft);
   white-space: nowrap;
   padding: var(--tg-space-xs) var(--tg-space-sm);
   border: var(--tg-border-hair) solid var(--tg-color-drawer-edge);
   border-radius: var(--tg-radius-md);
   background: var(--tg-color-raised);
-  font-family: var(--tg-font-mono);
-  font-size: var(--tg-type-small);
-  color: var(--tg-color-ink-soft);
   &[data-alarm] {
     border-color: var(--tg-color-accent);
     color: var(--tg-color-ink);
@@ -688,9 +688,9 @@ svg {
 }
 
 .tg-layout\(drawer\) {
-  display: none;
   position: fixed;
   top: 0;
+  display: none;
   right: 0;
   z-index: 3;
   width: var(--tg-size-full);

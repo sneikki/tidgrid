@@ -1,0 +1,823 @@
+load("mixins.tg", "button", "layer", "link", "text")
+
+keyframes("drift", {
+    "0%": {
+        "transform": "translateX(0)",
+    },
+    "100%": {
+        "transform": "translateX(-50%)",
+    },
+})
+
+keyframes("cell", {
+    "0%": {
+        "opacity": "0",
+    },
+    "12%": {
+        "opacity": "1",
+    },
+    "75%": {
+        "opacity": "1",
+    },
+    "100%": {
+        "opacity": "0",
+    },
+})
+
+# Text.
+role(
+    "text", "page-title",
+    use = "The one title of a page (h1 or the first line). Never twice on a page.",
+    include = [text.heading],
+    css = {
+        "font-size": "{type.h2}",
+        "font-weight": "700",
+        "@sm": {
+            "font-size": "{type.h1}",
+        },
+        "@md": {
+            "font-size": "{type.display}",
+        },
+    },
+)
+
+role(
+    "text", "section-title",
+    use = "Heading of a section inside a page. Lighter than the page title.",
+    include = [text.heading],
+    css = {
+        "font-size": "{type.h2}",
+        "font-weight": "400",
+    },
+)
+
+role(
+    "text", "body",
+    use = "Ordinary running text. The default for any paragraph.",
+    css = {
+        "line-height": "1.75",
+        "color": "{color.ink}",
+    },
+)
+
+role(
+    "text", "tagline",
+    use = "The one big statement under the hero wordmark on the front page.",
+    include = [text.heading],
+    css = {
+        "text-wrap": "balance",
+        "font-size": "{type.subtitle}",
+        "font-weight": "400",
+        "@lg": {
+            "font-size": "{type.display}",
+        },
+    },
+)
+
+role(
+    "text", "punch",
+    use = "The big statement that heads a scene of the front page: one or two short sentences. Not the heading of a docs section.",
+    include = [text.heading],
+    css = {
+        "font-size": "{type.h1}",
+        "font-weight": "700",
+        "line-height": "1.1",
+        "text-wrap": "balance",
+        "@lg": {
+            "font-size": "{type.hero}",
+        },
+    },
+)
+
+role(
+    "text", "lead",
+    use = "The sentence or two under a text(punch), a tagline or a page title: larger than body, quieter than the statement above it.",
+    css = {
+        "font-size": "{type.lead}",
+        "line-height": "1.6",
+        "text-wrap": "pretty",
+        "color": "{color.ink-soft}",
+        "@lg": {
+            "font-size": "{type.subtitle}",
+        },
+    },
+)
+
+role(
+    "text", "entry-title",
+    use = "The name of one entry in a list of pages, inside link(entry). Takes the link's colour, so it lights up with it.",
+    css = {
+        "font-family": "{font.title}",
+        "font-size": "{type.lead}",
+        "font-weight": "600",
+    },
+)
+
+role(
+    "text", "fine-print",
+    use = "Small muted text such as licence lines in the footer.",
+    css = {
+        "font-size": "{type.small}",
+        "line-height": "1.75",
+        "color": "{color.muted}",
+    },
+)
+
+role(
+    "text", "wordmark",
+    use = "The product name set in monospace, lowercase. Footer size; one per area.",
+    include = [text.wordmark],
+    css = {
+        "font-size": "{type.h2}",
+        "text-transform": "lowercase",
+    },
+)
+
+role(
+    "text", "wordmark-hero",
+    use = "The huge product name of the front page hero. Pair with text(wordmark-accent) for the accent part.",
+    include = [text.wordmark],
+    css = {
+        "font-size": "{type.hero-narrow}",
+        "line-height": "1.2",
+        "@xs": {
+            "font-size": "{type.hero}",
+        },
+        "@sm": {
+            "font-size": "{type.hero-wide}",
+        },
+        "@lg": {
+            "font-size": "{type.hero-max}",
+        },
+    },
+)
+
+role(
+    "text", "wordmark-accent",
+    use = "Accent colour for a part of a wordmark (the .dev).",
+    css = {
+        "color": "{color.accent}",
+    },
+)
+
+role(
+    "text", "version",
+    use = "A version number next to the wordmark.",
+    css = {
+        "font-family": "{font.mono}",
+        "font-size": "{type.base}",
+        "color": "{color.muted}",
+    },
+)
+
+role(
+    "text", "keyword",
+    use = "A short inline term, class name or command inside a sentence (shown as a chip).",
+    css = {
+        "display": "inline-block",
+        "max-width": "{size.full}",
+        "overflow-wrap": "anywhere",
+        "padding": "0 {space.xs}",
+        "font-family": "{font.mono}",
+        "color": "{color.keyword}",
+        "background": "{color.sand}",
+        "border-radius": "{radius.sm}",
+    },
+)
+
+role(
+    "text", "error-code",
+    use = "The huge number on an error page.",
+    include = [text.heading],
+    css = {
+        "font-size": "{type.hero}",
+        "font-weight": "900",
+        "text-align": "center",
+    },
+)
+
+role(
+    "text", "error-message",
+    use = "The sentence under an error code.",
+    css = {
+        "font-size": "{type.subtitle}",
+        "text-align": "center",
+        "color": "{color.ink}",
+    },
+)
+
+role(
+    "text", "prose",
+    use = "Wrap rendered Markdown (a docs page body). Styles its p, h2, ul, ol, a and code so the Markdown source needs no classes.",
+    css = {
+        "font-family": "{font.sans}",
+        "overflow-wrap": "anywhere",
+        "& > * + *": {
+            "margin-top": "{space.lg}",
+        },
+        "& h3": {
+            "font-family": "{font.title}",
+            "font-size": "{type.heading}",
+            "font-weight": "700",
+        },
+        "& h4": {
+            "font-family": "{font.title}",
+            "font-size": "{type.label}",
+            "font-weight": "600",
+            "text-transform": "uppercase",
+        },
+        "& table": {
+            "display": "block",
+            "max-width": "{size.full}",
+            "overflow-x": "auto",
+            "overflow-wrap": "normal",
+            "border-collapse": "collapse",
+            "font-size": "{type.small}",
+            "line-height": "1.5",
+        },
+        "& th": {
+            "padding": "{space.xs} {space.sm}",
+            "font-family": "{font.title}",
+            "font-weight": "600",
+            "text-align": "start",
+            "vertical-align": "top",
+            "background": "{color.tint}",
+            "border": "{border.hair} solid {color.edge}",
+        },
+        "& td": {
+            "padding": "{space.xs} {space.sm}",
+            "vertical-align": "top",
+            "border": "{border.hair} solid {color.edge}",
+        },
+        "& p": {
+            "line-height": "1.75",
+        },
+        "& h2": {
+            "font-family": "{font.title}",
+            "font-size": "{type.h2}",
+            "font-weight": "400",
+        },
+        "& ul": {
+            "margin-left": "{space.lg}",
+        },
+        "& ol": {
+            "margin-left": "{space.lg}",
+        },
+        "& li + li": {
+            "margin-top": "{space.sm}",
+        },
+        "& a": {
+            "font-weight": "600",
+            "text-decoration": "none",
+            "color": "{color.ink}",
+            "transition": "color {motion.fast}",
+        },
+        "& a:hover": {
+            "color": "{color.ink-soft}",
+        },
+        "& :not(pre) > code": {
+            "padding": "0 {space.xs}",
+            "font-family": "{font.mono}",
+            "color": "{color.keyword}",
+            "background": "{color.sand}",
+            "border-radius": "{radius.sm}",
+        },
+    },
+)
+
+role(
+    "text", "note-title",
+    use = "The heading line of a surface(note).",
+    include = [text.label],
+    css = {
+        "font-size": "{type.label}",
+        "border-bottom": "{border.hair} solid {color.edge}",
+    },
+)
+
+role(
+    "text", "caption",
+    use = "A small label above a panel: who or what the panel is (Agent, index.tg, a command, Not like this). On a div when inside text(prose).",
+    include = [text.caption],
+)
+
+role(
+    "text", "line",
+    use = "One row of a terminal or code panel that is built up row by row, inside surface(code) on a div. Keeps its spaces; a row too long for the panel wraps, as in a terminal.",
+    css = {
+        "display": "block",
+        "white-space": "pre-wrap",
+        "overflow-wrap": "anywhere",
+    },
+)
+
+role(
+    "text", "refused",
+    use = "Marks a piece of code or a status word as outside the vocabulary: what check refuses, or would have.",
+    css = {
+        "color": "{color.accent}",
+        "background": "color-mix(in srgb, {color.accent} 16%, transparent)",
+    },
+)
+
+role(
+    "text", "passed",
+    use = "Marks a status word as fine: merged, built, in the vocabulary.",
+    css = {
+        "color": "{color.pass}",
+    },
+)
+
+# Links and navigation.
+role(
+    "link", "nav",
+    use = "A link in the main header navigation. Mark the page you are on with state(current).",
+    include = [text.label, link.base],
+    css = {
+        "font-size": "{type.label}",
+        "&:hover": {
+            "color": "{color.ink-soft}",
+        },
+        "&.tg-state(current)": {
+            "color": "{color.accent}",
+        },
+    },
+)
+
+role(
+    "link", "text",
+    use = "A plain text link outside prose, such as the 'more' link under a block of text. Not for the header or the footer.",
+    css = {
+        "font-weight": "600",
+        "text-decoration": "underline",
+        "color": "{color.ink}",
+        "transition": "color {motion.fast}",
+        "&:hover": {
+            "color": "{color.ink-soft}",
+        },
+    },
+)
+
+role(
+    "link", "entry",
+    use = "One row of a list of pages: the whole row is the link, with a rule above it. Holds a sample on one side and text(entry-title) with a line of text(body) on the other.",
+    include = [link.base],
+    css = {
+        "display": "block",
+        "border-top": "{border.hair} solid {color.drawer-edge}",
+        "&:is(:hover, :focus-visible)": {
+            "color": "{color.accent}",
+        },
+    },
+)
+
+role(
+    "link", "page",
+    use = "A plain link in a list of pages: the documentation pages in the footer or beside a docs page. Mark the page being shown with state(current).",
+    include = [link.base],
+    css = {
+        "font-family": "{font.sans}",
+        "&:hover": {
+            "color": "{color.ink-soft}",
+        },
+        "&.tg-state(current)": {
+            "color": "{color.accent}",
+            "font-weight": "700",
+        },
+    },
+)
+
+role(
+    "link", "footer-heading",
+    use = "A main link in the footer (Home, Get started, a section name) or a licence name; uppercase.",
+    include = [text.label, link.base],
+    css = {
+        "font-size": "{type.small}",
+        "&:hover": {
+            "color": "{color.ink-soft}",
+        },
+    },
+)
+
+role(
+    "link", "breadcrumb",
+    use = "One step of a breadcrumb trail, a link to a parent page. The last step is the page itself: add state(current). The arrow between steps is drawn by the role.",
+    include = [link.base],
+    css = {
+        "font-size": "{type.crumb}",
+        "&:hover": {
+            "color": "{color.ink-soft}",
+        },
+        "&:not(:last-child)::after": {
+            "content": "\"›\"",
+            "margin": "0 {space.xs}",
+        },
+        "&.tg-state(current)": {
+            "font-weight": "900",
+        },
+    },
+)
+
+role(
+    "link", "card",
+    use = "The link that makes a whole card clickable. Wraps a surface(card).",
+    css = {
+        "text-decoration": "none",
+        "color": "{color.ink}",
+    },
+)
+
+role(
+    "state", "current",
+    use = "Set on the link of the page being shown: in the header navigation, a breadcrumb or a list of pages.",
+)
+
+role(
+    "state", "open",
+    use = "Set by a script on an element that is currently open, for example the header menu panel on small screens.",
+)
+
+role(
+    "state", "light",
+    use = "Set by a script on html when the reader picked the light colours with the header button. Without it and state(dark) the page follows the system.",
+)
+
+role(
+    "state", "dark",
+    use = "Set by a script on html when the reader picked the dark colours with the header button.",
+)
+
+role(
+    "state", "foreign",
+    use = "Set by the backdrop script on a surface(cell) that shows a class name from outside the vocabulary: accent colour, struck out.",
+)
+
+role(
+    "state", "scripted",
+    use = "Set on html by story.js once it runs. Without it a story reads as a plain page: every piece is visible from the start.",
+)
+
+role(
+    "state", "shown",
+    use = "Set by story.js on a motion(rise) block once it has scrolled into view.",
+)
+
+role(
+    "list", "plain",
+    use = "A list without bullets or indent, for navigation links.",
+    css = {
+        "list-style": "none",
+    },
+)
+
+role(
+    "icon", "ink",
+    use = "Colours an inline svg icon with the text colour.",
+    css = {
+        "fill": "{color.ink}",
+    },
+)
+
+# Actions.
+role(
+    "action", "primary",
+    use = "The one main button of a view: dark, filled. Put it first.",
+    include = [button.shape],
+    css = {
+        "color": "{color.paper}",
+        "background": "{color.ink}",
+    },
+)
+
+role(
+    "action", "secondary",
+    use = "A second button beside the primary one: quiet, sand coloured.",
+    include = [button.shape],
+    css = {
+        "color": "{color.ink}",
+        "background": "{color.sand}",
+    },
+)
+
+role(
+    "action", "icon",
+    use = "A bare button that holds only an icon (open or close the menu).",
+    css = {
+        "padding": "0",
+        "appearance": "none",
+        "border": "none",
+        "outline": "none",
+        "background": "transparent",
+        "cursor": "pointer",
+        "&:focus-visible": {
+            "outline": "{border.focus} solid {color.accent}",
+            "outline-offset": "{border.focus}",
+            "border-radius": "{radius.sm}",
+        },
+    },
+)
+
+# Surfaces.
+role(
+    "surface", "footer",
+    use = "The page footer band. Once per page.",
+    css = {
+        "background": "{color.tint}",
+    },
+)
+
+role(
+    "surface", "drawer",
+    use = "Look of the header menu panel: tinted slide-in panel on small screens, no look at all from sm up. Goes with layout(drawer).",
+    css = {
+        "background": "{color.drawer}",
+        "border-left": "{border.hair} solid {color.drawer-edge}",
+        "@sm": {
+            "background": "transparent",
+            "border-left": "none",
+        },
+    },
+)
+
+role(
+    "surface", "card",
+    use = "A clickable panel for one entry of a list of pages (title and a line of text). Put inside link(card).",
+    css = {
+        "padding": "{space.md}",
+        "border": "{border.hair} solid {color.edge}",
+        "border-radius": "{radius.md}",
+        "background": "{color.raised}",
+        "box-shadow": "{shadow.card}",
+        "transition": "box-shadow {motion.medium}",
+        "&:hover": {
+            "box-shadow": "{shadow.card-hover}",
+        },
+    },
+)
+
+role(
+    "surface", "note",
+    use = "A callout that sets a remark apart from the text: a heading line (text(note-title)) and a body. Use for notices such as 'under development'.",
+    css = {
+        "border": "{border.hair} solid {color.edge}",
+        "border-radius": "{radius.md}",
+        "background": "{color.tint}",
+        "color": "{color.ink}",
+    },
+)
+
+role(
+    "surface", "code",
+    use = "A panel for a code sample or shell command: on a pre, or on a div that holds several pre blocks or text(line) rows built up one by one. Colours highlight.js syntax inside it. With data-alarm it is the panel where something outside the vocabulary ended up.",
+    css = {
+        "overflow": "auto",
+        "padding": "{space.md}",
+        "font-family": "{font.mono}",
+        "line-height": "1.75",
+        "color": "{color.code-ink}",
+        "background": "{color.code-ground}",
+        "border": "{border.hair} solid {color.code-edge}",
+        "border-radius": "{radius.md}",
+        "&[data-alarm]": {
+            "border-color": "{color.accent}",
+            "box-shadow": "0 0 {space.lg} 0 color-mix(in srgb, {color.accent} 22%, transparent)",
+        },
+        "& code": {
+            "font-family": "{font.mono}",
+            "color": "inherit",
+            "background": "transparent",
+            "padding": "0",
+        },
+        "& .hljs-comment": {
+            "color": "{color.syn-comment}",
+            "font-style": "italic",
+        },
+        "& .hljs-keyword": {
+            "color": "{color.syn-keyword}",
+            "font-weight": "700",
+        },
+        "& .hljs-section": {
+            "color": "{color.syn-tag}",
+            "font-weight": "700",
+        },
+        "& .hljs-name": {
+            "color": "{color.syn-tag}",
+        },
+        "& .hljs-selector-tag": {
+            "color": "{color.syn-tag}",
+        },
+        "& .hljs-literal": {
+            "color": "{color.syn-literal}",
+        },
+        "& .hljs-string": {
+            "color": "{color.syn-string}",
+        },
+        "& .hljs-attribute": {
+            "color": "{color.syn-string}",
+        },
+        "& .hljs-attr": {
+            "color": "{color.syn-attr}",
+        },
+        "& .hljs-number": {
+            "color": "{color.syn-attr}",
+        },
+        "& .hljs-title": {
+            "color": "{color.syn-title}",
+        },
+        "& .hljs-built_in": {
+            "color": "{color.syn-builtin}",
+        },
+    },
+)
+
+# The front page story.
+# Scenes read by scrolling, each headed by the question it answers and each with a picture
+# of its own that builds up piece by piece (story.js). Two colours carry a meaning in the
+# pictures: pass = in the vocabulary, accent = outside it.
+role(
+    "surface", "progress",
+    use = "The thin bar on the top edge that shows how far a story has been read. Once per page; story.js scales it.",
+    include = [layer.pinned],
+    css = {
+        "left": "0",
+        "z-index": "2",
+        "width": "{size.full}",
+        "height": "{border.bar}",
+        "background": "{color.pass}",
+        "transform": "scaleX(0)",
+        "transform-origin": "left",
+    },
+)
+
+role(
+    "surface", "tag",
+    use = "One item of a surface(stream): a short name with its status word. With data-alarm it is the one item to notice.",
+    include = [text.caption],
+    css = {
+        "white-space": "nowrap",
+        "padding": "{space.xs} {space.sm}",
+        "border": "{border.hair} solid {color.drawer-edge}",
+        "border-radius": "{radius.md}",
+        "background": "{color.raised}",
+        "&[data-alarm]": {
+            "border-color": "{color.accent}",
+            "color": "{color.ink}",
+        },
+    },
+)
+
+role(
+    "surface", "stream",
+    use = "A band of rows of surface(tag) that drift sideways and fade out at both ends: the flow of work between two panels. Decoration; hide it from assistive technology.",
+    css = {
+        "overflow": "hidden",
+        "mask-image": "linear-gradient(to right, transparent, {color.ink} 14%, {color.ink} 86%, transparent)",
+    },
+)
+
+# The backdrop.
+role(
+    "surface", "grid",
+    use = "The grid of fine lines behind every page: one fixed layer, first in body, hidden from assistive technology. The backdrop script moves it slower than the page.",
+    include = [layer.pinned],
+    css = {
+        "right": "0",
+        "bottom": "calc({size.cell} * -1)",
+        "left": "0",
+        "z-index": "-1",
+        "pointer-events": "none",
+        "background-size": "{size.cell} {size.cell}",
+        "background-image": "linear-gradient(to right, {color.tint} {border.hair}, transparent {border.hair}), linear-gradient(to bottom, {color.tint} {border.hair}, transparent {border.hair})",
+    },
+)
+
+role(
+    "surface", "cell",
+    use = "One lit cell of the page grid, holding a class name. Created and placed by the backdrop script inside surface(grid); never written in a page.",
+    css = {
+        "position": "absolute",
+        "display": "grid",
+        "place-items": "center",
+        "width": "{size.cell}",
+        "height": "{size.cell}",
+        "font-family": "{font.mono}",
+        "font-size": "{type.cell}",
+        "color": "{color.ink-soft}",
+        "background": "color-mix(in srgb, {color.ink-soft} 9%, transparent)",
+        "animation": "{keyframes.cell} {motion.cell} ease-in-out both",
+        "&.tg-state(foreign)": {
+            "color": "{color.accent}",
+            "background": "color-mix(in srgb, {color.accent} 12%, transparent)",
+            "text-decoration": "line-through",
+        },
+    },
+)
+
+role(
+    "layout", "pinned",
+    use = "Keeps the shorter side of a two-column block in view from lg while the taller side scrolls past: a scene's question beside its picture, the list of pages beside a docs page. One per block.",
+    css = {
+        "@lg": {
+            "position": "sticky",
+            "top": "{size.pin}",
+        },
+    },
+)
+
+# Layout the atoms cannot express.
+role(
+    "layout", "drawer",
+    use = "The header navigation container. On small screens a panel fixed to the right edge, hidden until a script sets state(open); from sm up an ordinary inline block. Goes with surface(drawer).",
+    include = [layer.pinned],
+    css = {
+        "display": "none",
+        "right": "0",
+        "z-index": "3",
+        "width": "{size.full}",
+        "max-width": "{size.drawer}",
+        "height": "{size.full}",
+        "&.tg-state(open)": {
+            "display": "block",
+        },
+        "@sm": {
+            "display": "block",
+            "position": "static",
+            "width": "auto",
+            "max-width": "none",
+            "height": "auto",
+        },
+    },
+)
+
+role(
+    "layout", "corner",
+    use = "Pins an element to the top-right corner of the screen (a close button on the drawer).",
+    css = {
+        "position": "absolute",
+        "top": "{space.lg}",
+        "right": "{space.lg}",
+    },
+)
+
+role(
+    "layout", "footer",
+    use = "The footer's three blocks, in this order: brand, navigation, legal. Stacked on small screens. From md up the navigation takes the left side, brand sits top right and legal bottom right.",
+    css = {
+        "display": "grid",
+        "@md": {
+            "grid-template-columns": "1fr auto",
+            "grid-template-rows": "auto 1fr",
+            "& > :nth-child(1)": {
+                "grid-area": "1 / 2",
+            },
+            "& > :nth-child(2)": {
+                "grid-area": "1 / 1 / 3 / 2",
+            },
+            "& > :nth-child(3)": {
+                "grid-area": "2 / 2",
+                "align-self": "end",
+            },
+        },
+    },
+)
+
+role(
+    "motion", "drift",
+    use = "A row inside surface(stream) that drifts left without end. Write its items twice, each with its own trailing space, so the loop has no seam.",
+    css = {
+        "width": "max-content",
+        "animation": "{keyframes.drift} {motion.drift} linear infinite",
+        "@media (prefers-reduced-motion: reduce)": {
+            "animation": "none",
+        },
+    },
+)
+
+role(
+    "motion", "drift-back",
+    use = "Like motion(drift), the other way: for every second row of a stream.",
+    css = {
+        "width": "max-content",
+        "animation": "{keyframes.drift} {motion.drift} linear infinite reverse",
+        "@media (prefers-reduced-motion: reduce)": {
+            "animation": "none",
+        },
+    },
+)
+
+role(
+    "motion", "rise",
+    use = "A piece of a scene that fades and rises in once, when it scrolls into view (story.js sets state(shown); with reduced motion asked for, on every piece at once).",
+    css = {
+        ".tg-state(scripted) &": {
+            "opacity": "0",
+            "transform": "translateY({space.sm})",
+            "transition": "opacity {motion.slow}, transform {motion.slow}",
+        },
+        ".tg-state(scripted) &.tg-state(shown)": {
+            "opacity": "1",
+            "transform": "none",
+        },
+    },
+)
+

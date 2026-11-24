@@ -4,8 +4,8 @@ baseurl: ""
 title: "Tidgrid"
 # The released tidgrid version this site documents. The footer shows it and
 # the workflow installs exactly this one, so the two cannot drift apart.
-version: "v0.2.3"
+version: "v0.3.0"
 
 exclude:
   - vendor
-  - tidgrid.toml
+  - "*.tg"

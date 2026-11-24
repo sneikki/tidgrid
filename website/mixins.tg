@@ -1,0 +1,65 @@
+# Treatments that several roles share. A role includes a set and keeps only what makes it its own.
+text = mixin(
+    "text",
+    use = "How a piece of text is set: the face and colour it shares with the others of its kind.",
+    sets = {
+        "heading": {
+            "font-family": "{font.title}",
+            "color": "{color.ink}",
+        },
+        "label": {
+            "font-family": "{font.title}",
+            "font-weight": "600",
+            "text-transform": "uppercase",
+        },
+        "wordmark": {
+            "font-family": "{font.mono}",
+            "color": "{color.ink}",
+            "user-select": "none",
+        },
+        "caption": {
+            "font-family": "{font.mono}",
+            "font-size": "{type.small}",
+            "color": "{color.ink-soft}",
+        },
+    },
+)
+
+link = mixin(
+    "link",
+    use = "What every plain link shares.",
+    sets = {
+        "base": {
+            "text-decoration": "none",
+            "color": "{color.ink}",
+            "transition": "color {motion.fast}",
+        },
+    },
+)
+
+layer = mixin(
+    "layer",
+    use = "How a layer sits over the page.",
+    sets = {
+        "pinned": {
+            "position": "fixed",
+            "top": "0",
+        },
+    },
+)
+
+button = mixin(
+    "button",
+    use = "What every button shares.",
+    sets = {
+        "shape": {
+            "display": "block",
+            "padding": "{space.sm}",
+            "border-radius": "{radius.sm}",
+            "font-family": "{font.title}",
+            "font-weight": "700",
+            "text-align": "center",
+            "text-decoration": "none",
+        },
+    },
+)
