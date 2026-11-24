@@ -77,7 +77,9 @@ function play(sc, name, launch) {
   for (const [f, c] of Object.entries(sc.files)) fs.writeFileSync(path.join(dir, f), c);
   const norm = (s) => {
     s = s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n");
-    return win ? s.replace(/\\/g, "/") : s; // native Windows prints "\" in paths, wasm "/"
+    // native Windows prints "\" in paths, wasm "/"; the launcher hands the wasm
+    // paths relative to cwd, so it echoes "s2.html" where native echoes "<dir>/s2.html"
+    return win ? s.replace(/\\/g, "/").replace("wrote <dir>/", "wrote ") : s;
   };
   const log = [];
   sc.steps.forEach((step, i) => {
