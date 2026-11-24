@@ -105,16 +105,15 @@ func TestMixinHandWrittenNeedsSameValue(t *testing.T) {
 	mixinLoad(t, map[string]string{"index.tg": mixinHead + twoUsers + `role("text", "c", use = "C.", css = {"font-weight": "700"})` + "\n"})
 }
 
-func TestMixinHandWrittenIgnoresEmptyAndNestedOnlySets(t *testing.T) {
-	got := loadErr(t, map[string]string{"index.tg": projectLine + `m = mixin("m", use = "u", sets = {
-    "empty": {},
-    "nest": {"&:hover": {"color": "red"}},
+// A set with no top-level lines is contained in every role's own lines; the hand-written rule must not fire on it.
+func TestMixinHandWrittenIgnoresNestedOnlySets(t *testing.T) {
+	mixinLoad(t, map[string]string{"index.tg": projectLine + `m = mixin("m", use = "u", sets = {
+    "nest": {"&:hover": {"text-decoration": "underline", "font-weight": "700"}},
 })
-role("text", "a", use = "A.", css = {"margin": "0", "&:hover": {"color": "red"}})
+role("text", "a", use = "A.", include = [m.nest])
+role("text", "b", use = "B.", include = [m.nest])
+role("text", "c", use = "C.", css = {"margin": "0", "&:hover": {"text-decoration": "underline", "font-weight": "700"}})
 `})
-	if strings.Contains(got, "role.text.a:") {
-		t.Errorf("hand-written rule fired: %s", got)
-	}
 }
 
 func TestMixinUsersCountedAcrossFiles(t *testing.T) {

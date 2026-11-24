@@ -169,7 +169,7 @@ func TestRepeatsReportsAtMostTwentyWithClosingLine(t *testing.T) {
 
 func TestRepeatsClosingLineWithFewGroups(t *testing.T) {
 	got := repeatsFail(t, rr("a", l1, l2, l3), rr("b", l1, l2, l3))
-	wantIn(t, got, "index.tg: 1 groups of repeated lines; fix the first and build again: one mixin set often clears several")
+	wantIn(t, got, "index.tg: 1 group of repeated lines; fix the first and build again: one mixin set often clears several")
 }
 
 func TestRepeatsOutputIsStableAcrossRuns(t *testing.T) {

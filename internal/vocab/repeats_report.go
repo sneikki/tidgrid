@@ -47,6 +47,9 @@ func (l *loader) reportRepeat(g repeatGroup, texts []string) {
 // repeatClosing is the last line of a repeat report: the total, how many are shown, and the way out.
 func (l *loader) repeatClosing(total, shown int) {
 	count := fmt.Sprintf("%d groups of repeated lines", total)
+	if total == 1 {
+		count = "1 group of repeated lines"
+	}
 	if total > shown {
 		count += fmt.Sprintf(", %d shown", shown)
 	}
