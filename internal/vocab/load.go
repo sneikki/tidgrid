@@ -45,6 +45,7 @@ func (l *loader) validate() (*Vocabulary, []error) {
 	l.registerRoleClasses()
 	l.loadElements()
 	l.loadKeyframes()
+	l.checkSets()
 	l.loadRoles()
 	l.loadAllow()
 	l.exportMixins()

@@ -17,13 +17,14 @@ func (l *loader) declareRole(p []string, use string, css *starlark.Dict, include
 	owner := map[string]string{}
 	sets := l.includedSets(p, include)
 	for _, s := range sets {
-		l.addLines(p, t, s.css, s.label(), owner)
+		l.addLines(p, t, s.tree, s.label(), owner)
 		l.noteUse(p, s)
 	}
 	ru := roleUse{p: p, incl: sets, own: map[string]bool{}}
 	if css != nil {
-		l.addLines(p, t, css, "", owner)
-		for _, ln := range topLines(css) {
+		own := l.snapshot(p, css)
+		l.addLines(p, t, own, "", owner)
+		for _, ln := range topLines(own) {
 			ru.own[ln[0]+"\x00"+ln[1]] = true
 		}
 	}
@@ -54,6 +55,10 @@ func (l *loader) includedSets(p []string, include starlark.Value) []*setDef {
 	var out []*setDef
 	for it, x := seq.Iterate(), starlark.Value(nil); it.Next(&x); {
 		if s, ok := x.(*setDef); ok {
+			if contains(out, s) {
+				l.errf(ip, "set %s is included twice", s.label())
+				continue
+			}
 			out = append(out, s)
 		} else {
 			l.errf(ip, "%s is not a mixin set; write a set such as type.heading", x.String())
@@ -62,31 +67,38 @@ func (l *loader) includedSets(p []string, include starlark.Value) []*setDef {
 	return out
 }
 
-// addLines copies the lines of d into the role table t. from names the set
-// the lines belong to, empty for the role's own css; owner says who gave
-// each key, so a second giver is an error.
-func (l *loader) addLines(p []string, t map[string]any, d *starlark.Dict, from string, owner map[string]string) {
-	for _, kv := range d.Items() {
-		key, ok := kv[0].(starlark.String)
-		if !ok {
-			l.errf(p, "keys must be strings, got %s", kv[0].Type())
+// addLines copies lines into the table t. from names the set the lines
+// belong to, empty for the role's own css; owner says who gave each
+// property, so a second giver is an error at any depth. A nested rule that
+// is already there is merged into: the first giver's lines stay first.
+func (l *loader) addLines(p []string, t map[string]any, ls []cssLine, from string, owner map[string]string) {
+	for _, ln := range ls {
+		kp := extend(p, ln.key)
+		k := pathKey(kp)
+		if sub, ok := t[ln.key].(map[string]any); ok && ln.nested {
+			l.addLines(kp, sub, ln.sub, from, owner)
 			continue
 		}
-		kp := extend(p, string(key))
-		if prev, dup := owner[string(key)]; dup {
+		if prev, dup := owner[k]; dup {
 			l.errf(kp, "given twice: by %s and by %s", giver(prev), giver(from))
 			continue
 		}
-		v, err := l.cell(kp, kv[1])
+		owner[k] = from
+		if from != "" {
+			l.origin[k] = from
+		}
+		if ln.nested {
+			sub := map[string]any{}
+			l.putKey(t, p, ln.key, sub)
+			l.addLines(kp, sub, ln.sub, from, owner)
+			continue
+		}
+		v, err := l.cell(kp, ln.val)
 		if err != nil {
 			l.errf(kp, "%s", err.Error())
 			continue
 		}
-		owner[string(key)] = from
-		if from != "" {
-			l.origin[pathKey(kp)] = from
-		}
-		l.putKey(t, p, string(key), v)
+		l.putKey(t, p, ln.key, v)
 	}
 }
 

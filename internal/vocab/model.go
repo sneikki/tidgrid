@@ -29,6 +29,8 @@ type Allow struct{ Name, Reason string }
 
 // Node is a declaration (Prop, Value) or a nested rule (Sub). From names the
 // mixin set it came from ("type.heading"); it is empty for a role's own lines.
+// A nested rule a set opened and the role added to keeps the set's name;
+// its own nodes say which line came from where.
 type Node struct {
 	Prop, Value string
 	Sub         *Rule

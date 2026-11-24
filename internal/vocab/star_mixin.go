@@ -33,7 +33,7 @@ type mixinDef struct {
 type setDef struct {
 	mixin *mixinDef
 	name  string
-	css   *starlark.Dict
+	tree  []cssLine
 	lines []string
 	tops  [][2]string // top-level property and value as written
 	users []roleRef
@@ -113,40 +113,10 @@ func (l *loader) addSets(p []string, m *mixinDef, sets *starlark.Dict) {
 			l.errf(p, "sets: want names mapped to css dicts")
 			continue
 		}
-		s := &setDef{mixin: m, name: string(key), css: d, lines: lineTexts(d), tops: topLines(d)}
+		// a set is fixed here: later changes to d do not reach it
+		tree := l.snapshot(append(append([]string{}, p...), string(key)), d)
+		s := &setDef{mixin: m, name: string(key), tree: tree, lines: lineTexts(tree), tops: topLines(tree)}
 		m.sets = append(m.sets, s)
 		m.byName[s.name] = s
 	}
-}
-
-// plain is a css value as written.
-func plain(v starlark.Value) string {
-	if s, ok := v.(starlark.String); ok {
-		return string(s)
-	}
-	return v.String()
-}
-
-// topLines are the property and value of each non-nested line of d, as written.
-func topLines(d *starlark.Dict) [][2]string {
-	var out [][2]string
-	for _, kv := range d.Items() {
-		if _, nested := kv[1].(*starlark.Dict); !nested {
-			out = append(out, [2]string{plain(kv[0]), plain(kv[1])})
-		}
-	}
-	return out
-}
-
-// lineTexts renders d for `tidgrid list`: `prop: value`, nested rules as `sel { a: b; c: d }`.
-func lineTexts(d *starlark.Dict) []string {
-	var out []string
-	for _, kv := range d.Items() {
-		if sub, ok := kv[1].(*starlark.Dict); ok {
-			out = append(out, plain(kv[0])+" { "+strings.Join(lineTexts(sub), "; ")+" }")
-		} else {
-			out = append(out, plain(kv[0])+": "+plain(kv[1]))
-		}
-	}
-	return out
 }
