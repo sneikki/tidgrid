@@ -28,7 +28,7 @@ The commands that read a vocabulary take the entry file as an argument, like a c
 
 ## init
 
-`tidgrid init` writes a starter vocabulary with tokens, two element rules and a set of roles. The roles are written commented out, so a fresh project has no unused role and `check` passes. Uncomment a role when a page uses it.
+`tidgrid init` writes a starter vocabulary with tokens, the full reset (`tidiness("full")`), two element rules and a set of roles. Its colours are greys only: a hue is the project's decision. The roles are written commented out, so a fresh project has no unused role and `check` passes. Uncomment a role when a page uses it.
 
 {% capture c %}
 # Roles. Uncomment a role when a page uses it: `tidgrid check` fails on a role nothing uses.

@@ -223,6 +223,7 @@ shape  Shared shapes of controls.
 | `breakpoints({...})` or `breakpoints(sm="40em", ...)` | Breakpoints, ascending in call order. Values are literal (media queries cannot read custom properties). |
 | `tokens(group, {name: value})` or `tokens(group, name=value, ...)` | A token group. Returns the group: `color.ink` and `color["sand-ink"]` give the reference `"{color.ink}"`. |
 | `element(selector, css={...}, use="")` | A base rule for a bare element (`body`, `a`, `"*"`). `use` is optional. |
+| `tidiness(level)` | A reset, written before the element rules. `"minimal"`: browser fixes only. `"full"`: also no margin, padding, border, heading size, list marker or link colour until an element rule or a role gives one. No call, no reset. |
 | `keyframes(name, {stop: css})` | An animation. Returns `"{keyframes.name}"`. |
 | `role(kind, name, use=..., css={...}, include=[...])` | The class `tg-<kind>(<name>)`. `use` is required. |
 | `mixin(name, use=..., sets={...})` | Named sets of declarations that roles include. Returns the mixin: `type.heading` and `type["heading"]` give a set. |

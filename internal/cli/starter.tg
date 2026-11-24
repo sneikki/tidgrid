@@ -7,7 +7,7 @@ project(out = "src/styles/tidgrid.css", scan = ["src"], prefix = "tg")
 # Breakpoints: ascending. Atoms can be prefixed with them (md:tg-gap(md)).
 breakpoints(sm = "40em", md = "64em", lg = "80em")
 
-# Colour: a grey scale and one accent.
+# Colour: greys only. A hue is the project's decision: add it when the look is chosen.
 color = tokens("color", {
     "ground": "#ffffff",
     "raised": "#f5f5f5",
@@ -15,7 +15,6 @@ color = tokens("color", {
     "ink": "#1a1a1a",
     "muted": "#6b6b6b",
     "line": "#d0d0d0",
-    "accent": "#2456c4",
 })
 
 # Space: the gap and padding scale, six steps.
@@ -77,10 +76,10 @@ element("body", css = {
     "line-height": "1.5",
 })
 
-# Links: accent colour, underlined on hover.
+# Links: the text's colour, underlined so they still read as links.
 element("a", css = {
-    "color": color.accent,
-    "&:hover": {"text-decoration": "underline"},
+    "color": color.ink,
+    "text-decoration": "underline",
 })
 
 # Roles. Uncomment a role when a page uses it: `tidgrid check` fails on a role nothing uses.
@@ -154,7 +153,7 @@ element("a", css = {
 # role("action", "primary",
 #     use = "The one main action of a view, such as Save or Send. At most one per view.",
 #     css = {
-#         "background": color.accent,
+#         "background": color.ink,
 #         "color": color.ground,
 #         "border-radius": radius.sm,
 #         "cursor": "pointer",
@@ -167,7 +166,8 @@ element("a", css = {
 #     use = "Any secondary control, such as Cancel or a row action. Use for every action that is not the main one.",
 #     css = {
 #         "background": "transparent",
-#         "color": color.accent,
+#         "color": color.ink,
+#         "text-decoration": "underline",
 #         "cursor": "pointer",
-#         "&:hover": {"text-decoration": "underline"},
+#         "&:hover": {"color": color.muted},
 #     })

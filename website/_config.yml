@@ -4,7 +4,7 @@ baseurl: ""
 title: "Tidgrid"
 # The released tidgrid version this site documents. The footer and the install
 # line show it; the workflow checks the site with the tool from the commit.
-version: "v0.3.0"
+version: "v0.3.2"
 
 exclude:
   - vendor

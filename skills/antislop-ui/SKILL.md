@@ -34,7 +34,7 @@ How to write `.tg` files, pick a class, add a mixin, a state or dark mode, and k
 
 - **`index.tg` exists.** Run `tidgrid list`, and `tidgrid sheet -o <file>` to see it (step 5 says where the file may go). Run step 4 on what you see. If it reads as a default, tell the person before building on it; do not redesign it unasked. Otherwise go to step 6.
 - **Only a `tidgrid.toml`.** Run `tidgrid convert`, then as above.
-- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, one blue accent): that is the default look itself. Keep the structure, replace every value, and write your own roles: the commented ones are examples.
+- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, no hue): that is the default look itself. Keep the structure, replace every value, and write your own roles: the commented ones are examples.
 - **Styled some other way** (own CSS, a utility framework, a component library). Moving it to Tidgrid is a migration: propose it and wait for a yes. The current look is material for step 2, not a decision already made.
 
 ## 2. Write the brief of the look
@@ -57,7 +57,7 @@ Tokens first, then roles. Decide each one; the first value that comes to mind is
 - **Space.** One scale, with steps and density chosen for the use: a tool someone works in all day packs tighter than a page someone reads once.
 - **Shape and motion.** Corners, rules, borders, shadows, transitions: each a decision, and "none" is one. Every length and time is a token, the small ones too (an outline offset, a hover nudge, a shadow size): give them a group of their own, or `build` refuses each one.
 - **Roles.** One per kind of content in the brief, named by purpose, each `use` line saying when it applies and when it does not. Give the subject's own things roles of their own (its records, measures, statuses, objects), not only levels of text. A vocabulary of title, heading, body, label, card and button is the starter again under new colours.
-- **Base rules.** The starter has no `box-sizing` reset. Add `element("*", css = {"box-sizing": "border-box"})`, or a box that takes `tg-width(full)` and padding together is wider than the screen.
+- **Base rules.** The starter calls `tidiness("full")` (0.3.2 or later): padding counts inside a width, and nothing has a margin, a list marker or a link colour until the vocabulary gives one. A vocabulary without the call gets it added, or a box that takes `tg-width(full)` and padding together is wider than the screen. The starter's colours are greys: the hue is yours to choose.
 - **The unglamorous roles.** Those the brief's content calls for, no more (a page without a form needs no field roles, and `check` fails on a role nothing uses): tables, and what a wide one does on a phone (rows that stack, or a role that scrolls by itself), form fields with focus, disabled and error states, plain links, long words and code that must wrap, empty states. In our trial, pages written from a finished vocabulary had no generic patterns but came out dry: the vocabulary held text levels and a code panel and little else, so every page became heading, prose, panel.
 
 `tidgrid build` must exit 0. `tidgrid check` lists every role as unused until pages use them; at this step that is expected.

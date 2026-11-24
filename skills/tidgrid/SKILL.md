@@ -123,6 +123,6 @@ A vocabulary message (exit 2) starts with `file:line:` of the call that declared
 
 ## Setting up a project
 
-`tidgrid init [file]` writes a starter `index.tg` with the starter roles commented out. Set `out` and `scan` in `project()`, put the project's colours and scales in the token groups, uncomment a role when a page uses it, then run the check in CI: `tidgrid build`, fail if the stylesheet changed, `tidgrid check`. `tidgrid sheet` writes one HTML page that shows every token and role, for a person to look at.
+`tidgrid init [file]` writes a starter `index.tg` with grey colour tokens, the reset `tidiness("full")` (nothing has a margin, a padding, a list marker or a link colour until an element rule or a role gives one; `"minimal"` keeps the browser's looks) and the starter roles commented out. Set `out` and `scan` in `project()`, put the project's colours and scales in the token groups, uncomment a role when a page uses it, then run the check in CI: `tidgrid build`, fail if the stylesheet changed, `tidgrid check`. `tidgrid sheet` writes one HTML page that shows every token and role, for a person to look at.
 
 Reference: https://tidgrid.dev/docs
