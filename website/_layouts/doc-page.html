@@ -3,22 +3,30 @@ layout: default
 ---
 
 <section class="tg-pad-y(xl)">
-  <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(lg)">
-    <nav class="tg-row tg-wrap">
-      {% assign parts = page.dir | split: "/" %}
-      {% assign length = parts.size | minus: 1 %}
-
-      {% for i in (1..length) %}
-        <a class="tg-link(breadcrumb)" href="{{ site.baseurl }}/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
-      {% endfor %}
-
-      <span class="tg-link(breadcrumb) tg-state(current)">{{ page.title }}</span>
+  <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col lg:tg-row lg:tg-align(start) tg-gap(xl)">
+    {% comment %}The list of pages stays in view beside the text from lg; below lg the footer has the same list.{% endcomment %}
+    <nav class="tg-layout(pinned) tg-hide-below(lg) tg-fixed tg-width(rail) tg-col tg-y-gap(sm)" aria-label="Documentation pages">
+      <a class="tg-text(caption)" href="{{ site.baseurl }}/docs">Documentation</a>
+      {% include docs-links.html %}
     </nav>
 
-    <h1 class="tg-text(page-title)">{{ page.title }}</h1>
+    <div class="tg-grow tg-col tg-y-gap(lg)">
+      <nav class="tg-row tg-wrap lg:tg-hide" aria-label="Breadcrumb">
+        {% assign parts = page.dir | split: "/" %}
+        {% assign length = parts.size | minus: 1 %}
 
-    <div class="tg-text(prose)">
-      {{ content }}
+        {% for i in (1..length) %}
+          <a class="tg-link(breadcrumb)" href="{{ site.baseurl }}/{{ parts | slice: 1, i | join: "/" }}">{{ parts[i] | capitalize }}</a>
+        {% endfor %}
+
+        <span class="tg-link(breadcrumb) tg-state(current)">{{ page.title }}</span>
+      </nav>
+
+      <h1 class="tg-text(page-title)">{{ page.title }}</h1>
+
+      <div class="tg-text(prose)">
+        {{ content }}
+      </div>
     </div>
   </div>
 </section>

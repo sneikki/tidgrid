@@ -30,7 +30,7 @@
     {% comment %}The page grid; backdrop.js moves it and, on the front page (data-cells), lights its cells.{% endcomment %}
     <div id="grid" class="tg-surface(grid)" aria-hidden="true"{% if page.url == "/" %} data-cells{% endif %}><div></div></div>
     {% include header.html %}
-    <main class="tg-grow tg-col {{ page.main_class }}">
+    <main class="tg-grow tg-col{% if page.centred %} tg-justify(center){% endif %}">
       {{ content }}
     </main>
     {% include footer.html %}

@@ -18,7 +18,7 @@ md = "1rem"
 [tokens.motion]
 slow = "1.1s"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 `[tokens.<group>]` holds `name = "raw value"`. Each one becomes a custom property named `--tg-<group>-<name>` on `:root`, so scripts can read it. The example above gives `--tg-color-ground`, `--tg-space-md` and so on.
 

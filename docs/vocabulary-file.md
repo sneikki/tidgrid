@@ -75,7 +75,7 @@ transform = "none"
 [allow.css]
 "src/styles/fonts.css" = "self-hosted @font-face only"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 ## The tables
 

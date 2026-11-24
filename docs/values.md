@@ -30,7 +30,7 @@ The percentage rule covers `width`, `height`, `inline-size`, `block-size`, their
 padding    = "calc({space.md} * 2)"
 background = "color-mix(in srgb, {color.accent} 18%, transparent)"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 Text in quotes and inside `url()` is not looked at.
 
@@ -42,7 +42,7 @@ The key of an at-rule sub-table follows the same rule. A reference in it is repl
 [role.layout.panel."@media (max-height: {size.short})"]
 display = "none"
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="tidgrid.toml" %}
 
 ## Next
 

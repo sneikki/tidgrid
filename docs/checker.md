@@ -21,7 +21,7 @@ A message names the fix where there is one:
 {% capture c %}
 src/pages/index.astro:14: unknown class tg-gap(2); tg-gap takes: sm md
 {% endcapture %}
-{% include code.html code=c plain=true %}
+{% include code.html code=c plain=true caption="What check prints" %}
 
 After the violations come three lists: per file, the roles it uses; the roles nothing uses; and the `allow` entries with their reasons.
 
@@ -68,6 +68,8 @@ const cls = kinds[kind];
 <!-- tidgrid-ignore-end -->
 
 The names in such a table are whole, but the table is still a variable: `check` does not read it, and a role used only there is listed as unused. To have them checked, pass each name through one of the helper functions (`cn("tg-action(primary)")`).
+
+More mistakes that pass the check, each beside its fix, are on the [pitfalls](/docs/pitfalls) page.
 
 ## Next
 

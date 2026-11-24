@@ -1,0 +1,24 @@
+{% comment %}
+A mistake beside its fix: two panels, side by side from md. include.bad and include.good:
+the two samples. bad_in and good_in: where each lives (a file name), after the verdict.
+plain=true: both are shell or prose. says: what the tool prints for the mistake, shown
+under the pair; in it [[ ]] marks what is refused (see lines.html).
+{% endcomment %}
+<div class="tg-col tg-y-gap(sm)">
+  <div class="tg-col md:tg-row tg-gap(md)">
+    <div class="tg-grow tg-col tg-y-gap(xs)">
+      <div class="tg-text(caption)"><span class="tg-text(refused)">Not like this</span>{% if include.bad_in %} {{ include.bad_in }}{% endif %}</div>
+      {% include code.html code=include.bad plain=include.plain alarm=true %}
+    </div>
+    <div class="tg-grow tg-col tg-y-gap(xs)">
+      <div class="tg-text(caption)"><span class="tg-text(passed)">Like this</span>{% if include.good_in %} {{ include.good_in }}{% endif %}</div>
+      {% include code.html code=include.good plain=include.plain %}
+    </div>
+  </div>
+  {% if include.says %}<div class="tg-col tg-y-gap(xs)">
+    <div class="tg-text(caption)">What the tool says</div>
+    <div class="tg-surface(code)">
+{% include lines.html text=include.says %}
+    </div>
+  </div>{% endif %}
+</div>

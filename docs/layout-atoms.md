@@ -69,7 +69,7 @@ A small example, a column on a phone and a row from `md` up:
   <div class="tg-grow">Two</div>
 </div>
 {% endcapture %}
-{% include code.html code=c %}
+{% include code.html code=c caption="A page" %}
 <!-- tidgrid-ignore-end -->
 
 ## Atom or role

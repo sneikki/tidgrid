@@ -1,0 +1,3 @@
+{% comment %}One link per documentation page, the page being shown marked. Put inside a column.{% endcomment %}
+{% for entry in site.data.docs %}<a class="tg-link(page){% if page.url contains entry.href %} tg-state(current){% endif %}" href="{{ site.baseurl }}{{ entry.href }}">{{ entry.title }}</a>
+{% endfor %}
