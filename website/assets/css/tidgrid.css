@@ -569,6 +569,12 @@ svg {
   color: var(--tg-color-ink);
 }
 
+.tg-surface\(shot\) {
+  height: auto;
+  border: var(--tg-border-hair) solid var(--tg-color-edge);
+  border-radius: var(--tg-radius-md);
+}
+
 .tg-surface\(code\) {
   overflow: auto;
   padding: var(--tg-space-md);
