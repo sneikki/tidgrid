@@ -14,7 +14,7 @@ const OWN = ["tg-col", "tg-row", "tg-gap(md)", "tg-pad(sm)", "tg-grow", "tg-cent
 const OUTSIDE = ["mt-[13px]", "border-l-4", ".btn-new", "#ff0066", "is-active", "p-[7px]"];
 
 // The header, what the first screen says, and everything after it: no cell shows behind these.
-const KEEP_CLEAR = "header, [data-clear] > *, section ~ section, footer";
+const KEEP_CLEAR = "header, [data-clear] > *, main > :not(:first-child), footer";
 
 const cells = new Map(); // "column:row" -> { element, left, top } in the lit layer's own coordinates
 let size = 0; // one cell in px
