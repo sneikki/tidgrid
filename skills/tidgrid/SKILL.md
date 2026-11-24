@@ -9,7 +9,7 @@ Tidgrid is a closed CSS vocabulary. A Starlark program (`.tg` files, entry `inde
 
 Commands take the entry file as an argument and default to `index.tg` in the current directory: `tidgrid build [file]`. There is no `-c` flag. Install (needs Go 1.25): `go install github.com/sneikki/tidgrid/cmd/tidgrid@latest`.
 
-A project that has only a `tidgrid.toml` and no `index.tg`: every command exits 2 and says to run `tidgrid convert`. Run it once; it writes `index.tg`, `tokens.tg` and `roles.tg` and builds the same stylesheet. Commit the three files and delete the TOML.
+A project that has only a `tidgrid.toml` and no `index.tg`: `build`, `check`, `list`, `plan` and `sheet` exit 2 and say to run `tidgrid convert` (`init` and `convert` work). Run it once; it writes `index.tg`, `tokens.tg` and `roles.tg` and builds the same stylesheet. Commit the three files and delete the TOML. The converted `project()` has `repeats = []`; remove it and fix what `build` then reports (see Mixins).
 
 ## Before any UI work
 
@@ -54,9 +54,10 @@ type = mixin("type", use = "A text style. Pick one; never set family, size or we
 role("text", "section-title", use = "...", include = [type.heading], css = {"color": color.ink})
 ```
 
-- A set needs at least two roles that include it; `build` fails otherwise. So make a set when the second user exists, not before.
-- A role may not give a property that an included set gives, and two included sets may not overlap.
-- A role whose own lines repeat a whole set fails `build` and the message says which `include` to write.
+- A set needs at least two roles that include it and at least two lines (nested ones count); `build` fails otherwise. A single shared value belongs in a token. So make a set when the second user exists, not before.
+- A role may not give a property that an included set gives, and two included sets may not overlap; this holds inside nested rules too. A nested rule with the same key in the set and the role merges, the set's lines first.
+- A role whose own top-level lines repeat a whole set of two or more top-level lines fails `build` and the message says which `include` to write.
+- Repeated lines: when the same lines sit in 3 lines x 2 roles or 2 lines x 4 roles (`project(repeats=[(3, 2), (2, 4)])`, `[]` is off), `build` fails with `role.action.a: own lines also in role action.b: cursor: pointer; padding: 0; border: none; make them a mixin set and include it`. At most 20 groups show, most roles first. When two groups share a line, put it in one set only, or the role gets it twice (`given twice: by set m.s1 and by set m.s2`).
 - A set takes no parameters. Variants that differ in a colour (two buttons): a set for the fixed lines plus a plain function for the rest, `css = filled(color.accent, color.ground)`. No custom property that one role sets and another reads; the checker cannot follow that.
 - Mixins are Starlark only. A `.toml` vocabulary has none.
 
@@ -64,7 +65,8 @@ role("text", "section-title", use = "...", include = [type.heading], css = {"col
 
 - Tokens: `color = tokens("color", {"ink": "#e6e9eb"})`. `color.ink` and `color["sand-ink"]` are references; a name the group lacks is an error at that line.
 - Values are strings. A `def` that returns a string names a repeated expression (`tint(c, pct)`); a top-level `for` makes several roles. No `while`, no recursion.
-- `load("tokens.tg", "color")` imports names; `source("roles.tg")` runs a file that only declares. Paths stay inside the entry file's folder. The vocabulary may span files.
+- `load("tokens.tg", "color")` imports names; `source("roles.tg")` runs a file for what it declares and imports no names (the sourced file may `load`). A file runs once however often it is named. Paths stay inside the entry file's folder.
+- Kind and name of a role are letters, digits, `-` and `_`.
 - `project(out=..., scan=[...])`, `breakpoints(...)`, `element(sel, css=...)`, `keyframes(name, {...})`, `allow_class(name, reason)`, `allow_css(path, reason)`.
 - `tidgrid plan` shows what the stylesheet would gain, lose or change, without writing. Read it before `build` after a vocabulary edit.
 
@@ -75,15 +77,15 @@ The checker reads class attributes and string literals in class expressions. It 
 - Write whole names. `` `tg-kind(${kind})` `` is a violation: a built name cannot be checked.
 - A lookup table of names is a variable too. Pass each name through a helper so it is read:
   `{ primary: cn("tg-action(primary)") }`. Helpers are `cn clsx cva classNames twMerge` by default; `helpers` in `project()` replaces that list, so repeat the ones in use.
-- `check` reports a role as not used although the page shows it: the checker could not see the name. Fix the route, not the report. A role a script sets counts when the script names it whole, as a string.
+- `check` reports a role as not used although the page shows it: the checker could not see the name. Fix the route, not the report. A role a script sets counts when the script names it whole, as a string. A name that appears only in another role's or element's selector does not count.
 
 ## State
 
-A class a script sets is a role of kind `state` with only a `use` line; other roles react to it in a nested rule (`"&.tg-state(open)"`, `".tg-state(ready) &"`). ARIA and data attributes work the same way and need no state role: `"&[aria-current]"`, `"&[data-state=retired]"`.
+A class a script sets is a role of kind `state` with only a `use` line; other roles react to it in a nested rule (`"&.tg-state(open)"`, `".tg-state(ready) &"`). The role is unused for `check` until the script writes the name whole: `card.classList.toggle("tg-state(open)")`. ARIA and data attributes work the same way and need no state role: `"&[aria-current]"`, `"&[data-state=retired]"`.
 
 ## Dark mode
 
-Colours stay in tokens, as pairs: `"ink": "light-dark(#32495d, #d7e2ec)"`, and `element("html", css = {"color-scheme": "light dark"})`. The page follows the system with no second stylesheet. For a manual switch, a script sets a state class on `html` and the vocabulary narrows the scheme: add `"&.tg-state(dark)": {"color-scheme": "dark"}` to that element's css.
+Colours stay in tokens, as pairs: `"ink": "light-dark(#32495d, #d7e2ec)"`, and `element("html", css = {"color-scheme": "light dark"})`. The page follows the system with no second stylesheet. For a manual switch: declare `role("state", "dark", use = "Set on html to force the dark scheme.")`, add `"&.tg-state(dark)": {"color-scheme": "dark"}` to the html element's css, and have the script write the name whole, `document.documentElement.classList.add("tg-state(dark)")`. Without that line `check` fails on the unused role.
 
 ## Before every commit
 
@@ -97,7 +99,7 @@ Commit the stylesheet `build` wrote. Exit code 0 is fine, 1 means violations (`c
 |---|---|
 | `unknown class tg-gap(2); tg-gap takes: sm md` | Use one of the listed token names. |
 | `unknown class card-accent: not in the vocabulary; run `tidgrid list`` | Pick a class from `tidgrid list`, or add a role. |
-| `appearance in style attribute: color; use a role` | Move the look to a role. Geometry in `style` is allowed. |
+| ``appearance in style attribute: color; use a role (`tidgrid list`)`` | Move the look to a role. Geometry in `style` is allowed. |
 | `own CSS: <style> block; make it a role in the vocabulary` | Make it a role. |
 | `role tg-text(lead) is not used in the scanned sources: use it, remove it, ...` | Use it in the page of the same commit, or remove it. |
 | `stylesheet differs from the vocabulary; run `tidgrid build`` | Run `tidgrid build` and commit the result. |
@@ -107,7 +109,7 @@ Commit the stylesheet `build` wrote. Exit code 0 is fine, 1 means violations (`c
 | `role.text.dup.font-weight: given twice: by set type.label and by the role's own css` | Drop the line from the role, or pick another set. |
 | `index.tg not found, but tidgrid.toml is here: run `tidgrid convert` ...` | Run `tidgrid convert`. |
 
-A message that starts with `file:line:` names the call in the vocabulary that declared the thing.
+A vocabulary message (exit 2) starts with `file:line:` of the call that declared the thing. A page violation (`check`, exit 1) starts with the page and line, such as `src/b.html:1:`. Messages marked `...` are cut.
 
 ## Never
 

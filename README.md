@@ -11,8 +11,7 @@ defines every class a page may use. `tidgrid build` turns it into one static
 stylesheet. `tidgrid check` fails on anything outside it: an unknown class, a
 `<style>` block, a raw colour, a role no page uses.
 
-The point is a closed vocabulary, decided once and checked. How many files hold
-it does not matter.
+The point is a closed vocabulary, decided once and checked.
 
 The split that keeps pages from looking generic:
 
@@ -52,10 +51,11 @@ There is no `-c` flag. `sheet` also takes `-o <file>` (default
 `tidgrid-sheet.html`).
 
 Exit code 0: fine. 1: violations (`check`). 2: the vocabulary itself is
-invalid or missing, or the command was misused.
+invalid or missing (`check` too), or the command was misused.
 
-With no `index.tg` but a `tidgrid.toml` in the directory, the commands exit 2
-and say to run `tidgrid convert`. A file named with the `.toml` extension is
+With no `index.tg` but a `tidgrid.toml` in the directory, `build`, `check`,
+`list`, `plan` and `sheet` exit 2 and say to run `tidgrid convert`. `init` and
+`convert` do not: `init` writes `index.tg` as usual. A file named with the `.toml` extension is
 still read as TOML (see below); a `.tg` file is read as Starlark.
 
 ### plan
@@ -202,11 +202,11 @@ shape  Shared shapes of controls.
 
 - `load("tokens.tg", "color", "space")` is Starlark's own `load`: it runs the
   file and imports the named variables. It must name at least one.
-- `source("roles.tg")` runs a file that only declares things and imports
-  nothing.
+- `source("roles.tg")` runs a file for what it declares and imports no names
+  into the caller. The sourced file may itself `load` what it needs.
 - A path is relative to the file that names it and must stay inside the entry
   file's directory: no absolute path, no `..`, no symlink out. A file runs
-  once, however many files load it. A cycle is an error.
+  once, however many times `load` and `source` name it. A cycle is an error.
 - The builtins below are available in every file without importing.
 - The entry file can be anywhere and named anything; `out`, `scan` and
   `allow_css` paths resolve against its directory. One folder may hold several
@@ -297,15 +297,22 @@ role("text", "section-title", use = "...", include = [type.heading], css = {"col
 - A set takes no parameters. A set is a step of a scale: `type.heading`,
   `type.label`.
 - `include` takes only mixin sets. Anything else is an error.
-- A role's own top-level property that an included set already gives is an
-  error. So are two included sets that give the same property.
+- Nested rules with the same key, in a set and in the role (`"&:hover"`), merge
+  into one rule: the set's lines first, then the role's.
+- The same property given twice is an error, at any depth: a role's own
+  property that an included set already gives, or two included sets that give
+  the same one, also inside a nested rule. The message names the path:
+  `index.tg:7: role.action.b."&:hover".color: given twice: by set btn.base and by the role's own css`
 - **A set needs at least two roles that include it.** A set with fewer fails
   `build`. Only roles that exist count, and an unused role fails `check`, so
   a role invented to give a set its second user does not survive.
+- **A set needs at least two lines in total**, nested ones counted. A set of
+  one line fails `build`: `mixin.m.one: a set needs at least two lines; a single shared value belongs in a token`.
 - A role whose own top-level lines contain every top-level line of a set (same
   property, same value as written) without including it fails `build`, and the
-  message gives the `include` to write. A role may still write by hand what a
-  mixin does not cover.
+  message gives the `include` to write. This only applies to sets with two or
+  more top-level lines. A role may still write by hand what a mixin does not
+  cover.
 - `mixin` needs `use`. A mixin name declared twice is an error.
 - Mixins exist only in `.tg` vocabularies.
 
@@ -338,10 +345,27 @@ Lines that come from an included set do not count. `build` fails (exit 2) when
 the same lines appear in several roles: 3 lines in 2 roles, or 2 lines in 4
 roles. Each group is reported once, with the roles and the lines they share,
 and the message says the way out: make the lines a mixin set and include it.
+Two roles that share lines and every other role that holds all of those lines
+form a group. A report of two roles sharing three lines:
+
+```
+index.tg:3: role.action.a: own lines also in role action.b: cursor: pointer; padding: 0; border: none; make them a mixin set and include it
+index.tg: 1 group of repeated lines; fix the first and build again: one mixin set often clears several
+```
+
+The first line is at the first role of the group and lists the shared lines;
+the last line is the total. At most 20 groups are shown, the ones with the
+most roles first (then the most lines); the last line then also says how many
+are shown.
 
 The numbers are a setting, a list of (lines, roles) pairs:
-`project(repeats=[(3, 2), (2, 4)])` is the default. An empty list turns the
-rule off.
+`project(repeats=[(3, 2), (2, 4)])` is the default. `repeats = []` turns the
+rule off. `tidgrid convert` writes `repeats = []`, because an old project
+repeats lines freely; cleaning it up starts by removing that argument.
+
+Two reported groups may share a line. Put the shared line in one set only. If
+a role includes two sets that both give it, `build` says so (`given twice: by
+set m.s1 and by set m.s2`).
 
 ## Layout atoms
 
@@ -389,8 +413,8 @@ block.
 
 `role(kind, name, ...)` becomes the class `tg-<kind>(<name>)`. Kinds are free
 words (`surface`, `text`, `emphasis`, `action`, `state`, …) but may not
-collide with an atom name (`kind collides with atom tg-row`). Kind and name are
-made of letters, digits and `-`.
+collide with an atom name (`kind collides with atom tg-row`). Kind and name
+are made of letters, digits, `-` and `_`.
 
 - `use` is required: one or two sentences that tell an agent when the role
   applies. It is not emitted as CSS.
@@ -401,12 +425,30 @@ A class a script sets is a role of kind `state` with only a `use`; other roles
 react to it in a nested rule (`".tg-state(ready) &"`, `"&.tg-state(open)"`).
 ARIA and data attributes need no role: `"&[aria-current]"`.
 
+A name written only in another role's or element's selector does not count as
+used. `check` fails on the state role until the script that sets the class
+writes the name whole, as a string the scanner reads (see
+[How classes are found](#how-classes-are-found)):
+
+```js
+card.classList.toggle("tg-state(open)");
+```
+
 Dark mode: keep colours in tokens as pairs, `"light-dark(#32495d, #d7e2ec)"`,
 and set `color-scheme` on `html`:
 `element("html", css = {"color-scheme": "light dark"})`. The page follows the
-system with no second stylesheet. For a manual switch a script sets a state
-class on `html` and a nested rule narrows the scheme:
-`element("html", css = {"color-scheme": "light dark", "&.tg-state(dark)": {"color-scheme": "dark"}})`.
+system with no second stylesheet. For a manual switch, declare a state role
+for the class, narrow the scheme in a nested rule, and have the script write
+the name whole:
+
+```python
+role("state", "dark", use = "Set on html to force the dark scheme.")
+element("html", css = {"color-scheme": "light dark", "&.tg-state(dark)": {"color-scheme": "dark"}})
+```
+
+```js
+document.documentElement.classList.add("tg-state(dark)");
+```
 
 ## What a value may contain
 
@@ -457,6 +499,8 @@ file, line and column. These are the messages, from real runs:
 | A set written out by hand | `roles.tg:46: role.text.plain: own lines repeat set type.heading; write include = [type.heading] and drop them` |
 | A set with one user | `roles.tg:46: mixin.solo.a: included only by role text.s1; a set needs at least two` |
 | A set with none | `roles.tg:46: mixin.solo.b: included by no role; a set needs at least two` |
+| A set of one line | `roles.tg:46: mixin.m.one: a set needs at least two lines; a single shared value belongs in a token` |
+| Repeated lines | `index.tg:3: role.action.a: own lines also in role action.b: cursor: pointer; padding: 0; border: none; make them a mixin set and include it` |
 | A wrong argument | `roles.tg:46:5: role: unexpected keyword argument "usee" (did you mean use?)` |
 | A path leaving the folder | `index.tg:7:1: cannot load ../x.tg: "../x.tg": path leaves the directory of the entry file` |
 | An absolute path | `index.tg:7:7: "/etc/x.tg": path must be relative to the loading file` |
@@ -496,8 +540,12 @@ src/styles/tidgrid.css:1: stylesheet missing; run `tidgrid build`
 
 An unused role is reported at the line of the call that declared it. A role
 that a script sets counts as used when the script names it whole, as a string
-(`classList.add("tg-state(ready)")`, `cn("tg-state(ready)")`). A role made in
-a loop is reported once per role.
+(`classList.add("tg-state(ready)")`, `cn("tg-state(ready)")`). A name that
+appears only in another role's or element's selector (`"&.tg-state(open)"`)
+does not count. A role made in a loop is reported once per role.
+
+`check` loads the vocabulary first: when that fails it prints the problems
+(see above) and exits 2, with no scan.
 
 After the violations: per file, the roles it uses; the `allow` entries with
 their reasons.
@@ -594,8 +642,8 @@ wrote tokens.tg
 note: TOML comments are not carried over
 ```
 
-In a directory that has `tidgrid.toml` and no `index.tg`, the other commands
-exit 2:
+In a directory that has `tidgrid.toml` and no `index.tg`, `build`, `check`,
+`list`, `plan` and `sheet` exit 2 (`init` and `convert` do not):
 
 ```
 index.tg not found, but tidgrid.toml is here: run `tidgrid convert` to write index.tg
