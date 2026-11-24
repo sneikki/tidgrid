@@ -1,0 +1,2 @@
+# A vocabulary file is Starlark; GitHub does not know the extension.
+*.tg linguist-language=Starlark

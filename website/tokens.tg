@@ -1,0 +1,109 @@
+# Every colour is a pair: light-dark(light, dark). The browser picks by the
+# reader's system setting, switched on by color-scheme on html (index.tg).
+color = tokens("color", {
+    "ink": "light-dark(#32495d, #d7e2ec)",
+    "ink-soft": "light-dark(#4d708e, #a3bcd1)",
+    "muted": "light-dark(#92adc4, #7b96ac)",
+    "paper": "light-dark(#ffffff, #11171d)",
+    "raised": "light-dark(#ffffff, #171f27)",
+    "tint": "light-dark(#f7f7f7, #18212a)",
+    "drawer": "light-dark(#f8f8f8, #151c24)",
+    "drawer-edge": "light-dark(#ececec, #27323d)",
+    "edge": "light-dark(#f0f0f0, #232d38)",
+    "sand": "light-dark(#f8f3ed, #222e3a)",
+    "sand-ink": "light-dark(#c3a888, #d2b892)",
+    "accent": "light-dark(#da526b, #ec6b82)",
+    "pass": "light-dark(#1d7a62, #6fd0b0)",
+    "keyword": "light-dark(#fa8383, #ff9b9b)",
+    "shade": "light-dark(#00000011, #00000055)",
+    "shade-deep": "light-dark(#00000021, #00000088)",
+    "code-ground": "light-dark(#fafafa, #0c1116)",
+    "code-edge": "light-dark(#f2f2f2, #1e2832)",
+    "code-ink": "light-dark(#32495d, #c5d2de)",
+    # Syntax colours come from the page's own hues (slate blue, the pink accent),
+    # not from an editor theme: sections in the accent, keys blue, strings mint.
+    "syn-comment":"light-dark(#5f7488, #6f879b)",
+    "syn-keyword": "light-dark(#6a4fc0, #b7a6f2)",
+    "syn-tag": "light-dark(#c2334f, #ec6b82)",
+    "syn-literal": "light-dark(#b3366f, #f2a0b1)",
+    "syn-string": "light-dark(#23755f, #a9d6c4)",
+    "syn-attr": "light-dark(#2a6aa0, #8fb8de)",
+    "syn-title": "light-dark(#1f5fa8, #7fb6f0)",
+    "syn-builtin": "light-dark(#0f7385, #7fd1de)",
+})
+
+space = tokens("space", {
+    "none": "0",
+    "xs": "0.5rem",
+    "sm": "1rem",
+    "md": "1.5rem",
+    "lg": "2rem",
+    "xl": "3rem",
+    "xxl": "5rem",
+})
+
+size = tokens("size", {
+    "full": "100%",
+    "measure": "72rem",
+    "wide": "84rem",
+    "drawer": "20rem",
+    "specimen": "19rem",
+    "icon-sm": "2rem",
+    "icon-md": "3rem",
+    "cell": "5rem",
+    "hero": "calc(100svh - 7rem)",
+    "reading": "44rem",
+    "aside": "20rem",
+    "rail": "13rem",
+    "pin": "16vh",
+    "screen": "100vh",
+})
+
+font = tokens("font", {
+    "sans": "Lato, sans-serif",
+    "title": "Montserrat, Lato, sans-serif",
+    "mono": "\"Source Code Pro\", monospace",
+})
+
+type = tokens("type", {
+    "small": "0.9rem",
+    "label": "0.95rem",
+    "base": "1rem",
+    "heading": "1.1rem",
+    "crumb": "1.15rem",
+    "lead": "1.2rem",
+    "subtitle": "1.5rem",
+    "h2": "2rem",
+    "h1": "2.5rem",
+    "display": "3rem",
+    "hero-narrow": "2.75rem",
+    "hero": "4rem",
+    "hero-wide": "5rem",
+    "hero-max": "7rem",
+    "cell": "0.7rem",
+})
+
+border = tokens("border", {
+    "hair": "1px",
+    "focus": "2px",
+    "bar": "3px",
+})
+
+radius = tokens("radius", {
+    "sm": "0.25rem",
+    "md": "0.5rem",
+})
+
+shadow = tokens("shadow", {
+    "card": "0 0 1rem 0 {color.shade}",
+    "card-hover": "0 0 1rem 0 {color.shade-deep}",
+})
+
+motion = tokens("motion", {
+    "fast": "200ms",
+    "medium": "300ms",
+    "slow": "500ms",
+    "drift": "70s",
+    "cell": "3600ms",
+})
+

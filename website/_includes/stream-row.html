@@ -1,0 +1,7 @@
+{% comment %}
+The items of one drifting row of a surface(stream), written twice so the loop has no seam.
+include.items: names split by |. include.alarm: the one to notice. include.stopped: true
+when the check stopped it; otherwise it was merged like the rest.
+{% endcomment %}
+{% assign items = include.items | split: "|" %}
+{% for pass in (1..2) %}{% for item in items %}<span class="tg-fixed tg-pad-r(sm)">{% if item == include.alarm %}<span class="tg-surface(tag)" data-alarm>{{ item }} {% if include.stopped %}<span class="tg-text(refused)">check failed</span>{% else %}<span class="tg-text(passed)">merged</span>{% endif %}</span>{% else %}<span class="tg-surface(tag)">{{ item }} <span class="tg-text(passed)">merged</span></span>{% endif %}</span>{% endfor %}{% endfor %}

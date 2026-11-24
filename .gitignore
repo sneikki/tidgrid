@@ -1,7 +1,14 @@
 /tidgrid
+<<<<<<< HEAD
 /npm/tidgrid.wasm
 /npm/wasm_exec.js
 /npm/GO-LICENSE
 /npm/LICENSE.md
 /npm/README.md
 /npm/*.tgz
+=======
+website/_site/
+website/.jekyll_cache/
+website/vendor/
+website/.bundle/
+>>>>>>> origin/master
