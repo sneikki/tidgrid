@@ -1,1 +1,5 @@
 /tidgrid
+website/_site/
+website/.jekyll_cache/
+website/vendor/
+website/.bundle/

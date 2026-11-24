@@ -1,0 +1,9 @@
+{% comment %}
+The flow of work between two panels of a scene: three rows of merged changes drifting past,
+one of them the change the scene is about. include.stopped: true when the check stopped it.
+{% endcomment %}
+<div class="tg-surface(stream) tg-col tg-y-gap(sm) tg-pad-y(sm)" aria-hidden="true">
+  <div class="tg-motion(drift) tg-row">{% include stream-row.html items="Add pricing page|Fix footer links|Update hero copy|Add FAQ|Tidy the nav" %}</div>
+  <div class="tg-motion(drift-back) tg-row">{% include stream-row.html items="New careers page|Rename nav items|Bump dependencies|Add changelog" alarm="New careers page" stopped=include.stopped %}</div>
+  <div class="tg-motion(drift) tg-row">{% include stream-row.html items="Lazy-load images|Refactor search|Fix a typo|Add 404 page|Sort the footer" %}</div>
+</div>

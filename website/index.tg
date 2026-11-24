@@ -1,0 +1,64 @@
+project(prefix = "tg", out = "assets/css/tidgrid.css", scan = [".", "../docs"])
+
+breakpoints({
+    "xs": "36em",
+    "sm": "48em",
+    "md": "64em",
+    "lg": "75em",
+    "xl": "90em",
+})
+
+element(
+    "*",
+    css = {
+        "box-sizing": "border-box",
+        "margin": "0",
+        "padding": "0",
+    },
+)
+
+element(
+    "html",
+    css = {
+        "color-scheme": "light dark",
+        "&.tg-state(light)": {
+            "color-scheme": "light",
+        },
+        "&.tg-state(dark)": {
+            "color-scheme": "dark",
+        },
+    },
+)
+
+element(
+    "body",
+    css = {
+        "min-height": "{size.screen}",
+        "overflow-x": "hidden",
+        "display": "flex",
+        "flex-direction": "column",
+        "font-family": "{font.sans}",
+        "color": "{color.ink}",
+        "background-color": "{color.paper}",
+    },
+)
+
+element(
+    "img",
+    css = {
+        "display": "block",
+    },
+)
+
+element(
+    "svg",
+    css = {
+        "display": "block",
+    },
+)
+
+# Exceptions.
+allow_class("nohighlight", "read by highlight.js: keeps a panel of plain text, a shell command or tool output uncoloured")
+
+source("tokens.tg")
+source("roles.tg")
