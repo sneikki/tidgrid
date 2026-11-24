@@ -1,0 +1,59 @@
+load("tokens.tg", "border", "color", "font", "radius", "size", "sizes", "space", "tint", "track")
+
+type = mixin("type",
+    use = "A text style. Pick one; never set family, size or weight by hand.",
+    sets = {
+        "display": {"font-family": font.display, "font-weight": 800, "line-height": 1.02, "letter-spacing": track.tight},
+        "caps": {"font-family": font.sans, "font-size": sizes.label, "font-weight": 700, "text-transform": "uppercase", "letter-spacing": track.caps},
+        "figure": {"font-family": font.mono, "font-weight": 600, "font-variant-numeric": "tabular-nums", "line-height": 1},
+    },
+)
+
+shape = mixin("shape",
+    use = "A shape of a box.",
+    sets = {
+        "plate": {"background": color.panel, "border": "%s solid %s" % (border.hair, color.line), "border-radius": radius.sm},
+        "tag": {"padding": "%s %s" % (space.xs, space.sm), "border-radius": radius.pill, "border-width": border.hair, "border-style": "solid", "white-space": "nowrap"},
+    },
+)
+
+role("text", "hero", use = "The page title. Once per page.", include = [type.display], css = {"font-size": sizes.hero, "color": color.ink})
+role("text", "heading", use = "Heading of a section of the page.", include = [type.display], css = {"font-size": sizes.h2, "color": color.ink})
+role("text", "label", use = "Small capitals over a value or beside a group.", include = [type.caps])
+role("text", "time", use = "A clock time in a list.", include = [type.figure], css = {"font-size": sizes.time, "color": color.ink})
+role("text", "clock", use = "A clock time shown large.", include = [type.figure], css = {"font-size": sizes.clock})
+
+role("surface", "board", use = "The panel that holds a list of rows.", include = [shape.plate])
+role("surface", "note", use = "A notice to the reader that sits over the list.", include = [shape.plate], css = {"color": color.ink, "border-color": color.late, "border-width": border.rule})
+role("surface", "masthead", use = "The top of the page: title and the one thing to know now. Closed by a heavy rule.", css = {
+    "border-bottom": "%s solid %s" % (border.rule, color.ink),
+})
+role("surface", "row", use = "One row of a list inside a board. Rows are divided by a hairline.", css = {
+    "border-bottom": "%s solid %s" % (border.hair, color.line),
+    "&:last-child": {"border-bottom": "none"},
+})
+role("surface", "next", use = "The one highlighted item the visitor most likely came for.", css = {
+    "background": color.accent,
+    "color": color["on-accent"],
+    "border-radius": radius.sm,
+})
+
+role("action", "tab", use = "A button in a row of choices where one is on. The chosen one also carries the active state.", include = [type.caps], css = {
+    "min-height": size.tap,
+    "padding": "0 %s" % space.md,
+    "background": "transparent",
+    "color": color.ink,
+    "border": "%s solid %s" % (border.hair, color.line),
+    "border-radius": radius.pill,
+    "cursor": "pointer",
+    "&:hover": {"border-color": color.accent},
+    "&.tg-state(active)": {"background": color.accent, "color": color["on-accent"], "border-color": color.accent},
+})
+
+role("state", "active", use = "Set on the chosen button of a row of choices.")
+
+def tone(c):
+    return {"color": c, "border-color": c, "background": tint(c, 12)}
+
+for name, c in [("ok", color.ok), ("late", color.late), ("cancelled", color.cancelled)]:
+    role("badge", name, use = "Status of a departure: %s." % name, include = [shape.tag, type.caps], css = tone(c))
