@@ -11,6 +11,9 @@ import (
 type mixinState struct {
 	defs  []*mixinDef
 	roles []roleUse
+	// repeats are the (lines, roles) pairs of project(repeats=...); defaultRepeats unless repeatsSet.
+	repeats    [][2]int
+	repeatsSet bool
 }
 
 type roleRef struct{ kind, name string }
@@ -20,6 +23,8 @@ type roleUse struct {
 	p    []string
 	incl []*setDef
 	own  map[string]bool // "prop\x00value" of the role's own top-level lines
+	// ownList is the same lines in written order.
+	ownList [][2]string
 }
 
 // mixinDef is the value mixin() returns: `type.heading` and `type["heading"]` give a set.

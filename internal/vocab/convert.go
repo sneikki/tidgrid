@@ -26,7 +26,8 @@ func Convert(path string) (map[string]string, []error) {
 func (l *loader) convertIndex() string {
 	var b strings.Builder
 	if t := l.table("project"); t != nil {
-		b.WriteString("project(" + l.args([]string{"project"}, t, "") + ")\n\n")
+		b.WriteString("# Repeated lines are not checked until repeats is removed; then build says which roles share lines.\n")
+		b.WriteString("project(" + l.args([]string{"project"}, t, "") + ", repeats = [])\n\n")
 	}
 	if t := l.table("breakpoints"); t != nil {
 		b.WriteString("breakpoints(" + l.dict([]string{"breakpoints"}, t, 0) + ")\n\n")

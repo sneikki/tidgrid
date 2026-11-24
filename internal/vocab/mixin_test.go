@@ -9,7 +9,7 @@ import (
 const mixinHead = projectLine + `c = tokens("color", ink = "#111", sand = "#eee")
 type = mixin("type", use = "A text style.", sets = {
     "heading": {"font-size": "700", "color": c.ink, "&:hover": {"color": c.sand}},
-    "label": {"font-weight": "600"},
+    "label": {"font-weight": "600", "text-transform": "none"},
 })
 `
 
@@ -36,7 +36,7 @@ func TestMixinRenderOrder(t *testing.T) {
 		t.Fatal(errs)
 	}
 	css := v.Render()
-	wantIn(t, css, ".tg-text\\(a\\) {\n  font-size: 700;\n  color: var(--tg-color-ink);\n  &:hover {\n    color: var(--tg-color-sand);\n  }\n  font-weight: 600;\n  margin: 0;\n}\n")
+	wantIn(t, css, ".tg-text\\(a\\) {\n  font-size: 700;\n  color: var(--tg-color-ink);\n  &:hover {\n    color: var(--tg-color-sand);\n  }\n  font-weight: 600;\n  text-transform: none;\n  margin: 0;\n}\n")
 	if strings.Contains(css, "heading") || strings.Contains(css, "mixin") {
 		t.Error("a mixin reached the stylesheet")
 	}
@@ -68,7 +68,7 @@ func TestMixinNeedsTwoUsers(t *testing.T) {
 }
 
 func TestMixinHandWrittenSet(t *testing.T) {
-	got := mixinErr(t, twoUsers+`role("text", "c", use = "C.", css = {"font-weight": "600", "color": "red"})`)
+	got := mixinErr(t, twoUsers+`role("text", "c", use = "C.", css = {"font-weight": "600", "text-transform": "none", "color": "red"})`)
 	wantIn(t, got, "role.text.c: own lines repeat set type.label; write include = [type.label]")
 	if strings.Contains(got, "role.text.a") || strings.Contains(got, "role.text.b") {
 		t.Errorf("fired on a role that includes the set: %s", got)

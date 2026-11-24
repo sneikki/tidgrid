@@ -53,8 +53,8 @@ func (e *evaluator) source(th *starlark.Thread, args starlark.Tuple, kw []starla
 
 func (e *evaluator) project(th *starlark.Thread, args starlark.Tuple, kw []starlark.Tuple) (starlark.Value, error) {
 	var out starlark.String
-	var scan, prefix, helpers starlark.Value
-	if err := starlark.UnpackArgs("project", args, kw, "out", &out, "scan?", &scan, "prefix?", &prefix, "helpers?", &helpers); err != nil {
+	var scan, prefix, helpers, repeats starlark.Value
+	if err := starlark.UnpackArgs("project", args, kw, "out", &out, "scan?", &scan, "prefix?", &prefix, "helpers?", &helpers, "repeats?", &repeats); err != nil {
 		return nil, err
 	}
 	p := []string{"project"}
@@ -68,7 +68,13 @@ func (e *evaluator) project(th *starlark.Thread, args starlark.Tuple, kw []starl
 			e.l.putKey(t, p, f.key, projectValue(f.v))
 		}
 	}
-	return starlark.None, e.l.declare(p, t, at(th))
+	if err := e.l.declare(p, t, at(th)); err != nil {
+		return nil, err
+	}
+	if repeats != nil {
+		e.l.setRepeats(repeats)
+	}
+	return starlark.None, nil
 }
 
 // projectValue converts a string or a list of strings; anything else stays unconverted for the loader to reject.

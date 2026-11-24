@@ -13,6 +13,7 @@ func (l *loader) checkMixins() {
 			l.checkUsers(m, s)
 		}
 	}
+	l.checkRepeats()
 }
 
 func (l *loader) checkUsers(m *mixinDef, s *setDef) {
@@ -37,13 +38,14 @@ func (l *loader) checkHandWritten(r roleUse) {
 }
 
 // writesOut is true when every top-level line of s, same property and value as written, is in r.
+// A set of one line never counts as written out: one matching line is coincidence, not a copy.
 func writesOut(r roleUse, s *setDef) bool {
 	for _, ln := range s.tops {
 		if !r.own[strings.Join(ln[:], "\x00")] {
 			return false
 		}
 	}
-	return len(s.tops) > 0
+	return len(s.tops) >= 2
 }
 
 func contains(list []*setDef, s *setDef) bool {
