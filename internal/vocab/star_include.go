@@ -24,7 +24,8 @@ func (l *loader) declareRole(p []string, use string, css *starlark.Dict, include
 	if css != nil {
 		own := l.snapshot(p, css)
 		l.addLines(p, t, own, "", owner)
-		for _, ln := range topLines(own) {
+		ru.ownList = topLines(own)
+		for _, ln := range ru.ownList {
 			ru.own[ln[0]+"\x00"+ln[1]] = true
 		}
 	}

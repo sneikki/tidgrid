@@ -3,6 +3,7 @@ package cli
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -23,6 +24,11 @@ func TestConvertThenBuildMatchesGolden(t *testing.T) {
 	}
 	if Run([]string{"convert", src}) != 2 {
 		t.Fatal("second convert must refuse to overwrite")
+	}
+	idx, _ := os.ReadFile(filepath.Join(dir, "index.tg"))
+	if !strings.Contains(string(idx), "# Repeated lines are not checked until repeats is removed") ||
+		!strings.Contains(string(idx), ", repeats = [])") {
+		t.Fatal("converted project() must turn the repeats rule off, with a comment")
 	}
 	want, _ := os.ReadFile(fixtures + "example.css")
 	t.Chdir(dir)

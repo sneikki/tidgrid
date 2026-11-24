@@ -13,6 +13,7 @@ func (l *loader) checkMixins() {
 			l.checkUsers(m, s)
 		}
 	}
+	l.checkRepeats()
 }
 
 func (l *loader) checkUsers(m *mixinDef, s *setDef) {
