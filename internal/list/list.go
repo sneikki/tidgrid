@@ -36,6 +36,7 @@ func text(v *vocab.Vocabulary) string {
 	atoms(v, &b)
 	b.WriteString("\n# roles\n")
 	roles(v, &b)
+	mixins(v, &b)
 	b.WriteString("\n# allow\n")
 	allow(v, &b)
 	b.WriteString("\n# rules\n")

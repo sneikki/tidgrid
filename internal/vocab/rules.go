@@ -13,7 +13,10 @@ func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bo
 		kp := extend(p, k)
 		val := t[k]
 		if sub, ok := val.(map[string]any); ok {
-			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, l.nestedKey(kp, k), false)})
+			n := len(l.errs)
+			key := l.nestedKey(kp, k)
+			l.dropSetErrs(kp, n)
+			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, key, false), From: l.origin[pathKey(kp)]})
 			continue
 		}
 		if k == "use" {
@@ -24,17 +27,39 @@ func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bo
 			}
 			continue
 		}
+		n := len(l.errs)
 		s, ok := scalar(val)
 		if !ok {
 			l.errf(kp, "value must be a string")
-			continue
+		} else {
+			if pr := rawProblem(k, s); pr != "" {
+				l.errf(kp, "%s", pr)
+			}
+			r.Nodes = append(r.Nodes, Node{Prop: k, Value: l.resolve(kp, s), From: l.origin[pathKey(kp)]})
 		}
-		if pr := rawProblem(k, s); pr != "" {
-			l.errf(kp, "%s", pr)
-		}
-		r.Nodes = append(r.Nodes, Node{Prop: k, Value: l.resolve(kp, s)})
+		l.dropSetErrs(kp, n)
 	}
 	return r
+}
+
+// dropSetErrs forgets the errors since n when the line at p came from a mixin
+// set: checkSets reports a set's content once, where the set is written.
+func (l *loader) dropSetErrs(p []string, n int) {
+	if l.origin[pathKey(p)] != "" {
+		l.errs = l.errs[:n]
+	}
+}
+
+// checkSets validates each set's content once, at the mixin() call.
+func (l *loader) checkSets() {
+	for _, m := range l.mix.defs {
+		for _, s := range m.sets {
+			p := []string{"mixin", m.name, s.name}
+			t := map[string]any{}
+			l.addLines(p, t, s.tree, "", map[string]string{})
+			l.buildRule(p, t, "", false)
+		}
+	}
 }
 
 var (

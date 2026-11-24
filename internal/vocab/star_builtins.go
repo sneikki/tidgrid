@@ -16,6 +16,7 @@ func (e *evaluator) builtins() starlark.StringDict {
 		"element":     e.element,
 		"keyframes":   e.keyframes,
 		"role":        e.role,
+		"mixin":       e.mixin,
 		"allow_class": e.allow("class"),
 		"allow_css":   e.allow("css"),
 		"source":      e.source,
@@ -165,15 +166,11 @@ func (e *evaluator) keyframes(th *starlark.Thread, args starlark.Tuple, kw []sta
 func (e *evaluator) role(th *starlark.Thread, args starlark.Tuple, kw []starlark.Tuple) (starlark.Value, error) {
 	var kind, name, use string
 	var css *starlark.Dict
-	if err := starlark.UnpackArgs("role", args, kw, "kind", &kind, "name", &name, "use?", &use, "css?", &css); err != nil {
+	var include starlark.Value
+	if err := starlark.UnpackArgs("role", args, kw, "kind", &kind, "name", &name, "use?", &use, "css?", &css, "include?", &include); err != nil {
 		return nil, err
 	}
-	p := []string{"role", kind, name}
-	t, err := e.l.newTable(p, use, css)
-	if err != nil {
-		return nil, err
-	}
-	return starlark.None, e.l.declare(p, t, at(th))
+	return starlark.None, e.l.declareRole([]string{"role", kind, name}, use, css, include, at(th))
 }
 
 func (e *evaluator) allow(kind string) func(*starlark.Thread, starlark.Tuple, []starlark.Tuple) (starlark.Value, error) {

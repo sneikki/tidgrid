@@ -65,6 +65,7 @@ func (l *loader) evalStarlark(entry string) []error {
 	if _, err := e.run(filepath.Base(entry)); err != nil {
 		return append(l.errs, describe(err)...)
 	}
+	l.checkMixins()
 	return l.errs
 }
 
