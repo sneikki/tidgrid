@@ -1,0 +1,20 @@
+project(out = "app/tidgrid.css", scan = ["app", "components", "lib"], helpers = ["cn"])
+
+breakpoints(sm = "40em", md = "56em")
+
+load("tokens.tg", "color", "font", "sizes", "space")
+source("roles.tg")
+
+element("*", css = {"box-sizing": "border-box", "margin": "0", "padding": "0"})
+element("html", css = {"color-scheme": "light dark"})
+element("body", css = {
+    "min-height": "{size.screen}",
+    "background": color.ground,
+    "color": color.ink,
+    "font-family": font.sans,
+    "font-size": sizes.body,
+    "line-height": 1.5,
+})
+element("a", css = {"color": color.accent, "text-underline-offset": space.xs})
+element("a:focus-visible, button:focus-visible", css = {"outline": "{border.rule} solid {color.accent}", "outline-offset": space.xs})
+element("ul", css = {"list-style": "none"})

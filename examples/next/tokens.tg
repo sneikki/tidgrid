@@ -1,0 +1,62 @@
+color = tokens("color", {
+    "ground": "light-dark(#e4ecf1, #071626)",
+    "panel": "light-dark(#f7fafc, #0e2339)",
+    "ink": "light-dark(#0a2038, #dce8f2)",
+    "muted": "light-dark(#4b6277, #92abc0)",
+    "line": "light-dark(#aebfcc, #234563)",
+    "accent": "light-dark(#0b4f8a, #7cc0f5)",
+    "on-accent": "light-dark(#f7fafc, #071626)",
+    "ok": "light-dark(#0b6b4d, #62d3a6)",
+    "late": "light-dark(#7d5200, #f3bb52)",
+    "cancelled": "light-dark(#ad2a1f, #ff8f80)",
+})
+
+space = tokens("space", {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.75rem",
+    "xl": "3rem",
+})
+
+size = tokens("size", {
+    "page": "62rem",
+    "screen": "100dvh",
+    "tap": "2.75rem",
+    "slot": "5.5rem",
+    "panel": "13rem",
+    "full": "100%",
+})
+
+font = tokens("font", {
+    "display": "var(--font-display), 'Arial Narrow', sans-serif",
+    "sans": "var(--font-body), system-ui, sans-serif",
+    "mono": "var(--font-mono), ui-monospace, monospace",
+})
+
+sizes = tokens("sizes", {
+    "label": "0.78rem",
+    "body": "1rem",
+    "h2": "1.5rem",
+    "time": "1.35rem",
+    "hero": "clamp(2.6rem, 9vw, 5.5rem)",
+    "clock": "clamp(2.2rem, 6vw, 3.5rem)",
+})
+
+track = tokens("track", {
+    "caps": "0.09em",
+    "tight": "-0.015em",
+})
+
+border = tokens("border", {
+    "hair": "1px",
+    "rule": "2px",
+})
+
+radius = tokens("radius", {
+    "sm": "0.2rem",
+    "pill": "99rem",
+})
+
+def tint(c, pct):
+    return "color-mix(in srgb, %s %d%%, transparent)" % (c, pct)
