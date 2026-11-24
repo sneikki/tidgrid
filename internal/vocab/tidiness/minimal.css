@@ -7,6 +7,11 @@
  *
  * After modern-normalize 3 and Tailwind CSS 4 preflight (both MIT), checked
  * rule by rule 2026-11. Comments are not written to the stylesheet.
+ *
+ * Left out on purpose, though one or both sources carry them:
+ * - a monospace font stack and tab-size: a typeface and a tab width are looks;
+ * - abbr[title], ::placeholder opacity, :-moz-focusring, :-moz-ui-invalid:
+ *   current browsers already do what those rules ask for.
  */
 
 /* Padding and border count inside a width, so width: 100% with padding fits. */
@@ -21,7 +26,6 @@
 /* iOS enlarges text when the phone turns sideways. */
 html {
   -webkit-text-size-adjust: 100%;
-  tab-size: 4;
 }
 
 body {
@@ -50,12 +54,13 @@ strong {
   font-weight: bolder;
 }
 
-/* A bare monospace family is drawn at 13px instead of the parent's size. */
+/* A bare monospace family is drawn at 13px instead of the parent's size.
+   Naming it twice turns that off and picks no typeface. */
 code,
 kbd,
 samp,
 pre {
-  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -78,10 +83,6 @@ sub {
 
 sup {
   top: -0.5em;
-}
-
-abbr:where([title]) {
-  text-decoration: underline dotted;
 }
 
 /* Chrome and Safari do not pass the border colour into a table. */
@@ -119,19 +120,6 @@ progress {
 
 summary {
   display: list-item;
-}
-
-/* Firefox dims placeholders and paints its own red shadow on invalid fields. */
-::placeholder {
-  opacity: 1;
-}
-
-:-moz-ui-invalid {
-  box-shadow: none;
-}
-
-:-moz-focusring:where(:not(iframe)) {
-  outline: auto;
 }
 
 /* Safari: search, number and date fields carry inner parts of their own size. */

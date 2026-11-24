@@ -1,10 +1,12 @@
 /*
- * tidiness("full"): minimal, then every browser default look taken away.
+ * tidiness("full"): minimal, then the browser's default looks taken away.
  *
  * After this nothing has a margin, a padding, a border, a heading size, a
- * list marker or a link colour until an element rule or a role gives it one.
+ * list marker or a link colour, and a form control has no colour or
+ * background, until an element rule or a role gives it one.
  * It removes; it decides nothing: no typeface, no line height, no colour.
- * Those belong to the vocabulary.
+ * Those belong to the vocabulary. Small defaults stay (bold th, em, mark,
+ * a dialog's own background): none of them fights a layout.
  *
  * Written after minimal.css, so where both name a property this file wins.
  * After Tailwind CSS 4 preflight (MIT), checked rule by rule 2026-11.
