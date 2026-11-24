@@ -84,7 +84,7 @@ function play(sc, name, launch) {
 
 // prints the first step and the first file that differ, native then npm
 function report(a, b) {
-  const cut = (s) => JSON.stringify(s).slice(0, 400);
+  const cut = (s) => String(JSON.stringify(s)).slice(0, 400);
   const i = a.log.findIndex((l, n) => JSON.stringify(l) !== JSON.stringify(b.log[n]));
   if (i >= 0) console.log(`step ${i}\n go: ${cut(a.log[i])}\n npm: ${cut(b.log[i])}`);
   const f = Object.keys({ ...a.files, ...b.files }).find((k) => a.files[k] !== b.files[k]);

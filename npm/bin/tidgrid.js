@@ -19,6 +19,22 @@ function windowsPaths(args) {
   });
 }
 
+// Go's glue fits argv and environment in 8 KiB. npx and CI runners exceed
+// that, so shed the npm_* variables first, then the largest, until it fits.
+function fitEnv(env, args) {
+  const cost = (s) => Buffer.byteLength(s) + 1 + 7 + 8;
+  const entries = Object.entries(env).map(([k, v]) => [k, v, cost(`${k}=${v}`)]);
+  let total = args.reduce((n, a) => n + cost(a), 0) + entries.reduce((n, e) => n + e[2], 0);
+  const shed = [...entries].sort((a, b) => (b[0].startsWith("npm_") - a[0].startsWith("npm_")) || b[2] - a[2]);
+  const drop = new Set();
+  for (const e of shed) {
+    if (total <= 7000) break;
+    drop.add(e[0]);
+    total -= e[2];
+  }
+  return Object.fromEntries(entries.filter((e) => !drop.has(e[0])).map((e) => e.slice(0, 2)));
+}
+
 function main() {
   globalThis.require = require;
   globalThis.fs = fs;
@@ -32,7 +48,7 @@ function main() {
   const args = process.platform === "win32" ? windowsPaths(process.argv.slice(2)) : process.argv.slice(2);
   const go = new Go();
   go.argv = ["tidgrid", ...args];
-  go.env = { TMPDIR: os.tmpdir(), ...process.env };
+  go.env = fitEnv({ TMPDIR: os.tmpdir(), ...process.env }, go.argv);
   // Not process.exit: let the event loop drain so stdout and stderr arrive whole.
   go.exit = (code) => {
     process.exitCode = code;
