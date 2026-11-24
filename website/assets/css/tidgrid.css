@@ -181,7 +181,18 @@ svg {
   font-size: var(--tg-type-h1);
   font-weight: 700;
   line-height: 1.1;
+  @media (min-width: 75em) {
+    font-size: var(--tg-type-hero);
+  }
   text-wrap: balance;
+}
+
+.tg-text\(figure\) {
+  font-family: var(--tg-font-title);
+  color: var(--tg-color-ink);
+  font-size: var(--tg-type-h1);
+  font-weight: 700;
+  line-height: 1.1;
   @media (min-width: 75em) {
     font-size: var(--tg-type-hero);
   }

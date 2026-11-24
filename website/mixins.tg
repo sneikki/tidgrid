@@ -22,6 +22,14 @@ text = mixin(
             "font-size": "{type.small}",
             "color": "{color.ink-soft}",
         },
+        "statement": {
+            "font-size": "{type.h1}",
+            "font-weight": "700",
+            "line-height": "1.1",
+            "@lg": {
+                "font-size": "{type.hero}",
+            },
+        },
     },
 )
 
