@@ -63,18 +63,29 @@ jobs:
       contents: write
       actions: write
 
+    # One at a time, so two close pushes to master cannot cross.
+    concurrency:
+      group: site-advance
+      cancel-in-progress: false
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # Moves `site` to master's newest commit, not this run's: a run that
+      # starts late then does nothing wrong.
       - name: Fast-forward site to master
         run: |
-          if git fetch origin site && ! git merge-base --is-ancestor FETCH_HEAD "$GITHUB_SHA"; then
-            echo "::error::site has commits master lacks (a hotfix): merge site into master first"
+          git fetch origin master site
+          if ! git merge-base --is-ancestor origin/site origin/master; then
+            echo "::error::site has commits master lacks (a hotfix): merge site into master with a merge commit first"
             exit 1
           fi
-          git push origin "$GITHUB_SHA:refs/heads/site"
+          if ! git push origin origin/master:refs/heads/site; then
+            echo "::error::the push to site was refused. This run's token may not move a branch across a change to .github/workflows: run 'git push origin master:site' yourself"
+            exit 1
+          fi
 
       # A push made with the workflow's own token starts no run, so start it.
       - name: Start the deploy
@@ -90,6 +101,11 @@ jobs:
     permissions:
       pages: write
       id-token: write
+
+    # An older build never lands after a newer one.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
 
     environment:
       name: github-pages
