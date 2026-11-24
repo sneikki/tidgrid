@@ -133,7 +133,7 @@ func (e *evaluator) tokens(th *starlark.Thread, args starlark.Tuple, kw []starla
 func (e *evaluator) element(th *starlark.Thread, args starlark.Tuple, kw []starlark.Tuple) (starlark.Value, error) {
 	var sel, use string
 	var css *starlark.Dict
-	if err := starlark.UnpackArgs("element", args, kw, "selector", &sel, "css", &css, "use?", &use); err != nil {
+	if err := starlark.UnpackArgs("element", args, kw, "selector", &sel, "css?", &css, "use?", &use); err != nil {
 		return nil, err
 	}
 	p := []string{"element", sel}
