@@ -2,7 +2,8 @@
 
 The site tidgrid.dev: a Jekyll site in `website/`, its documentation pages in `docs/` (`website/docs` is a symlink to it). The rest of the repo is the tool itself.
 
-- The default branch is `master`; a push to it deploys the live site (GitHub Pages, `.github/workflows/site.yml`). A pull request runs the check and the build without deploying. The workflow builds the tool from the same commit, so a tool change that breaks the site's check fails the pull request.
+- The live site is the branch `site` (GitHub Pages, `.github/workflows/site.yml`). It follows the default branch `master`: every push to master moves `site` forward and deploys. Never push to `site` yourself, with one exception, a hotfix: a pull request against `site` deploys when merged, and `site` is then merged into master before anything else lands there (the workflow fails on master until it is).
+- A pull request runs the check and the build without deploying. The workflow builds the tool from the same commit, so a tool change that breaks the site's check fails the pull request.
 - The site is styled with the tool it documents. Style only with the classes `tidgrid list` prints (run it in `website/`). No `<style>`, no `style=` for appearance, no own CSS.
 - Run `cd website && tidgrid build && tidgrid check` before every commit; check must exit 0. Commit the stylesheet `build` wrote.
 - A new role goes in `website/index.tg` or a file it loads, in the same commit as the first page that uses it; `tidgrid check` fails on a role nothing uses.
