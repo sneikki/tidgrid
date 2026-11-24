@@ -13,7 +13,7 @@ func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bo
 		kp := extend(p, k)
 		val := t[k]
 		if sub, ok := val.(map[string]any); ok {
-			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, l.nestedKey(kp, k), false)})
+			r.Nodes = append(r.Nodes, Node{Sub: l.buildRule(kp, sub, l.nestedKey(kp, k), false), From: l.origin[pathKey(kp)]})
 			continue
 		}
 		if k == "use" {
@@ -32,7 +32,7 @@ func (l *loader) buildRule(p []string, t map[string]any, key string, topLevel bo
 		if pr := rawProblem(k, s); pr != "" {
 			l.errf(kp, "%s", pr)
 		}
-		r.Nodes = append(r.Nodes, Node{Prop: k, Value: l.resolve(kp, s)})
+		r.Nodes = append(r.Nodes, Node{Prop: k, Value: l.resolve(kp, s), From: l.origin[pathKey(kp)]})
 	}
 	return r
 }

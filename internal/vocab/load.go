@@ -47,6 +47,7 @@ func (l *loader) validate() (*Vocabulary, []error) {
 	l.loadKeyframes()
 	l.loadRoles()
 	l.loadAllow()
+	l.exportMixins()
 	if len(l.errs) > 0 {
 		return nil, l.errs
 	}
@@ -66,6 +67,9 @@ type loader struct {
 	// keyframeNames holds every declared keyframes name.
 	keyframeNames map[string]bool
 	expansions    map[string]*expansion // "group.name" -> literal expansion, see literalToken
+	mix           mixinState            // mixins and role includes (Starlark only)
+	origin        map[string]string     // role line path -> "mixin.set" it came from
+	includes      map[string][]string   // role path -> "mixin.set" included
 }
 
 func newLoader(path string) *loader {
@@ -78,6 +82,8 @@ func newLoader(path string) *loader {
 		written:       map[string]string{},
 		keyframeNames: map[string]bool{},
 		expansions:    map[string]*expansion{},
+		origin:        map[string]string{},
+		includes:      map[string][]string{},
 	}
 }
 

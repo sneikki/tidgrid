@@ -27,10 +27,12 @@ type TokenGroup struct {
 // Allow is an [allow] entry: a name (class or css path) and the reason it is allowed.
 type Allow struct{ Name, Reason string }
 
-// Node is a declaration (Prop, Value) or a nested rule (Sub).
+// Node is a declaration (Prop, Value) or a nested rule (Sub). From names the
+// mixin set it came from ("type.heading"); it is empty for a role's own lines.
 type Node struct {
 	Prop, Value string
 	Sub         *Rule
+	From        string
 }
 
 // Rule is a block: Key is the rendered selector or at-rule prelude.
@@ -43,6 +45,7 @@ type Rule struct {
 type Role struct {
 	Kind, Name, Use, Class string
 	Rule                   *Rule
+	Includes               []string // mixin sets included, as "mixin.set", in include order
 	// File is the declaring file's slash path relative to the entry file's
 	// directory and Line the line of the call; both are zero for TOML.
 	File string
@@ -67,6 +70,7 @@ type Vocabulary struct {
 	Tokens      []TokenGroup // file order
 	elements    []element
 	keyframes   []keyframe
+	Mixins      []Mixin // declaration order
 	Roles       []Role  // file order
 	AllowClass  []Allow // file order
 	AllowCSS    []Allow // file order, paths as written
