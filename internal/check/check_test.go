@@ -31,12 +31,20 @@ func copyTree(t *testing.T, from, to string) {
 	}
 }
 
+// sharedRoles uses every role of testdata/check/tidgrid.toml, so no case
+// reports one as unused. A case that must not have it says no-shared-roles.
+const sharedRoles = `<body class="tg-state(ready) tg-surface(card) tg-text(title)"></body>`
+
 // runCase copies a case next to the shared vocabulary, writes the built
 // stylesheet unless the case brings its own (or says no-out), and checks.
 func runCase(t *testing.T, name string) (code int, violations []string, out string) {
 	t.Helper()
 	dir := t.TempDir()
 	copyTree(t, "testdata/check/cases/"+name, dir)
+	if _, skip := os.Stat(filepath.Join(dir, "no-shared-roles")); skip != nil {
+		os.MkdirAll(filepath.Join(dir, "src"), 0o755)
+		os.WriteFile(filepath.Join(dir, "src", "shared-roles.html"), []byte(sharedRoles), 0o644)
+	}
 	vb, _ := os.ReadFile("testdata/check/tidgrid.toml")
 	cfg := filepath.Join(dir, "tidgrid.toml")
 	os.WriteFile(cfg, vb, 0o644)
@@ -96,7 +104,7 @@ func TestCheckSummary(t *testing.T) {
 		"roles used:\n",
 		"  src/b.astro: tg-surface(card)\n",
 		"  src/index.html: tg-state(ready) tg-surface(card) tg-text(title)\n",
-		"roles unused:\n  none\n",
+		"  src/shared-roles.html: tg-state(ready) tg-surface(card) tg-text(title)\n",
 		"  class has-js: set by an inline script before first paint\n",
 		"  css src/fonts.css: self-hosted @font-face only\n",
 	} {
@@ -104,9 +112,14 @@ func TestCheckSummary(t *testing.T) {
 			t.Errorf("summary lacks %q\n%s", s, out)
 		}
 	}
+	if strings.Contains(out, "roles unused:") {
+		t.Errorf("summary repeats the unused roles\n%s", out)
+	}
 	_, _, out = runCase(t, "unknown-class")
-	if !strings.Contains(out, "roles unused:\n  tg-surface(card)\n  tg-text(title)\n  tg-state(ready)\n") {
-		t.Errorf("unused roles not listed\n%s", out)
+	for _, r := range []string{"tg-surface(card)", "tg-text(title)", "tg-state(ready)"} {
+		if n := strings.Count(out, "role "+r+" is not used"); n != 1 {
+			t.Errorf("unused role %s reported %d times, want 1\n%s", r, n, out)
+		}
 	}
 }
 
