@@ -83,6 +83,18 @@ func TestLoadRules(t *testing.T) {
 	}
 }
 
+func TestSymlinkOutOfTreeRefused(t *testing.T) {
+	outside := writeTree(t, map[string]string{"evil.tg": `role("text", "evil", use = "x")`})
+	dir := writeTree(t, map[string]string{"index.tg": projectLine + `source("link.tg")`})
+	if err := os.Symlink(filepath.Join(outside, "evil.tg"), filepath.Join(dir, "link.tg")); err != nil {
+		t.Skip(err)
+	}
+	_, errs := Load(filepath.Join(dir, "index.tg"))
+	if len(errs) == 0 || !strings.Contains(errs[0].Error(), "cannot read inside the entry file's directory") {
+		t.Fatalf("want a refusal, got %v", errs)
+	}
+}
+
 func TestLoadOnceAndRelative(t *testing.T) {
 	dir := writeTree(t, map[string]string{
 		"index.tg": projectLine + "source(\"sub/a.tg\")\nsource(\"sub/b.tg\")\n",

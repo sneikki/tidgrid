@@ -3,6 +3,7 @@ package vocab
 import (
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -22,14 +23,19 @@ var fileOptions = &syntax.FileOptions{TopLevelControl: true}
 // Files are named by their slash path relative to the entry's directory.
 type evaluator struct {
 	l     *loader
-	root  string                         // the entry file's directory
+	root  *os.Root                       // the entry file's directory; reads cannot leave it, symlinks included
 	done  map[string]starlark.StringDict // evaluated files: a file runs once
 	stack []string                       // files being evaluated, for cycle errors
 }
 
 // evalStarlark evaluates the entry file; each builtin call fills l.raw and l.kids.
 func (l *loader) evalStarlark(entry string) []error {
-	e := &evaluator{l: l, root: filepath.Dir(entry), done: map[string]starlark.StringDict{}}
+	root, err := os.OpenRoot(filepath.Dir(entry))
+	if err != nil {
+		return []error{err}
+	}
+	defer root.Close()
+	e := &evaluator{l: l, root: root, done: map[string]starlark.StringDict{}}
 	if _, err := e.run(filepath.Base(entry)); err != nil {
 		return append(l.errs, errors.New(describe(err)))
 	}
@@ -52,7 +58,7 @@ func (e *evaluator) run(name string) (starlark.StringDict, error) {
 	if i := indexOf(e.stack, name); i >= 0 {
 		return nil, fmt.Errorf("load cycle: %s", strings.Join(append(e.stack[i:], name), " -> "))
 	}
-	src, err := os.ReadFile(filepath.Join(e.root, filepath.FromSlash(name)))
+	src, err := e.read(name)
 	if err != nil {
 		return nil, err
 	}
@@ -66,6 +72,16 @@ func (e *evaluator) run(name string) (starlark.StringDict, error) {
 	}
 	e.done[name] = g
 	return g, nil
+}
+
+// read opens name through the root, so a symlink that points outside the tree is refused.
+func (e *evaluator) read(name string) ([]byte, error) {
+	f, err := e.root.Open(filepath.FromSlash(name))
+	if err != nil {
+		return nil, fmt.Errorf("%s: cannot read inside the entry file's directory: %w", name, err)
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }
 
 func (e *evaluator) load(th *starlark.Thread, module string) (starlark.StringDict, error) {

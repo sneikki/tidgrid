@@ -2,9 +2,21 @@ package vocab
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"go.starlark.net/starlark"
 )
+
+// splitPos splits a "file:line" position; both are zero when pos is empty.
+func splitPos(pos string) (string, int) {
+	i := strings.LastIndex(pos, ":")
+	if i < 0 {
+		return "", 0
+	}
+	n, _ := strconv.Atoi(pos[i+1:])
+	return pos[:i], n
+}
 
 // declare stores v at path p and remembers where it was declared. A second
 // declaration of the same path is an error naming both places.

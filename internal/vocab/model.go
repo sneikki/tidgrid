@@ -43,6 +43,10 @@ type Rule struct {
 type Role struct {
 	Kind, Name, Use, Class string
 	Rule                   *Rule
+	// File is the declaring file's slash path relative to the entry file's
+	// directory and Line the line of the call; both are zero for TOML.
+	File string
+	Line int
 }
 
 type element struct {

@@ -120,3 +120,26 @@ func TestRoleOnlyInHelperCallUsed(t *testing.T) {
 		t.Fatalf("exit %d, want 0\n%s", code, out)
 	}
 }
+
+// A .tg role that nothing uses is reported at its own call, not at line 1 of the entry file.
+func TestUnusedRoleStarlarkPosition(t *testing.T) {
+	dir := t.TempDir()
+	files := map[string]string{
+		"index.tg": "project(out = \"o.css\")\nsource(\"roles.tg\")\n",
+		"roles.tg": "\n\nrole(\"text\", \"title\", use = \"x\")\n",
+	}
+	for n, s := range files {
+		if err := os.WriteFile(filepath.Join(dir, n), []byte(s), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	v, errs := vocab.Load(filepath.Join(dir, "index.tg"))
+	if errs != nil {
+		t.Fatal(errs)
+	}
+	os.WriteFile(v.Project.Out, []byte(v.Render()), 0o644)
+	var buf bytes.Buffer
+	if code := reportProject(v, &buf); code != 1 || !strings.Contains(buf.String(), "roles.tg:3") {
+		t.Fatalf("exit %d, want 1 at roles.tg:3\n%s", code, buf.String())
+	}
+}
