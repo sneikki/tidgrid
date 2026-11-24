@@ -1,2 +1,5 @@
 src/a.html:2: unknown class border-l-4: not in the vocabulary; run `tidgrid list`
 src/a.html:2: unknown class card-accent: not in the vocabulary; run `tidgrid list`
+tidgrid.toml:1: role tg-state(ready) is not used in the scanned sources: use it, remove it, or, if a script or lookup table sets it, write the name whole inside a helper call such as cn()
+tidgrid.toml:1: role tg-surface(card) is not used in the scanned sources: use it, remove it, or, if a script or lookup table sets it, write the name whole inside a helper call such as cn()
+tidgrid.toml:1: role tg-text(title) is not used in the scanned sources: use it, remove it, or, if a script or lookup table sets it, write the name whole inside a helper call such as cn()
