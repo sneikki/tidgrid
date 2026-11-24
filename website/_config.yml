@@ -2,7 +2,9 @@ domain: "tidgrid.dev"
 url: "https://tidgrid.sneikki.lol"
 baseurl: ""
 title: "Tidgrid"
-version: "v0.1.0-alpha.2"
+# The released tidgrid version this site documents. The footer shows it and
+# the workflow installs exactly this one, so the two cannot drift apart.
+version: "v0.2.3"
 
 exclude:
   - vendor

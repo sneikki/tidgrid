@@ -23,7 +23,9 @@ jobs:
 
       - name: Install tidgrid
         run: |
-          go install github.com/sneikki/tidgrid/cmd/tidgrid@v0.2.3
+          version=$(sed -n 's/^version: *"\(v[0-9][^"]*\)"$/\1/p' website/_config.yml)
+          test -n "$version"
+          go install "github.com/sneikki/tidgrid/cmd/tidgrid@$version"
           echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
 
       - name: Check pages against the vocabulary
