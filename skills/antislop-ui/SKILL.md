@@ -34,7 +34,7 @@ How to write `.tg` files, pick a class, add a mixin, a state or dark mode, and k
 
 - **`index.tg` exists.** Run `tidgrid list`, and `tidgrid sheet -o <file>` to see it (step 5 says where the file may go). Run step 4 on what you see. If it reads as a default, tell the person before building on it; do not redesign it unasked. Otherwise go to step 6.
 - **Only a `tidgrid.toml`.** Run `tidgrid convert`, then as above.
-- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, one blue accent): that is the default look itself. Keep the structure, replace every value, and write your own roles: the commented ones are examples.
+- **No vocabulary.** Steps 2 to 6. `tidgrid init` writes a starter `index.tg`. Its values are placeholders (system fonts, a grey ramp, no hue): that is the default look itself. Keep the structure, replace every value, and write your own roles: the commented ones are examples.
 - **Styled some other way** (own CSS, a utility framework, a component library). Moving it to Tidgrid is a migration: propose it and wait for a yes. The current look is material for step 2, not a decision already made.
 
 ## 2. Write the brief of the look
