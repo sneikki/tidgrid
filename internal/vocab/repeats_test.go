@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 // rr writes a role of kind text named name with the given own lines, "prop=value" each.
@@ -82,7 +83,7 @@ func TestRepeatsLargerGroupSwallowsSubGroups(t *testing.T) {
 }
 
 func TestRepeatsGroupNoPairYieldsAlone(t *testing.T) {
-	// x,y share {m,p,c,f}; x,z share {m,p,c,g}... all three share only {m,p}: four roles needed for (2,4)
+	// a and d share only {m,p}; the pair yields it with all four roles holding it, so (2,4) fires
 	got := repeatsFail(t,
 		rr("a", l1, l2, "x=1", "y=1"), rr("b", l1, l2, "x=1", "z=1"),
 		rr("c", l1, l2, "y=1", "z=1"), rr("d", l1, l2, "w=1"))
@@ -116,23 +117,82 @@ func TestRepeatsSettingChangesPairs(t *testing.T) {
 }
 
 func TestRepeatsMalformedSettingErrors(t *testing.T) {
-	for _, bad := range []string{`"x"`, `[3]`, `[(3, 0)]`, `[(3, 2, 1)]`, `[(3, "a")]`, `[(-1, 2)]`, `3`, `[[3, 2]]`} {
+	for _, bad := range []string{`"x"`, `[3]`, `[(3, 0)]`, `[(3, 1)]`, `[(0, 2)]`, `[(3, 2, 1)]`, `[(3, "a")]`, `[(-1, 2)]`, `3`, `[[3, 2]]`} {
 		got, failed := repeatsLoad(t, `project(out = "o.css", repeats = `+bad+")\n")
 		if !failed {
 			t.Errorf("repeats = %s: want an error", bad)
 		}
-		wantIn(t, got, "project.repeats: must be a list of (lines, roles) pairs of positive integers")
+		wantIn(t, got, "project.repeats: must be a list of (lines, roles) pairs")
 	}
 }
 
-func TestRepeatsHundredRolesIsCheap(t *testing.T) {
+// assertRepeatsBounded loads body and checks it finishes fast and prints at most 21 lines (20 groups and the closing line).
+func assertRepeatsBounded(t *testing.T, body []string) {
+	t.Helper()
+	start := time.Now()
+	got, failed := repeatsLoad(t, projectLine, body...)
+	if elapsed := time.Since(start); elapsed > time.Second {
+		t.Fatalf("took %s, want well under a second", elapsed)
+	}
+	if !failed {
+		t.Fatal("want repeat groups reported")
+	}
+	if n := strings.Count(got, "\n") + 1; n > 21 {
+		t.Fatalf("printed %d lines, want at most 21", n)
+	}
+}
+
+func TestRepeatsDenseCaseIsBounded(t *testing.T) {
+	assertRepeatsBounded(t, denseBody())
+}
+
+func TestRepeatsHeavyOverlapIsBounded(t *testing.T) {
+	// 100 roles, 15 lines each, drawn from a pool of 20 so neighbours share most lines
 	var body []string
 	for i := 0; i < 100; i++ {
 		var ls []string
 		for j := 0; j < 15; j++ {
-			ls = append(ls, fmt.Sprintf("p%d-%d=v", j, (i*7+j)%40))
+			ls = append(ls, fmt.Sprintf("p%d=v", (i+j)%20))
 		}
 		body = append(body, rr(fmt.Sprintf("r%d", i), ls...))
 	}
-	repeatsLoad(t, projectLine, body...)
+	assertRepeatsBounded(t, body)
+}
+
+func TestRepeatsReportsAtMostTwentyWithClosingLine(t *testing.T) {
+	got := repeatsFail(t, denseBody()...)
+	if n := strings.Count(got, "own lines also in"); n != 20 {
+		t.Fatalf("want 20 group lines, got %d", n)
+	}
+	wantIn(t, got, "index.tg: 300 groups of repeated lines, 20 shown; fix the first and build again: one mixin set often clears several")
+}
+
+func TestRepeatsClosingLineWithFewGroups(t *testing.T) {
+	got := repeatsFail(t, rr("a", l1, l2, l3), rr("b", l1, l2, l3))
+	wantIn(t, got, "index.tg: 1 groups of repeated lines; fix the first and build again: one mixin set often clears several")
+}
+
+func TestRepeatsOutputIsStableAcrossRuns(t *testing.T) {
+	body := denseBody()
+	first := repeatsFail(t, body...)
+	for i := 0; i < 5; i++ {
+		if got := repeatsFail(t, body...); got != first {
+			t.Fatalf("output changed between runs")
+		}
+	}
+}
+
+// denseBody is 25 roles, each holding all of 25 lines but its own.
+func denseBody() []string {
+	var body []string
+	for i := 0; i < 25; i++ {
+		var ls []string
+		for j := 0; j < 25; j++ {
+			if j != i {
+				ls = append(ls, fmt.Sprintf("p%d=1", j))
+			}
+		}
+		body = append(body, rr(fmt.Sprintf("r%d", i), ls...))
+	}
+	return body
 }
