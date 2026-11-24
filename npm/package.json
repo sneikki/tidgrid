@@ -1,0 +1,30 @@
+{
+  "name": "tidgrid",
+  "version": "0.3.0",
+  "description": "A closed CSS vocabulary for coding agents: the build fails when a page or a role steps outside it.",
+  "license": "MIT",
+  "homepage": "https://tidgrid.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sneikki/tidgrid.git",
+    "directory": "npm"
+  },
+  "bin": {
+    "tidgrid": "bin/tidgrid.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/tidgrid.js",
+    "tidgrid.wasm",
+    "wasm_exec.js",
+    "GO-LICENSE",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "smoke": "node smoke.js"
+  }
+}

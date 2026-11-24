@@ -33,6 +33,9 @@ Needs Go 1.25.
 go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
 ```
 
+Without Go, Node 18 or newer runs the same tool as WebAssembly:
+`npm install --save-dev tidgrid`, or `npx tidgrid check` once.
+
 ## Commands
 
 | Command | Does |
