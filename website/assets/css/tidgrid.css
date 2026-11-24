@@ -10,7 +10,7 @@
   --tg-color-drawer: light-dark(#f8f8f8, #151c24);
   --tg-color-drawer-edge: light-dark(#ececec, #27323d);
   --tg-color-edge: light-dark(#f0f0f0, #232d38);
-  --tg-color-sand: light-dark(#f8f3ed, #2b251d);
+  --tg-color-sand: light-dark(#f8f3ed, #222e3a);
   --tg-color-sand-ink: light-dark(#c3a888, #d2b892);
   --tg-color-accent: light-dark(#da526b, #ec6b82);
   --tg-color-keyword: light-dark(#fa8383, #ff9b9b);
@@ -36,6 +36,7 @@
   --tg-space-xxl: 5rem;
   --tg-size-full: 100%;
   --tg-size-measure: 72rem;
+  --tg-size-wide: 84rem;
   --tg-size-drawer: 20rem;
   --tg-size-specimen: 19rem;
   --tg-size-icon-sm: 2rem;
@@ -962,6 +963,10 @@ svg {
   width: var(--tg-size-measure);
 }
 
+.tg-width\(wide\) {
+  width: var(--tg-size-wide);
+}
+
 .tg-width\(drawer\) {
   width: var(--tg-size-drawer);
 }
@@ -996,6 +1001,10 @@ svg {
 
 .tg-min-width\(measure\) {
   min-width: var(--tg-size-measure);
+}
+
+.tg-min-width\(wide\) {
+  min-width: var(--tg-size-wide);
 }
 
 .tg-min-width\(drawer\) {
@@ -1034,6 +1043,10 @@ svg {
   max-width: var(--tg-size-measure);
 }
 
+.tg-max-width\(wide\) {
+  max-width: var(--tg-size-wide);
+}
+
 .tg-max-width\(drawer\) {
   max-width: var(--tg-size-drawer);
 }
@@ -1070,6 +1083,10 @@ svg {
   height: var(--tg-size-measure);
 }
 
+.tg-height\(wide\) {
+  height: var(--tg-size-wide);
+}
+
 .tg-height\(drawer\) {
   height: var(--tg-size-drawer);
 }
@@ -1104,6 +1121,10 @@ svg {
 
 .tg-min-height\(measure\) {
   min-height: var(--tg-size-measure);
+}
+
+.tg-min-height\(wide\) {
+  min-height: var(--tg-size-wide);
 }
 
 .tg-min-height\(drawer\) {
@@ -1521,6 +1542,9 @@ svg {
   .xs\:tg-width\(measure\) {
     width: var(--tg-size-measure);
   }
+  .xs\:tg-width\(wide\) {
+    width: var(--tg-size-wide);
+  }
   .xs\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
@@ -1547,6 +1571,9 @@ svg {
   }
   .xs\:tg-min-width\(measure\) {
     min-width: var(--tg-size-measure);
+  }
+  .xs\:tg-min-width\(wide\) {
+    min-width: var(--tg-size-wide);
   }
   .xs\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
@@ -1575,6 +1602,9 @@ svg {
   .xs\:tg-max-width\(measure\) {
     max-width: var(--tg-size-measure);
   }
+  .xs\:tg-max-width\(wide\) {
+    max-width: var(--tg-size-wide);
+  }
   .xs\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
@@ -1602,6 +1632,9 @@ svg {
   .xs\:tg-height\(measure\) {
     height: var(--tg-size-measure);
   }
+  .xs\:tg-height\(wide\) {
+    height: var(--tg-size-wide);
+  }
   .xs\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
@@ -1628,6 +1661,9 @@ svg {
   }
   .xs\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .xs\:tg-min-height\(wide\) {
+    min-height: var(--tg-size-wide);
   }
   .xs\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
@@ -2017,6 +2053,9 @@ svg {
   .sm\:tg-width\(measure\) {
     width: var(--tg-size-measure);
   }
+  .sm\:tg-width\(wide\) {
+    width: var(--tg-size-wide);
+  }
   .sm\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
@@ -2043,6 +2082,9 @@ svg {
   }
   .sm\:tg-min-width\(measure\) {
     min-width: var(--tg-size-measure);
+  }
+  .sm\:tg-min-width\(wide\) {
+    min-width: var(--tg-size-wide);
   }
   .sm\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
@@ -2071,6 +2113,9 @@ svg {
   .sm\:tg-max-width\(measure\) {
     max-width: var(--tg-size-measure);
   }
+  .sm\:tg-max-width\(wide\) {
+    max-width: var(--tg-size-wide);
+  }
   .sm\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
@@ -2098,6 +2143,9 @@ svg {
   .sm\:tg-height\(measure\) {
     height: var(--tg-size-measure);
   }
+  .sm\:tg-height\(wide\) {
+    height: var(--tg-size-wide);
+  }
   .sm\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
@@ -2124,6 +2172,9 @@ svg {
   }
   .sm\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .sm\:tg-min-height\(wide\) {
+    min-height: var(--tg-size-wide);
   }
   .sm\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
@@ -2513,6 +2564,9 @@ svg {
   .md\:tg-width\(measure\) {
     width: var(--tg-size-measure);
   }
+  .md\:tg-width\(wide\) {
+    width: var(--tg-size-wide);
+  }
   .md\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
@@ -2539,6 +2593,9 @@ svg {
   }
   .md\:tg-min-width\(measure\) {
     min-width: var(--tg-size-measure);
+  }
+  .md\:tg-min-width\(wide\) {
+    min-width: var(--tg-size-wide);
   }
   .md\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
@@ -2567,6 +2624,9 @@ svg {
   .md\:tg-max-width\(measure\) {
     max-width: var(--tg-size-measure);
   }
+  .md\:tg-max-width\(wide\) {
+    max-width: var(--tg-size-wide);
+  }
   .md\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
@@ -2594,6 +2654,9 @@ svg {
   .md\:tg-height\(measure\) {
     height: var(--tg-size-measure);
   }
+  .md\:tg-height\(wide\) {
+    height: var(--tg-size-wide);
+  }
   .md\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
@@ -2620,6 +2683,9 @@ svg {
   }
   .md\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .md\:tg-min-height\(wide\) {
+    min-height: var(--tg-size-wide);
   }
   .md\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
@@ -3009,6 +3075,9 @@ svg {
   .lg\:tg-width\(measure\) {
     width: var(--tg-size-measure);
   }
+  .lg\:tg-width\(wide\) {
+    width: var(--tg-size-wide);
+  }
   .lg\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
@@ -3035,6 +3104,9 @@ svg {
   }
   .lg\:tg-min-width\(measure\) {
     min-width: var(--tg-size-measure);
+  }
+  .lg\:tg-min-width\(wide\) {
+    min-width: var(--tg-size-wide);
   }
   .lg\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
@@ -3063,6 +3135,9 @@ svg {
   .lg\:tg-max-width\(measure\) {
     max-width: var(--tg-size-measure);
   }
+  .lg\:tg-max-width\(wide\) {
+    max-width: var(--tg-size-wide);
+  }
   .lg\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
@@ -3090,6 +3165,9 @@ svg {
   .lg\:tg-height\(measure\) {
     height: var(--tg-size-measure);
   }
+  .lg\:tg-height\(wide\) {
+    height: var(--tg-size-wide);
+  }
   .lg\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
@@ -3116,6 +3194,9 @@ svg {
   }
   .lg\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .lg\:tg-min-height\(wide\) {
+    min-height: var(--tg-size-wide);
   }
   .lg\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
@@ -3505,6 +3586,9 @@ svg {
   .xl\:tg-width\(measure\) {
     width: var(--tg-size-measure);
   }
+  .xl\:tg-width\(wide\) {
+    width: var(--tg-size-wide);
+  }
   .xl\:tg-width\(drawer\) {
     width: var(--tg-size-drawer);
   }
@@ -3531,6 +3615,9 @@ svg {
   }
   .xl\:tg-min-width\(measure\) {
     min-width: var(--tg-size-measure);
+  }
+  .xl\:tg-min-width\(wide\) {
+    min-width: var(--tg-size-wide);
   }
   .xl\:tg-min-width\(drawer\) {
     min-width: var(--tg-size-drawer);
@@ -3559,6 +3646,9 @@ svg {
   .xl\:tg-max-width\(measure\) {
     max-width: var(--tg-size-measure);
   }
+  .xl\:tg-max-width\(wide\) {
+    max-width: var(--tg-size-wide);
+  }
   .xl\:tg-max-width\(drawer\) {
     max-width: var(--tg-size-drawer);
   }
@@ -3586,6 +3676,9 @@ svg {
   .xl\:tg-height\(measure\) {
     height: var(--tg-size-measure);
   }
+  .xl\:tg-height\(wide\) {
+    height: var(--tg-size-wide);
+  }
   .xl\:tg-height\(drawer\) {
     height: var(--tg-size-drawer);
   }
@@ -3612,6 +3705,9 @@ svg {
   }
   .xl\:tg-min-height\(measure\) {
     min-height: var(--tg-size-measure);
+  }
+  .xl\:tg-min-height\(wide\) {
+    min-height: var(--tg-size-wide);
   }
   .xl\:tg-min-height\(drawer\) {
     min-height: var(--tg-size-drawer);
