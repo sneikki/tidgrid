@@ -77,7 +77,7 @@ func TestNoStylesheetListsEverythingAdded(t *testing.T) {
 	if code != 0 {
 		t.Fatalf("exit %d", code)
 	}
-	for _, want := range []string{"added class tg-surface(card)", "added token --tg-color-ink: #000", "added class tg-surface(card) in &:hover"} {
+	for _, want := range []string{"added class tg-surface(card)", "added token color.ink: #000", "added class tg-surface(card) in &:hover"} {
 		if !slices.Contains(lines, want) {
 			t.Errorf("missing %q in\n%s", want, strings.Join(lines, "\n"))
 		}
@@ -121,7 +121,7 @@ func TestChangedNestedRule(t *testing.T) {
 func TestChangedToken(t *testing.T) {
 	now := strings.Replace(planBase, `ink = "#000"`, `ink = "#222"`, 1)
 	lines, code := planAfter(t, planBase, now)
-	wantLines(t, lines, code, "changed token --tg-color-ink: #000 -> #222")
+	wantLines(t, lines, code, "changed token color.ink: #000 -> #222", "  reaches 1 classes: tg-surface(card)")
 }
 
 func TestVocabularyThatDoesNotLoadExits2(t *testing.T) {

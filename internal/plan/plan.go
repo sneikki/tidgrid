@@ -31,7 +31,7 @@ func report(args []string) ([]string, int) {
 		fmt.Fprintln(os.Stderr, "tidgrid plan:", err)
 		return nil, 2
 	}
-	lines := Diff(string(disk), v.Render())
+	lines := Diff(string(disk), v.Render(), v)
 	if len(lines) == 0 {
 		return []string{"no difference"}, 0
 	}

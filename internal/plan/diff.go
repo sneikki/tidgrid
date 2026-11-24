@@ -3,22 +3,37 @@ package plan
 import (
 	"fmt"
 	"slices"
+	"strings"
+
+	"github.com/sneikki/tidgrid/internal/vocab"
 )
 
 // Diff lists what changing the stylesheet from old to cur does: classes, then
 // tokens, then element rules, one fact per line. It is empty when they match.
-func Diff(old, cur string) []string {
-	o := buildIndex(parseSheet(old))
-	n := buildIndex(parseSheet(cur))
+// v names tokens and breakpoints as the vocabulary writes them; nil keeps raw names.
+func Diff(old, cur string, v *vocab.Vocabulary) []string {
+	nm := newNames(v)
+	o := buildIndex(parseSheet(old), nm)
+	n := buildIndex(parseSheet(cur), nm)
+	reach := func(prop string, removed bool) string {
+		if removed {
+			return o.reachLine(prop)
+		}
+		return n.reachLine(prop)
+	}
 	var out []string
-	out = append(out, diffTable(o.classes, n.classes)...)
-	out = append(out, diffTable(o.tokens, n.tokens)...)
-	out = append(out, diffTable(o.elements, n.elements)...)
+	out = append(out, diffTable(o.classes, n.classes, nil)...)
+	out = append(out, diffTable(o.tokens, n.tokens, reach)...)
+	out = append(out, diffTable(o.elements, n.elements, nil)...)
+	for i, l := range out {
+		out[i] = nm.rename(l)
+	}
 	return out
 }
 
 // diffTable lists the items added or changed in cur, in its order, then the removed ones in old's order.
-func diffTable(old, cur *table) []string {
+// note, when set, adds a line under a changed or removed item; removed says which sheet it reads.
+func diffTable(old, cur *table, note func(key string, removed bool) string) []string {
 	var out []string
 	for _, k := range cur.keys {
 		it := cur.items[k]
@@ -29,12 +44,24 @@ func diffTable(old, cur *table) []string {
 		}
 		for _, ch := range diffDecls(prev.decls, it.decls) {
 			out = append(out, "changed "+it.label+": "+ch)
+			out = appendNote(out, note, k, false)
 		}
 	}
 	for _, k := range old.keys {
 		if _, ok := cur.items[k]; !ok {
 			out = append(out, "removed "+present(old.items[k]))
+			out = appendNote(out, note, k, true)
 		}
+	}
+	return out
+}
+
+func appendNote(out []string, note func(string, bool) string, key string, removed bool) []string {
+	if note == nil {
+		return out
+	}
+	if s := note(key, removed); s != "" {
+		out = append(out, s)
 	}
 	return out
 }
@@ -80,6 +107,8 @@ func diffDecls(old, cur []decl) []string {
 	return out
 }
 
+// diffValues compares a property's values in order. Values that only moved
+// are a change of the whole list, since the last one wins.
 func diffValues(prop string, old, cur []string) []string {
 	if slices.Equal(old, cur) {
 		return nil
@@ -93,6 +122,9 @@ func diffValues(prop string, old, cur []string) []string {
 	}
 	for _, v := range subtract(old, cur) {
 		out = append(out, "removed "+show(prop, v))
+	}
+	if len(out) == 0 {
+		return []string{change(prop, strings.Join(old, "; "), strings.Join(cur, "; "))}
 	}
 	return out
 }
