@@ -27,6 +27,8 @@
     <script src="{{ site.baseurl }}/assets/js/theme.js?v={{ build }}"></script>
   </head>
   <body>
+    {% comment %}The page grid; backdrop.js moves it and, on the front page (data-cells), lights its cells.{% endcomment %}
+    <div id="grid" class="tg-surface(grid)" aria-hidden="true"{% if page.url == "/" %} data-cells{% endif %}><div></div></div>
     {% include header.html %}
     <main class="tg-grow tg-col {{ page.main_class }}">
       {{ content }}
@@ -34,5 +36,6 @@
     {% include footer.html %}
 
     <script src="{{ site.baseurl }}/assets/js/header.js?v={{ build }}"></script>
+    <script src="{{ site.baseurl }}/assets/js/backdrop.js?v={{ build }}"></script>
   </body>
 </html>
