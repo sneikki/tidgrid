@@ -27,10 +27,10 @@ func reportProject(v *vocab.Vocabulary, w io.Writer) int {
 	c := newProjectScan(v)
 	use := c.scanFiles(c.filesUnderScan())
 	c.judgeOutputFresh()
+	c.judgeUnusedRoles(use)
 	violations := c.sortedViolations()
 	writeViolations(w, violations)
 	writeRolesUsed(w, use)
-	writeRolesUnused(w, v, use)
 	writeAllowed(w, v)
 	if len(violations) > 0 {
 		return 1

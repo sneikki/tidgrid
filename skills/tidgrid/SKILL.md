@@ -44,7 +44,7 @@ The checker reads class attributes and string literals in class expressions. It 
 - Write whole names. `` `tg-kind(${kind})` `` is a violation: a built name cannot be checked.
 - A lookup table of names is a variable too. Pass each name through a helper so it is read:
   `{ primary: cn("tg-action(primary)") }`. Helpers are `cn clsx cva classNames twMerge` by default; `project.helpers` replaces that list, so repeat the ones in use.
-- A role that `check` lists under "roles unused" although the page shows it is a name the checker could not see. Fix the route, not the report.
+- `check` reports a role as a violation ("is not used in the scanned sources") although the page shows it: the checker could not see the name. Fix the route, not the report.
 
 ## State
 
