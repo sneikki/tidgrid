@@ -62,4 +62,7 @@ func TestListExample(t *testing.T) {
 	if !strings.Contains(out, rules) {
 		t.Error("agent rules missing")
 	}
+	if strings.Contains(rules, "tidgrid.toml") || !strings.Contains(rules, "same commit as the page") {
+		t.Error("commit rule must be the same-commit rule and not name tidgrid.toml")
+	}
 }
