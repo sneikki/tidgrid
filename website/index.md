@@ -102,17 +102,17 @@ every number after it moves.
       <path class="tg-drawing(wire) tg-drawing(in) tg-drawing(part)" data-show="3-8" d="M250,37 L156,37" marker-end="url(#head-in)"/>
       <text class="tg-drawing(mono) tg-drawing(in) tg-drawing(part)" data-show="3-8" x="203" y="30" text-anchor="middle">tidgrid list</text>
 
-      <path class="tg-drawing(wire) tg-drawing(out) tg-drawing(part)" data-show="0-3" d="M85,60 L85,112" marker-end="url(#head-out)"/>
-      <path class="tg-drawing(wire) tg-drawing(in) tg-drawing(part)" data-show="4-8" d="M85,60 L85,112" marker-end="url(#head-in)"/>
+      <path class="tg-drawing(wire) tg-drawing(out) tg-drawing(part)" data-show="0-2" d="M85,60 L85,112" marker-end="url(#head-out)"/>
+      <path class="tg-drawing(wire) tg-drawing(in) tg-drawing(part)" data-show="3-8" d="M85,60 L85,112" marker-end="url(#head-in)"/>
       <text class="tg-drawing(note)" x="93" y="91">writes</text>
 
       <rect class="tg-drawing(box)" data-hot="4-5" x="20" y="118" width="130" height="84" rx="5"/>
       <text class="tg-drawing(title)" x="32" y="137">a page</text>
-      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-3"><rect x="32" y="146" width="52" height="18" rx="3"/><text x="58" y="158.5" text-anchor="middle">.btn-new</text></g>
-      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-3"><rect x="90" y="146" width="50" height="18" rx="3"/><text x="115" y="158.5" text-anchor="middle">#ff0066</text></g>
-      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-3"><rect x="32" y="170" width="50" height="18" rx="3"/><text x="57" y="182.5" text-anchor="middle">&lt;style&gt;</text></g>
-      <g class="tg-drawing(chip) tg-drawing(in) tg-drawing(part)" data-show="4-8" data-hot="4-5"><rect x="32" y="146" width="44" height="18" rx="3"/><text x="54" y="158.5" text-anchor="middle">tg-col</text></g>
-      <g class="tg-drawing(chip) tg-drawing(in) tg-drawing(part)" data-show="4-5,8" data-hot="4-5"><rect x="32" y="170" width="98" height="18" rx="3"/><text x="81" y="182.5" text-anchor="middle">tg-surface(card)</text></g>
+      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-2"><rect x="32" y="146" width="52" height="18" rx="3"/><text x="58" y="158.5" text-anchor="middle">.btn-new</text></g>
+      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-2"><rect x="90" y="146" width="50" height="18" rx="3"/><text x="115" y="158.5" text-anchor="middle">#ff0066</text></g>
+      <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="0-2"><rect x="32" y="170" width="50" height="18" rx="3"/><text x="57" y="182.5" text-anchor="middle">&lt;style&gt;</text></g>
+      <g class="tg-drawing(chip) tg-drawing(in) tg-drawing(part)" data-show="3-8" data-hot="4-5"><rect x="32" y="146" width="44" height="18" rx="3"/><text x="54" y="158.5" text-anchor="middle">tg-col</text></g>
+      <g class="tg-drawing(chip) tg-drawing(in) tg-drawing(part)" data-show="3-5,8" data-hot="4-5"><rect x="32" y="170" width="98" height="18" rx="3"/><text x="81" y="182.5" text-anchor="middle">tg-surface(card)</text></g>
       <g class="tg-drawing(chip) tg-drawing(out) tg-drawing(part)" data-show="6-7"><rect x="32" y="170" width="66" height="18" rx="3"/><text x="65" y="182.5" text-anchor="middle">border-l-4</text></g>
 
       <g class="tg-drawing(part)" data-show="2-8">
@@ -122,7 +122,7 @@ every number after it moves.
         <path class="tg-drawing(wire) tg-drawing(in)" d="M315,60 L315,112" marker-end="url(#head-in)"/>
         <text class="tg-drawing(mono) tg-drawing(in)" x="322" y="91">tidgrid build</text>
       </g>
-      <g class="tg-drawing(part)" data-show="4-8">
+      <g class="tg-drawing(part)" data-show="3-8">
         <path class="tg-drawing(wire)" d="M250,141 L156,141" marker-end="url(#head)"/>
         <text class="tg-drawing(note)" x="203" y="134" text-anchor="middle">styles it</text>
       </g>
@@ -155,8 +155,9 @@ every number after it moves.
 
     <section data-step data-badge="One file" class="tg-surface(step) tg-col tg-y-gap(md) tg-pad-y(xl) lg:tg-min-height(step)">
       <h2 class="tg-text(section-title)">Where is the list of classes?</h2>
-      <p data-rise class="tg-motion(rise) tg-text(body)">In one file per project, <span class="tg-text(keyword)">tidgrid.toml</span>. It defines every class a page may use. What the project looks like is decided once, in that file, and reviewed there.</p>
-      <div data-rise class="tg-motion(rise)">
+      <p data-rise class="tg-motion(rise) tg-text(body)">Tidgrid closes the list. One file per project defines every class a page may use. What the project looks like is decided once, in that file, and reviewed there.</p>
+      <div data-rise class="tg-motion(rise) tg-col tg-y-gap(sm)">
+        <p class="tg-text(body)"><span class="tg-text(keyword)">tidgrid.toml</span></p>
 {% include code.html code=vocabulary %}
       </div>
     </section>
@@ -169,7 +170,7 @@ every number after it moves.
 
     <section data-step data-badge="List" class="tg-surface(step) tg-col tg-y-gap(md) tg-pad-y(xl) lg:tg-min-height(step)">
       <h2 class="tg-text(section-title)">How does the agent know what exists?</h2>
-      <p data-rise class="tg-motion(rise) tg-text(body)">It runs <span class="tg-text(keyword)">tidgrid list</span> before any UI work and styles pages only with what it finds there. Every role comes with a sentence that says when to use it.</p>
+      <p data-rise class="tg-motion(rise) tg-text(body)">It runs <span class="tg-text(keyword)">tidgrid list</span> before any UI work and styles pages only with what it finds there. <span class="tg-text(keyword)">tidgrid check</span> fails when it does not. Every role comes with a sentence that says when to use it.</p>
       <div data-rise class="tg-motion(rise) tg-col tg-y-gap(sm)">
         <p class="tg-text(body)"><span class="tg-text(keyword)">tidgrid list</span>, the part about roles</p>
 {% include code.html code=listing plain=true %}
