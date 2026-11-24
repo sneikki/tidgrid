@@ -58,16 +58,16 @@ $ go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
 
 <section class="tg-pad-y(xl)">
   <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(xl)">
-    <h2 class="tg-text(section-title)">Against Tailwind</h2>
+    <h2 class="tg-text(section-title)">Next to Tailwind</h2>
 
     <div class="tg-col tg-y-gap(md)">
-      <p class="tg-text(body)">A mistyped or built class gets no CSS and no message from the build. Tidgrid exits 1.</p>
+      <p class="tg-text(body)">In Tailwind a mistyped class, or one built from pieces, gets no CSS and no message from the build. Tidgrid exits 1.</p>
       {% include code.html code=unknown_run plain=true caption="A mistyped class" %}
       {% include code.html code=built_run plain=true caption="A class built from pieces" %}
     </div>
 
     <div class="tg-col tg-y-gap(md)">
-      <p class="tg-text(body)">A coloured stripe on a box's left edge is two utility classes, <span class="tg-text(keyword)">border-l-4</span> and a border colour. Tidgrid stops all three ways to write it.</p>
+      <p class="tg-text(body)">In Tailwind a coloured stripe on a box's left edge is two utility classes, <span class="tg-text(keyword)">border-l-4</span> and a border colour. Tidgrid stops all three ways to write it.</p>
       {% include code.html code=stripe_check plain=true caption="As a utility class or in style=: check" %}
       {% include code.html code=stripe_build plain=true caption="As a role of its own: build" %}
     </div>
