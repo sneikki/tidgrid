@@ -6,7 +6,7 @@ title: Why Tidgrid
 {% comment %}What the panels show. The text is the tool's real output (v0.3.0, rerun in an empty project).{% endcomment %}
 <!-- tidgrid-ignore-start -->
 {% capture unknown_run %}
-src/page.html:1: unknown class tg-surface(rasied): not in the vocabulary; run `tidgrid list`
+src/page.html:1: unknown class tg-surface(rasied); tg-surface takes: raised sunken
 {% endcapture %}
 {% capture built_run %}
 src/page.html:2: class name built from pieces: tg-text(${tone}); write every whole name out in a lookup table
