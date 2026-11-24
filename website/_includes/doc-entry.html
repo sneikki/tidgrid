@@ -1,0 +1,9 @@
+<a href="{{ site.baseurl }}{{ include.href }}" class="tg-link(entry) tg-pad-y(md)">
+  <div class="tg-col tg-gap(xs) sm:tg-row sm:tg-gap(lg) sm:tg-align(baseline)">
+    <div class="sm:tg-fixed sm:tg-width(specimen)"><span class="tg-text(keyword)">{{ include.sample | escape }}</span></div>
+    <div class="tg-grow tg-col tg-gap(xs)">
+      <h2 class="tg-text(entry-title)">{{ include.title }}</h2>
+      <p class="tg-text(body)">{{ include.description }}</p>
+    </div>
+  </div>
+</a>

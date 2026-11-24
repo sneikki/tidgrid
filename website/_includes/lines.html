@@ -1,0 +1,8 @@
+{% comment %}
+Rows of a terminal or code panel, built up one by one (story.js). Put inside a div with
+surface(code). In include.text, [[ and ]] mark what is outside the vocabulary, (( and ))
+what is fine. The text itself is a sample: capture it between tidgrid-ignore comments.
+{% endcomment %}
+{% assign rows = include.text | strip | newline_to_br | split: "<br />" %}
+{% for row in rows %}<div data-rise class="tg-motion(rise) tg-text(line)">{{ row | strip_newlines | escape | replace: "[[", '<span class="tg-text(refused)">' | replace: "]]", "</span>" | replace: "((", '<span class="tg-text(passed)">' | replace: "))", "</span>" | default: "&nbsp;" }}</div>
+{% endfor %}
