@@ -13,66 +13,89 @@ const TRIES = 8; // random places tried before a round is skipped
 const OWN = ["tg-col", "tg-row", "tg-gap(md)", "tg-pad(sm)", "tg-grow", "tg-center", "tg-wrap", "tg-cols(3)", "tg-hide"];
 const OUTSIDE = ["mt-[13px]", "border-l-4", ".btn-new", "#ff0066", "is-active", "p-[7px]"];
 
-const taken = new Set();
+// The header, what the first screen says, and everything after it: no cell shows behind these.
+const KEEP_CLEAR = "header, [data-clear] > *, section ~ section, footer";
+
+const cells = new Map(); // "column:row" -> { element, left, top } in the lit layer's own coordinates
 let size = 0; // one cell in px
 let travelled = 0; // px the grid has moved up
+let queued = false;
 
-function follow() {
+function measure() {
   size = parseFloat(getComputedStyle(grid).backgroundSize);
+  follow();
+}
+
+function keptClear() {
+  return [...document.querySelectorAll(KEEP_CLEAR)].map((element) => element.getBoundingClientRect());
+}
+
+// Whether a cell at this place of the lit layer is on screen behind one of the boxes.
+function covered(boxes, left, top) {
+  const onScreen = top - travelled;
+  return boxes.some((box) => box.left < left + size && box.right > left && box.top < onScreen + size && box.bottom > onScreen);
+}
+
+function put(key) {
+  cells.get(key)?.element.remove();
+  cells.delete(key);
+}
+
+// The page moves faster than the grid, so text catches up with a lit cell: such a cell goes out.
+function follow() {
+  queued = false;
+  const boxes = cells.size ? keptClear() : [];
   travelled = scrollY * SHARE;
   const within = travelled % size;
   grid.style.transform = `translateY(${-within}px)`;
   lit.style.transform = `translateY(${within - travelled}px)`;
+  for (const [key, { left, top }] of cells) if (covered(boxes, left, top)) put(key);
+}
+
+function onScroll() {
+  if (queued) return;
+  queued = true;
+  requestAnimationFrame(follow);
 }
 
 function pick(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-// The header, what the first screen says, and everything after it: no cell lights up behind these.
-const KEEP_CLEAR = "header, [data-clear] > *, section ~ section, footer";
-
-// Where a cell would sit on screen, or null when something to keep clear or another cell is there.
-function freePlace(busy) {
+function freePlace(boxes) {
   const column = Math.floor(Math.random() * Math.ceil(innerWidth / size));
   const row = Math.floor((travelled + Math.random() * innerHeight) / size);
   const key = `${column}:${row}`;
-  if (taken.has(key)) return null;
-
   const left = column * size;
-  const top = row * size - travelled;
-  const covered = busy.some((box) => box.left < left + size && box.right > left && box.top < top + size && box.bottom > top);
-  return covered ? null : { key, left, top: row * size };
+  const top = row * size;
+  return cells.has(key) || covered(boxes, left, top) ? null : { key, left, top };
 }
 
 function light() {
   if (document.hidden || scrollY > innerHeight) return;
-  const busy = [...document.querySelectorAll(KEEP_CLEAR)].map((element) => element.getBoundingClientRect());
+  const boxes = keptClear();
 
   for (let attempt = 0; attempt < TRIES; attempt++) {
-    const place = freePlace(busy);
+    const place = freePlace(boxes);
     if (!place) continue;
 
     const foreign = Math.random() < FOREIGN;
-    const cell = document.createElement("div");
-    cell.className = "tg-surface(cell)";
-    cell.classList.toggle("tg-state(foreign)", foreign);
-    cell.textContent = pick(foreign ? OUTSIDE : OWN);
-    cell.style.left = `${place.left}px`;
-    cell.style.top = `${place.top}px`;
-    cell.addEventListener("animationend", () => {
-      cell.remove();
-      taken.delete(place.key);
-    });
-    taken.add(place.key);
-    lit.append(cell);
+    const element = document.createElement("div");
+    element.className = "tg-surface(cell)";
+    element.classList.toggle("tg-state(foreign)", foreign);
+    element.textContent = pick(foreign ? OUTSIDE : OWN);
+    element.style.left = `${place.left}px`;
+    element.style.top = `${place.top}px`;
+    element.addEventListener("animationend", () => put(place.key));
+    cells.set(place.key, { element, left: place.left, top: place.top });
+    lit.append(element);
     return;
   }
 }
 
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  follow();
-  addEventListener("scroll", follow, { passive: true });
-  addEventListener("resize", follow);
+  measure();
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", measure);
   if (grid.hasAttribute("data-cells")) setInterval(light, EVERY);
 }

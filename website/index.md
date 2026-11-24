@@ -115,14 +115,14 @@ slip.html:7: own CSS: <style> block; make it a role in the vocabulary
     <div class="tg-col md:tg-row tg-gap(lg)">
       <a class="tg-link(card) tg-grow tg-col" href="{{ site.baseurl }}/docs/layout-atoms">
         <div class="tg-surface(card) tg-grow tg-col tg-gap(sm)">
-          <p class="tg-text(label)">Layout is atoms</p>
+          <h3 class="tg-text(label)">Layout is atoms</h3>
           <p class="tg-text(body)">Rows, gaps, padding and widths are free to combine. They always run on the project's token scales, so a gap is <span class="tg-text(keyword)">tg-gap(md)</span> and never an arbitrary number.</p>
         </div>
       </a>
 
       <a class="tg-link(card) tg-grow tg-col" href="{{ site.baseurl }}/docs/roles">
         <div class="tg-surface(card) tg-grow tg-col tg-gap(sm)">
-          <p class="tg-text(label)">Appearance is roles</p>
+          <h3 class="tg-text(label)">Appearance is roles</h3>
           <p class="tg-text(body)">Colour, border, shadow and type are reachable only through named roles such as <span class="tg-text(keyword)">tg-surface(card)</span>. What a role looks like is decided once, in the vocabulary file. There is no border atom and no colour atom.</p>
         </div>
       </a>
