@@ -63,7 +63,9 @@ role("text", "section-title", use = "...", include = [type.heading], css = {"col
 
 ## Writing the vocabulary
 
-- Tokens: `color = tokens("color", {"ink": "#e6e9eb"})`. `color.ink` and `color["sand-ink"]` are references; a name the group lacks is an error at that line.
+- Tokens: `color = tokens("color", {"ink": "#e6e9eb"})`. `color.ink` and `color["sand-ink"]` are references; a name the group lacks is an error at that line. A name with a hyphen needs the brackets: `color.sand-ink` is a subtraction and fails with `undefined: ink`.
+- A file runs top to bottom: a token group or a mixin is defined above the first role that uses it.
+- The refusal of raw lengths and times covers every rule: element rules, nested and pseudo-element rules, offsets, outline widths, shadow sizes. Small one-off sizes go in a token group of their own.
 - Values are strings. A `def` that returns a string names a repeated expression (`tint(c, pct)`); a top-level `for` makes several roles. No `while`, no recursion.
 - `load("tokens.tg", "color")` imports names; `source("roles.tg")` runs a file for what it declares and imports no names (the sourced file may `load`). A file runs once however often it is named. Paths stay inside the entry file's folder.
 - Kind and name of a role are letters, digits, `-` and `_`.
