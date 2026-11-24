@@ -39,7 +39,7 @@ $ go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
     </div>
     <div class="tg-col tg-y-gap(xs)">
       <p class="tg-text(figure)">24 groups, 7 mixin sets</p>
-      <p class="tg-text(body) tg-max-width(reading)">This site's vocabulary had 24 groups of repeated lines in 57 roles; the largest was one title font and ink colour written by hand in 8 roles. Now they are 7 mixin sets.</p>
+      <p class="tg-text(body) tg-max-width(reading)">This site's vocabulary had 24 groups of repeated lines in 57 roles; the largest was one title font and ink colour written by hand in 8 roles. The cleanup turned them into 7 mixin sets.</p>
     </div>
     <div class="tg-col tg-y-gap(xs)">
       <p class="tg-text(figure)">no difference</p>
