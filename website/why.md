@@ -35,15 +35,15 @@ $ go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
   <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md) tg-col tg-y-gap(md)">
     <div class="tg-col md:tg-row tg-gap(md)">
       <figure class="tg-col tg-y-gap(xs) tg-grow">
-        <a href="{{ site.baseurl }}/assets/img/home-tailwind.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/home-tailwind.png" width="1280" height="1081" alt="Home page of a bicycle repair shop: green header and hero with a yellow booking button, a list of six services with prices, a card of opening hours, a dark footer."></a>
+        <a href="{{ site.baseurl }}/assets/img/landing-tailwind-full.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/landing-tailwind-top.png" width="1280" height="1500" alt="Top of a dark landing page for moonshine: a small navigation bar, a large white headline with a yellow button, a section with a heading on the left and text on the right, and the start of a grid of boxed items."></a>
         <figcaption class="tg-text(caption)">Styled with Tailwind CSS</figcaption>
       </figure>
       <figure class="tg-col tg-y-gap(xs) tg-grow">
-        <a href="{{ site.baseurl }}/assets/img/home-tidgrid.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/home-tidgrid.png" width="1280" height="1145" alt="Home page of a bicycle repair shop: cream background, heavy serif headline, an opening-hours tag, a dark panel of eight prices in two columns, a dark footer."></a>
+        <a href="{{ site.baseurl }}/assets/img/landing-tidgrid-full.png"><img class="tg-width(full) tg-surface(shot)" src="{{ site.baseurl }}/assets/img/landing-tidgrid-top.png" width="1280" height="1500" alt="Top of a dark landing page for moonshine: a large monospace cream headline, two columns of intro text, and a dated list of one real case in four rows."></a>
         <figcaption class="tg-text(caption)">Written with the <a class="tg-link(text)" href="https://github.com/sneikki/tidgrid/tree/master/skills/antislop-ui">antislop-ui skill</a> and Tidgrid</figcaption>
       </figure>
     </div>
-    <p class="tg-text(body) tg-max-width(reading)">The same request, "a two-page website for a small family-run bicycle repair shop: a home page with services, prices and opening hours, and a booking-request form. Plain HTML.", given once to each of two fresh agents on the same model. One was told to style it with Tailwind CSS; the other had the skill and Tidgrid. One run each; click a picture for its full size.</p>
+    <p class="tg-text(body) tg-max-width(reading)">The same request, "Build the landing page for moonshine. Everything the page may say is in content.md; the wordmark and favicon are in brand/. Plain HTML.", and the same content file, given to two agents on the same model. One was told to style it with Tailwind CSS. The other had the skill and Tidgrid: it first wrote a brief of the look and a vocabulary, a person approved that look, and only then did it build the page; <span class="tg-text(keyword)">tidgrid check</span> passes on it. One run each. The pictures show the top of each page; click one for the whole page.</p>
   </div>
 </section>
 
