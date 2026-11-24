@@ -70,7 +70,12 @@ function play(sc, name, launch) {
   const norm = (s) => s.split(dir).join("<dir>").split(dir.replace(/\\/g, "/")).join("<dir>").replace(/\r\n/g, "\n");
   const log = [];
   sc.steps.forEach((step, i) => {
-    if (i === 3 && sc.after) for (const [f, c] of Object.entries(sc.after)) fs.writeFileSync(path.join(dir, f), c);
+    if (i === 3 && sc.after) {
+      for (const [f, c] of Object.entries(sc.after)) {
+        fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true });
+        fs.writeFileSync(path.join(dir, f), c);
+      }
+    }
     const r = launch(step.map((a) => a.replace("{dir}", dir)), dir);
     log.push({ step, code: r.status, out: norm(r.stdout), err: norm(r.stderr) });
   });
@@ -104,7 +109,10 @@ function main() {
   const viaNpx = sh("npx", ["--no-install", "tidgrid", "check", "nowhere.tg"], { cwd: proj, shell: process.platform === "win32" });
   const npxOk = viaNpx.status === 2;
   console.log(`${npxOk ? "ok  " : "FAIL"} npx shim exits 2 (got ${viaNpx.status})`);
-  if (!npxOk) failed++;
+  if (!npxOk) {
+    failed++;
+    console.log(viaNpx.stdout + viaNpx.stderr);
+  }
   fs.rmSync(tmp, { recursive: true, force: true });
   process.exit(failed ? 1 : 0);
 }
