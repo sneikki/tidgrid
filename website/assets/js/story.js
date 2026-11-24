@@ -38,6 +38,7 @@ function shareRead() {
 function frame() {
   queued = false;
   reveal();
+  if (!story || !progress) return;
   progress.style.transform = `scaleX(${shareRead()})`;
 }
 

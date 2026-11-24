@@ -70,6 +70,11 @@ $ tidgrid build
   --tg-space-md: 1rem;
   --tg-border-hair: 1px;
 }
+
+body {
+  background: var(--tg-color-ground);
+  color: var(--tg-color-ink);
+}
 {% endcapture %}
 {% capture css_roles %}
 .tg-surface\(card\) {
@@ -82,15 +87,19 @@ $ tidgrid build
 {% endcapture %}
 {% capture list_run %}
 $ tidgrid list
+…
 # roles
 ## surface
 tg-surface(card)  A panel that lifts off the ground. One per group of related content.
 ## text
 tg-text(title)  The one title of a page.
 
+# allow
+
 # rules
 Style only with the classes `tidgrid list` prints. No <style>, no style= for appearance, no own CSS.
 Run `tidgrid check` before every commit; it must exit 0.
+A new role is a change to tidgrid.toml in its own commit, never mixed into page work.
 {% endcapture %}
 {% capture page %}
 <main class="tg-col tg-gap(md) tg-pad(md)">
@@ -106,7 +115,10 @@ roles used:
   index.html: tg-surface(card) tg-text(title)
 roles unused:
   none
-((exit code 0))
+allow:
+  none
+$ echo $?
+((0))
 {% endcapture %}
 {% capture slip_page %}
 1 <main class="tg-col [[tg-gap(2)]]">
@@ -122,7 +134,9 @@ $ tidgrid check
 [[careers.html:3:]] appearance in style attribute: color; use a role (`tidgrid list`)
 [[careers.html:4:]] unknown class btn-new: not in the vocabulary; run `tidgrid list`
 [[careers.html:6:]] own CSS: <style> block; make it a role in the vocabulary
-[[exit code 1]]
+…
+$ echo $?
+[[1]]
 {% endcapture %}
 {% capture start_run %}
 $ go install github.com/sneikki/tidgrid/cmd/tidgrid@latest
@@ -217,7 +231,7 @@ something: text(passed) = in the vocabulary, text(refused) = outside it.
 {% include lines.html text=build_run %}
       </div>
       <div class="tg-col tg-y-gap(xs)">
-        <p class="tg-text(caption)">site.css</p>
+        <p class="tg-text(caption)">site.css, down to the roles; the atoms follow</p>
         <div class="tg-surface(code) tg-col tg-y-gap(md)">
           <div data-rise class="tg-motion(rise)"><pre><code>{{ css_tokens | strip | escape }}</code></pre></div>
           <div data-rise class="tg-motion(rise)"><pre><code>{{ css_roles | strip | escape }}</code></pre></div>
@@ -234,7 +248,7 @@ something: text(passed) = in the vocabulary, text(refused) = outside it.
       <p class="tg-text(body)">Every role comes with a sentence that says when to use it.</p>
     </div>
     <div class="tg-grow tg-col tg-y-gap(xs)">
-      <p class="tg-text(caption)">The agent's terminal, the part about roles</p>
+      <p class="tg-text(caption)">The agent's terminal, from the roles on</p>
       <div class="tg-surface(code)">
 {% include lines.html text=list_run %}
       </div>
@@ -285,7 +299,7 @@ something: text(passed) = in the vocabulary, text(refused) = outside it.
     <div class="tg-center tg-width(full) tg-max-width(measure) tg-pad-x(md)">
       <div class="tg-col tg-y-gap(md) tg-max-width(reading)">
         <h2 class="tg-text(section-title)">What happens on a slip?</h2>
-        <p class="tg-text(body)">An unknown atom value, an inline colour, a class from nowhere and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1. The change never reaches the site, and each message tells the agent what to do instead.</p>
+        <p class="tg-text(body)">An unknown atom value, an inline colour, a class from nowhere and a <span class="tg-text(keyword)">&lt;style&gt;</span> block each fail, and the exit code is 1. Run before every commit, the check keeps the change off the site, and each message tells the agent what to do instead.</p>
       </div>
     </div>
     <div class="tg-center tg-width(full) tg-max-width(wide) tg-pad-x(md) tg-col lg:tg-row lg:tg-align(center) tg-gap(md)">
