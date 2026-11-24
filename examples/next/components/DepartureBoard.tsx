@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/cn";
 import { departures, routes } from "@/lib/departures";
 import { DepartureRow } from "./DepartureRow";
 
@@ -19,7 +18,7 @@ export function DepartureBoard() {
               key={r}
               type="button"
               aria-pressed={r === route}
-              className={cn("tg-action(tab)", r === route && "tg-state(active)")}
+              className="tg-action(filter)"
               onClick={() => setRoute(r)}
             >
               {r}

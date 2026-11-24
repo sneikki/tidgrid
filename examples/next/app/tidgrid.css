@@ -90,6 +90,15 @@ ul {
   color: var(--tg-color-ink);
 }
 
+.tg-text\(destination\) {
+  font-family: var(--tg-font-display);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: var(--tg-track-tight);
+  font-size: var(--tg-sizes-time);
+  color: var(--tg-color-ink);
+}
+
 .tg-text\(label\) {
   font-family: var(--tg-font-sans);
   font-size: var(--tg-sizes-label);
@@ -147,7 +156,7 @@ ul {
   border-radius: var(--tg-radius-sm);
 }
 
-.tg-action\(tab\) {
+.tg-action\(filter\) {
   font-family: var(--tg-font-sans);
   font-size: var(--tg-sizes-label);
   font-weight: 700;
@@ -163,14 +172,11 @@ ul {
   &:hover {
     border-color: var(--tg-color-accent);
   }
-  &.tg-state\(active\) {
+  &[aria-pressed=true] {
     background: var(--tg-color-accent);
     color: var(--tg-color-on-accent);
     border-color: var(--tg-color-accent);
   }
-}
-
-.tg-state\(active\) {
 }
 
 .tg-badge\(ok\) {

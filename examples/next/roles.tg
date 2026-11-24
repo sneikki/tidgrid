@@ -19,6 +19,7 @@ shape = mixin("shape",
 
 role("text", "hero", use = "The page title. Once per page.", include = [type.display], css = {"font-size": sizes.hero, "color": color.ink})
 role("text", "heading", use = "Heading of a section of the page.", include = [type.display], css = {"font-size": sizes.h2, "color": color.ink})
+role("text", "destination", use = "Where a departure goes: the title of one row in a list. Not a section heading.", include = [type.display], css = {"font-size": sizes.time, "color": color.ink})
 role("text", "label", use = "Small capitals over a value or beside a group.", include = [type.caps])
 role("text", "time", use = "A clock time in a list.", include = [type.figure], css = {"font-size": sizes.time, "color": color.ink})
 role("text", "clock", use = "A clock time shown large.", include = [type.figure], css = {"font-size": sizes.clock})
@@ -38,7 +39,7 @@ role("surface", "next", use = "The one highlighted item the visitor most likely 
     "border-radius": radius.sm,
 })
 
-role("action", "tab", use = "A button in a row of choices where one is on. The chosen one also carries the active state.", include = [type.caps], css = {
+role("action", "filter", use = "A button that filters a list by one choice. aria-pressed=true marks the choice in effect.", include = [type.caps], css = {
     "min-height": size.tap,
     "padding": "0 %s" % space.md,
     "background": "transparent",
@@ -47,10 +48,8 @@ role("action", "tab", use = "A button in a row of choices where one is on. The c
     "border-radius": radius.pill,
     "cursor": "pointer",
     "&:hover": {"border-color": color.accent},
-    "&.tg-state(active)": {"background": color.accent, "color": color["on-accent"], "border-color": color.accent},
+    "&[aria-pressed=true]": {"background": color.accent, "color": color["on-accent"], "border-color": color.accent},
 })
-
-role("state", "active", use = "Set on the chosen button of a row of choices.")
 
 def tone(c):
     return {"color": c, "border-color": c, "background": tint(c, 12)}
